@@ -1,18 +1,20 @@
 #include <time.h>
 #include <iostream>
 using namespace std;
-//0 1 1 2 3 5 8 13 21 34
+
 int fib1(int n);
 int fib2(int n);
 
 int main()
 {
-    clock_t start, end;
+    clock_t start, end1, end2;
     start = clock();
-    // fib1(40);
+    fib1(40);
+    end1 = clock();
+    cout << "time1 = " << double(end1 - start) / CLOCKS_PER_SEC << "s" << endl;
     fib2(40);
-    end = clock();
-    cout << "time = " << double(end - start) / CLOCKS_PER_SEC << "s" << endl;
+    end2 = clock();
+    cout << "time2 = " << double(end2 - end1) / CLOCKS_PER_SEC << "s" << endl;
     return 0;
 }
 
@@ -36,3 +38,11 @@ int fib2(int n)
     }
     return second;
 }
+
+/*
+时间：
+    2022年3月13日 00:15:29
+输出：
+    time1 = 0.576s
+    time2 = 0.001s
+*/
