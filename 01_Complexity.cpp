@@ -1,7 +1,8 @@
 #include <time.h>
 #include <iostream>
 using namespace std;
-
+//斐波那契数列
+//0 1 1 2 3 5 8 13 21 34
 int fib1(int n);
 int fib2(int n);
 
