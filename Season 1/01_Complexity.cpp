@@ -1,9 +1,9 @@
 #include <time.h>
 #include <iostream>
 using namespace std;
-//斐波那契数列
-//0 1 1 2 3 5 8 13 21 34
+//斐波那契数列递归算法
 int fib1(int n);
+//斐波那契数列迭代算法
 int fib2(int n);
 
 int main()
@@ -42,8 +42,8 @@ int fib2(int n)
 
 /*
 时间：
-    2022年3月13日 13:36:03
+    2022年3月15日 12:17:58
 输出：
-    time1 = 13.334s
-    time2 = 0.008s
+    time1 = 13.218s
+    time2 = 0.002s
 */
