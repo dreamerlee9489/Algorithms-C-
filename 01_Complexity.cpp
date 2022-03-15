@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 //斐波那契数列
-//0 1 1 2 3 5 8 13 21
+//0 1 1 2 3 5 8 13 21 34
 int fib1(int n);
 int fib2(int n);
 
@@ -47,4 +47,3 @@ int fib2(int n)
     time1 = 13.334s
     time2 = 0.008s
 */
-//测试github桌面
