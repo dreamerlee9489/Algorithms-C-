@@ -1,9 +1,9 @@
 #include <time.h>
 #include <iostream>
 using namespace std;
-//斐波那契数列递归算法 O(2^n)
+//斐波那契数列递归算法
 int fib1(int n);
-//斐波那契数列迭代算法 O(n)
+//斐波那契数列迭代算法
 int fib2(int n);
 
 int main()
