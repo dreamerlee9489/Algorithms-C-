@@ -1,10 +1,10 @@
+#ifndef ARRAYLIST_H
+#define ARRAYLIST_H
 #include <iostream>
 #include <string>
 #include <memory>
 #include <stdexcept>
-#ifndef ARRAYLIST_H
-#define ARRAYLIST_H
-// 动态数组模板类
+// 动态数组模板类(智能指针版)
 template <typename T>
 class ArrayList
 {
