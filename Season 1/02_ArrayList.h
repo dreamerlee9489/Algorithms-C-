@@ -4,7 +4,7 @@
 #include <stdexcept>
 #ifndef ARRAYLIST_H
 #define ARRAYLIST_H
-
+// 动态数组模板类
 template <typename T>
 class ArrayList
 {

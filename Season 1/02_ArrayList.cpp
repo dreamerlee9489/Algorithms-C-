@@ -1,5 +1,6 @@
 #include "./02_ArrayList.h"
 
+#pragma region 方法实现
 template <typename T>
 ArrayList<T>::ArrayList()
 {
@@ -115,6 +116,7 @@ void ArrayList<T>::expand_capacity()
     delete[] array;
     array = temp;
 }
+#pragma endregion
 
 int main()
 {
