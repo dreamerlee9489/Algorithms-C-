@@ -33,6 +33,8 @@ public:
 
 class Person
 {
+	friend std::istream &operator>>(std::istream &in, Person &person);
+	friend std::ostream &operator<<(std::istream &out, const Person &person);
 	friend bool operator==(const Person &lhs, const Person &rhs);
 	friend bool operator!=(const Person &lhs, const Person &rhs);
 
@@ -45,10 +47,11 @@ public:
 		_age = age;
 		_name = name;
 	}
-	~Person() { std::cout << "delete " << this << to_string(); }
-	std::string to_string() { return "[" + std::to_string(_age) + ", " + _name + "]\n"; }
+	~Person() { std::cout << "delete " << this << "[" << _age << ", " << _name + "]\n"; }
 };
 
+std::istream &operator>>(std::istream &in, Person &person) { return in >> person._age >> person._name; }
+std::ostream &operator<<(std::ostream &out, const Person &person) { return out << &person << "[" << person._age << ", " << person._name + "]\n"; }
 bool operator==(const Person &lhs, const Person &rhs) { return lhs._age == rhs._age && lhs._name == rhs._name; }
 bool operator!=(const Person &lhs, const Person &rhs) { return !(lhs == rhs); }
 

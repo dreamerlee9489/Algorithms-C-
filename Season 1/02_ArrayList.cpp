@@ -130,13 +130,13 @@ int main()
     list->add(std::make_shared<Person>(27, "Alice7"));
     std::cout << "size=" << list->get_size() << ", capacity=" << list->get_capacity() << std::endl;
     for (size_t i = 0; i < list->get_size(); ++i)
-        std::cout << list->get(i)->to_string();
+        std::cout << *list->get(i);
 
     std::cout << "----------Test insert()----------\n";
     list->insert(5, std::make_shared<Person>(30, "Bob0"));
     std::cout << "size=" << list->get_size() << ", capacity=" << list->get_capacity() << std::endl;
     for (size_t i = 0; i < list->get_size(); ++i)
-        std::cout << list->get(i)->to_string();
+        std::cout << *list->get(i);
 
     std::cout << "----------Test contains() & index_of()----------\n";
     if (list->contains(std::make_shared<Person>(30, "Bob0")))
@@ -146,13 +146,13 @@ int main()
     list->set(5, std::make_shared<Person>(15, "Jack"));
     std::cout << "size=" << list->get_size() << ", capacity=" << list->get_capacity() << std::endl;
     for (size_t i = 0; i < list->get_size(); ++i)
-        std::cout << list->get(i)->to_string();
+        std::cout << *list->get(i);
 
     std::cout << "----------Test remove()----------\n";
-    std::cout << "Remove: " << list->remove(5)->to_string();
+    std::cout << "Remove: " << *list->remove(5);
     std::cout << "size=" << list->get_size() << ", capacity=" << list->get_capacity() << std::endl;
     for (size_t i = 0; i < list->get_size(); ++i)
-        std::cout << list->get(i)->to_string();
+        std::cout << *list->get(i);
 
     std::cout << "----------Test clear()----------\n";
     list->clear();
@@ -165,61 +165,61 @@ int main()
 输出:
 ----------Test add()----------
 size=8, capacity=8
-[20, Alice0]
-[21, Alice1]
-[22, Alice2]
-[23, Alice3]
-[24, Alice4]
-[25, Alice5]
-[26, Alice6]
-[27, Alice7]
+0x25c22e0[20, Alice0]
+0x25c2320[21, Alice1]
+0x25c2360[22, Alice2]
+0x25c23a0[23, Alice3]
+0x25c23e0[24, Alice4]
+0x25c2420[25, Alice5]
+0x25c2460[26, Alice6]
+0x25c24a0[27, Alice7]
 ----------Test insert()----------
 size=9, capacity=16
-[20, Alice0]
-[21, Alice1]
-[22, Alice2]
-[23, Alice3]
-[24, Alice4]
-[30, Bob0]
-[25, Alice5]
-[26, Alice6]
-[27, Alice7]
+0x25c22e0[20, Alice0]
+0x25c2320[21, Alice1]
+0x25c2360[22, Alice2]
+0x25c23a0[23, Alice3]
+0x25c23e0[24, Alice4]
+0x25c24e0[30, Bob0]
+0x25c2420[25, Alice5]
+0x25c2460[26, Alice6]
+0x25c24a0[27, Alice7]
 ----------Test contains() & index_of()----------
-delete 0x632250[30, Bob0]
+delete 0x25c2250[30, Bob0]
 index=5
-delete 0x632250[30, Bob0]
+delete 0x25c2250[30, Bob0]
 ----------Test set()----------
-delete 0x6324e0[30, Bob0]
+delete 0x25c24e0[30, Bob0]
 size=9, capacity=16
-[20, Alice0]
-[21, Alice1]
-[22, Alice2]
-[23, Alice3]
-[24, Alice4]
-[15, Jack]
-[25, Alice5]
-[26, Alice6]
-[27, Alice7]
+0x25c22e0[20, Alice0]
+0x25c2320[21, Alice1]
+0x25c2360[22, Alice2]
+0x25c23a0[23, Alice3]
+0x25c23e0[24, Alice4]
+0x25c2250[15, Jack]
+0x25c2420[25, Alice5]
+0x25c2460[26, Alice6]
+0x25c24a0[27, Alice7]
 ----------Test remove()----------
-Remove: [15, Jack]
-delete 0x632250[15, Jack]
+Remove: 0x25c2250[15, Jack]
+delete 0x25c2250[15, Jack]
 size=8, capacity=16
-[20, Alice0]
-[21, Alice1]
-[22, Alice2]
-[23, Alice3]
-[24, Alice4]
-[25, Alice5]
-[26, Alice6]
-[27, Alice7]
+0x25c22e0[20, Alice0]
+0x25c2320[21, Alice1]
+0x25c2360[22, Alice2]
+0x25c23a0[23, Alice3]
+0x25c23e0[24, Alice4]
+0x25c2420[25, Alice5]
+0x25c2460[26, Alice6]
+0x25c24a0[27, Alice7]
 ----------Test clear()----------
-delete 0x6322e0[20, Alice0]
-delete 0x632320[21, Alice1]
-delete 0x632360[22, Alice2]
-delete 0x6323a0[23, Alice3]
-delete 0x6323e0[24, Alice4]
-delete 0x632420[25, Alice5]
-delete 0x632460[26, Alice6]
+delete 0x25c22e0[20, Alice0]
+delete 0x25c2320[21, Alice1]
+delete 0x25c2360[22, Alice2]
+delete 0x25c23a0[23, Alice3]
+delete 0x25c23e0[24, Alice4]
+delete 0x25c2420[25, Alice5]
+delete 0x25c2460[26, Alice6]
 size=0, capacity=16
-delete 0x6324a0[27, Alice7]
+delete 0x25c24a0[27, Alice7]
 */
