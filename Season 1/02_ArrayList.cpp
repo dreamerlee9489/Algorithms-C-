@@ -52,8 +52,7 @@ std::shared_ptr<T> ArrayList<T>::remove(int index)
     auto old = array[index];
     for (size_t i = index + 1; i < size; ++i)
         array[i - 1] = array[i];
-    array[size] = nullptr;
-    size--;
+    array[size--] = nullptr;
     return old;
 }
 
@@ -100,7 +99,7 @@ bool ArrayList<T>::contains(std::shared_ptr<T> element)
 template <typename T>
 void ArrayList<T>::clear()
 {
-    for (size_t i = 0; i < size; ++i)
+    for (size_t i = 0; i < capacity; ++i)
         array[i] = nullptr;
     size = 0;
 }
@@ -157,6 +156,7 @@ int main()
     std::cout << "----------Test clear()----------\n";
     list->clear();
     std::cout << "size=" << list->get_size() << ", capacity=" << list->get_capacity() << std::endl;
+    std::getchar();
     return 0;
 }
 
@@ -165,61 +165,61 @@ int main()
 输出:
 ----------Test add()----------
 size=8, capacity=8
-0x25c22e0[20, Alice0]
-0x25c2320[21, Alice1]
-0x25c2360[22, Alice2]
-0x25c23a0[23, Alice3]
-0x25c23e0[24, Alice4]
-0x25c2420[25, Alice5]
-0x25c2460[26, Alice6]
-0x25c24a0[27, Alice7]
+0x25022e0[20, Alice0]
+0x2502320[21, Alice1]
+0x2502360[22, Alice2]
+0x25023a0[23, Alice3]
+0x25023e0[24, Alice4]
+0x2502420[25, Alice5]
+0x2502460[26, Alice6]
+0x25024a0[27, Alice7]
 ----------Test insert()----------
 size=9, capacity=16
-0x25c22e0[20, Alice0]
-0x25c2320[21, Alice1]
-0x25c2360[22, Alice2]
-0x25c23a0[23, Alice3]
-0x25c23e0[24, Alice4]
-0x25c24e0[30, Bob0]
-0x25c2420[25, Alice5]
-0x25c2460[26, Alice6]
-0x25c24a0[27, Alice7]
+0x25022e0[20, Alice0]
+0x2502320[21, Alice1]
+0x2502360[22, Alice2]
+0x25023a0[23, Alice3]
+0x25023e0[24, Alice4]
+0x25024e0[30, Bob0]
+0x2502420[25, Alice5]
+0x2502460[26, Alice6]
+0x25024a0[27, Alice7]
 ----------Test contains() & index_of()----------
-delete 0x25c2250[30, Bob0]
+delete 0x2502250[30, Bob0]
 index=5
-delete 0x25c2250[30, Bob0]
+delete 0x2502250[30, Bob0]
 ----------Test set()----------
-delete 0x25c24e0[30, Bob0]
+delete 0x25024e0[30, Bob0]
 size=9, capacity=16
-0x25c22e0[20, Alice0]
-0x25c2320[21, Alice1]
-0x25c2360[22, Alice2]
-0x25c23a0[23, Alice3]
-0x25c23e0[24, Alice4]
-0x25c2250[15, Jack]
-0x25c2420[25, Alice5]
-0x25c2460[26, Alice6]
-0x25c24a0[27, Alice7]
+0x25022e0[20, Alice0]
+0x2502320[21, Alice1]
+0x2502360[22, Alice2]
+0x25023a0[23, Alice3]
+0x25023e0[24, Alice4]
+0x2502250[15, Jack]
+0x2502420[25, Alice5]
+0x2502460[26, Alice6]
+0x25024a0[27, Alice7]
 ----------Test remove()----------
-Remove: 0x25c2250[15, Jack]
-delete 0x25c2250[15, Jack]
+Remove: 0x2502250[15, Jack]
+delete 0x2502250[15, Jack]
 size=8, capacity=16
-0x25c22e0[20, Alice0]
-0x25c2320[21, Alice1]
-0x25c2360[22, Alice2]
-0x25c23a0[23, Alice3]
-0x25c23e0[24, Alice4]
-0x25c2420[25, Alice5]
-0x25c2460[26, Alice6]
-0x25c24a0[27, Alice7]
+0x25022e0[20, Alice0]
+0x2502320[21, Alice1]
+0x2502360[22, Alice2]
+0x25023a0[23, Alice3]
+0x25023e0[24, Alice4]
+0x2502420[25, Alice5]
+0x2502460[26, Alice6]
+0x25024a0[27, Alice7]
 ----------Test clear()----------
-delete 0x25c22e0[20, Alice0]
-delete 0x25c2320[21, Alice1]
-delete 0x25c2360[22, Alice2]
-delete 0x25c23a0[23, Alice3]
-delete 0x25c23e0[24, Alice4]
-delete 0x25c2420[25, Alice5]
-delete 0x25c2460[26, Alice6]
+delete 0x25022e0[20, Alice0]
+delete 0x2502320[21, Alice1]
+delete 0x2502360[22, Alice2]
+delete 0x25023a0[23, Alice3]
+delete 0x25023e0[24, Alice4]
+delete 0x2502420[25, Alice5]
+delete 0x2502460[26, Alice6]
+delete 0x25024a0[27, Alice7]
 size=0, capacity=16
-delete 0x25c24a0[27, Alice7]
 */
