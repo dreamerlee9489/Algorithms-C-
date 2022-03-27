@@ -18,6 +18,15 @@ ArrayList<T>::~ArrayList()
 }
 
 template <typename T>
+size_t ArrayList<T>::index_of(std::shared_ptr<T> element)
+{
+    for (size_t i = 0; i < IList<T>::_size; ++i)
+        if (*array[i] == *element)
+            return i;
+    return -1;
+}
+
+template <typename T>
 void ArrayList<T>::insert(size_t index, std::shared_ptr<T> element)
 {
     IList<T>::check_range_add(index);
@@ -38,15 +47,6 @@ std::shared_ptr<T> ArrayList<T>::remove(size_t index)
         array[i - 1] = array[i];
     array[IList<T>::_size--] = nullptr;
     return old;
-}
-
-template <typename T>
-size_t ArrayList<T>::index_of(std::shared_ptr<T> element)
-{
-    for (size_t i = 0; i < IList<T>::_size; ++i)
-        if (*array[i] == *element)
-            return i;
-    return -1;
 }
 
 template <typename T>
@@ -128,65 +128,65 @@ int main()
 }
 
 /*
-2022年3月27日 22:37:46
+2022年3月27日 23:53:01
 输出:
 ----------Test add()----------
 size=8, capacity=8
-0x1071790[20, Alice0]
-0x10717d0[21, Alice1]
-0x1071810[22, Alice2]
-0x1071850[23, Alice3]
-0x1071890[24, Alice4]
-0x10718d0[25, Alice5]
-0x1071910[26, Alice6]
-0x1071950[27, Alice7]
+0xde1790[20, Alice0]
+0xde17d0[21, Alice1]
+0xde1810[22, Alice2]
+0xde1850[23, Alice3]
+0xde1890[24, Alice4]
+0xde18d0[25, Alice5]
+0xde1910[26, Alice6]
+0xde1950[27, Alice7]
 ----------Test insert()----------
 size=9, capacity=16
-0x1071790[20, Alice0]
-0x10717d0[21, Alice1]
-0x1071810[22, Alice2]
-0x1071850[23, Alice3]
-0x1071890[24, Alice4]
-0x1071990[30, Bob0]
-0x10718d0[25, Alice5]
-0x1071910[26, Alice6]
-0x1071950[27, Alice7]
+0xde1790[20, Alice0]
+0xde17d0[21, Alice1]
+0xde1810[22, Alice2]
+0xde1850[23, Alice3]
+0xde1890[24, Alice4]
+0xde1990[30, Bob0]
+0xde18d0[25, Alice5]
+0xde1910[26, Alice6]
+0xde1950[27, Alice7]
 ----------Test contains() & index_of()----------
-delete 0x1071700[30, Bob0]
+delete 0xde1700[30, Bob0]
 index=5
-delete 0x1071700[30, Bob0]
+delete 0xde1700[30, Bob0]
 ----------Test set()----------
-delete 0x1071990[30, Bob0]
+delete 0xde1990[30, Bob0]
 size=9, capacity=16
-0x1071790[20, Alice0]
-0x10717d0[21, Alice1]
-0x1071810[22, Alice2]
-0x1071850[23, Alice3]
-0x1071890[24, Alice4]
-0x1071700[15, Jack]
-0x10718d0[25, Alice5]
-0x1071910[26, Alice6]
-0x1071950[27, Alice7]
+0xde1790[20, Alice0]
+0xde17d0[21, Alice1]
+0xde1810[22, Alice2]
+0xde1850[23, Alice3]
+0xde1890[24, Alice4]
+0xde1700[15, Jack]
+0xde18d0[25, Alice5]
+0xde1910[26, Alice6]
+0xde1950[27, Alice7]
 ----------Test remove()----------
-Remove: 0x1071700[15, Jack]
-delete 0x1071700[15, Jack]
+Remove: 0xde1700[15, Jack]
+delete 0xde1700[15, Jack]
 size=8, capacity=16
-0x1071790[20, Alice0]
-0x10717d0[21, Alice1]
-0x1071810[22, Alice2]
-0x1071850[23, Alice3]
-0x1071890[24, Alice4]
-0x10718d0[25, Alice5]
-0x1071910[26, Alice6]
-0x1071950[27, Alice7]
+0xde1790[20, Alice0]
+0xde17d0[21, Alice1]
+0xde1810[22, Alice2]
+0xde1850[23, Alice3]
+0xde1890[24, Alice4]
+0xde18d0[25, Alice5]
+0xde1910[26, Alice6]
+0xde1950[27, Alice7]
 ----------Test clear()----------
-delete 0x1071790[20, Alice0]
-delete 0x10717d0[21, Alice1]
-delete 0x1071810[22, Alice2]
-delete 0x1071850[23, Alice3]
-delete 0x1071890[24, Alice4]
-delete 0x10718d0[25, Alice5]
-delete 0x1071910[26, Alice6]
-delete 0x1071950[27, Alice7]
+delete 0xde1790[20, Alice0]
+delete 0xde17d0[21, Alice1]
+delete 0xde1810[22, Alice2]
+delete 0xde1850[23, Alice3]
+delete 0xde1890[24, Alice4]
+delete 0xde18d0[25, Alice5]
+delete 0xde1910[26, Alice6]
+delete 0xde1950[27, Alice7]
 size=0, capacity=16
 */
