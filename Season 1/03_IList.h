@@ -19,8 +19,8 @@ public:
     bool is_empty() { return _size == 0; }
     bool contains(std::shared_ptr<T> element);
     void add(std::shared_ptr<T> element);
-    virtual size_t index_of(std::shared_ptr<T> element) = 0;
     virtual void insert(size_t index, std::shared_ptr<T> element) = 0;
+    virtual size_t index_of(std::shared_ptr<T> element) = 0;
     virtual std::shared_ptr<T> remove(size_t index) = 0;
     virtual std::shared_ptr<T> get(size_t index) = 0;
     virtual void set(size_t index, std::shared_ptr<T> element) = 0;

@@ -18,15 +18,6 @@ ArrayList<T>::~ArrayList()
 }
 
 template <typename T>
-size_t ArrayList<T>::index_of(std::shared_ptr<T> element)
-{
-    for (size_t i = 0; i < IList<T>::_size; ++i)
-        if (*array[i] == *element)
-            return i;
-    return -1;
-}
-
-template <typename T>
 void ArrayList<T>::insert(size_t index, std::shared_ptr<T> element)
 {
     IList<T>::check_range_add(index);
@@ -36,6 +27,15 @@ void ArrayList<T>::insert(size_t index, std::shared_ptr<T> element)
         array[i] = array[i - 1];
     array[index] = element;
     IList<T>::_size++;
+}
+
+template <typename T>
+size_t ArrayList<T>::index_of(std::shared_ptr<T> element)
+{
+    for (size_t i = 0; i < IList<T>::_size; ++i)
+        if (*array[i] == *element)
+            return i;
+    return -1;
 }
 
 template <typename T>
