@@ -1,11 +1,20 @@
 #include "./02_ArrayList.h"
 
 template <typename T>
-void ArrayList<T>::add(std::shared_ptr<T> element)
+ArrayList<T>::ArrayList()
 {
-    if (IList<T>::_size >= _capacity)
-        expand_capacity();
-    array[IList<T>::_size++] = element;
+    IList<T>::_size = 0;
+    _capacity = DEFAULT_CAPACITY;
+    array = new std::shared_ptr<T>[_capacity];
+}
+
+template <typename T>
+ArrayList<T>::~ArrayList()
+{
+    IList<T>::_size = 0;
+    _capacity = 0;
+    delete[] array;
+    array = nullptr;
 }
 
 template <typename T>
@@ -14,8 +23,8 @@ void ArrayList<T>::insert(size_t index, std::shared_ptr<T> element)
     IList<T>::check_range_add(index);
     if (IList<T>::_size >= _capacity)
         expand_capacity();
-    for (size_t i = IList<T>::_size - 1; i >= index; --i)
-        array[i + 1] = array[i];
+    for (size_t i = IList<T>::_size; i > index; --i)
+        array[i] = array[i - 1];
     array[index] = element;
     IList<T>::_size++;
 }
@@ -55,12 +64,6 @@ void ArrayList<T>::set(size_t index, std::shared_ptr<T> element)
 }
 
 template <typename T>
-bool ArrayList<T>::contains(std::shared_ptr<T> element)
-{
-    return index_of(element) != -1;
-}
-
-template <typename T>
 void ArrayList<T>::clear()
 {
     for (size_t i = 0; i < _capacity; ++i)
@@ -72,7 +75,7 @@ template <typename T>
 void ArrayList<T>::expand_capacity()
 {
     _capacity = _capacity << 1;
-    std::shared_ptr<T> *temp = new std::shared_ptr<T>[_capacity];
+    auto temp = new std::shared_ptr<T>[_capacity];
     for (size_t i = 0; i < IList<T>::_size; ++i)
         temp[i] = array[i];
     delete[] array;
@@ -81,7 +84,7 @@ void ArrayList<T>::expand_capacity()
 
 int main()
 {
-    std::shared_ptr<ArrayList<Person>> list = std::make_shared<ArrayList<Person>>();
+    auto list = std::make_shared<ArrayList<Person>>();
     std::cout << "----------Test add()----------\n";
     list->add(std::make_shared<Person>(20, "Alice0"));
     list->add(std::make_shared<Person>(21, "Alice1"));
