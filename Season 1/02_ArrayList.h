@@ -2,39 +2,46 @@
 #define ARRAYLIST_H
 #include <iostream>
 #include <string>
-#include <memory>
-#include <stdexcept>
+#include "./03_IList.h"
 // 动态数组模板类(智能指针版)
 template <typename T>
-class ArrayList
+class ArrayList : public IList<T>
 {
 private:
-	size_t size = 0;
-	size_t capacity = 0;
+	size_t _capacity = 0;
 	const static size_t DEFAULT_CAPACITY = 8;
 	std::shared_ptr<T> *array = nullptr;
 	void expand_capacity();
 
 public:
-	ArrayList();
-	~ArrayList();
-	size_t get_size() { return size; }
-	size_t get_capacity() { return capacity; }
-	bool is_empty() { return size == 0; }
-	void add(std::shared_ptr<T> element);
-	void insert(int index, std::shared_ptr<T> element);
-	std::shared_ptr<T> remove(int index);
-	size_t index_of(std::shared_ptr<T> element);
-	std::shared_ptr<T> get(int index);
-	void set(int index, std::shared_ptr<T> element);
-	bool contains(std::shared_ptr<T> element);
-	void clear();
+	ArrayList() : IList<T>()
+	{
+		IList<T>::_size = 0;
+		_capacity = DEFAULT_CAPACITY;
+		array = new std::shared_ptr<T>[_capacity];
+	}
+	~ArrayList()
+	{
+		IList<T>::_size = 0;
+		_capacity = 0;
+		delete[] array;
+		array = nullptr;
+	}
+	size_t capacity() { return _capacity; }
+	virtual void add(std::shared_ptr<T> element) override;
+	void insert(size_t index, std::shared_ptr<T> element) override;
+	std::shared_ptr<T> remove(size_t index) override;
+	size_t index_of(std::shared_ptr<T> element) override;
+	std::shared_ptr<T> get(size_t index) override;
+	void set(size_t index, std::shared_ptr<T> element) override;
+	virtual bool contains(std::shared_ptr<T> element) override;
+	void clear() override;
 };
 
 class Person
 {
-	friend std::istream &operator>>(std::istream &in, Person &person);
-	friend std::ostream &operator<<(std::istream &out, const Person &person);
+	friend std::istream &operator>>(std::istream &in, Person &p);
+	friend std::ostream &operator<<(std::ostream &out, const Person &p);
 	friend bool operator==(const Person &lhs, const Person &rhs);
 	friend bool operator!=(const Person &lhs, const Person &rhs);
 
@@ -50,8 +57,8 @@ public:
 	~Person() { std::cout << "delete " << this << "[" << _age << ", " << _name + "]\n"; }
 };
 
-std::istream &operator>>(std::istream &in, Person &person) { return in >> person._age >> person._name; }
-std::ostream &operator<<(std::ostream &out, const Person &person) { return out << &person << "[" << person._age << ", " << person._name + "]\n"; }
+std::istream &operator>>(std::istream &in, Person &p) { return in >> p._age >> p._name; }
+std::ostream &operator<<(std::ostream &out, const Person &p) { return out << &p << "[" << p._age << ", " << p._name + "]\n"; }
 bool operator==(const Person &lhs, const Person &rhs) { return lhs._age == rhs._age && lhs._name == rhs._name; }
 bool operator!=(const Person &lhs, const Person &rhs) { return !(lhs == rhs); }
 

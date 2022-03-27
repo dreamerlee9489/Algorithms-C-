@@ -1,0 +1,43 @@
+#ifndef ILIST_H
+#define ILIST_H
+#include <memory>
+#include <stdexcept>
+
+template <typename T>
+class IList
+{
+protected:
+    size_t _size = 0;
+    void check_range(size_t index);
+    void check_range_add(size_t index);
+
+public:
+    IList() = default;
+    virtual ~IList() = default;
+    size_t size() { return _size; }
+    bool is_empty() { return _size == 0; }
+    virtual void add(std::shared_ptr<T> element) = 0;
+    virtual void insert(size_t index, std::shared_ptr<T> element) = 0;
+    virtual std::shared_ptr<T> remove(size_t index) = 0;
+    virtual size_t index_of(std::shared_ptr<T> element) = 0;
+    virtual std::shared_ptr<T> get(size_t index) = 0;
+    virtual void set(size_t index, std::shared_ptr<T> element) = 0;
+    virtual bool contains(std::shared_ptr<T> element) = 0;
+    virtual void clear() = 0;
+};
+
+template <typename T>
+void IList<T>::check_range(size_t index)
+{
+    if (index >= _size)
+        throw std::out_of_range("Index out of range: [0, " + std::to_string(_size - 1) + "].");
+}
+
+template <typename T>
+void IList<T>::check_range_add(size_t index)
+{
+    if (index > _size)
+        throw std::out_of_range("Index out of range for add: [0, " + std::to_string(_size) + "].");
+}
+
+#endif
