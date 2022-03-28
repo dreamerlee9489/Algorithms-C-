@@ -17,12 +17,12 @@ public:
     size_t size() { return _size; }
     bool is_empty() { return _size == 0; }
     bool contains(std::shared_ptr<T> element);
-    void add(std::shared_ptr<T> element);
-    virtual void insert(size_t index, std::shared_ptr<T> element) = 0;
+    std::shared_ptr<T> add(std::shared_ptr<T> element);
     virtual size_t index_of(std::shared_ptr<T> element) = 0;
+    virtual std::shared_ptr<T> insert(size_t index, std::shared_ptr<T> element) = 0;
     virtual std::shared_ptr<T> remove(size_t index) = 0;
     virtual std::shared_ptr<T> get(size_t index) = 0;
-    virtual void set(size_t index, std::shared_ptr<T> element) = 0;
+    virtual std::shared_ptr<T> set(size_t index, std::shared_ptr<T> element) = 0;
     virtual void clear() = 0;
 };
 
@@ -42,9 +42,9 @@ bool IList<T>::contains(std::shared_ptr<T> element)
 }
 
 template <typename T>
-void IList<T>::add(std::shared_ptr<T> element)
+std::shared_ptr<T> IList<T>::add(std::shared_ptr<T> element)
 {
-    insert(_size, element);
+    return insert(_size, element);
 }
 
 #endif
