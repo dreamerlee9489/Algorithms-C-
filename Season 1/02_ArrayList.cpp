@@ -18,7 +18,7 @@ ArrayList<T>::~ArrayList()
 }
 
 template <typename T>
-size_t ArrayList<T>::index_of(std::shared_ptr<T> element)
+int ArrayList<T>::index_of(std::shared_ptr<T> element)
 {
     for (size_t i = 0; i < this->_size; ++i)
         if (*array[i] == *element)
@@ -27,7 +27,7 @@ size_t ArrayList<T>::index_of(std::shared_ptr<T> element)
 }
 
 template <typename T>
-std::shared_ptr<T> ArrayList<T>::insert(size_t index, std::shared_ptr<T> element)
+std::shared_ptr<T> ArrayList<T>::insert(int index, std::shared_ptr<T> element)
 {
     this->check_range(index, true);
     if (this->_size >= _capacity)
@@ -40,7 +40,7 @@ std::shared_ptr<T> ArrayList<T>::insert(size_t index, std::shared_ptr<T> element
 }
 
 template <typename T>
-std::shared_ptr<T> ArrayList<T>::remove(size_t index)
+std::shared_ptr<T> ArrayList<T>::remove(int index)
 {
     this->check_range(index);
     auto old = array[index];
@@ -51,14 +51,14 @@ std::shared_ptr<T> ArrayList<T>::remove(size_t index)
 }
 
 template <typename T>
-std::shared_ptr<T> ArrayList<T>::get(size_t index)
+std::shared_ptr<T> ArrayList<T>::get(int index)
 {
     this->check_range(index);
     return array[index];
 }
 
 template <typename T>
-std::shared_ptr<T> ArrayList<T>::set(size_t index, std::shared_ptr<T> element)
+std::shared_ptr<T> ArrayList<T>::set(int index, std::shared_ptr<T> element)
 {
     this->check_range(index);
     array[index] = element;
@@ -128,7 +128,7 @@ int main()
     try
     {
         std::cout << "Remove: " << *list->remove(5);
-        std::cout << "Remove: " << *list->remove(10);
+        std::cout << "Remove: " << *list->remove(-1);
     }
     catch(const std::exception& e)
     {
@@ -149,75 +149,75 @@ int main()
 2022年3月28日 08:44:51
 输出:
 ----------Test add()----------
-Add: 0xdb1790[20, Alice0]
-Add: 0xdb17d0[21, Alice1]
-Add: 0xdb1810[22, Alice2]
-Add: 0xdb1850[23, Alice3]
-Add: 0xdb1890[24, Alice4]
-Add: 0xdb18d0[25, Alice5]
-Add: 0xdb1910[26, Alice6]
-Add: 0xdb1950[27, Alice7]
+Add: 0xee1790[20, Alice0]
+Add: 0xee17d0[21, Alice1]
+Add: 0xee1810[22, Alice2]
+Add: 0xee1850[23, Alice3]
+Add: 0xee1890[24, Alice4]
+Add: 0xee18d0[25, Alice5]
+Add: 0xee1910[26, Alice6]
+Add: 0xee1950[27, Alice7]
 size=8, capacity=8
-0xdb1790[20, Alice0]
-0xdb17d0[21, Alice1]
-0xdb1810[22, Alice2]
-0xdb1850[23, Alice3]
-0xdb1890[24, Alice4]
-0xdb18d0[25, Alice5]
-0xdb1910[26, Alice6]
-0xdb1950[27, Alice7]
+0xee1790[20, Alice0]
+0xee17d0[21, Alice1]
+0xee1810[22, Alice2]
+0xee1850[23, Alice3]
+0xee1890[24, Alice4]
+0xee18d0[25, Alice5]
+0xee1910[26, Alice6]
+0xee1950[27, Alice7]
 ----------Test insert()----------
-Insert: 0xdb1990[30, Bob0]
-Insert: delete 0xdb1700[35, Bob1]
+Insert: 0xee1990[30, Bob0]
+Insert: delete 0xee1700[35, Bob1]
 index = 15 out of range for add: [0, 9].
 size=9, capacity=16
-0xdb1790[20, Alice0]
-0xdb17d0[21, Alice1]
-0xdb1810[22, Alice2]
-0xdb1850[23, Alice3]
-0xdb1890[24, Alice4]
-0xdb1990[30, Bob0]
-0xdb18d0[25, Alice5]
-0xdb1910[26, Alice6]
-0xdb1950[27, Alice7]
+0xee1790[20, Alice0]
+0xee17d0[21, Alice1]
+0xee1810[22, Alice2]
+0xee1850[23, Alice3]
+0xee1890[24, Alice4]
+0xee1990[30, Bob0]
+0xee18d0[25, Alice5]
+0xee1910[26, Alice6]
+0xee1950[27, Alice7]
 ----------Test contains() & index_of()----------
-delete 0xdb1700[30, Bob0]
+delete 0xee1700[30, Bob0]
 Bob0 at index=5
-delete 0xdb1700[30, Bob0]
+delete 0xee1700[30, Bob0]
 ----------Test set()----------
-Set: delete 0xdb1990[30, Bob0]
-0xdb1700[25, Jack]
+Set: delete 0xee1990[30, Bob0]
+0xee1700[25, Jack]
 size=9, capacity=16
-0xdb1790[20, Alice0]
-0xdb17d0[21, Alice1]
-0xdb1810[22, Alice2]
-0xdb1850[23, Alice3]
-0xdb1890[24, Alice4]
-0xdb1700[25, Jack]
-0xdb18d0[25, Alice5]
-0xdb1910[26, Alice6]
-0xdb1950[27, Alice7]
+0xee1790[20, Alice0]
+0xee17d0[21, Alice1]
+0xee1810[22, Alice2]
+0xee1850[23, Alice3]
+0xee1890[24, Alice4]
+0xee1700[25, Jack]
+0xee18d0[25, Alice5]
+0xee1910[26, Alice6]
+0xee1950[27, Alice7]
 ----------Test remove()----------
-Remove: 0xdb1700[25, Jack]
-delete 0xdb1700[25, Jack]
-Remove: index = 10 out of range: [0, 7].
+Remove: 0xee1700[25, Jack]
+delete 0xee1700[25, Jack]
+Remove: index = -1 out of range: [0, 7].
 size=8, capacity=16
-0xdb1790[20, Alice0]
-0xdb17d0[21, Alice1]
-0xdb1810[22, Alice2]
-0xdb1850[23, Alice3]
-0xdb1890[24, Alice4]
-0xdb18d0[25, Alice5]
-0xdb1910[26, Alice6]
-0xdb1950[27, Alice7]
+0xee1790[20, Alice0]
+0xee17d0[21, Alice1]
+0xee1810[22, Alice2]
+0xee1850[23, Alice3]
+0xee1890[24, Alice4]
+0xee18d0[25, Alice5]
+0xee1910[26, Alice6]
+0xee1950[27, Alice7]
 ----------Test clear()----------
-delete 0xdb1790[20, Alice0]
-delete 0xdb17d0[21, Alice1]
-delete 0xdb1810[22, Alice2]
-delete 0xdb1850[23, Alice3]
-delete 0xdb1890[24, Alice4]
-delete 0xdb18d0[25, Alice5]
-delete 0xdb1910[26, Alice6]
-delete 0xdb1950[27, Alice7]
+delete 0xee1790[20, Alice0]
+delete 0xee17d0[21, Alice1]
+delete 0xee1810[22, Alice2]
+delete 0xee1850[23, Alice3]
+delete 0xee1890[24, Alice4]
+delete 0xee18d0[25, Alice5]
+delete 0xee1910[26, Alice6]
+delete 0xee1950[27, Alice7]
 size=0, capacity=16
 */

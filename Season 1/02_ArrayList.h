@@ -15,11 +15,11 @@ public:
 	ArrayList();
 	~ArrayList();
 	size_t capacity() { return _capacity; }
-	size_t index_of(std::shared_ptr<T> element) override;
-	std::shared_ptr<T> insert(size_t index, std::shared_ptr<T> element) override;
-	std::shared_ptr<T> remove(size_t index) override;
-	std::shared_ptr<T> get(size_t index) override;
-	std::shared_ptr<T> set(size_t index, std::shared_ptr<T> element) override;
+	int index_of(std::shared_ptr<T> element) override;
+	std::shared_ptr<T> insert(int index, std::shared_ptr<T> element) override;
+	std::shared_ptr<T> remove(int index) override;
+	std::shared_ptr<T> get(int index) override;
+	std::shared_ptr<T> set(int index, std::shared_ptr<T> element) override;
 	void clear() override;
 };
 

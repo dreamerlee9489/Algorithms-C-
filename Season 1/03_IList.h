@@ -9,7 +9,7 @@ class IList
 {
 protected:
     size_t _size = 0;
-    void check_range(size_t index, bool isAdd = false);
+    void check_range(int index, bool isAdd = false);
 
 public:
     IList() = default;
@@ -18,20 +18,20 @@ public:
     bool is_empty() { return _size == 0; }
     bool contains(std::shared_ptr<T> element);
     std::shared_ptr<T> add(std::shared_ptr<T> element);
-    virtual size_t index_of(std::shared_ptr<T> element) = 0;
-    virtual std::shared_ptr<T> insert(size_t index, std::shared_ptr<T> element) = 0;
-    virtual std::shared_ptr<T> remove(size_t index) = 0;
-    virtual std::shared_ptr<T> get(size_t index) = 0;
-    virtual std::shared_ptr<T> set(size_t index, std::shared_ptr<T> element) = 0;
+    virtual int index_of(std::shared_ptr<T> element) = 0;
+    virtual std::shared_ptr<T> insert(int index, std::shared_ptr<T> element) = 0;
+    virtual std::shared_ptr<T> remove(int index) = 0;
+    virtual std::shared_ptr<T> get(int index) = 0;
+    virtual std::shared_ptr<T> set(int index, std::shared_ptr<T> element) = 0;
     virtual void clear() = 0;
 };
 
 template <typename T>
-void IList<T>::check_range(size_t index, bool isAdd)
+void IList<T>::check_range(int index, bool isAdd)
 {
-    if (!isAdd && index >= _size)
+    if (!isAdd && (index >= _size || index < 0))
         throw std::out_of_range("index = " + std::to_string(index) + " out of range: [0, " + std::to_string(_size - 1) + "].");
-    if (index > _size)
+    if (index > _size || index < 0)
         throw std::out_of_range("index = " + std::to_string(index) + " out of range for add: [0, " + std::to_string(_size) + "].");
 }
 
