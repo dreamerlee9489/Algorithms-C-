@@ -3,7 +3,7 @@
 template <typename T>
 ArrayList<T>::ArrayList()
 {
-    IList<T>::_size = 0;
+    this->_size = 0;
     _capacity = DEFAULT_CAPACITY;
     array = new std::shared_ptr<T>[_capacity];
 }
@@ -11,7 +11,7 @@ ArrayList<T>::ArrayList()
 template <typename T>
 ArrayList<T>::~ArrayList()
 {
-    IList<T>::_size = 0;
+    this->_size = 0;
     _capacity = 0;
     delete[] array;
     array = nullptr;
@@ -20,19 +20,19 @@ ArrayList<T>::~ArrayList()
 template <typename T>
 void ArrayList<T>::insert(size_t index, std::shared_ptr<T> element)
 {
-    IList<T>::check_range_add(index);
-    if (IList<T>::_size >= _capacity)
+    this->check_range_add(index);
+    if (this->_size >= _capacity)
         expand_capacity();
-    for (size_t i = IList<T>::_size; i > index; --i)
+    for (size_t i = this->_size; i > index; --i)
         array[i] = array[i - 1];
     array[index] = element;
-    IList<T>::_size++;
+    this->_size++;
 }
 
 template <typename T>
 size_t ArrayList<T>::index_of(std::shared_ptr<T> element)
 {
-    for (size_t i = 0; i < IList<T>::_size; ++i)
+    for (size_t i = 0; i < this->_size; ++i)
         if (*array[i] == *element)
             return i;
     return -1;
@@ -41,25 +41,25 @@ size_t ArrayList<T>::index_of(std::shared_ptr<T> element)
 template <typename T>
 std::shared_ptr<T> ArrayList<T>::remove(size_t index)
 {
-    IList<T>::check_range(index);
+    this->check_range(index);
     auto old = array[index];
-    for (size_t i = index + 1; i < IList<T>::_size; ++i)
+    for (size_t i = index + 1; i < this->_size; ++i)
         array[i - 1] = array[i];
-    array[IList<T>::_size--] = nullptr;
+    array[this->_size--] = nullptr;
     return old;
 }
 
 template <typename T>
 std::shared_ptr<T> ArrayList<T>::get(size_t index)
 {
-    IList<T>::check_range(index);
+    this->check_range(index);
     return array[index];
 }
 
 template <typename T>
 void ArrayList<T>::set(size_t index, std::shared_ptr<T> element)
 {
-    IList<T>::check_range(index);
+    this->check_range(index);
     array[index] = element;
 }
 
@@ -68,7 +68,7 @@ void ArrayList<T>::clear()
 {
     for (size_t i = 0; i < _capacity; ++i)
         array[i] = nullptr;
-    IList<T>::_size = 0;
+    this->_size = 0;
 }
 
 template <typename T>
@@ -76,7 +76,7 @@ void ArrayList<T>::expand_capacity()
 {
     _capacity = _capacity << 1;
     auto temp = new std::shared_ptr<T>[_capacity];
-    for (size_t i = 0; i < IList<T>::_size; ++i)
+    for (size_t i = 0; i < this->_size; ++i)
         temp[i] = array[i];
     delete[] array;
     array = temp;
@@ -128,65 +128,65 @@ int main()
 }
 
 /*
-2022年3月27日 23:53:01
+2022年3月28日 08:44:51
 输出:
 ----------Test add()----------
 size=8, capacity=8
-0xde1790[20, Alice0]
-0xde17d0[21, Alice1]
-0xde1810[22, Alice2]
-0xde1850[23, Alice3]
-0xde1890[24, Alice4]
-0xde18d0[25, Alice5]
-0xde1910[26, Alice6]
-0xde1950[27, Alice7]
+0x771790[20, Alice0]
+0x7717d0[21, Alice1]
+0x771810[22, Alice2]
+0x771850[23, Alice3]
+0x771890[24, Alice4]
+0x7718d0[25, Alice5]
+0x771910[26, Alice6]
+0x771950[27, Alice7]
 ----------Test insert()----------
 size=9, capacity=16
-0xde1790[20, Alice0]
-0xde17d0[21, Alice1]
-0xde1810[22, Alice2]
-0xde1850[23, Alice3]
-0xde1890[24, Alice4]
-0xde1990[30, Bob0]
-0xde18d0[25, Alice5]
-0xde1910[26, Alice6]
-0xde1950[27, Alice7]
+0x771790[20, Alice0]
+0x7717d0[21, Alice1]
+0x771810[22, Alice2]
+0x771850[23, Alice3]
+0x771890[24, Alice4]
+0x771990[30, Bob0]
+0x7718d0[25, Alice5]
+0x771910[26, Alice6]
+0x771950[27, Alice7]
 ----------Test contains() & index_of()----------
-delete 0xde1700[30, Bob0]
+delete 0x771700[30, Bob0]
 index=5
-delete 0xde1700[30, Bob0]
+delete 0x771700[30, Bob0]
 ----------Test set()----------
-delete 0xde1990[30, Bob0]
+delete 0x771990[30, Bob0]
 size=9, capacity=16
-0xde1790[20, Alice0]
-0xde17d0[21, Alice1]
-0xde1810[22, Alice2]
-0xde1850[23, Alice3]
-0xde1890[24, Alice4]
-0xde1700[15, Jack]
-0xde18d0[25, Alice5]
-0xde1910[26, Alice6]
-0xde1950[27, Alice7]
+0x771790[20, Alice0]
+0x7717d0[21, Alice1]
+0x771810[22, Alice2]
+0x771850[23, Alice3]
+0x771890[24, Alice4]
+0x771700[15, Jack]
+0x7718d0[25, Alice5]
+0x771910[26, Alice6]
+0x771950[27, Alice7]
 ----------Test remove()----------
-Remove: 0xde1700[15, Jack]
-delete 0xde1700[15, Jack]
+Remove: 0x771700[15, Jack]
+delete 0x771700[15, Jack]
 size=8, capacity=16
-0xde1790[20, Alice0]
-0xde17d0[21, Alice1]
-0xde1810[22, Alice2]
-0xde1850[23, Alice3]
-0xde1890[24, Alice4]
-0xde18d0[25, Alice5]
-0xde1910[26, Alice6]
-0xde1950[27, Alice7]
+0x771790[20, Alice0]
+0x7717d0[21, Alice1]
+0x771810[22, Alice2]
+0x771850[23, Alice3]
+0x771890[24, Alice4]
+0x7718d0[25, Alice5]
+0x771910[26, Alice6]
+0x771950[27, Alice7]
 ----------Test clear()----------
-delete 0xde1790[20, Alice0]
-delete 0xde17d0[21, Alice1]
-delete 0xde1810[22, Alice2]
-delete 0xde1850[23, Alice3]
-delete 0xde1890[24, Alice4]
-delete 0xde18d0[25, Alice5]
-delete 0xde1910[26, Alice6]
-delete 0xde1950[27, Alice7]
+delete 0x771790[20, Alice0]
+delete 0x7717d0[21, Alice1]
+delete 0x771810[22, Alice2]
+delete 0x771850[23, Alice3]
+delete 0x771890[24, Alice4]
+delete 0x7718d0[25, Alice5]
+delete 0x771910[26, Alice6]
+delete 0x771950[27, Alice7]
 size=0, capacity=16
 */

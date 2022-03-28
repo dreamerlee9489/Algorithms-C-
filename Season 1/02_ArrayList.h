@@ -33,7 +33,7 @@ class Person
 public:
 	int _age = 0;
 	std::string _name = "name";
-	Person() {}
+	Person() = default;
 	Person(int age, std::string name)
 	{
 		_age = age;
