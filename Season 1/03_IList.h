@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include <memory>
-
+//线性表基类(智能指针版)
 template <typename T>
 class IList
 {
