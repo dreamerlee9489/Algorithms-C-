@@ -9,8 +9,7 @@ class IList
 {
 protected:
     size_t _size = 0;
-    void check_range(size_t index);
-    void check_range_add(size_t index);
+    void check_range(size_t index, bool isAdd = false);
 
 public:
     IList() = default;
@@ -28,17 +27,12 @@ public:
 };
 
 template <typename T>
-void IList<T>::check_range(size_t index)
+void IList<T>::check_range(size_t index, bool isAdd)
 {
-    if (index >= _size)
-        throw std::out_of_range("Index out of range: [0, " + std::to_string(_size - 1) + "].");
-}
-
-template <typename T>
-void IList<T>::check_range_add(size_t index)
-{
+    if (!isAdd && index >= _size)
+        throw std::out_of_range("index = " + std::to_string(index) + " out of range: [0, " + std::to_string(_size - 1) + "].");
     if (index > _size)
-        throw std::out_of_range("Index out of range for add: [0, " + std::to_string(_size) + "].");
+        throw std::out_of_range("index = " + std::to_string(index) + " out of range for add: [0, " + std::to_string(_size) + "].");
 }
 
 template <typename T>

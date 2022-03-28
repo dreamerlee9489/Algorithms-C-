@@ -7,7 +7,7 @@ class ArrayList : public IList<T>
 {
 private:
 	size_t _capacity = 0;
-	const static size_t DEFAULT_CAPACITY = 8;
+	const size_t DEFAULT_CAPACITY = 8;
 	std::shared_ptr<T> *array = nullptr;
 	void expand_capacity();
 
