@@ -2,37 +2,60 @@
 #include "Person.h"
 
 template <typename T>
+template <typename U>
+LinkedList<T>::Node<U>::Node(std::shared_ptr<T> data, Node<U> *prev, Node<U> *next)
+{
+    _data = data;
+    _prev = prev;
+    _next = next;
+}
+
+template <typename T>
+template <typename U>
+LinkedList<T>::Node<U>::~Node()
+{
+    _data = nullptr;
+    _prev = _next = nullptr;
+}
+
+template <typename T>
+template <typename U>
+std::shared_ptr<T> LinkedList<T>::Node<U>::disconnect()
+{
+    _prev = _next = nullptr;
+    return _data;
+}
+
+template <typename T>
 LinkedList<T>::LinkedList()
 {
+    head = last = new Node<T>(nullptr);
     this->_size = 0;
-    first = last = nullptr;
 }
 
 template <typename T>
 LinkedList<T>::~LinkedList()
 {
     Node<T> *p = last;
-    while (p != first)
+    while (p != head)
     {
-        p = p->prev;
-        delete p->next;
+        p = p->_prev;
+        delete p->_next;
     }
-    delete first;
+    delete head;
     this->_size = 0;
-    first = last = nullptr;
+    head = last = nullptr;
 }
 
 template <typename T>
 int LinkedList<T>::index_of(std::shared_ptr<T> element)
 {
-    Node<T> *p = first;
+    Node<T> *p = head;
     for (size_t i = 0; i < this->_size; ++i)
     {
+        p = p->_next;
         if (*p->_data == *element)
-        {
             return i;
-        }
-        p = p->next;
     }
     return -1;
 }
@@ -41,33 +64,33 @@ template <typename T>
 std::shared_ptr<T> LinkedList<T>::insert(int index, std::shared_ptr<T> element)
 {
     this->check_range(index, true);
-    Node<T> *temp = new Node<T>(element);
+    Node<T> *temp = new Node<T>(element, get_node(index - 1), get_node(index));
     if (this->_size == 0)
     {
-        first = temp;
+        head = temp;
         last = temp;
     }
     else if (index == 0)
     {
-        temp->next = first;
-        first->prev = temp;
-        first = temp;
+        temp->_next = head;
+        head->_prev = temp;
+        head = temp;
     }
     else if (index == this->_size)
     {
-        temp->prev = last;
-        last->next = temp;
+        temp->_prev = last;
+        last->_next = temp;
         last = temp;
     }
     else
     {
-        Node<T> *p = first;
+        Node<T> *p = head;
         for (size_t i = 1; i < index; ++i)
-            p = p->next;
-        temp->next = p->next;
-        p->next->prev = temp;
-        temp->prev = p;
-        p->next = temp;
+            p = p->_next;
+        temp->_next = p->_next;
+        p->_next->_prev = temp;
+        temp->_prev = p;
+        p->_next = temp;
     }
     this->_size++;
     return element;
@@ -77,24 +100,24 @@ template <typename T>
 std::shared_ptr<T> LinkedList<T>::remove(int index)
 {
     this->check_range(index);
-    Node<T> *p = first;
+    Node<T> *p = head;
     if (index == 0)
     {
-        first->next->prev = nullptr;
-        first = first->next;
+        head->_next->_prev = nullptr;
+        head = head->_next;
     }
     else if (index == this->_size - 1)
     {
         p = last;
-        last->prev->next = nullptr;
-        last = last->prev;
+        last->_prev->_next = nullptr;
+        last = last->_prev;
     }
     else
     {
         for (size_t i = 0; i < index; ++i)
-            p = p->next;
-        p->prev->next = p->next;
-        p->next->prev = p->prev;
+            p = p->_next;
+        p->_prev->_next = p->_next;
+        p->_next->_prev = p->_prev;
     }
     this->_size--;
     return p->disconnect();
@@ -104,9 +127,9 @@ template <typename T>
 std::shared_ptr<T> LinkedList<T>::get(int index)
 {
     this->check_range(index);
-    Node<T> *p = first;
+    Node<T> *p = head;
     for (size_t i = 0; i < index; ++i)
-        p = p->next;
+        p = p->_next;
     return p->_data;
 }
 
@@ -114,9 +137,9 @@ template <typename T>
 std::shared_ptr<T> LinkedList<T>::set(int index, std::shared_ptr<T> element)
 {
     this->check_range(index);
-    Node<T> *p = first;
+    Node<T> *p = head;
     for (size_t i = 0; i < index; ++i)
-        p = p->next;
+        p = p->_next;
     p->_data = element;
     return p->_data;
 }
@@ -125,14 +148,27 @@ template <typename T>
 void LinkedList<T>::clear()
 {
     Node<T> *p = last;
-    while (p != first)
+    while (p != head)
     {
-        p = p->prev;
-        delete p->next;
+        p = p->_prev;
+        delete p->_next;
     }
-    delete first;
+    delete head;
     this->_size = 0;
-    first = last = nullptr;
+    head = last = nullptr;
+}
+
+template <typename T>
+LinkedList<T>::Node<T> *LinkedList<T>::get_node(int index)
+{
+    Node<T> *p = head;
+    if(index == -1)
+        return head;
+    if(index == this->_size)
+        return last;
+    for (size_t i = 0; i < index; ++i)
+        p = p->_next;
+    return p->_next;
 }
 
 int main()

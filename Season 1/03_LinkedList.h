@@ -10,22 +10,15 @@ private:
     struct Node
     {
         std::shared_ptr<T> _data = nullptr;
-        Node<U> *prev = nullptr, *next = nullptr;
-        Node(std::shared_ptr<T> data)
-        {
-            _data = data;
-            prev = next = nullptr;
-        }
-        ~Node() { _data = nullptr; }
-        std::shared_ptr<T> disconnect()
-        {
-            prev = next = nullptr;
-            return _data;
-        }
+        Node<U> *_prev = nullptr, *_next = nullptr;
+        Node(std::shared_ptr<T> data, Node<U>* prev = nullptr, Node<U>* next = nullptr);
+        ~Node();
+        std::shared_ptr<T> disconnect();
     };
+    Node<T> *get_node(int index);
 
 public:
-    Node<T> *first = nullptr, *last = nullptr;
+    Node<T> *head = nullptr, *last = nullptr;
     LinkedList();
     ~LinkedList();
     int index_of(std::shared_ptr<T> element) override;
