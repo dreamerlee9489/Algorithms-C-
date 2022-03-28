@@ -74,7 +74,7 @@ void ArrayList<T>::clear()
 template <typename T>
 void ArrayList<T>::expand_capacity()
 {
-    _capacity = _capacity << 1;
+    _capacity <<= 1;
     auto temp = new std::shared_ptr<T>[_capacity];
     for (size_t i = 0; i < this->_size; ++i)
         temp[i] = array[i];
