@@ -7,9 +7,8 @@ class LinkedList : public IList<T>
 {
 private:
     template <typename U>
-    class Node
+    struct Node
     {
-    public:
         std::shared_ptr<T> _data = nullptr;
         Node<U> *prev = nullptr, *next = nullptr;
         Node(std::shared_ptr<T> data)
