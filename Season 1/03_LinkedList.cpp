@@ -203,7 +203,7 @@ int main()
     std::cout << "----------Test clear()----------\n";
     list->clear();
     std::cout << "size=" << list->size() << std::endl;
-    //std::getchar();
+    std::getchar();
     return 0;
 }
 
