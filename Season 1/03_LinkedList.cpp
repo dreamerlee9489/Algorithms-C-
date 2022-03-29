@@ -1,5 +1,5 @@
-#include "03_LinkedList.h"
-#include "Person.h"
+#include "./03_LinkedList.h"
+#include "./Person.h"
 
 template <typename T>
 template <typename U>
@@ -22,8 +22,10 @@ template <typename T>
 template <typename U>
 std::shared_ptr<T> LinkedList<T>::Node<U>::disconnect()
 {
+    auto old = _data;
+    _data = nullptr;
     _prev = _next = nullptr;
-    return _data;
+    return old;
 }
 
 template <typename T>
@@ -64,34 +66,14 @@ template <typename T>
 std::shared_ptr<T> LinkedList<T>::insert(int index, std::shared_ptr<T> element)
 {
     this->check_range(index, true);
-    Node<T> *temp = new Node<T>(element, get_node(index - 1), get_node(index));
-    if (this->_size == 0)
-    {
-        head = temp;
+    Node<T> *prev = get_node(index - 1);
+    Node<T> *next = prev->_next;
+    Node<T> *temp = new Node<T>(element, prev, next);
+    prev->_next = temp;
+    if (next == nullptr)
         last = temp;
-    }
-    else if (index == 0)
-    {
-        temp->_next = head;
-        head->_prev = temp;
-        head = temp;
-    }
-    else if (index == this->_size)
-    {
-        temp->_prev = last;
-        last->_next = temp;
-        last = temp;
-    }
     else
-    {
-        Node<T> *p = head;
-        for (size_t i = 1; i < index; ++i)
-            p = p->_next;
-        temp->_next = p->_next;
-        p->_next->_prev = temp;
-        temp->_prev = p;
-        p->_next = temp;
-    }
+        next->_prev = temp;
     this->_size++;
     return element;
 }
@@ -100,34 +82,33 @@ template <typename T>
 std::shared_ptr<T> LinkedList<T>::remove(int index)
 {
     this->check_range(index);
-    Node<T> *p = head;
+    Node<T> *old = head->_next;
+    for (size_t i = 0; i < index; ++i)
+        old = old->_next;
     if (index == 0)
     {
-        head->_next->_prev = nullptr;
-        head = head->_next;
+        head->_next = head->_next->_next;
+        head->_next->_prev = head;
     }
     else if (index == this->_size - 1)
     {
-        p = last;
-        last->_prev->_next = nullptr;
         last = last->_prev;
+        last->_next = nullptr;
     }
     else
     {
-        for (size_t i = 0; i < index; ++i)
-            p = p->_next;
-        p->_prev->_next = p->_next;
-        p->_next->_prev = p->_prev;
+        old->_prev->_next = old->_next;
+        old->_next->_prev = old->_prev;
     }
     this->_size--;
-    return p->disconnect();
+    return old->disconnect();
 }
 
 template <typename T>
 std::shared_ptr<T> LinkedList<T>::get(int index)
 {
     this->check_range(index);
-    Node<T> *p = head;
+    Node<T> *p = head->_next;
     for (size_t i = 0; i < index; ++i)
         p = p->_next;
     return p->_data;
@@ -137,7 +118,7 @@ template <typename T>
 std::shared_ptr<T> LinkedList<T>::set(int index, std::shared_ptr<T> element)
 {
     this->check_range(index);
-    Node<T> *p = head;
+    Node<T> *p = head->_next;
     for (size_t i = 0; i < index; ++i)
         p = p->_next;
     p->_data = element;
@@ -161,11 +142,13 @@ void LinkedList<T>::clear()
 template <typename T>
 LinkedList<T>::Node<T> *LinkedList<T>::get_node(int index)
 {
-    Node<T> *p = head;
-    if(index == -1)
+    if (index == -1)
         return head;
-    if(index == this->_size)
+    if (index == this->_size)
+        return nullptr;
+    if (index == this->_size - 1)
         return last;
+    Node<T> *p = head;
     for (size_t i = 0; i < index; ++i)
         p = p->_next;
     return p->_next;
@@ -236,74 +219,75 @@ int main()
 2022年3月28日 20:59:21
 输出:
 ----------Test add()----------
-Add: 0xfa16f0[20, Alice0]
-Add: 0xfa1760[21, Alice1]
-Add: 0xfa17d0[22, Alice2]
-Add: 0xfa1840[23, Alice3]
-Add: 0xfa18b0[24, Alice4]
-Add: 0xfa1920[25, Alice5]
-Add: 0xfa1990[26, Alice6]
-Add: 0xfa1a00[27, Alice7]
+Add: 0xfd1730[20, Alice0]
+Add: 0xfd17a0[21, Alice1]
+Add: 0xfd1810[22, Alice2]
+Add: 0xfd1880[23, Alice3]
+Add: 0xfd18f0[24, Alice4]
+Add: 0xfd1960[25, Alice5]
+Add: 0xfd19d0[26, Alice6]
+Add: 0xfd1a40[27, Alice7]
 size=8
-0xfa16f0[20, Alice0]
-0xfa1760[21, Alice1]
-0xfa17d0[22, Alice2]
-0xfa1840[23, Alice3]
-0xfa18b0[24, Alice4]
-0xfa1920[25, Alice5]
-0xfa1990[26, Alice6]
-0xfa1a00[27, Alice7]
+0xfd1730[20, Alice0]
+0xfd17a0[21, Alice1]
+0xfd1810[22, Alice2]
+0xfd1880[23, Alice3]
+0xfd18f0[24, Alice4]
+0xfd1960[25, Alice5]
+0xfd19d0[26, Alice6]
+0xfd1a40[27, Alice7]
 ----------Test insert()----------
-Insert: 0xfa1a70[30, Bob0]
-Insert: delete 0xfa1ae0[35, Bob1]
+Insert: 0xfd1ab0[30, Bob0]
+Insert: delete 0xfd1b20[35, Bob1]
 index = 15 out of range for add: [0, 9].
 size=9
-0xfa16f0[20, Alice0]
-0xfa1760[21, Alice1]
-0xfa17d0[22, Alice2]
-0xfa1840[23, Alice3]
-0xfa18b0[24, Alice4]
-0xfa1a70[30, Bob0]
-0xfa1920[25, Alice5]
-0xfa1990[26, Alice6]
-0xfa1a00[27, Alice7]
+0xfd1730[20, Alice0]
+0xfd17a0[21, Alice1]
+0xfd1810[22, Alice2]
+0xfd1880[23, Alice3]
+0xfd18f0[24, Alice4]
+0xfd1ab0[30, Bob0]
+0xfd1960[25, Alice5]
+0xfd19d0[26, Alice6]
+0xfd1a40[27, Alice7]
 ----------Test contains() & index_of()----------
-delete 0xfa1c00[30, Bob0]
+delete 0xfd1c40[30, Bob0]
 Bob0 at index=5
-delete 0xfa1c00[30, Bob0]
+delete 0xfd1c40[30, Bob0]
 ----------Test set()----------
-Set: delete 0xfa1a70[30, Bob0]
-0xfa1c00[25, Jack]
+Set: delete 0xfd1ab0[30, Bob0]
+0xfd1c40[25, Jack]
 size=9
-0xfa16f0[20, Alice0]
-0xfa1760[21, Alice1]
-0xfa17d0[22, Alice2]
-0xfa1840[23, Alice3]
-0xfa18b0[24, Alice4]
-0xfa1c00[25, Jack]
-0xfa1920[25, Alice5]
-0xfa1990[26, Alice6]
-0xfa1a00[27, Alice7]
+0xfd1730[20, Alice0]
+0xfd17a0[21, Alice1]
+0xfd1810[22, Alice2]
+0xfd1880[23, Alice3]
+0xfd18f0[24, Alice4]
+0xfd1c40[25, Jack]
+0xfd1960[25, Alice5]
+0xfd19d0[26, Alice6]
+0xfd1a40[27, Alice7]
 ----------Test remove()----------
-Remove: 0xfa1c00[25, Jack]
+Remove: 0xfd1c40[25, Jack]
+delete 0xfd1c40[25, Jack]
 Remove: index = -1 out of range: [0, 7].
 size=8
-0xfa16f0[20, Alice0]
-0xfa1760[21, Alice1]
-0xfa17d0[22, Alice2]
-0xfa1840[23, Alice3]
-0xfa18b0[24, Alice4]
-0xfa1920[25, Alice5]
-0xfa1990[26, Alice6]
-0xfa1a00[27, Alice7]
+0xfd1730[20, Alice0]
+0xfd17a0[21, Alice1]
+0xfd1810[22, Alice2]
+0xfd1880[23, Alice3]
+0xfd18f0[24, Alice4]
+0xfd1960[25, Alice5]
+0xfd19d0[26, Alice6]
+0xfd1a40[27, Alice7]
 ----------Test clear()----------
-delete 0xfa1a00[27, Alice7]
-delete 0xfa1990[26, Alice6]
-delete 0xfa1920[25, Alice5]
-delete 0xfa18b0[24, Alice4]
-delete 0xfa1840[23, Alice3]
-delete 0xfa17d0[22, Alice2]
-delete 0xfa1760[21, Alice1]
-delete 0xfa16f0[20, Alice0]
+delete 0xfd1a40[27, Alice7]
+delete 0xfd19d0[26, Alice6]
+delete 0xfd1960[25, Alice5]
+delete 0xfd18f0[24, Alice4]
+delete 0xfd1880[23, Alice3]
+delete 0xfd1810[22, Alice2]
+delete 0xfd17a0[21, Alice1]
+delete 0xfd1730[20, Alice0]
 size=0
 */

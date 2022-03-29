@@ -1,6 +1,6 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
-#include "03_IList.h"
+#include "./03_IList.h"
 // 泛型双向链表
 template <typename T>
 class LinkedList : public IList<T>

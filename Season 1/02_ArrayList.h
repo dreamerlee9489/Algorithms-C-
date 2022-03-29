@@ -1,6 +1,6 @@
 #ifndef ARRAYLIST_H
 #define ARRAYLIST_H
-#include "03_IList.h"
+#include "./03_IList.h"
 // 泛型动态数组
 template <typename T>
 class ArrayList : public IList<T>
