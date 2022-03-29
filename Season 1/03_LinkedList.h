@@ -1,7 +1,7 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 #include "./03_IList.h"
-// 泛型双向链表
+// 泛型双向循环链表
 template <typename T>
 class LinkedList : public IList<T>
 {
@@ -18,7 +18,7 @@ private:
     Node<T> *get_node(int index);
 
 public:
-    Node<T> *head = nullptr, *last = nullptr;
+    Node<T> *head = nullptr;
     LinkedList();
     ~LinkedList();
     int index_of(std::shared_ptr<T> element) override;
