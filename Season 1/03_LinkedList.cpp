@@ -38,7 +38,7 @@ LinkedList<T>::LinkedList()
 template <typename T>
 LinkedList<T>::~LinkedList()
 {
-    if(this->_size > 0)
+    if (this->_size > 0)
         clear();
     delete head;
 }
@@ -136,8 +136,6 @@ LinkedList<T>::Node<T> *LinkedList<T>::get_node(int index)
 {
     if (index == -1)
         return head;
-    if (index == this->_size)
-        return nullptr;
     if (index == this->_size - 1)
         return head->_prev;
     Node<T> *p = head;

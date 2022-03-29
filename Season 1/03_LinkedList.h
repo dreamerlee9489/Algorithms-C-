@@ -11,7 +11,7 @@ private:
     {
         std::shared_ptr<T> _data = nullptr;
         Node<U> *_prev = nullptr, *_next = nullptr;
-        Node(std::shared_ptr<T> data, Node<U>* prev = nullptr, Node<U>* next = nullptr);
+        Node(std::shared_ptr<T> data, Node<U> *prev = nullptr, Node<U> *next = nullptr);
         ~Node();
         std::shared_ptr<T> disconnect();
     };

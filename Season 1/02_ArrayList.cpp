@@ -131,7 +131,7 @@ int main()
         std::cout << "Remove: " << *list->remove(5);
         std::cout << "Remove: " << *list->remove(-1);
     }
-    catch(const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cerr << e.what() << '\n';
     }
