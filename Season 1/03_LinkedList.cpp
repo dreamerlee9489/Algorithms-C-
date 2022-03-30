@@ -233,11 +233,6 @@ int main()
     std::cout << "----------Test clear()----------\n";
     list->clear();
     std::cout << "size=" << list->size() << std::endl;
-
-    LinkedList<double> list1 = LinkedList<double>();
-    list1.add(std::make_shared<double>(15));
-    list1.add(std::make_shared<double>(25));
-    LinkedList<double> list2 = list1;
     std::getchar();
     return 0;
 }
