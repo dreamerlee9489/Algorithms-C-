@@ -27,4 +27,5 @@ public:
 	std::shared_ptr<T> set(int index, std::shared_ptr<T> element) override;
 	void clear() override;
 };
+
 #endif
