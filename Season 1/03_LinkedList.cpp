@@ -12,6 +12,26 @@ LinkedList<T>::Node<U>::Node(std::shared_ptr<T> data, Node<U> *prev, Node<U> *ne
 
 template <typename T>
 template <typename U>
+LinkedList<T>::Node<U> &LinkedList<T>::Node<U>::operator=(const Node<U> &node)
+{
+    _data = node._data;
+    _prev = node._prev;
+    _next = node._next;
+    return *this;
+}
+
+template <typename T>
+template <typename U>
+LinkedList<T>::Node<U> &LinkedList<T>::Node<U>::operator=(Node<U> &&node) noexcept
+{
+    _data = std::move((std::shared_ptr<T>)node._data);
+    _prev = std::move((Node<U> *)node._prev);
+    _next = std::move((Node<U> *)node._next);
+    return *this;
+}
+
+template <typename T>
+template <typename U>
 LinkedList<T>::Node<U>::~Node()
 {
     _data = nullptr;
@@ -31,8 +51,20 @@ std::shared_ptr<T> LinkedList<T>::Node<U>::disconnect()
 template <typename T>
 LinkedList<T>::LinkedList()
 {
-    head = new Node<T>(nullptr);
+    _head = new Node<T>(nullptr);
     this->_size = 0;
+}
+
+template <typename T>
+LinkedList<T> &LinkedList<T>::operator=(const LinkedList &list)
+{
+    return *this;
+}
+
+template <typename T>
+LinkedList<T> &LinkedList<T>::operator=(LinkedList &&list) noexcept
+{
+    return *this;
 }
 
 template <typename T>
@@ -40,13 +72,13 @@ LinkedList<T>::~LinkedList()
 {
     if (this->_size > 0)
         clear();
-    delete head;
+    delete _head;
 }
 
 template <typename T>
 int LinkedList<T>::index_of(std::shared_ptr<T> element)
 {
-    Node<T> *p = head;
+    Node<T> *p = _head;
     for (size_t i = 0; i < this->_size; ++i)
     {
         p = p->_next;
@@ -65,7 +97,7 @@ std::shared_ptr<T> LinkedList<T>::insert(int index, std::shared_ptr<T> element)
     Node<T> *temp = new Node<T>(element, prev, next);
     prev->_next = temp;
     if (next == nullptr)
-        head->_prev = temp;
+        _head->_prev = temp;
     else
         next->_prev = temp;
     this->_size++;
@@ -76,18 +108,18 @@ template <typename T>
 std::shared_ptr<T> LinkedList<T>::remove(int index)
 {
     this->check_range(index);
-    Node<T> *old = head->_next;
+    Node<T> *old = _head->_next;
     for (size_t i = 0; i < index; ++i)
         old = old->_next;
     if (index == 0)
     {
-        head->_next = head->_next->_next;
-        head->_next->_prev = head;
+        _head->_next = _head->_next->_next;
+        _head->_next->_prev = _head;
     }
     else if (index == this->_size - 1)
     {
-        head->_prev = head->_prev->_prev;
-        head->_prev->_next = nullptr;
+        _head->_prev = _head->_prev->_prev;
+        _head->_prev->_next = nullptr;
     }
     else
     {
@@ -102,7 +134,7 @@ template <typename T>
 std::shared_ptr<T> LinkedList<T>::get(int index)
 {
     this->check_range(index);
-    Node<T> *p = head->_next;
+    Node<T> *p = _head->_next;
     for (size_t i = 0; i < index; ++i)
         p = p->_next;
     return p->_data;
@@ -112,7 +144,7 @@ template <typename T>
 std::shared_ptr<T> LinkedList<T>::set(int index, std::shared_ptr<T> element)
 {
     this->check_range(index);
-    Node<T> *p = head->_next;
+    Node<T> *p = _head->_next;
     for (size_t i = 0; i < index; ++i)
         p = p->_next;
     p->_data = element;
@@ -122,8 +154,8 @@ std::shared_ptr<T> LinkedList<T>::set(int index, std::shared_ptr<T> element)
 template <typename T>
 void LinkedList<T>::clear()
 {
-    Node<T> *p = head->_prev;
-    while (p != head)
+    Node<T> *p = _head->_prev;
+    while (p != _head)
     {
         p = p->_prev;
         delete p->_next;
@@ -135,10 +167,10 @@ template <typename T>
 LinkedList<T>::Node<T> *LinkedList<T>::get_node(int index)
 {
     if (index == -1)
-        return head;
+        return _head;
     if (index == this->_size - 1)
-        return head->_prev;
-    Node<T> *p = head;
+        return _head->_prev;
+    Node<T> *p = _head;
     for (size_t i = 0; i < index; ++i)
         p = p->_next;
     return p->_next;
@@ -201,83 +233,11 @@ int main()
     std::cout << "----------Test clear()----------\n";
     list->clear();
     std::cout << "size=" << list->size() << std::endl;
+
+    LinkedList<double> list1 = LinkedList<double>();
+    list1.add(std::make_shared<double>(15));
+    list1.add(std::make_shared<double>(25));
+    LinkedList<double> list2 = list1;
     std::getchar();
     return 0;
 }
-
-/*
-2022年3月28日 20:59:21
-输出:
-----------Test add()----------
-Add: 0xeb1720[20, Alice0]
-Add: 0xeb1790[21, Alice1]
-Add: 0xeb1800[22, Alice2]
-Add: 0xeb1870[23, Alice3]
-Add: 0xeb18e0[24, Alice4]
-Add: 0xeb1950[25, Alice5]
-Add: 0xeb19c0[26, Alice6]
-Add: 0xeb1a30[27, Alice7]
-size=8
-0xeb1720[20, Alice0]
-0xeb1790[21, Alice1]
-0xeb1800[22, Alice2]
-0xeb1870[23, Alice3]
-0xeb18e0[24, Alice4]
-0xeb1950[25, Alice5]
-0xeb19c0[26, Alice6]
-0xeb1a30[27, Alice7]
-----------Test insert()----------
-Insert: 0xeb1aa0[30, Bob0]
-Insert: delete 0xeb1b10[35, Bob1]
-index = 15 out of range for add: [0, 9].
-size=9
-0xeb1720[20, Alice0]
-0xeb1790[21, Alice1]
-0xeb1800[22, Alice2]
-0xeb1870[23, Alice3]
-0xeb18e0[24, Alice4]
-0xeb1aa0[30, Bob0]
-0xeb1950[25, Alice5]
-0xeb19c0[26, Alice6]
-0xeb1a30[27, Alice7]
-----------Test contains() & index_of()----------
-delete 0xeb1c30[30, Bob0]
-Bob0 at index=5
-delete 0xeb1c30[30, Bob0]
-----------Test set()----------
-Set: delete 0xeb1aa0[30, Bob0]
-0xeb1c30[25, Jack]
-size=9
-0xeb1720[20, Alice0]
-0xeb1790[21, Alice1]
-0xeb1800[22, Alice2]
-0xeb1870[23, Alice3]
-0xeb18e0[24, Alice4]
-0xeb1c30[25, Jack]
-0xeb1950[25, Alice5]
-0xeb19c0[26, Alice6]
-0xeb1a30[27, Alice7]
-----------Test remove()----------
-Remove: 0xeb1c30[25, Jack]
-delete 0xeb1c30[25, Jack]
-Remove: index = -1 out of range: [0, 7].
-size=8
-0xeb1720[20, Alice0]
-0xeb1790[21, Alice1]
-0xeb1800[22, Alice2]
-0xeb1870[23, Alice3]
-0xeb18e0[24, Alice4]
-0xeb1950[25, Alice5]
-0xeb19c0[26, Alice6]
-0xeb1a30[27, Alice7]
-----------Test clear()----------
-delete 0xeb1a30[27, Alice7]
-delete 0xeb19c0[26, Alice6]
-delete 0xeb1950[25, Alice5]
-delete 0xeb18e0[24, Alice4]
-delete 0xeb1870[23, Alice3]
-delete 0xeb1800[22, Alice2]
-delete 0xeb1790[21, Alice1]
-delete 0xeb1720[20, Alice0]
-size=0
-*/
