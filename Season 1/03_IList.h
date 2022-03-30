@@ -9,7 +9,7 @@ class IList
 {
 protected:
     size_t _size = 0;
-    void check_range(int index, bool isAdd = false);
+    void check_range(int index, bool isAdd = false) const;
 
 public:
     IList() = default;
@@ -22,12 +22,13 @@ public:
     virtual std::shared_ptr<T> insert(int index, std::shared_ptr<T> element) = 0;
     virtual std::shared_ptr<T> remove(int index) = 0;
     virtual std::shared_ptr<T> get(int index) = 0;
+    virtual std::shared_ptr<T> get(int index) const = 0;
     virtual std::shared_ptr<T> set(int index, std::shared_ptr<T> element) = 0;
     virtual void clear() = 0;
 };
 
 template <typename T>
-void IList<T>::check_range(int index, bool isAdd)
+void IList<T>::check_range(int index, bool isAdd) const
 {
     if (!isAdd && (index >= _size || index < 0))
         throw std::out_of_range("index = " + std::to_string(index) + " out of range: [0, " + std::to_string(_size - 1) + "].");
