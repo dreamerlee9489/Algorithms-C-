@@ -1,7 +1,7 @@
 #ifndef ARRAYLIST_H
 #define ARRAYLIST_H
 #include "./03_IList.h"
-// 泛型动态数组
+// 泛型动态数组(智能指针版)
 template <typename T>
 class ArrayList : public IList<T>
 {
@@ -27,5 +27,4 @@ public:
 	std::shared_ptr<T> set(int index, std::shared_ptr<T> element) override;
 	void clear() override;
 };
-
 #endif
