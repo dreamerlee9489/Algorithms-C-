@@ -99,8 +99,7 @@ LinkedList<T>::LinkedList(LinkedList<T> &&list) noexcept
 template <typename T>
 LinkedList<T>::~LinkedList()
 {
-    if (this->_size > 0)
-        clear();
+    clear();
     delete _head;
 }
 

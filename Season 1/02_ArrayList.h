@@ -13,11 +13,11 @@ private:
 
 public:
 	ArrayList<T>& operator=(const ArrayList<T>& list);
-	ArrayList<T>& operator=(ArrayList<T>&& list);
+	ArrayList<T>& operator=(ArrayList<T>&& list) noexcept;
 	ArrayList();
 	~ArrayList();
 	ArrayList(const ArrayList<T> &list);
-	ArrayList(ArrayList<T> &&list);
+	ArrayList(ArrayList<T> &&list) noexcept;
 	size_t capacity() { return _capacity; }
 	int index_of(std::shared_ptr<T> element) override;
 	std::shared_ptr<T> insert(int index, std::shared_ptr<T> element) override;

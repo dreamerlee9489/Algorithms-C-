@@ -10,7 +10,7 @@ ArrayList<T> &ArrayList<T>::operator=(const ArrayList<T> &list)
 }
 
 template <typename T>
-ArrayList<T> &ArrayList<T>::operator=(ArrayList<T> &&list)
+ArrayList<T> &ArrayList<T>::operator=(ArrayList<T> &&list) noexcept
 {
     clear();
     this->_size = list._size;
@@ -38,7 +38,7 @@ ArrayList<T>::ArrayList(const ArrayList<T> &list)
 }
 
 template <typename T>
-ArrayList<T>::ArrayList(ArrayList<T> &&list)
+ArrayList<T>::ArrayList(ArrayList<T> &&list) noexcept
 {
     this->_size = list._size;
     _capacity = list._capacity;
