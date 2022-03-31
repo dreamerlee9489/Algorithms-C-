@@ -32,13 +32,6 @@ LinkedList<T>::Node<U> &LinkedList<T>::Node<U>::operator=(Node<U> &&node) noexce
 
 template <typename T>
 template <typename U>
-LinkedList<T>::Node<U>::~Node()
-{
-    _data = nullptr;
-}
-
-template <typename T>
-template <typename U>
 std::shared_ptr<T> LinkedList<T>::Node<U>::disconnect()
 {
     auto old = _data;
