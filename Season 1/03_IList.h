@@ -36,16 +36,4 @@ void IList<T>::check_range(int index, bool isAdd) const
         throw std::out_of_range("index = " + std::to_string(index) + " out of range for add: [0, " + std::to_string(_size) + "].");
 }
 
-// template <typename T>
-// bool IList<T>::contains(std::shared_ptr<T> data)
-// {
-//     return index_of(data);
-// }
-
-// template <typename T>
-// std::shared_ptr<T> IList<T>::add(std::shared_ptr<T> data)
-// {
-//     return insert(_size, data);
-// }
-
 #endif
