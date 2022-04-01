@@ -16,8 +16,8 @@ public:
     virtual ~IList() = default;
     size_t size() { return _size; }
     bool is_empty() { return _size == 0; }
-    bool contains(std::shared_ptr<T> data);
-    std::shared_ptr<T> add(std::shared_ptr<T> data);
+    bool contains(std::shared_ptr<T> data) { return index_of(data); }
+    std::shared_ptr<T> add(std::shared_ptr<T> data) { return insert(_size, data); }
     virtual int index_of(std::shared_ptr<T> data) = 0;
     virtual std::shared_ptr<T> insert(int index, std::shared_ptr<T> data) = 0;
     virtual std::shared_ptr<T> remove(int index) = 0;
@@ -36,16 +36,16 @@ void IList<T>::check_range(int index, bool isAdd) const
         throw std::out_of_range("index = " + std::to_string(index) + " out of range for add: [0, " + std::to_string(_size) + "].");
 }
 
-template <typename T>
-bool IList<T>::contains(std::shared_ptr<T> data)
-{
-    return index_of(data);
-}
+// template <typename T>
+// bool IList<T>::contains(std::shared_ptr<T> data)
+// {
+//     return index_of(data);
+// }
 
-template <typename T>
-std::shared_ptr<T> IList<T>::add(std::shared_ptr<T> data)
-{
-    return insert(_size, data);
-}
+// template <typename T>
+// std::shared_ptr<T> IList<T>::add(std::shared_ptr<T> data)
+// {
+//     return insert(_size, data);
+// }
 
 #endif
