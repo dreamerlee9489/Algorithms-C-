@@ -97,32 +97,32 @@ LinkedList<T>::~LinkedList()
 }
 
 template <typename T>
-int LinkedList<T>::index_of(std::shared_ptr<T> element)
+int LinkedList<T>::index_of(std::shared_ptr<T> data)
 {
     Node<T> *p = _head;
     for (size_t i = 0; i < this->_size; ++i)
     {
         p = p->_next;
-        if (*p->_data == *element)
+        if (*p->_data == *data)
             return i;
     }
     return -1;
 }
 
 template <typename T>
-std::shared_ptr<T> LinkedList<T>::insert(int index, std::shared_ptr<T> element)
+std::shared_ptr<T> LinkedList<T>::insert(int index, std::shared_ptr<T> data)
 {
     this->check_range(index, true);
     Node<T> *prev = get_node(index - 1);
     Node<T> *next = prev->_next;
-    Node<T> *temp = new Node<T>(element, prev, next);
+    Node<T> *temp = new Node<T>(data, prev, next);
     prev->_next = temp;
     if (next == nullptr)
         _head->_prev = temp;
     else
         next->_prev = temp;
     this->_size++;
-    return element;
+    return data;
 }
 
 template <typename T>
@@ -172,13 +172,13 @@ std::shared_ptr<T> LinkedList<T>::get(int index) const
 }
 
 template <typename T>
-std::shared_ptr<T> LinkedList<T>::set(int index, std::shared_ptr<T> element)
+std::shared_ptr<T> LinkedList<T>::set(int index, std::shared_ptr<T> data)
 {
     this->check_range(index);
     Node<T> *p = _head->_next;
     for (size_t i = 0; i < index; ++i)
         p = p->_next;
-    p->_data = element;
+    p->_data = data;
     return p->_data;
 }
 

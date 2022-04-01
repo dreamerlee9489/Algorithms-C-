@@ -54,25 +54,25 @@ ArrayList<T>::~ArrayList()
 }
 
 template <typename T>
-int ArrayList<T>::index_of(std::shared_ptr<T> element)
+int ArrayList<T>::index_of(std::shared_ptr<T> data)
 {
     for (size_t i = 0; i < this->_size; ++i)
-        if (*_array[i] == *element)
+        if (*_array[i] == *data)
             return i;
     return -1;
 }
 
 template <typename T>
-std::shared_ptr<T> ArrayList<T>::insert(int index, std::shared_ptr<T> element)
+std::shared_ptr<T> ArrayList<T>::insert(int index, std::shared_ptr<T> data)
 {
     this->check_range(index, true);
     if (this->_size >= _capacity)
         expand_capacity();
     for (size_t i = this->_size; i > index; --i)
         _array[i] = _array[i - 1];
-    _array[index] = element;
+    _array[index] = data;
     this->_size++;
-    return element;
+    return data;
 }
 
 template <typename T>
@@ -101,11 +101,11 @@ std::shared_ptr<T> ArrayList<T>::get(int index) const
 }
 
 template <typename T>
-std::shared_ptr<T> ArrayList<T>::set(int index, std::shared_ptr<T> element)
+std::shared_ptr<T> ArrayList<T>::set(int index, std::shared_ptr<T> data)
 {
     this->check_range(index);
-    _array[index] = element;
-    return element;
+    _array[index] = data;
+    return data;
 }
 
 template <typename T>

@@ -29,12 +29,12 @@ public:
     ~LinkedList();
     LinkedList(const LinkedList<T> &list);
     LinkedList(LinkedList<T> &&list) noexcept;
-    int index_of(std::shared_ptr<T> element) override;
-    std::shared_ptr<T> insert(int index, std::shared_ptr<T> element) override;
+    int index_of(std::shared_ptr<T> data) override;
+    std::shared_ptr<T> insert(int index, std::shared_ptr<T> data) override;
     std::shared_ptr<T> remove(int index) override;
     std::shared_ptr<T> get(int index) override;
     std::shared_ptr<T> get(int index) const override;
-    std::shared_ptr<T> set(int index, std::shared_ptr<T> element) override;
+    std::shared_ptr<T> set(int index, std::shared_ptr<T> data) override;
     void clear() override;
 };
 
