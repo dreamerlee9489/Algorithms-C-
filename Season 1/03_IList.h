@@ -21,7 +21,6 @@ public:
     virtual int index_of(std::shared_ptr<T> data) = 0;
     virtual std::shared_ptr<T> insert(int index, std::shared_ptr<T> data) = 0;
     virtual std::shared_ptr<T> remove(int index) = 0;
-    virtual std::shared_ptr<T> get(int index) = 0;
     virtual std::shared_ptr<T> get(int index) const = 0;
     virtual std::shared_ptr<T> set(int index, std::shared_ptr<T> data) = 0;
     virtual void clear() = 0;

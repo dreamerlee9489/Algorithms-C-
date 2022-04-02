@@ -152,16 +152,6 @@ std::shared_ptr<T> LinkedList<T>::remove(int index)
 }
 
 template <typename T>
-std::shared_ptr<T> LinkedList<T>::get(int index)
-{
-    this->check_range(index);
-    Node<T> *p = _head->_next;
-    for (size_t i = 0; i < index; ++i)
-        p = p->_next;
-    return p->_data;
-}
-
-template <typename T>
 std::shared_ptr<T> LinkedList<T>::get(int index) const
 {
     this->check_range(index);

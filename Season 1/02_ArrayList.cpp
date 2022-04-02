@@ -87,13 +87,6 @@ std::shared_ptr<T> ArrayList<T>::remove(int index)
 }
 
 template <typename T>
-std::shared_ptr<T> ArrayList<T>::get(int index)
-{
-    this->check_range(index);
-    return _array[index];
-}
-
-template <typename T>
 std::shared_ptr<T> ArrayList<T>::get(int index) const
 {
     this->check_range(index);
