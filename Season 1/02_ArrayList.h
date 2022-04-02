@@ -18,8 +18,8 @@ public:
 	~ArrayList();
 	ArrayList(const ArrayList<T> &list);
 	ArrayList(ArrayList<T> &&list) noexcept;
-	size_t capacity() { return _capacity; }
-	int index_of(std::shared_ptr<T> data) override;
+	size_t capacity() const { return _capacity; }
+	int index_of(std::shared_ptr<T> data) const override;
 	std::shared_ptr<T> insert(int index, std::shared_ptr<T> data) override;
 	std::shared_ptr<T> remove(int index) override;
 	std::shared_ptr<T> get(int index) const override;

@@ -54,7 +54,7 @@ ArrayList<T>::~ArrayList()
 }
 
 template <typename T>
-int ArrayList<T>::index_of(std::shared_ptr<T> data)
+int ArrayList<T>::index_of(std::shared_ptr<T> data) const
 {
     for (size_t i = 0; i < this->_size; ++i)
         if (*_array[i] == *data)

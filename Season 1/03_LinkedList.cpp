@@ -97,7 +97,7 @@ LinkedList<T>::~LinkedList()
 }
 
 template <typename T>
-int LinkedList<T>::index_of(std::shared_ptr<T> data)
+int LinkedList<T>::index_of(std::shared_ptr<T> data) const
 {
     Node<T> *p = _head;
     for (size_t i = 0; i < this->_size; ++i)
@@ -190,7 +190,7 @@ void LinkedList<T>::clear()
 }
 
 template <typename T>
-LinkedList<T>::Node<T> *LinkedList<T>::get_node(int index)
+LinkedList<T>::Node<T> *LinkedList<T>::get_node(int index) const
 {
     if (index == -1)
         return _head;

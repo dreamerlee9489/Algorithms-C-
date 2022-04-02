@@ -19,7 +19,7 @@ private:
         ~Node() { _data = nullptr; }
         std::shared_ptr<T> disconnect();
     };
-    Node<T> *get_node(int index);
+    Node<T> *get_node(int index) const;
 
 public:
     Node<T> *_head = nullptr;
@@ -29,7 +29,7 @@ public:
     ~LinkedList();
     LinkedList(const LinkedList<T> &list);
     LinkedList(LinkedList<T> &&list) noexcept;
-    int index_of(std::shared_ptr<T> data) override;
+    int index_of(std::shared_ptr<T> data) const override;
     std::shared_ptr<T> insert(int index, std::shared_ptr<T> data) override;
     std::shared_ptr<T> remove(int index) override;
     std::shared_ptr<T> get(int index) const override;
