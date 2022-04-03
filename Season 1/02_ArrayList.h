@@ -27,4 +27,122 @@ public:
 	void clear() override;
 };
 
+template <typename T>
+ArrayList<T> &ArrayList<T>::operator=(const ArrayList<T> &list)
+{
+	for (size_t i = 0; i < list._size; i++)
+		insert(i, list.get(i));
+	return *this;
+}
+
+template <typename T>
+ArrayList<T> &ArrayList<T>::operator=(ArrayList<T> &&list) noexcept
+{
+	clear();
+	this->_size = list._size;
+	_array = list._array;
+	_capacity = list._capacity;
+	list._size = 0;
+	return *this;
+}
+
+template <typename T>
+ArrayList<T>::ArrayList()
+{
+	this->_size = 0;
+	_capacity = DEFAULT_CAPACITY;
+	_array = new std::shared_ptr<T>[_capacity];
+}
+
+template <typename T>
+ArrayList<T>::ArrayList(const ArrayList<T> &list)
+{
+	this->_size = 0;
+	_capacity = DEFAULT_CAPACITY;
+	_array = new std::shared_ptr<T>[_capacity];
+	*this = list;
+}
+
+template <typename T>
+ArrayList<T>::ArrayList(ArrayList<T> &&list) noexcept
+{
+	this->_size = list._size;
+	_capacity = list._capacity;
+	*this = std::move(list);
+}
+
+template <typename T>
+ArrayList<T>::~ArrayList()
+{
+	if (this->_size > 0)
+		clear();
+	_capacity = 0;
+}
+
+template <typename T>
+int ArrayList<T>::index_of(std::shared_ptr<T> data) const
+{
+	for (size_t i = 0; i < this->_size; ++i)
+		if (*_array[i] == *data)
+			return i;
+	return -1;
+}
+
+template <typename T>
+std::shared_ptr<T> ArrayList<T>::insert(int index, std::shared_ptr<T> data)
+{
+	this->check_range(index, true);
+	if (this->_size >= _capacity)
+		expand_capacity();
+	for (size_t i = this->_size; i > index; --i)
+		_array[i] = _array[i - 1];
+	_array[index] = data;
+	this->_size++;
+	return data;
+}
+
+template <typename T>
+std::shared_ptr<T> ArrayList<T>::remove(int index)
+{
+	this->check_range(index);
+	auto old = _array[index];
+	for (size_t i = index + 1; i < this->_size; ++i)
+		_array[i - 1] = _array[i];
+	_array[this->_size--] = nullptr;
+	return old;
+}
+
+template <typename T>
+std::shared_ptr<T> ArrayList<T>::get(int index) const
+{
+	this->check_range(index);
+	return _array[index];
+}
+
+template <typename T>
+std::shared_ptr<T> ArrayList<T>::set(int index, std::shared_ptr<T> data)
+{
+	this->check_range(index);
+	_array[index] = data;
+	return data;
+}
+
+template <typename T>
+void ArrayList<T>::clear()
+{
+	delete[] _array;
+	this->_size = 0;
+}
+
+template <typename T>
+void ArrayList<T>::expand_capacity()
+{
+	_capacity <<= 1;
+	auto temp = new std::shared_ptr<T>[_capacity];
+	for (size_t i = 0; i < this->_size; ++i)
+		temp[i] = _array[i];
+	delete[] _array;
+	_array = temp;
+}
+
 #endif
