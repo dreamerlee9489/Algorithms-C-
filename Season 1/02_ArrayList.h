@@ -74,8 +74,8 @@ ArrayList<T>::ArrayList(ArrayList<T> &&list) noexcept
 template <typename T>
 ArrayList<T>::~ArrayList()
 {
-	if (this->_size > 0)
-		clear();
+	
+	clear();
 	_capacity = 0;
 }
 
@@ -130,8 +130,11 @@ std::shared_ptr<T> ArrayList<T>::set(int index, std::shared_ptr<T> data)
 template <typename T>
 void ArrayList<T>::clear()
 {
-	delete[] _array;
-	this->_size = 0;
+	if (this->_size > 0)
+	{
+		delete[] _array;
+		this->_size = 0;
+	}	
 }
 
 template <typename T>

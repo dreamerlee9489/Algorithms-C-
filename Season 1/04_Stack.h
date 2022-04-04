@@ -43,5 +43,5 @@ std::shared_ptr<T> Stack<T>::pop()
 template <typename T>
 std::shared_ptr<T> Stack<T>::peek()
 {
-    return _list->get(_list->size());
+    return _list->get(_list->size() - 1);
 }
