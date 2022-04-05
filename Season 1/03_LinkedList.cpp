@@ -59,17 +59,25 @@ int main()
     list->clear();
     std::cout << "size=" << list->size() << std::endl;
 
-    std::cout << "----------Test LinkedList(const LinkedList<T> &)----------\n";
+    std::cout << "----------Test operator=(const LinkedList<T> &)----------\n";
     auto list1 = std::make_shared<LinkedList<Person>>();
-    list1->add(std::make_shared<Person>(10, "test0"));
-    list1->add(std::make_shared<Person>(11, "test1"));
-    list1->add(std::make_shared<Person>(12, "test2"));
-    auto list2 = std::make_shared<LinkedList<Person>>(*list1);
+    list1->add(std::make_shared<Person>(10, "test10"));
+    list1->add(std::make_shared<Person>(11, "test11"));
+    list1->add(std::make_shared<Person>(12, "test12"));
+    auto list2 = std::make_shared<LinkedList<Person>>();
+    list2->add(std::make_shared<Person>(20, "test20"));
+    list2->add(std::make_shared<Person>(21, "test21"));
+    list2->add(std::make_shared<Person>(22, "test22"));
+    *list2 = *list1;
     for (size_t i = 0; i < list2->size(); ++i)
         std::cout << *list2->get(i);
 
-    std::cout << "----------Test LinkedList(LinkedList<T> &&)----------\n";
-    auto list3 = std::make_shared<LinkedList<Person>>(std::move(*list1));
+    std::cout << "----------Test operator=(LinkedList<T> &&)----------\n";
+    auto list3 = std::make_shared<LinkedList<Person>>();
+    list3->add(std::make_shared<Person>(30, "test30"));
+    list3->add(std::make_shared<Person>(31, "test31"));
+    list3->add(std::make_shared<Person>(32, "test32"));
+    *list3 = std::move(*list1);
     for (size_t i = 0; i < list3->size(); ++i)
         std::cout << *list3->get(i);
     std::getchar();
@@ -80,87 +88,93 @@ int main()
 2022年3月30日 15:32:00
 输出:
 ----------Test add()----------
-Add: 0x6f6750[20, Alice0]
-Add: 0x6f67c0[21, Alice1]
-Add: 0x6f6830[22, Alice2]
-Add: 0x6f68a0[23, Alice3]
-Add: 0x6f6910[24, Alice4]
-Add: 0x6f6980[25, Alice5]
-Add: 0x6f69f0[26, Alice6]
-Add: 0x6f6a60[27, Alice7]
+Add: 0xd76750[20, Alice0]
+Add: 0xd767c0[21, Alice1]
+Add: 0xd76830[22, Alice2]
+Add: 0xd768a0[23, Alice3]
+Add: 0xd76910[24, Alice4]
+Add: 0xd76980[25, Alice5]
+Add: 0xd769f0[26, Alice6]
+Add: 0xd76a60[27, Alice7]
 size=8
-0x6f6750[20, Alice0]
-0x6f67c0[21, Alice1]
-0x6f6830[22, Alice2]
-0x6f68a0[23, Alice3]
-0x6f6910[24, Alice4]
-0x6f6980[25, Alice5]
-0x6f69f0[26, Alice6]
-0x6f6a60[27, Alice7]
+0xd76750[20, Alice0]
+0xd767c0[21, Alice1]
+0xd76830[22, Alice2]
+0xd768a0[23, Alice3]
+0xd76910[24, Alice4]
+0xd76980[25, Alice5]
+0xd769f0[26, Alice6]
+0xd76a60[27, Alice7]
 ----------Test insert()----------
-Insert: 0x6f6ad0[30, Bob0]
-Insert: delete 0x6f6b40[35, Bob1]
+Insert: 0xd76ad0[30, Bob0]
+Insert: delete 0xd76b40[35, Bob1]
 index = 15 out of range for add: [0, 9].
 size=9
-0x6f6750[20, Alice0]
-0x6f67c0[21, Alice1]
-0x6f6830[22, Alice2]
-0x6f68a0[23, Alice3]
-0x6f6910[24, Alice4]
-0x6f6ad0[30, Bob0]
-0x6f6980[25, Alice5]
-0x6f69f0[26, Alice6]
-0x6f6a60[27, Alice7]
+0xd76750[20, Alice0]
+0xd767c0[21, Alice1]
+0xd76830[22, Alice2]
+0xd768a0[23, Alice3]
+0xd76910[24, Alice4]
+0xd76ad0[30, Bob0]
+0xd76980[25, Alice5]
+0xd769f0[26, Alice6]
+0xd76a60[27, Alice7]
 ----------Test contains() & index_of()----------
-delete 0x6f6c60[30, Bob0]
+delete 0xd76c60[30, Bob0]
 Bob0 at index=5
-delete 0x6f6c60[30, Bob0]
+delete 0xd76c60[30, Bob0]
 ----------Test set()----------
-Set: delete 0x6f6ad0[30, Bob0]
-0x6f6c60[25, Jack]
+Set: delete 0xd76ad0[30, Bob0]
+0xd76c60[25, Jack]
 size=9
-0x6f6750[20, Alice0]
-0x6f67c0[21, Alice1]
-0x6f6830[22, Alice2]
-0x6f68a0[23, Alice3]
-0x6f6910[24, Alice4]
-0x6f6c60[25, Jack]
-0x6f6980[25, Alice5]
-0x6f69f0[26, Alice6]
-0x6f6a60[27, Alice7]
+0xd76750[20, Alice0]
+0xd767c0[21, Alice1]
+0xd76830[22, Alice2]
+0xd768a0[23, Alice3]
+0xd76910[24, Alice4]
+0xd76c60[25, Jack]
+0xd76980[25, Alice5]
+0xd769f0[26, Alice6]
+0xd76a60[27, Alice7]
 ----------Test remove()----------
-Remove: 0x6f6c60[25, Jack]
-delete 0x6f6c60[25, Jack]
+Remove: 0xd76c60[25, Jack]
+delete 0xd76c60[25, Jack]
 Remove: index = -1 out of range: [0, 7].
 size=8
-0x6f6750[20, Alice0]
-0x6f67c0[21, Alice1]
-0x6f6830[22, Alice2]
-0x6f68a0[23, Alice3]
-0x6f6910[24, Alice4]
-0x6f6980[25, Alice5]
-0x6f69f0[26, Alice6]
-0x6f6a60[27, Alice7]
+0xd76750[20, Alice0]
+0xd767c0[21, Alice1]
+0xd76830[22, Alice2]
+0xd768a0[23, Alice3]
+0xd76910[24, Alice4]
+0xd76980[25, Alice5]
+0xd769f0[26, Alice6]
+0xd76a60[27, Alice7]
 ----------Test clear()----------
-delete 0x6f6a60[27, Alice7]
-delete 0x6f69f0[26, Alice6]
-delete 0x6f6980[25, Alice5]
-delete 0x6f6910[24, Alice4]
-delete 0x6f68a0[23, Alice3]
-delete 0x6f6830[22, Alice2]
-delete 0x6f67c0[21, Alice1]
-delete 0x6f6750[20, Alice0]
+delete 0xd76a60[27, Alice7]
+delete 0xd769f0[26, Alice6]
+delete 0xd76980[25, Alice5]
+delete 0xd76910[24, Alice4]
+delete 0xd768a0[23, Alice3]
+delete 0xd76830[22, Alice2]
+delete 0xd767c0[21, Alice1]
+delete 0xd76750[20, Alice0]
 size=0
-----------Test LinkedList(const LinkedList<T> &)----------
-0x6f6cc0[10, test0]
-0x6f6b70[11, test1]
-0x6f6be0[12, test2]
-----------Test LinkedList(LinkedList<T> &&)----------
-0x6f6cc0[10, test0]
-0x6f6b70[11, test1]
-0x6f6be0[12, test2]
+----------Test operator=(const LinkedList<T> &)----------
+delete 0xd76f90[22, test22]
+delete 0xd76f20[21, test21]
+delete 0xd76eb0[20, test20]
+0xd76cc0[10, test10]
+0xd76b70[11, test11]
+0xd76be0[12, test12]
+----------Test operator=(LinkedList<T> &&)----------
+delete 0xd767f0[32, test32]
+delete 0xd76780[31, test31]
+delete 0xd76fa0[30, test30]
+0xd76cc0[10, test10]
+0xd76b70[11, test11]
+0xd76be0[12, test12]
 
-delete 0x6f6be0[12, test2]
-delete 0x6f6b70[11, test1]
-delete 0x6f6cc0[10, test0]
+delete 0xd76be0[12, test12]
+delete 0xd76b70[11, test11]
+delete 0xd76cc0[10, test10]
 */

@@ -79,6 +79,7 @@ std::shared_ptr<T> LinkedList<T>::Node<U>::disconnect()
 template <typename T>
 LinkedList<T> &LinkedList<T>::operator=(const LinkedList<T> &list)
 {
+    clear();
     for (size_t i = 0; i < list._size; i++)
         insert(i, list.get(i));
     return *this;
