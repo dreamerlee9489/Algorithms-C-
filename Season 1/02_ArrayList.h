@@ -74,8 +74,7 @@ ArrayList<T>::ArrayList(ArrayList<T> &&list) noexcept
 
 template <typename T>
 ArrayList<T>::~ArrayList()
-{
-	
+{	
 	clear();
 	_capacity = 0;
 }
