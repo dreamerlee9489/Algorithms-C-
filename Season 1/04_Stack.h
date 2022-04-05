@@ -14,6 +14,7 @@ public:
     std::shared_ptr<T> push(std::shared_ptr<T> data);
     std::shared_ptr<T> pop();
     std::shared_ptr<T> peek();
+    void clear();
 };
 
 template <typename T>
@@ -44,4 +45,10 @@ template <typename T>
 std::shared_ptr<T> Stack<T>::peek()
 {
     return _list->get(_list->size() - 1);
+}
+
+template <typename T>
+void Stack<T>::clear()
+{
+    _list->clear();
 }
