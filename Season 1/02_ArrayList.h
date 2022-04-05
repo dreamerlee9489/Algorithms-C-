@@ -130,7 +130,7 @@ std::shared_ptr<T> ArrayList<T>::set(int index, std::shared_ptr<T> data)
 template <typename T>
 void ArrayList<T>::clear()
 {
-	if (this->_size > 0)
+	if (this->_size >= 0)
 	{
 		delete[] _array;
 		this->_size = 0;

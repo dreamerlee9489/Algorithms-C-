@@ -94,7 +94,7 @@ LinkedList<T> &LinkedList<T>::operator=(LinkedList<T> &&list) noexcept
         this->_size = list._size;
         _head->_next = list._head->_next;
         _head->_prev = list._head->_prev;
-        list._head->_next->_prev = _head;
+        list._head->_next->_prev = _head; 
         list._size = 0;
     }
     return *this;
@@ -104,7 +104,7 @@ template <typename T>
 LinkedList<T>::LinkedList()
 {
     _head = new Node<T>(nullptr);
-    _head->_prev = _head;
+    _head->_prev = _head->_next = _head;
     this->_size = 0;
 }
 
@@ -112,7 +112,7 @@ template <typename T>
 LinkedList<T>::LinkedList(const LinkedList<T> &list)
 {
     _head = new Node<T>(nullptr);
-    _head->_prev = _head;
+    _head->_prev = _head->_next = _head;
     this->_size = 0;
     *this = list;
 }
@@ -121,7 +121,7 @@ template <typename T>
 LinkedList<T>::LinkedList(LinkedList<T> &&list) noexcept
 {
     _head = new Node<T>(nullptr);
-    _head->_prev = _head;
+    _head->_prev = _head->_next = _head;
     this->_size = 0;
     *this = std::move(list);
 }
@@ -152,12 +152,18 @@ std::shared_ptr<T> LinkedList<T>::insert(int index, std::shared_ptr<T> data)
     this->check_range(index, true);
     Node<T> *prev = get_node(index - 1);
     Node<T> *next = prev->_next;
-    Node<T> *temp = new Node<T>(data, prev, next);
-    prev->_next = temp;
-    if (next == nullptr)
-        _head->_prev = temp;
-    else
+    Node<T> *temp = new Node<T>(data, prev, next);   
+    if (next != _head)
+    {
+        prev->_next = temp;
         next->_prev = temp;
+    }
+    else
+    {
+        prev->_next = temp;
+        temp->_next = _head;
+        _head->_prev = temp;
+    }
     this->_size++;
     return data;
 }
@@ -177,7 +183,7 @@ std::shared_ptr<T> LinkedList<T>::remove(int index)
     else if (index == this->_size - 1)
     {
         _head->_prev = _head->_prev->_prev;
-        _head->_prev->_next = nullptr;
+        _head->_prev->_next = _head;
     }
     else
     {
@@ -220,7 +226,7 @@ void LinkedList<T>::clear()
             p = p->_prev;
             delete p->_next;
         }
-        _head->_next = nullptr;
+        _head->_next = _head;
         _head->_prev = _head;
         this->_size = 0;
     }

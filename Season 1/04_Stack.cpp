@@ -24,17 +24,18 @@ int main()
 2022年4月5日 16:44:41
 输出:
 ----------Test peek()----------
-peek: 0x686880[14, Alice4]
+peek: 0x6b6880[14, Alice4]
 ----------Test pop()----------
 size=5
-0x686880[14, Alice4]
-delete 0x686880[14, Alice4]
-0x686840[13, Alice3]
-delete 0x686840[13, Alice3]
-0x686800[12, Alice2]
-delete 0x686800[12, Alice2]
-0x6867c0[11, Alice1]
-delete 0x6867c0[11, Alice1]
-0x686780[10, Alice0]
+0x6b6880[14, Alice4]
+delete 0x6b6880[14, Alice4]
+0x6b6840[13, Alice3]
+delete 0x6b6840[13, Alice3]
+0x6b6800[12, Alice2]
+delete 0x6b6800[12, Alice2]
+0x6b67c0[11, Alice1]
+delete 0x6b67c0[11, Alice1]
+0x6b6780[10, Alice0]
 size=0
+delete 0x6b6780[10, Alice0]
 */
