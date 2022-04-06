@@ -15,7 +15,7 @@ public:
     bool is_empty() { return _list->is_empty(); }
     std::shared_ptr<T> push(std::shared_ptr<T> data) { return _list->add(data); }
     std::shared_ptr<T> pop() { return _list->remove(_list->size() - 1); }
-    std::shared_ptr<T> peek() { return _list->get(_list->size() - 1); }
+    std::shared_ptr<T> top() { return _list->get(_list->size() - 1); }
     void clear() { _list->clear(); }
 };
 

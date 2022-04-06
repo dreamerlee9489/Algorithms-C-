@@ -10,8 +10,8 @@ int main()
     stack.push(std::make_shared<Person>(12, "Alice2"));
     stack.push(std::make_shared<Person>(13, "Alice3"));
     stack.push(std::make_shared<Person>(14, "Alice4"));
-    std::cout << "----------Test peek()----------\n";
-    std::cout << "peek: " << *stack.peek();
+    std::cout << "----------Test top()----------\n";
+    std::cout << "top: " << *stack.top();
     std::cout << "----------Test pop()----------\n";
     std::cout << "size=" << stack.size() << std::endl;
     while (!stack.is_empty())
@@ -23,8 +23,8 @@ int main()
 /*
 2022年4月5日 16:44:41
 输出:
-----------Test peek()----------
-peek: 0x6b6880[14, Alice4]
+----------Test top()----------
+top: 0x6b6880[14, Alice4]
 ----------Test pop()----------
 size=5
 0x6b6880[14, Alice4]
