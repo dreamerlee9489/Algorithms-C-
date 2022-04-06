@@ -31,7 +31,7 @@ template <typename T>
 ArrayList<T> &ArrayList<T>::operator=(const ArrayList<T> &list)
 {
 	clear();
-	for (size_t i = 0; i < list._size; i++)
+	for (size_t i = 0; i < list._size; ++i)
 		insert(i, list.get(i));
 	return *this;
 }
@@ -76,7 +76,7 @@ template <typename T>
 ArrayList<T>::~ArrayList()
 {	
 	clear();
-	_capacity = 0;
+	delete[] _array;
 }
 
 template <typename T>
@@ -130,11 +130,9 @@ std::shared_ptr<T> ArrayList<T>::set(int index, std::shared_ptr<T> data)
 template <typename T>
 void ArrayList<T>::clear()
 {
-	if (this->_size >= 0)
-	{
-		delete[] _array;
-		this->_size = 0;
-	}	
+	for (size_t i = 0; i < _capacity; ++i)
+		_array[i] = nullptr;
+	this->_size = 0;
 }
 
 template <typename T>
