@@ -10,6 +10,8 @@ int main()
     queue.en_queue(std::make_shared<Person>(12, "Alice2"));
     queue.en_queue(std::make_shared<Person>(13, "Alice3"));
     queue.en_queue(std::make_shared<Person>(14, "Alice4"));
+    std::cout << "----------Test operator<<()----------\n";
+    std::cout << queue;
     std::cout << "----------Test front()----------\n";
     std::cout << "front: " << *queue.front();
     std::cout << "----------Test de_queue()----------\n";

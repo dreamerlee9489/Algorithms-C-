@@ -5,6 +5,9 @@
 template <typename T>
 class LinkedList : public IList<T>
 {
+    template <typename U>
+    friend std::ostream &operator<<(std::ostream &os, const LinkedList<U> &list);
+
 private:
     template <typename U>
     struct Node
@@ -243,6 +246,15 @@ LinkedList<T>::Node<T> *LinkedList<T>::get_node(int index) const
     for (size_t i = 0; i < index; ++i)
         p = p->_next;
     return p->_next;
+}
+
+template <typename U>
+std::ostream &operator<<(std::ostream &os, const LinkedList<U> &list)
+{
+    for (size_t i = 0; i < list._size; ++i)
+        if (list.get(i) != nullptr)
+            os << *list.get(i);
+    return os;
 }
 
 #endif

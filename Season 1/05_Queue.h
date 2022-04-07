@@ -1,10 +1,12 @@
 #ifndef QUEUE_H
 #define QUEUE_H
-#include "03_LinkedList.h"
+#include "./03_LinkedList.h"
 
 template <typename T>
 class Queue
 {
+    friend std::ostream &operator<<(std::ostream &os, const Queue<T> &queue) { return os << *queue._list; }
+
 private:
     LinkedList<T> *_list;
 

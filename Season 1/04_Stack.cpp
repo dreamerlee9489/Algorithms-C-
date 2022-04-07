@@ -10,6 +10,8 @@ int main()
     stack.push(std::make_shared<Person>(12, "Alice2"));
     stack.push(std::make_shared<Person>(13, "Alice3"));
     stack.push(std::make_shared<Person>(14, "Alice4"));
+    std::cout << "----------Test operator<<()----------\n";
+    std::cout << stack;
     std::cout << "----------Test top()----------\n";
     std::cout << "top: " << *stack.top();
     std::cout << "----------Test pop()----------\n";

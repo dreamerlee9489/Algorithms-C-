@@ -1,10 +1,12 @@
 #ifndef STACK_H
 #define STACK_H
-#include "02_ArrayList.h"
+#include "./02_ArrayList.h"
 
 template <typename T>
 class Stack
 {
+    friend std::ostream &operator<<(std::ostream &os, const Stack<T> &stack) { return os << *stack._list; }
+
 private:
     ArrayList<T> *_list;
 

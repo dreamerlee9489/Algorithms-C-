@@ -5,15 +5,18 @@
 template <typename T>
 class ArrayList : public IList<T>
 {
+	template <typename U>
+	friend std::ostream &operator<<(std::ostream &os, const ArrayList<U> &list);
+
 private:
 	const size_t DEFAULT_CAPACITY = 8;
 	size_t _capacity = 0;
 	std::shared_ptr<T> *_array = nullptr;
-	void expand_capacity();
+	void exsure_capacity();
 
 public:
-	ArrayList<T>& operator=(const ArrayList<T>& list);
-	ArrayList<T>& operator=(ArrayList<T>&& list) noexcept;
+	ArrayList<T> &operator=(const ArrayList<T> &list);
+	ArrayList<T> &operator=(ArrayList<T> &&list) noexcept;
 	ArrayList();
 	~ArrayList();
 	ArrayList(const ArrayList<T> &list);
@@ -74,7 +77,7 @@ ArrayList<T>::ArrayList(ArrayList<T> &&list) noexcept
 
 template <typename T>
 ArrayList<T>::~ArrayList()
-{	
+{
 	clear();
 	delete[] _array;
 }
@@ -92,8 +95,7 @@ template <typename T>
 std::shared_ptr<T> ArrayList<T>::insert(int index, std::shared_ptr<T> data)
 {
 	this->check_range(index, true);
-	if (this->_size >= _capacity)
-		expand_capacity();
+	exsure_capacity();
 	for (size_t i = this->_size; i > index; --i)
 		_array[i] = _array[i - 1];
 	_array[index] = data;
@@ -136,14 +138,25 @@ void ArrayList<T>::clear()
 }
 
 template <typename T>
-void ArrayList<T>::expand_capacity()
+void ArrayList<T>::exsure_capacity()
 {
-	_capacity <<= 1;
-	auto temp = new std::shared_ptr<T>[_capacity];
-	for (size_t i = 0; i < this->_size; ++i)
-		temp[i] = _array[i];
-	delete[] _array;
-	_array = temp;
+	if (this->_size >= _capacity)
+	{
+		_capacity <<= 1;
+		auto temp = new std::shared_ptr<T>[_capacity];
+		for (size_t i = 0; i < this->_size; ++i)
+			temp[i] = _array[i];
+		_array = temp;
+	}
+}
+
+template <typename U>
+std::ostream &operator<<(std::ostream &os, const ArrayList<U> &list)
+{
+	for (size_t i = 0; i < list._size; ++i)
+		if(list.get(i) != nullptr)
+			os << *list.get(i);
+	return os;
 }
 
 #endif

@@ -14,8 +14,7 @@ int main()
     std::cout << "Add: " << *list->add(std::make_shared<Person>(26, "Alice6"));
     std::cout << "Add: " << *list->add(std::make_shared<Person>(27, "Alice7"));
     std::cout << "size=" << list->size() << std::endl;
-    for (size_t i = 0; i < list->size(); ++i)
-        std::cout << *list->get(i);
+    std::cout << *list;
 
     std::cout << "----------Test insert()----------\n";
     try
@@ -28,8 +27,7 @@ int main()
         std::cerr << e.what() << '\n';
     }
     std::cout << "size=" << list->size() << std::endl;
-    for (size_t i = 0; i < list->size(); ++i)
-        std::cout << *list->get(i);
+    std::cout << *list;
 
     std::cout << "----------Test contains() & index_of()----------\n";
     if (list->contains(std::make_shared<Person>(30, "Bob0")))
@@ -38,8 +36,7 @@ int main()
     std::cout << "----------Test set()----------\n";
     std::cout << "Set: " << *list->set(5, std::make_shared<Person>(25, "Jack"));
     std::cout << "size=" << list->size() << std::endl;
-    for (size_t i = 0; i < list->size(); ++i)
-        std::cout << *list->get(i);
+    std::cout << *list;
 
     std::cout << "----------Test remove()----------\n";
     try
@@ -52,8 +49,7 @@ int main()
         std::cerr << e.what() << '\n';
     }
     std::cout << "size=" << list->size() << std::endl;
-    for (size_t i = 0; i < list->size(); ++i)
-        std::cout << *list->get(i);
+    std::cout << *list;
 
     std::cout << "----------Test clear()----------\n";
     list->clear();
@@ -69,8 +65,7 @@ int main()
     list2->add(std::make_shared<Person>(21, "test21"));
     list2->add(std::make_shared<Person>(22, "test22"));
     *list2 = *list1;
-    for (size_t i = 0; i < list2->size(); ++i)
-        std::cout << *list2->get(i);
+    std::cout << *list2;
 
     std::cout << "----------Test operator=(LinkedList<T> &&)----------\n";
     auto list3 = std::make_shared<LinkedList<Person>>();
@@ -78,9 +73,8 @@ int main()
     list3->add(std::make_shared<Person>(31, "test31"));
     list3->add(std::make_shared<Person>(32, "test32"));
     *list3 = std::move(*list1);
-    for (size_t i = 0; i < list3->size(); ++i)
-        std::cout << *list3->get(i);
-        
+    std::cout << *list3;
+
     std::getchar();
     return 0;
 }
