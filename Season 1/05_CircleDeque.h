@@ -6,31 +6,31 @@ template <typename T>
 class CircleDeque
 {
     template <typename U>
-    friend std::ostream &operator<<(std::ostream &os, const CircleDeque<U> &deque);
+    friend inline std::ostream &operator<<(std::ostream &os, const CircleDeque<U> &deque);
 
 private:
     const size_t DEFAULT_CAPACITY = 8;
     size_t _capacity, _size, _front;
     std::shared_ptr<T> *_array;
-    int true_index(int index);
-    void ensure_capacity();
+    inline int true_index(int index) const;
+    inline void ensure_capacity();
 
 public:
-    CircleDeque<T> &operator=(const CircleDeque<T> &deque);
-    CircleDeque<T> &operator=(CircleDeque<T> &&deque);
-    CircleDeque();
+    inline CircleDeque<T> &operator=(const CircleDeque<T> &deque);
+    inline CircleDeque<T> &operator=(CircleDeque<T> &&deque);
+    inline CircleDeque();
     CircleDeque(const CircleDeque<T> &deque) { *this = deque; }
     CircleDeque(CircleDeque<T> &&deque) { *this = std::move(deque); }
-    ~CircleDeque();
-    size_t size() { return _size; }
+    inline ~CircleDeque();
+    size_t size() const { return _size; }
     size_t capacity() const { return _capacity; }
-    bool is_empty() { return _size == 0; }
+    bool is_empty() const { return _size == 0; }
     std::shared_ptr<T> enqueue(std::shared_ptr<T> data);
     std::shared_ptr<T> dequeue();
     std::shared_ptr<T> enqueue_front(std::shared_ptr<T> data);
     std::shared_ptr<T> dequeue_rear();
-    std::shared_ptr<T> front() { return _array[_front]; }
-    std::shared_ptr<T> rear() { return _array[true_index(_size - 1)]; }
+    std::shared_ptr<T> front() const { return _array[_front]; }
+    std::shared_ptr<T> rear() const { return _array[true_index(_size - 1)]; }
     void clear();
 };
 
@@ -137,7 +137,7 @@ void CircleDeque<T>::clear()
 }
 
 template <typename T>
-int CircleDeque<T>::true_index(int index)
+int CircleDeque<T>::true_index(int index) const
 {
     index += _front;
     if (index < 0)

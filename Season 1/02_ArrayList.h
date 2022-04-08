@@ -6,19 +6,19 @@ template <typename T>
 class ArrayList : public IList<T>
 {
 	template <typename U>
-	friend std::ostream &operator<<(std::ostream &os, const ArrayList<U> &list);
+	friend inline std::ostream &operator<<(std::ostream &os, const ArrayList<U> &list);
 
 private:
 	const size_t DEFAULT_CAPACITY = 8;
 	size_t _capacity = 0;
 	std::shared_ptr<T> *_array = nullptr;
-	void ensure_capacity();
+	void inline ensure_capacity();
 
 public:
-	ArrayList<T> &operator=(const ArrayList<T> &list);
-	ArrayList<T> &operator=(ArrayList<T> &&list) noexcept;
-	ArrayList();
-	~ArrayList();
+	inline ArrayList<T> &operator=(const ArrayList<T> &list);
+	inline ArrayList<T> &operator=(ArrayList<T> &&list) noexcept;
+	inline ArrayList();
+	inline ~ArrayList();
 	ArrayList(const ArrayList<T> &list) { *this = list; }
 	ArrayList(ArrayList<T> &&list) noexcept { *this = std::move(list); }
 	size_t capacity() const { return _capacity; }

@@ -11,20 +11,20 @@ private:
     LinkedList<T> *_list;
 
 public:
-    Deque<T> &operator=(const Deque<T> &deque);
-    Deque<T> &operator=(Deque<T> &&deque);
+    inline Deque<T> &operator=(const Deque<T> &deque);
+    inline Deque<T> &operator=(Deque<T> &&deque);
     Deque() { _list = new LinkedList<T>(); }
     Deque(const Deque<T> &deque) { *this = deque; }
     Deque(Deque<T> &&deque) { *this = std::move(deque); }
     ~Deque() { delete _list; }
-    size_t size() { return _list->size(); }
-    bool is_empty() { return _list->size() == 0; }
+    size_t size() const { return _list->size(); }
+    bool is_empty() const { return _list->size() == 0; }
     std::shared_ptr<T> enqueue(std::shared_ptr<T> data) { return _list->add(data); }
     std::shared_ptr<T> dequeue() { return _list->remove(0); }
     std::shared_ptr<T> enqueue_front(std::shared_ptr<T> data) { return _list->insert(0, data); }
     std::shared_ptr<T> dequeue_rear() { return _list->remove(_list->size() - 1); }
-    std::shared_ptr<T> front() { return _list->get(0); }
-    std::shared_ptr<T> rear() { return _list->get(_list->size() - 1); }
+    std::shared_ptr<T> front() const { return _list->get(0); }
+    std::shared_ptr<T> rear() const { return _list->get(_list->size() - 1); }
     void clear() { _list->clear(); }
 };
 

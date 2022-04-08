@@ -9,7 +9,7 @@ class IList
 {
 protected:
     size_t _size = 0;
-    void check_range(int index, bool isAdd = false) const;
+    void inline check_range(int index, bool isAdd = false) const;
 
 public:
     IList() = default;

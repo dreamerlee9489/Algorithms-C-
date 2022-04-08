@@ -6,7 +6,7 @@ template <typename T>
 class LinkedList : public IList<T>
 {
     template <typename U>
-    friend std::ostream &operator<<(std::ostream &os, const LinkedList<U> &list);
+    friend inline std::ostream &operator<<(std::ostream &os, const LinkedList<U> &list);
 
 private:
     template <typename U>
@@ -14,22 +14,22 @@ private:
     {
         std::shared_ptr<T> _data = nullptr;
         Node<U> *_prev = nullptr, *_next = nullptr;
-        Node<U> &operator=(const Node<U> &node);
-        Node<U> &operator=(Node<U> &&node) noexcept;
-        Node(std::shared_ptr<T> data, Node<U> *prev = nullptr, Node<U> *next = nullptr);
+        inline Node<U> &operator=(const Node<U> &node);
+        inline Node<U> &operator=(Node<U> &&node) noexcept;
+        inline Node(std::shared_ptr<T> data, Node<U> *prev = nullptr, Node<U> *next = nullptr);
         Node(const Node<U> &node) { *this = node; }
         Node(Node<U> &&node) noexcept { *this = std::move(node); }
-        ~Node() { _data = nullptr; }
+        inline ~Node() { _data = nullptr; }
         std::shared_ptr<T> disconnect();
     };
-    Node<T> *get_node(int index) const;
+    inline Node<T> *get_node(int index) const;
 
 public:
     Node<T> *_head = nullptr;
-    LinkedList<T> &operator=(const LinkedList<T> &list);
-    LinkedList<T> &operator=(LinkedList<T> &&list) noexcept;
-    LinkedList();
-    ~LinkedList();
+    inline LinkedList<T> &operator=(const LinkedList<T> &list);
+    inline LinkedList<T> &operator=(LinkedList<T> &&list) noexcept;
+    inline LinkedList();
+    inline ~LinkedList();
     LinkedList(const LinkedList<T> &list) { *this = list; }
     LinkedList(LinkedList<T> &&list) noexcept { *this = std::move(list); }
     int index_of(std::shared_ptr<T> data) const override;
