@@ -27,7 +27,7 @@ int main()
 输出:
 ----------Test front()----------
 front: 0x686710[10, Alice0]
-----------Test de_queue()----------
+----------Test pop()----------
 size=5
 0x686710[10, Alice0]
 delete 0x686710[10, Alice0]
