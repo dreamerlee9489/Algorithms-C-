@@ -88,7 +88,7 @@ std::shared_ptr<T> CircleDeque<T>::dequeue_rear()
 template <typename T>
 void CircleDeque<T>::clear()
 {
-    for(size_t i = 0; i < _capacity; ++i)
+    for (size_t i = 0; i < _capacity; ++i)
         _array[i] = nullptr;
     _front = 0;
     _size = 0;
@@ -121,7 +121,7 @@ void CircleDeque<T>::ensure_capacity()
 template <typename U>
 std::ostream &operator<<(std::ostream &os, const CircleDeque<U> &deque)
 {
-    for (size_t i = 0; i < deque._size; ++i)
+    for (size_t i = 0; i < deque._capacity; ++i)
     {
         if (deque._array[i] != nullptr)
             os << *deque._array[i];
