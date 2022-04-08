@@ -11,7 +11,11 @@ private:
     LinkedList<T> *_list;
 
 public:
+    Queue<T> operator=(const Queue<T> &queue);
+    Queue<T> operator=(Queue<T> &&queue);
     Queue() { _list = new LinkedList<T>(); }
+    Queue(const Queue<T> &queue) { *this = queue; }
+    Queue(Queue<T> &&queue) { *this = std::move(queue); }
     ~Queue() { delete _list; }
     size_t size() { return _list->size(); }
     bool is_empty() { return _list->is_empty(); }
@@ -20,5 +24,25 @@ public:
     std::shared_ptr<T> front() { return _list->get(0); }
     void clear() { _list->clear(); }
 };
+
+template <typename T>
+Queue<T> Queue<T>::operator=(const Queue<T> &queue)
+{
+    clear();
+    delete _list;
+    _list = new LinkedList<T>();
+    *_list = *queue._list;
+    return *this;
+}
+
+template <typename T>
+Queue<T> Queue<T>::operator=(Queue<T> &&queue)
+{
+    clear();
+    delete _list;
+    _list = new LinkedList<T>();
+    *_list = std::move(*queue._list);
+    return *this;
+}
 
 #endif /* QUEUE_H */

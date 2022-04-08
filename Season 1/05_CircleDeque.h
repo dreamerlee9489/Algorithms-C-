@@ -16,7 +16,11 @@ private:
     void ensure_capacity();
 
 public:
+    CircleDeque<T> &operator=(const CircleDeque<T> &deque);
+    CircleDeque<T> &operator=(CircleDeque<T> &&deque);
     CircleDeque();
+    CircleDeque(const CircleDeque<T> &deque) { *this = deque; }
+    CircleDeque(CircleDeque<T> &&deque) { *this = std::move(deque); }
     ~CircleDeque();
     size_t size() { return _size; }
     size_t capacity() const { return _capacity; }
@@ -29,6 +33,31 @@ public:
     std::shared_ptr<T> rear() { return _array[true_index(_size - 1)]; }
     void clear();
 };
+
+template <typename T>
+CircleDeque<T> &CircleDeque<T>::operator=(const CircleDeque<T> &deque)
+{
+    delete[] _array;
+    _array = new std::shared_ptr<T>[deque._capacity];
+    _capacity = deque._capacity;
+    _size = deque._size;
+    _front = deque._front;
+    for (size_t i = 0; i < deque._capacity; ++i)
+        _array[i] = deque._array[i];
+    return *this;
+}
+
+template <typename T>
+CircleDeque<T> &CircleDeque<T>::operator=(CircleDeque<T> &&deque)
+{
+    _array = deque._array;
+    _capacity = deque._capacity;
+    _size = deque._size;
+    _front = deque._front;
+    deque._size = 0;
+    deque._front = 0;
+    return *this;
+}
 
 template <typename T>
 CircleDeque<T>::CircleDeque()

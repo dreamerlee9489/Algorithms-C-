@@ -11,7 +11,11 @@ private:
     LinkedList<T> *_list;
 
 public:
+    Deque<T> &operator=(const Deque<T> &deque);
+    Deque<T> &operator=(Deque<T> &&deque);
     Deque() { _list = new LinkedList<T>(); }
+    Deque(const Deque<T> &deque) { *this = deque; }
+    Deque(Deque<T> &&deque) { *this = std::move(deque); }
     ~Deque() { delete _list; }
     size_t size() { return _list->size(); }
     bool is_empty() { return _list->size() == 0; }
@@ -23,5 +27,25 @@ public:
     std::shared_ptr<T> rear() { return _list->get(_list->size() - 1); }
     void clear() { _list->clear(); }
 };
+
+template <typename T>
+Deque<T> &Deque<T>::operator=(const Deque<T> &deque)
+{
+    clear();
+    delete _list;
+    _list = new LinkedList<T>();
+    *_list = *deque._list;
+    return *this;
+}
+
+template <typename T>
+Deque<T> &Deque<T>::operator=(Deque<T> &&deque)
+{
+    clear();
+    delete _list;
+    _list = new LinkedList<T>();
+    *_list = std::move(*deque._list);
+    return *this;
+}
 
 #endif /* DEQUE_H */

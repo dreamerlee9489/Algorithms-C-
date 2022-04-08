@@ -19,8 +19,8 @@ public:
 	ArrayList<T> &operator=(ArrayList<T> &&list) noexcept;
 	ArrayList();
 	~ArrayList();
-	ArrayList(const ArrayList<T> &list);
-	ArrayList(ArrayList<T> &&list) noexcept;
+	ArrayList(const ArrayList<T> &list) { *this = list; }
+	ArrayList(ArrayList<T> &&list) noexcept { *this = std::move(list); }
 	size_t capacity() const { return _capacity; }
 	int index_of(std::shared_ptr<T> data) const override;
 	std::shared_ptr<T> insert(int index, std::shared_ptr<T> data) override;
@@ -34,6 +34,9 @@ template <typename T>
 ArrayList<T> &ArrayList<T>::operator=(const ArrayList<T> &list)
 {
 	clear();
+	this->_size = 0;
+	_capacity = DEFAULT_CAPACITY;
+	_array = new std::shared_ptr<T>[_capacity];
 	for (size_t i = 0; i < list._size; ++i)
 		insert(i, list.get(i));
 	return *this;
@@ -56,23 +59,6 @@ ArrayList<T>::ArrayList()
 	this->_size = 0;
 	_capacity = DEFAULT_CAPACITY;
 	_array = new std::shared_ptr<T>[_capacity];
-}
-
-template <typename T>
-ArrayList<T>::ArrayList(const ArrayList<T> &list)
-{
-	this->_size = 0;
-	_capacity = DEFAULT_CAPACITY;
-	_array = new std::shared_ptr<T>[_capacity];
-	*this = list;
-}
-
-template <typename T>
-ArrayList<T>::ArrayList(ArrayList<T> &&list) noexcept
-{
-	this->_size = list._size;
-	_capacity = list._capacity;
-	*this = std::move(list);
 }
 
 template <typename T>
@@ -154,7 +140,7 @@ template <typename U>
 std::ostream &operator<<(std::ostream &os, const ArrayList<U> &list)
 {
 	for (size_t i = 0; i < list._size; ++i)
-		if(list.get(i) != nullptr)
+		if (list.get(i) != nullptr)
 			os << *list.get(i);
 	return os;
 }

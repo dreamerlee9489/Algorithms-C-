@@ -11,7 +11,11 @@ private:
     ArrayList<T> *_list;
 
 public:
+    Stack<T> &operator=(const Stack<T> &stack);
+    Stack<T> &operator=(Stack<T> &&stack);
     Stack() { _list = new ArrayList<T>(); }
+    Stack(const Stack<T> &stack) { *this = stack; }
+    Stack(Stack<T> &&stack) { *this = std::move(stack); }
     ~Stack() { delete _list; }
     size_t size() { return _list->size(); }
     bool is_empty() { return _list->is_empty(); }
@@ -20,5 +24,25 @@ public:
     std::shared_ptr<T> top() { return _list->get(_list->size() - 1); }
     void clear() { _list->clear(); }
 };
+
+template <typename T>
+Stack<T> &Stack<T>::operator=(const Stack<T> &stack)
+{
+    clear();
+    delete _list;
+    _list = new ArrayList<T>();
+    *_list = *stack._list;
+    return *this;
+}
+
+template <typename T>
+Stack<T> &Stack<T>::operator=(Stack<T> &&stack)
+{
+    clear();
+    delete _list;
+    _list = new ArrayList<T>();
+    *_list = std::move(*stack._list);
+    return *this;
+}
 
 #endif
