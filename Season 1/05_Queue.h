@@ -12,10 +12,10 @@ private:
 
 public:
     inline Queue<T> operator=(const Queue<T> &queue);
-    inline Queue<T> operator=(Queue<T> &&queue);
+    inline Queue<T> operator=(Queue<T> &&queue) noexcept;
     Queue() { _list = new LinkedList<T>(); }
     Queue(const Queue<T> &queue) { *this = queue; }
-    Queue(Queue<T> &&queue) { *this = std::move(queue); }
+    Queue(Queue<T> &&queue) noexcept { *this = std::move(queue); }
     ~Queue() { delete _list; }
     size_t size() const { return _list->size(); }
     bool is_empty() const { return _list->is_empty(); }

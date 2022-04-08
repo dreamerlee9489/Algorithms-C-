@@ -12,10 +12,10 @@ private:
 
 public:
     inline Deque<T> &operator=(const Deque<T> &deque);
-    inline Deque<T> &operator=(Deque<T> &&deque);
+    inline Deque<T> &operator=(Deque<T> &&deque) noexcept;
     Deque() { _list = new LinkedList<T>(); }
     Deque(const Deque<T> &deque) { *this = deque; }
-    Deque(Deque<T> &&deque) { *this = std::move(deque); }
+    Deque(Deque<T> &&deque) noexcept { *this = std::move(deque); }
     ~Deque() { delete _list; }
     size_t size() const { return _list->size(); }
     bool is_empty() const { return _list->size() == 0; }

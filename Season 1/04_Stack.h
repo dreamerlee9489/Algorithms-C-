@@ -12,10 +12,10 @@ private:
 
 public:
     inline Stack<T> &operator=(const Stack<T> &stack);
-    inline Stack<T> &operator=(Stack<T> &&stack);
+    inline Stack<T> &operator=(Stack<T> &&stack) noexcept;
     Stack() { _list = new ArrayList<T>(); }
     Stack(const Stack<T> &stack) { *this = stack; }
-    Stack(Stack<T> &&stack) { *this = std::move(stack); }
+    Stack(Stack<T> &&stack) noexcept { *this = std::move(stack); }
     ~Stack() { delete _list; }
     size_t size() const { return _list->size(); }
     bool is_empty() const { return _list->is_empty(); }
