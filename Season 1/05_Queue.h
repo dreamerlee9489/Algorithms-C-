@@ -14,9 +14,9 @@ public:
     inline Queue<T> operator=(const Queue<T> &queue);
     inline Queue<T> operator=(Queue<T> &&queue) noexcept;
     Queue() { _list = new LinkedList<T>(); }
+    ~Queue() { delete _list; }
     Queue(const Queue<T> &queue) { *this = queue; }
     Queue(Queue<T> &&queue) noexcept { *this = std::move(queue); }
-    ~Queue() { delete _list; }
     size_t size() const { return _list->size(); }
     bool is_empty() const { return _list->is_empty(); }
     std::shared_ptr<T> enqueue(std::shared_ptr<T> data) { return _list->add(data); }

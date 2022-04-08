@@ -17,9 +17,9 @@ private:
         inline Node<U> &operator=(const Node<U> &node);
         inline Node<U> &operator=(Node<U> &&node) noexcept;
         inline Node(std::shared_ptr<T> data, Node<U> *prev = nullptr, Node<U> *next = nullptr);
+        ~Node() { _data = nullptr; }
         Node(const Node<U> &node) { *this = node; }
         Node(Node<U> &&node) noexcept { *this = std::move(node); }
-        ~Node() { _data = nullptr; }
         std::shared_ptr<T> disconnect();
     };
     inline Node<T> *get_node(int index) const;

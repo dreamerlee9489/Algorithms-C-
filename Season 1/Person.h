@@ -17,9 +17,9 @@ public:
     Person &operator=(Person &&rhs) noexcept;
     Person() = default;
     Person(int age, std::string name) : _age(age), _name(name) {}
+    ~Person() { std::cout << "delete " << this << "[" << _age << ", " << _name + "]\n"; }
     Person(const Person &p) { *this = p; }
     Person(Person &&p) noexcept { *this = std::move(p); }
-    ~Person() { std::cout << "delete " << this << "[" << _age << ", " << _name + "]\n"; }
 };
 
 Person &Person::operator=(const Person &rhs)
