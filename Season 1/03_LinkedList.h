@@ -19,7 +19,7 @@ private:
         inline Node(std::shared_ptr<T> data, Node<U> *prev = nullptr, Node<U> *next = nullptr);
         Node(const Node<U> &node) { *this = node; }
         Node(Node<U> &&node) noexcept { *this = std::move(node); }
-        inline ~Node() { _data = nullptr; }
+        ~Node() { _data = nullptr; }
         std::shared_ptr<T> disconnect();
     };
     inline Node<T> *get_node(int index) const;
