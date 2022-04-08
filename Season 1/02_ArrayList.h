@@ -30,6 +30,15 @@ public:
 	void clear() override;
 };
 
+template <typename U>
+std::ostream &operator<<(std::ostream &os, const ArrayList<U> &list)
+{
+	for (size_t i = 0; i < list._size; ++i)
+		if (list.get(i) != nullptr)
+			os << *list.get(i);
+	return os;
+}
+
 template <typename T>
 ArrayList<T> &ArrayList<T>::operator=(const ArrayList<T> &list)
 {
@@ -134,15 +143,6 @@ void ArrayList<T>::ensure_capacity()
 			temp[i] = _array[i];
 		_array = temp;
 	}
-}
-
-template <typename U>
-std::ostream &operator<<(std::ostream &os, const ArrayList<U> &list)
-{
-	for (size_t i = 0; i < list._size; ++i)
-		if (list.get(i) != nullptr)
-			os << *list.get(i);
-	return os;
 }
 
 #endif

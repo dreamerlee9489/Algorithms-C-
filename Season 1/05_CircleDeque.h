@@ -34,6 +34,19 @@ public:
     void clear();
 };
 
+template <typename U>
+std::ostream &operator<<(std::ostream &os, const CircleDeque<U> &deque)
+{
+    for (size_t i = 0; i < deque._capacity; ++i)
+    {
+        if (deque._array[i] != nullptr)
+            os << *deque._array[i];
+        else
+            os << "nullptr\n";
+    }
+    return os;
+}
+
 template <typename T>
 CircleDeque<T> &CircleDeque<T>::operator=(const CircleDeque<T> &deque)
 {
@@ -145,19 +158,6 @@ void CircleDeque<T>::ensure_capacity()
         _front = 0;
         _capacity = new_cap;
     }
-}
-
-template <typename U>
-std::ostream &operator<<(std::ostream &os, const CircleDeque<U> &deque)
-{
-    for (size_t i = 0; i < deque._capacity; ++i)
-    {
-        if (deque._array[i] != nullptr)
-            os << *deque._array[i];
-        else
-            os << "nullptr\n";
-    }
-    return os;
 }
 
 #endif /* CIRCLE_DEQUE_H */
