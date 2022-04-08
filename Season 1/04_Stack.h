@@ -36,7 +36,7 @@ Stack<T> &Stack<T>::operator=(const Stack<T> &stack)
 }
 
 template <typename T>
-Stack<T> &Stack<T>::operator=(Stack<T> &&stack)
+Stack<T> &Stack<T>::operator=(Stack<T> &&stack) noexcept
 {
     clear();
     delete _list;

@@ -39,7 +39,7 @@ Deque<T> &Deque<T>::operator=(const Deque<T> &deque)
 }
 
 template <typename T>
-Deque<T> &Deque<T>::operator=(Deque<T> &&deque)
+Deque<T> &Deque<T>::operator=(Deque<T> &&deque) noexcept
 {
     clear();
     delete _list;

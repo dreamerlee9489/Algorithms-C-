@@ -36,7 +36,7 @@ Queue<T> Queue<T>::operator=(const Queue<T> &queue)
 }
 
 template <typename T>
-Queue<T> Queue<T>::operator=(Queue<T> &&queue)
+Queue<T> Queue<T>::operator=(Queue<T> &&queue) noexcept
 {
     clear();
     delete _list;
