@@ -1,6 +1,7 @@
 #ifndef CIRCLE_DEQUE_H
 #define CIRCLE_DEQUE_H
-#include "./02_ArrayList.h"
+#include <iostream>
+#include <memory>
 
 template <typename T>
 class CircleDeque
@@ -61,7 +62,7 @@ CircleDeque<T> &CircleDeque<T>::operator=(const CircleDeque<T> &deque)
 }
 
 template <typename T>
-CircleDeque<T> &CircleDeque<T>::operator=(CircleDeque<T> &&deque)
+CircleDeque<T> &CircleDeque<T>::operator=(CircleDeque<T> &&deque) noexcept
 {
     _array = deque._array;
     _capacity = deque._capacity;
