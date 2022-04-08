@@ -7,17 +7,17 @@ int main()
     CircleDeque<Person> deque = CircleDeque<Person>();
     for(size_t i = 0; i < 10; ++i)
     {
-        deque.en_queue_front(std::make_shared<Person>(i + 1, "Alice" + std::to_string(i + 1)));
-        deque.en_queue(std::make_shared<Person>(i + 100, "Alice" + std::to_string(i + 100)));
+        deque.enqueue_front(std::make_shared<Person>(i + 1, "Alice" + std::to_string(i + 1)));
+        deque.enqueue(std::make_shared<Person>(i + 100, "Alice" + std::to_string(i + 100)));
     }
     std::cout << "----------Test de_queue() / de_queue_rear()----------\n";
     for(size_t i = 0; i < 3; ++i)
     {
-        deque.de_queue();
-        deque.de_queue_rear();
+        deque.dequeue();
+        deque.dequeue_rear();
     }
-    deque.en_queue_front(std::make_shared<Person>(11, "Alice11"));
-    deque.en_queue_front(std::make_shared<Person>(12, "Alice12"));
+    deque.enqueue_front(std::make_shared<Person>(11, "Alice11"));
+    deque.enqueue_front(std::make_shared<Person>(12, "Alice12"));
     std::cout << "size=" << deque.size() << ", capacity=" << deque.capacity() << "\n";
     std::cout << "----------Test operator<<()----------\n";
     std::cout << deque;

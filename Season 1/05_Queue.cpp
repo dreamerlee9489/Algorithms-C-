@@ -5,11 +5,11 @@
 int main()
 {
     Queue<Person> queue = Queue<Person>();
-    queue.en_queue(std::make_shared<Person>(10, "Alice0"));
-    queue.en_queue(std::make_shared<Person>(11, "Alice1"));
-    queue.en_queue(std::make_shared<Person>(12, "Alice2"));
-    queue.en_queue(std::make_shared<Person>(13, "Alice3"));
-    queue.en_queue(std::make_shared<Person>(14, "Alice4"));
+    queue.enqueue(std::make_shared<Person>(10, "Alice0"));
+    queue.enqueue(std::make_shared<Person>(11, "Alice1"));
+    queue.enqueue(std::make_shared<Person>(12, "Alice2"));
+    queue.enqueue(std::make_shared<Person>(13, "Alice3"));
+    queue.enqueue(std::make_shared<Person>(14, "Alice4"));
     std::cout << "----------Test operator<<()----------\n";
     std::cout << queue;
     std::cout << "----------Test front()----------\n";
@@ -17,7 +17,7 @@ int main()
     std::cout << "----------Test de_queue()----------\n";
     std::cout << "size=" << queue.size() << std::endl;
     while (!queue.is_empty())
-        std::cout << *queue.de_queue();
+        std::cout << *queue.dequeue();
     std::cout << "size=" << queue.size() << std::endl;
     return 0;
 }

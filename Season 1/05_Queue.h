@@ -15,8 +15,8 @@ public:
     ~Queue() { delete _list; }
     size_t size() { return _list->size(); }
     bool is_empty() { return _list->is_empty(); }
-    std::shared_ptr<T> en_queue(std::shared_ptr<T> data) { return _list->add(data); }
-    std::shared_ptr<T> de_queue() { return _list->remove(0); }
+    std::shared_ptr<T> enqueue(std::shared_ptr<T> data) { return _list->add(data); }
+    std::shared_ptr<T> dequeue() { return _list->remove(0); }
     std::shared_ptr<T> front() { return _list->get(0); }
     void clear() { _list->clear(); }
 };

@@ -21,10 +21,10 @@ public:
     size_t size() { return _size; }
     size_t capacity() const { return _capacity; }
     bool is_empty() { return _size == 0; }
-    std::shared_ptr<T> en_queue(std::shared_ptr<T> data);
-    std::shared_ptr<T> de_queue();
-    std::shared_ptr<T> en_queue_front(std::shared_ptr<T> data);
-    std::shared_ptr<T> de_queue_rear();
+    std::shared_ptr<T> enqueue(std::shared_ptr<T> data);
+    std::shared_ptr<T> dequeue();
+    std::shared_ptr<T> enqueue_front(std::shared_ptr<T> data);
+    std::shared_ptr<T> dequeue_rear();
     std::shared_ptr<T> front() { return _array[_front]; }
     std::shared_ptr<T> rear() { return _array[true_index(_size - 1)]; }
     void clear();
@@ -47,7 +47,7 @@ CircleDeque<T>::~CircleDeque()
 }
 
 template <typename T>
-std::shared_ptr<T> CircleDeque<T>::en_queue(std::shared_ptr<T> data)
+std::shared_ptr<T> CircleDeque<T>::enqueue(std::shared_ptr<T> data)
 {
     ensure_capacity();
     _array[true_index(_size)] = data;
@@ -56,7 +56,7 @@ std::shared_ptr<T> CircleDeque<T>::en_queue(std::shared_ptr<T> data)
 }
 
 template <typename T>
-std::shared_ptr<T> CircleDeque<T>::de_queue()
+std::shared_ptr<T> CircleDeque<T>::dequeue()
 {
     std::shared_ptr<T> old = _array[_front];
     _array[_front] = nullptr;
@@ -66,7 +66,7 @@ std::shared_ptr<T> CircleDeque<T>::de_queue()
 }
 
 template <typename T>
-std::shared_ptr<T> CircleDeque<T>::en_queue_front(std::shared_ptr<T> data)
+std::shared_ptr<T> CircleDeque<T>::enqueue_front(std::shared_ptr<T> data)
 {
     ensure_capacity();
     _front = true_index(-1);
@@ -76,7 +76,7 @@ std::shared_ptr<T> CircleDeque<T>::en_queue_front(std::shared_ptr<T> data)
 }
 
 template <typename T>
-std::shared_ptr<T> CircleDeque<T>::de_queue_rear()
+std::shared_ptr<T> CircleDeque<T>::dequeue_rear()
 {
     int rear = true_index(_size - 1);
     std::shared_ptr<T> old = _array[rear];
@@ -125,6 +125,8 @@ std::ostream &operator<<(std::ostream &os, const CircleDeque<U> &deque)
     {
         if (deque._array[i] != nullptr)
             os << *deque._array[i];
+        else
+            os << "nullptr\n";
     }
     return os;
 }

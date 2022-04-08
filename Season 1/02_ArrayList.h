@@ -12,7 +12,7 @@ private:
 	const size_t DEFAULT_CAPACITY = 8;
 	size_t _capacity = 0;
 	std::shared_ptr<T> *_array = nullptr;
-	void exsure_capacity();
+	void ensure_capacity();
 
 public:
 	ArrayList<T> &operator=(const ArrayList<T> &list);
@@ -95,7 +95,7 @@ template <typename T>
 std::shared_ptr<T> ArrayList<T>::insert(int index, std::shared_ptr<T> data)
 {
 	this->check_range(index, true);
-	exsure_capacity();
+	ensure_capacity();
 	for (size_t i = this->_size; i > index; --i)
 		_array[i] = _array[i - 1];
 	_array[index] = data;
@@ -138,7 +138,7 @@ void ArrayList<T>::clear()
 }
 
 template <typename T>
-void ArrayList<T>::exsure_capacity()
+void ArrayList<T>::ensure_capacity()
 {
 	if (this->_size >= _capacity)
 	{
