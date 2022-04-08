@@ -5,7 +5,7 @@
 template <typename T>
 class Stack
 {
-    friend inline std::ostream &operator<<(std::ostream &os, const Stack<T> &stack) { return os << *stack._list; }
+    friend std::ostream &operator<<(std::ostream &os, const Stack<T> &stack) { return os << *stack._list; }
 
 private:
     ArrayList<T> *_list;
