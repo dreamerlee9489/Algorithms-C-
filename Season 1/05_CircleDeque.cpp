@@ -7,22 +7,22 @@ int main()
     CircleDeque<Person> deque = CircleDeque<Person>();
     for (size_t i = 0; i < 10; ++i)
     {
-        deque.enqueue_front(std::make_shared<Person>(i + 1, "Alice" + std::to_string(i + 1)));
-        deque.enqueue(std::make_shared<Person>(i + 100, "Alice" + std::to_string(i + 100)));
+        deque.push_front(std::make_shared<Person>(i + 1, "Alice" + std::to_string(i + 1)));
+        deque.push(std::make_shared<Person>(i + 100, "Alice" + std::to_string(i + 100)));
     }
     for (size_t i = 0; i < 3; ++i)
     {
-        deque.dequeue();
-        deque.dequeue_rear();
+        deque.pop();
+        deque.pop_rear();
     }
-    deque.enqueue_front(std::make_shared<Person>(11, "Alice11"));
-    deque.enqueue_front(std::make_shared<Person>(12, "Alice12"));
+    deque.push_front(std::make_shared<Person>(11, "Alice11"));
+    deque.push_front(std::make_shared<Person>(12, "Alice12"));
     std::cout << "size=" << deque.size() << ", capacity=" << deque.capacity() << "\n";
     std::cout << "----------Test operator<<()----------\n";
     std::cout << deque;
-    std::cout << "----------Test de_queue()----------\n";
+    std::cout << "----------Test pop()----------\n";
     while (!deque.is_empty())
-        std::cout << *deque.dequeue();
+        std::cout << *deque.pop();
 
     return 0;
 }
@@ -68,7 +68,7 @@ nullptr
 nullptr
 nullptr
 0x2651eb0[12, Alice12]
-----------Test de_queue()----------
+----------Test pop()----------
 0x2651eb0[12, Alice12]
 delete 0x2651eb0[12, Alice12]
 0x2652170[11, Alice11]

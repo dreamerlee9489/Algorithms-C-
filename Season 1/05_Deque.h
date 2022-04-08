@@ -19,10 +19,10 @@ public:
     Deque(Deque<T> &&deque) noexcept { *this = std::move(deque); }
     size_t size() const { return _list->size(); }
     bool is_empty() const { return _list->size() == 0; }
-    std::shared_ptr<T> enqueue(std::shared_ptr<T> data) { return _list->add(data); }
-    std::shared_ptr<T> dequeue() { return _list->remove(0); }
-    std::shared_ptr<T> enqueue_front(std::shared_ptr<T> data) { return _list->insert(0, data); }
-    std::shared_ptr<T> dequeue_rear() { return _list->remove(_list->size() - 1); }
+    std::shared_ptr<T> push(std::shared_ptr<T> data) { return _list->add(data); }
+    std::shared_ptr<T> pop() { return _list->remove(0); }
+    std::shared_ptr<T> push_front(std::shared_ptr<T> data) { return _list->insert(0, data); }
+    std::shared_ptr<T> pop_rear() { return _list->remove(_list->size() - 1); }
     std::shared_ptr<T> front() const { return _list->get(0); }
     std::shared_ptr<T> rear() const { return _list->get(_list->size() - 1); }
     void clear() { _list->clear(); }
