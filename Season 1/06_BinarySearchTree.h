@@ -55,7 +55,7 @@ public:
     void remove(std::shared_ptr<T> data);
     bool contains(std::shared_ptr<T> data) const;
     void traverse(TraverseOrder order = TraverseOrder::In, traverse_func func = nullptr) const;
-    inline void clear() { clear_recu(_root); }
+    void clear() { clear_recu(_root); }
 };
 
 template <typename T>
