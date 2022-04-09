@@ -12,7 +12,7 @@ private:
 	const size_t DEFAULT_CAPACITY = 8;
 	size_t _capacity = 0;
 	std::shared_ptr<T> *_array = nullptr;
-	inline void ensure_capacity();
+	void ensure_capacity();
 
 public:
 	inline ArrayList<T> &operator=(const ArrayList<T> &list);

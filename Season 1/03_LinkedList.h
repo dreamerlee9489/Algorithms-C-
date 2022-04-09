@@ -22,7 +22,7 @@ private:
         Node(Node<U> &&node) noexcept { *this = std::move(node); }
         std::shared_ptr<T> disconnect();
     };
-    inline Node<T> *get_node(int index) const;
+    Node<T> *get_node(int index) const;
 
 public:
     Node<T> *_head = nullptr;
@@ -64,8 +64,8 @@ template <typename U>
 LinkedList<T>::Node<U> &LinkedList<T>::Node<U>::operator=(Node<U> &&node) noexcept
 {
     _data = std::move((std::shared_ptr<T>)node._data);
-    _prev = std::move((Node<U>*)node._prev);
-    _next = std::move((Node<U>*)node._next);
+    _prev = std::move((Node<U> *)node._prev);
+    _next = std::move((Node<U> *)node._next);
     return *this;
 }
 
@@ -112,7 +112,7 @@ LinkedList<T> &LinkedList<T>::operator=(LinkedList<T> &&list) noexcept
         this->_size = list._size;
         _head->_next = list._head->_next;
         _head->_prev = list._head->_prev;
-        list._head->_next->_prev = _head; 
+        list._head->_next->_prev = _head;
         list._size = 0;
     }
     return *this;
@@ -152,7 +152,7 @@ std::shared_ptr<T> LinkedList<T>::insert(int index, std::shared_ptr<T> data)
     this->check_range(index, true);
     Node<T> *prev = get_node(index - 1);
     Node<T> *next = prev->_next;
-    Node<T> *temp = new Node<T>(data, prev, next);   
+    Node<T> *temp = new Node<T>(data, prev, next);
     if (next != _head)
     {
         prev->_next = temp;

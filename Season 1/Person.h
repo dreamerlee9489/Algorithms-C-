@@ -9,6 +9,8 @@ class Person
     friend std::ostream &operator<<(std::ostream &out, const Person &p);
     friend bool operator==(const Person &lhs, const Person &rhs);
     friend bool operator!=(const Person &lhs, const Person &rhs);
+    friend bool operator<(const Person &lhs, const Person &rhs);
+    friend bool operator>(const Person &lhs, const Person &rhs);
 
 public:
     int _age = 0;
@@ -40,5 +42,7 @@ std::istream &operator>>(std::istream &in, Person &p) { return in >> p._age >> p
 std::ostream &operator<<(std::ostream &out, const Person &p) { return out << &p << "[" << p._age << ", " << p._name + "]\n"; }
 bool operator==(const Person &lhs, const Person &rhs) { return lhs._age == rhs._age && lhs._name == rhs._name; }
 bool operator!=(const Person &lhs, const Person &rhs) { return !(lhs == rhs); }
+bool operator<(const Person &lhs, const Person &rhs) { return lhs._age < rhs._age; }
+bool operator>(const Person &lhs, const Person &rhs) { return lhs._age > rhs._age; }
 
 #endif // !PERSON_H

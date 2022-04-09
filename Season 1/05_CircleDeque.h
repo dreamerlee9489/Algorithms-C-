@@ -13,8 +13,8 @@ private:
     const size_t DEFAULT_CAPACITY = 8;
     size_t _capacity, _size, _front;
     std::shared_ptr<T> *_array;
-    inline int true_index(int index) const;
-    inline void ensure_capacity();
+    int true_index(int index) const;
+    void ensure_capacity();
 
 public:
     inline CircleDeque<T> &operator=(const CircleDeque<T> &deque);
