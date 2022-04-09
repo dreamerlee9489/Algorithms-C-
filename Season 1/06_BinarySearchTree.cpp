@@ -17,8 +17,21 @@ int main()
     tree.add(std::make_shared<Person>(11, "Alice11"));
     tree.add(std::make_shared<Person>(10, "Alice10"));
     tree.add(std::make_shared<Person>(12, "Alice12"));
-    tree.traverse(BinarySearchTree<Person>::TraverseOrder::Level, [](std::shared_ptr<Person> data)
-                  { std::cout << "lambda: " << *data; });
+    std::cout << "----------Test traverse()----------\n";
+    tree.traverse(BinarySearchTree<Person>::TraverseOrder::Level, [](std::shared_ptr<Person> data){ 
+        std::cout << "lambda: " << *data; 
+    });
+    std::cout << "height=" << tree.height() << "\n";
+    std::cout << "----------Test is_complete()----------\n";
+    std::cout << "is complete: " << tree.is_complete() << "\n";
+    tree.clear();
+    tree.add(std::make_shared<Person>(7, "Alice7"));
+    tree.add(std::make_shared<Person>(4, "Alice4"));
+    tree.add(std::make_shared<Person>(9, "Alice9"));
+    tree.add(std::make_shared<Person>(2, "Alice2"));
+    tree.add(std::make_shared<Person>(5, "Alice5"));
+    std::cout << "is complete: " << tree.is_complete() << "\n";
+    
     return 0;
 }
 
