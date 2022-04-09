@@ -19,7 +19,7 @@ int main()
     tree.add(std::make_shared<Person>(12, "Alice12"));
     std::cout << "----------Test traverse()----------\n";
     tree.traverse(BinarySearchTree<Person>::TraverseOrder::Level, [](std::shared_ptr<Person> data){ 
-        std::cout << "lambda: " << *data; 
+        std::cout << "lambda: " << *data << "\n"; 
     });
     std::cout << "height=" << tree.height() << "\n";
     std::cout << "----------Test is_complete()----------\n";
@@ -38,26 +38,36 @@ int main()
 /*
 2022年4月9日 12:01:06
 输出：
-lambda: 0xd6690[7, Alice7]
-lambda: 0xd6700[4, Alice4]
-lambda: 0xd6930[9, Alice9]
-lambda: 0xd6770[2, Alice2]
-lambda: 0xd68c0[5, Alice5]
-lambda: 0xd69a0[8, Alice8]
-lambda: 0xd6a10[11, Alice11]
-lambda: 0xd67e0[1, Alice1]
-lambda: 0xd6850[3, Alice3]
-lambda: 0xd6a80[10, Alice10]
-lambda: 0xd6af0[12, Alice12]
-delete 0xd67e0[1, Alice1]
-delete 0xd6850[3, Alice3]
-delete 0xd6770[2, Alice2]
-delete 0xd68c0[5, Alice5]
-delete 0xd6700[4, Alice4]
-delete 0xd69a0[8, Alice8]
-delete 0xd6a80[10, Alice10]
-delete 0xd6af0[12, Alice12]
-delete 0xd6a10[11, Alice11]
-delete 0xd6930[9, Alice9]
-delete 0xd6690[7, Alice7]
+----------Test traverse()----------
+lambda: 0xfd6740[7, Alice7]
+lambda: 0xfd67b0[4, Alice4]
+lambda: 0xfd69e0[9, Alice9]
+lambda: 0xfd6820[2, Alice2]
+lambda: 0xfd6970[5, Alice5]
+lambda: 0xfd6a50[8, Alice8]
+lambda: 0xfd6ac0[11, Alice11]
+lambda: 0xfd6890[1, Alice1]
+lambda: 0xfd6900[3, Alice3]
+lambda: 0xfd6b30[10, Alice10]
+lambda: 0xfd6ba0[12, Alice12]
+height=4
+----------Test is_complete()----------
+is complete: 0
+delete 0xfd6890[1, Alice1]
+delete 0xfd6900[3, Alice3]
+delete 0xfd6820[2, Alice2]
+delete 0xfd6970[5, Alice5]
+delete 0xfd67b0[4, Alice4]
+delete 0xfd6a50[8, Alice8]
+delete 0xfd6b30[10, Alice10]
+delete 0xfd6ba0[12, Alice12]
+delete 0xfd6ac0[11, Alice11]
+delete 0xfd69e0[9, Alice9]
+delete 0xfd6740[7, Alice7]
+is complete: 1
+delete 0xfd6890[2, Alice2]
+delete 0xfd6900[5, Alice5]
+delete 0xfd67b0[4, Alice4]
+delete 0xfd6820[9, Alice9]
+delete 0xfd6740[7, Alice7]
 */

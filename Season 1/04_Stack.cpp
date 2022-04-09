@@ -13,11 +13,11 @@ int main()
     std::cout << "----------Test operator<<()----------\n";
     std::cout << stack;
     std::cout << "----------Test top()----------\n";
-    std::cout << "top: " << *stack.top();
+    std::cout << "top: " << *stack.top() << "\n";
     std::cout << "----------Test pop()----------\n";
     std::cout << "size=" << stack.size() << std::endl;
     while (!stack.is_empty())
-        std::cout << *stack.pop();
+        std::cout << *stack.pop() << "\n";
     std::cout << "size=" << stack.size() << std::endl;
     return 0;
 }

@@ -5,22 +5,22 @@ int main()
 {
     auto list = std::make_shared<ArrayList<Person>>();
     std::cout << "----------Test add()----------\n";
-    std::cout << "Add: " << *list->add(std::make_shared<Person>(20, "Alice0"));
-    std::cout << "Add: " << *list->add(std::make_shared<Person>(21, "Alice1"));
-    std::cout << "Add: " << *list->add(std::make_shared<Person>(22, "Alice2"));
-    std::cout << "Add: " << *list->add(std::make_shared<Person>(23, "Alice3"));
-    std::cout << "Add: " << *list->add(std::make_shared<Person>(24, "Alice4"));
-    std::cout << "Add: " << *list->add(std::make_shared<Person>(25, "Alice5"));
-    std::cout << "Add: " << *list->add(std::make_shared<Person>(26, "Alice6"));
-    std::cout << "Add: " << *list->add(std::make_shared<Person>(27, "Alice7"));
+    std::cout << "Add: " << *list->add(std::make_shared<Person>(20, "Alice0")) << "\n";
+    std::cout << "Add: " << *list->add(std::make_shared<Person>(21, "Alice1")) << "\n";
+    std::cout << "Add: " << *list->add(std::make_shared<Person>(22, "Alice2")) << "\n";
+    std::cout << "Add: " << *list->add(std::make_shared<Person>(23, "Alice3")) << "\n";
+    std::cout << "Add: " << *list->add(std::make_shared<Person>(24, "Alice4")) << "\n";
+    std::cout << "Add: " << *list->add(std::make_shared<Person>(25, "Alice5")) << "\n";
+    std::cout << "Add: " << *list->add(std::make_shared<Person>(26, "Alice6")) << "\n";
+    std::cout << "Add: " << *list->add(std::make_shared<Person>(27, "Alice7")) << "\n";
     std::cout << "size=" << list->size() << ", capacity=" << list->capacity() << std::endl;
     std::cout << *list;
 
     std::cout << "----------Test insert()----------\n";
     try
     {
-        std::cout << "Insert: " << *list->insert(5, std::make_shared<Person>(30, "Bob0"));
-        std::cout << "Insert: " << *list->insert(15, std::make_shared<Person>(35, "Bob1"));
+        std::cout << "Insert: " << *list->insert(5, std::make_shared<Person>(30, "Bob0")) << "\n";
+        std::cout << "Insert: " << *list->insert(15, std::make_shared<Person>(35, "Bob1")) << "\n";
     }
     catch (const std::exception &e)
     {
@@ -34,15 +34,15 @@ int main()
         std::cout << "Bob0 at index=" << list->index_of(std::make_shared<Person>(30, "Bob0")) << std::endl;
 
     std::cout << "----------Test set()----------\n";
-    std::cout << "Set: " << *list->set(5, std::make_shared<Person>(25, "Jack"));
+    std::cout << "Set: " << *list->set(5, std::make_shared<Person>(25, "Jack")) << "\n";
     std::cout << "size=" << list->size() << ", capacity=" << list->capacity() << std::endl;
     std::cout << *list;
 
     std::cout << "----------Test remove()----------\n";
     try
     {
-        std::cout << "Remove: " << *list->remove(5);
-        std::cout << "Remove: " << *list->remove(-1);
+        std::cout << "Remove: " << *list->remove(5) << "\n";
+        std::cout << "Remove: " << *list->remove(-1) << "\n";
     }
     catch (const std::exception &e)
     {

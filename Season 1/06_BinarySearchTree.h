@@ -21,7 +21,7 @@ private:
             : _data(data), _parent(parent), _left(left), _right(right) {}
         ~Node() { _data = nullptr; }
         bool is_leaf() { return _left == nullptr && _right == nullptr; }
-        bool has_2branch() { return _left != nullptr && _right != nullptr; }
+        bool is_binary() { return _left != nullptr && _right != nullptr; }
     };
     size_t _size = 0;
     void nullptr_check(std::shared_ptr<T> data) const;
@@ -106,7 +106,7 @@ bool BinarySearchTree<T>::is_complete()
         q.pop();
         if (leaf && !elem->is_leaf())
             return false;
-        if (elem->has_2branch())
+        if (elem->is_binary())
         {
             q.push(elem->_left);
             q.push(elem->_right);
@@ -122,10 +122,10 @@ bool BinarySearchTree<T>::is_complete()
 template <typename T>
 BinarySearchTree<T>::Node<T> *BinarySearchTree<T>::get_predecessor(Node<T> *node) const
 {
-    if(node == nullptr)
+    if (node == nullptr)
         return nullptr;
-    Node<T>* p = node->_left;
-    if(p != nullptr)
+    Node<T> *p = node->_left;
+    if (p != nullptr)
     {
         while (p->_right != nullptr)
             p = p->_right;
@@ -226,8 +226,7 @@ void BinarySearchTree<T>::clear_recu(Node<T> *node)
         if (node->_right != nullptr)
             clear_recu(node->_right);
         delete node;
-        if(node == _root)
-            _root = nullptr;
+        _root = nullptr;
     }
 }
 
@@ -259,14 +258,12 @@ void BinarySearchTree<T>::inorder_traverse(Node<T> *node, traverse_func func) co
 {
     if (node != nullptr)
     {
-        if (node->_left != nullptr)
-            inorder_traverse(node->_left, func);
+        inorder_traverse(node->_left, func);
         if (func != nullptr)
             func(node->_data);
         else
-            std::cout << *node->_data;
-        if (node->_right != nullptr)
-            inorder_traverse(node->_right, func);
+            std::cout << *node->_data << "\n";
+        inorder_traverse(node->_right, func);
     }
 }
 
@@ -278,11 +275,9 @@ void BinarySearchTree<T>::preorder_traverse(Node<T> *node, traverse_func func) c
         if (func != nullptr)
             func(node->_data);
         else
-            std::cout << *node->_data;
-        if (node->_left != nullptr)
-            preorder_traverse(node->_left, func);
-        if (node->_right != nullptr)
-            preorder_traverse(node->_right, func);
+            std::cout << *node->_data << "\n";
+        preorder_traverse(node->_left, func);
+        preorder_traverse(node->_right, func);
     }
 }
 
@@ -291,14 +286,12 @@ void BinarySearchTree<T>::postorder_traverse(Node<T> *node, traverse_func func) 
 {
     if (node != nullptr)
     {
-        if (node->_left != nullptr)
-            postorder_traverse(node->_left, func);
-        if (node->_right != nullptr)
-            postorder_traverse(node->_right, func);
+        postorder_traverse(node->_left, func);
+        postorder_traverse(node->_right, func);
         if (func != nullptr)
             func(node->_data);
         else
-            std::cout << *node->_data;
+            std::cout << *node->_data << "\n";
     }
 }
 
@@ -312,15 +305,15 @@ void BinarySearchTree<T>::levelorder_traverse(Node<T> *node, traverse_func func)
     while (!q.empty())
     {
         Node<T> *elem = q.front();
-        if (func != nullptr)
-            func(elem->_data);
-        else
-            std::cout << *elem->_data;
         q.pop();
         if (elem->_left != nullptr)
             q.push(elem->_left);
         if (elem->_right != nullptr)
             q.push(elem->_right);
+        if (func != nullptr)
+            func(elem->_data);
+        else
+            std::cout << *elem->_data << "\n";
     }
 }
 

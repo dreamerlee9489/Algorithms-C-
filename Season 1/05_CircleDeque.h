@@ -41,7 +41,7 @@ std::ostream &operator<<(std::ostream &os, const CircleDeque<U> &deque)
     for (size_t i = 0; i < deque._capacity; ++i)
     {
         if (deque._array[i] != nullptr)
-            os << *deque._array[i];
+            os << *deque._array[i] << "\n";
         else
             os << "nullptr\n";
     }

@@ -39,7 +39,7 @@ Person &Person::operator=(Person &&rhs) noexcept
 }
 
 std::istream &operator>>(std::istream &in, Person &p) { return in >> p._age >> p._name; }
-std::ostream &operator<<(std::ostream &out, const Person &p) { return out << &p << "[" << p._age << ", " << p._name + "]\n"; }
+std::ostream &operator<<(std::ostream &out, const Person &p) { return out << &p << "[" << p._age << ", " << p._name + "]"; }
 bool operator==(const Person &lhs, const Person &rhs) { return lhs._age == rhs._age && lhs._name == rhs._name; }
 bool operator!=(const Person &lhs, const Person &rhs) { return !(lhs == rhs); }
 bool operator<(const Person &lhs, const Person &rhs) { return lhs._age < rhs._age; }

@@ -84,7 +84,7 @@ std::ostream &operator<<(std::ostream &os, const LinkedList<U> &list)
 {
     for (size_t i = 0; i < list._size; ++i)
         if (list.get(i) != nullptr)
-            os << *list.get(i);
+            os << *list.get(i) << "\n";
     return os;
 }
 

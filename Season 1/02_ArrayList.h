@@ -18,7 +18,7 @@ public:
 	inline ArrayList<T> &operator=(const ArrayList<T> &list);
 	inline ArrayList<T> &operator=(ArrayList<T> &&list) noexcept;
 	inline ArrayList();
-	inline ~ArrayList();
+	inline ~ArrayList() { clear(); }
 	ArrayList(const ArrayList<T> &list) { *this = list; }
 	ArrayList(ArrayList<T> &&list) noexcept { *this = std::move(list); }
 	size_t capacity() const { return _capacity; }
@@ -35,7 +35,7 @@ std::ostream &operator<<(std::ostream &os, const ArrayList<U> &list)
 {
 	for (size_t i = 0; i < list._size; ++i)
 		if (list.get(i) != nullptr)
-			os << *list.get(i);
+			os << *list.get(i) << "\n";
 	return os;
 }
 
@@ -68,13 +68,6 @@ ArrayList<T>::ArrayList()
 	this->_size = 0;
 	_capacity = DEFAULT_CAPACITY;
 	_array = new std::shared_ptr<T>[_capacity];
-}
-
-template <typename T>
-ArrayList<T>::~ArrayList()
-{
-	clear();
-	delete[] _array;
 }
 
 template <typename T>
