@@ -1,7 +1,6 @@
 #include <iostream>
 #include "./06_BinarySearchTree.h"
 #include "./Person.h"
-using namespace std;
 
 int main()
 {
@@ -30,6 +29,7 @@ int main()
     tree.add(std::make_shared<Person>(9, "Alice9"));
     tree.add(std::make_shared<Person>(2, "Alice2"));
     tree.add(std::make_shared<Person>(5, "Alice5"));
+    std::cout << "height=" << tree.height() << "\n";
     std::cout << "is complete: " << tree.is_complete() << "\n";
     
     return 0;
@@ -39,35 +39,36 @@ int main()
 2022年4月9日 12:01:06
 输出：
 ----------Test traverse()----------
-lambda: 0xfd6740[7, Alice7]
-lambda: 0xfd67b0[4, Alice4]
-lambda: 0xfd69e0[9, Alice9]
-lambda: 0xfd6820[2, Alice2]
-lambda: 0xfd6970[5, Alice5]
-lambda: 0xfd6a50[8, Alice8]
-lambda: 0xfd6ac0[11, Alice11]
-lambda: 0xfd6890[1, Alice1]
-lambda: 0xfd6900[3, Alice3]
-lambda: 0xfd6b30[10, Alice10]
-lambda: 0xfd6ba0[12, Alice12]
+lambda: 0x6a6740[7, Alice7]
+lambda: 0x6a67b0[4, Alice4]
+lambda: 0x6a69e0[9, Alice9]
+lambda: 0x6a6820[2, Alice2]
+lambda: 0x6a6970[5, Alice5]
+lambda: 0x6a6a50[8, Alice8]
+lambda: 0x6a6ac0[11, Alice11]
+lambda: 0x6a6890[1, Alice1]
+lambda: 0x6a6900[3, Alice3]
+lambda: 0x6a6b30[10, Alice10]
+lambda: 0x6a6ba0[12, Alice12]
 height=4
 ----------Test is_complete()----------
 is complete: 0
-delete 0xfd6890[1, Alice1]
-delete 0xfd6900[3, Alice3]
-delete 0xfd6820[2, Alice2]
-delete 0xfd6970[5, Alice5]
-delete 0xfd67b0[4, Alice4]
-delete 0xfd6a50[8, Alice8]
-delete 0xfd6b30[10, Alice10]
-delete 0xfd6ba0[12, Alice12]
-delete 0xfd6ac0[11, Alice11]
-delete 0xfd69e0[9, Alice9]
-delete 0xfd6740[7, Alice7]
+delete 0x6a6890[1, Alice1]
+delete 0x6a6900[3, Alice3]
+delete 0x6a6820[2, Alice2]
+delete 0x6a6970[5, Alice5]
+delete 0x6a67b0[4, Alice4]
+delete 0x6a6a50[8, Alice8]
+delete 0x6a6b30[10, Alice10]
+delete 0x6a6ba0[12, Alice12]
+delete 0x6a6ac0[11, Alice11]
+delete 0x6a69e0[9, Alice9]
+delete 0x6a6740[7, Alice7]
+height=3
 is complete: 1
-delete 0xfd6890[2, Alice2]
-delete 0xfd6900[5, Alice5]
-delete 0xfd67b0[4, Alice4]
-delete 0xfd6820[9, Alice9]
-delete 0xfd6740[7, Alice7]
+delete 0x6a6890[2, Alice2]
+delete 0x6a6900[5, Alice5]
+delete 0x6a67b0[4, Alice4]
+delete 0x6a6820[9, Alice9]
+delete 0x6a6740[7, Alice7]
 */

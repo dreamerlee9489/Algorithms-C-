@@ -18,7 +18,7 @@ public:
 	inline ArrayList<T> &operator=(const ArrayList<T> &list);
 	inline ArrayList<T> &operator=(ArrayList<T> &&list) noexcept;
 	inline ArrayList();
-	inline ~ArrayList() { clear(); }
+	inline ~ArrayList() { delete[] _array; }
 	ArrayList(const ArrayList<T> &list) { *this = list; }
 	ArrayList(ArrayList<T> &&list) noexcept { *this = std::move(list); }
 	size_t capacity() const { return _capacity; }

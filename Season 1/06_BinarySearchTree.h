@@ -24,7 +24,7 @@ private:
         bool is_binary() { return _left != nullptr && _right != nullptr; }
     };
     size_t _size = 0;
-    void nullptr_check(std::shared_ptr<T> data) const;
+    void not_null_check(std::shared_ptr<T> data) const;
     Node<T> *get_predecessor(Node<T> *node) const;
     Node<T> *get_successor(Node<T> *node) const;
     void inorder_traverse(Node<T> *node, traverse_func func) const;
@@ -53,7 +53,7 @@ public:
     Node<T> *get_node(std::shared_ptr<T> data) const;
     void add(std::shared_ptr<T> data);
     void remove(std::shared_ptr<T> data);
-    bool contains(std::shared_ptr<T> data) const;
+    bool contains(std::shared_ptr<T> data) const { return get_node(data) != nullptr; }
     void traverse(TraverseOrder order = TraverseOrder::In, traverse_func func = nullptr) const;
     void clear() { clear_recu(_root); }
 };
@@ -156,7 +156,7 @@ BinarySearchTree<T>::Node<T> *BinarySearchTree<T>::get_successor(Node<T> *node) 
 template <typename T>
 void BinarySearchTree<T>::add(std::shared_ptr<T> data)
 {
-    nullptr_check(data);
+    not_null_check(data);
     if (_root == nullptr)
     {
         _root = new Node<T>(data);
@@ -188,12 +188,6 @@ void BinarySearchTree<T>::add(std::shared_ptr<T> data)
 template <typename T>
 void BinarySearchTree<T>::remove(std::shared_ptr<T> data)
 {
-}
-
-template <typename T>
-bool BinarySearchTree<T>::contains(std::shared_ptr<T> data) const
-{
-    return get_node(data) != nullptr;
 }
 
 template <typename T>
@@ -231,7 +225,7 @@ void BinarySearchTree<T>::clear_recu(Node<T> *node)
 }
 
 template <typename T>
-void BinarySearchTree<T>::nullptr_check(std::shared_ptr<T> data) const
+void BinarySearchTree<T>::not_null_check(std::shared_ptr<T> data) const
 {
     if (data == nullptr)
         throw std::invalid_argument("data must be not null.");
