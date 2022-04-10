@@ -7,5 +7,4 @@
 >>队列  
 >>双端队列  
 >>循环双端队列  
- 
-第二季链接：https://www.bilibili.com/video/BV1b54y1s74e?spm_id_from=333.337.search-card.all.click  
+>>二叉搜索树
