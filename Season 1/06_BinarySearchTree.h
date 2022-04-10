@@ -228,6 +228,54 @@ void BinarySearchTree<T>::add(std::shared_ptr<T> data)
 template <typename T>
 void BinarySearchTree<T>::remove(std::shared_ptr<T> data)
 {
+    _size--;
+    Node<T> *node = get_node(data);
+    if(node == nullptr)
+        return;
+    if(node->is_binary())
+    {
+        Node<T>* s = get_successor(node);
+        node->_data = s->_data;
+        node = s;//删除前驱结点
+    }
+    Node<T>* replace = node->_left != nullptr ? node->_left : node->_right;
+    if(replace != nullptr)
+    {
+        replace->_parent = node->_parent;
+        if(node->_parent == nullptr)
+        {
+            delete _root;
+            _root = replace;
+        }
+        else if(node == node->_parent->_left)
+        {
+            delete node->_parent->_left;
+            node->_parent->_left = replace;
+        }
+        else
+        {
+            delete node->_parent->_right;
+            node->_parent->_right = replace;
+        }
+    }
+    else if(node->_parent == nullptr)
+    {
+        delete _root;
+        _root = nullptr;
+    }
+    else
+    {
+        if(node == node->_parent->_left)
+        {
+            delete node->_parent->_left;
+            node->_parent->_left = nullptr;
+        }
+        else
+        {
+            delete node->_parent->_right;
+            node->_parent->_right = nullptr;
+        }
+    }
 }
 
 template <typename T>
