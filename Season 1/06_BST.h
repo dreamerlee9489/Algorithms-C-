@@ -1,11 +1,11 @@
 #ifndef BST_H
 #define BST_H
-#include "./06_BinaryTree.h"
-
+#include "./06_IBinaryTree.h"
+// 二叉搜索树
 template <typename T>
-class BST : public BinaryTree<T>
+class BST : public IBinaryTree<T>
 {
-    friend inline std::ostream &operator<<(std::ostream &os, const BST<T> &tree) { return draw_tree(os, tree); }
+    friend std::ostream &operator<<(std::ostream &os, const BST<T> &tree) { return draw_tree(os, tree); }
 
 private:
     static std::ostream &draw_tree(std::ostream &os, const BST<T> &tree);

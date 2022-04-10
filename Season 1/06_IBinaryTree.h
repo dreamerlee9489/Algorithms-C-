@@ -7,7 +7,7 @@
 #include "./IString.h"
 // 二叉树基类(智能指针版)
 template <typename T>
-class BinaryTree
+class IBinaryTree
 {
     // typedef void traverse_func(std::shared_ptr<T> data);
     using traverse_func = void (*)(std::shared_ptr<T> data);
@@ -45,8 +45,8 @@ public:
         Level
     };
     Node<T> *_root = nullptr;
-    BinaryTree() = default;
-    ~BinaryTree() { clear_recu(_root); }
+    IBinaryTree() = default;
+    ~IBinaryTree() { clear_recu(_root); }
     virtual Node<T> *get_node(std::shared_ptr<T> data) const = 0;
     virtual void add(std::shared_ptr<T> data) = 0;
     virtual void remove(std::shared_ptr<T> data) = 0;
@@ -60,7 +60,7 @@ public:
 };
 
 template <typename T>
-size_t BinaryTree<T>::height_recu(Node<T> *node) const
+size_t IBinaryTree<T>::height_recu(Node<T> *node) const
 {
     if (node == nullptr)
         return 0;
@@ -68,7 +68,7 @@ size_t BinaryTree<T>::height_recu(Node<T> *node) const
 }
 
 template <typename T>
-size_t BinaryTree<T>::height_iter(Node<T> *node) const
+size_t IBinaryTree<T>::height_iter(Node<T> *node) const
 {
     if (node == nullptr)
         return 0;
@@ -94,7 +94,7 @@ size_t BinaryTree<T>::height_iter(Node<T> *node) const
 }
 
 template <typename T>
-bool BinaryTree<T>::is_complete() const
+bool IBinaryTree<T>::is_complete() const
 {
     if (_root == nullptr)
         return false;
@@ -121,7 +121,7 @@ bool BinaryTree<T>::is_complete() const
 }
 
 template <typename T>
-BinaryTree<T>::Node<T> *BinaryTree<T>::get_predecessor(Node<T> *node) const
+IBinaryTree<T>::Node<T> *IBinaryTree<T>::get_predecessor(Node<T> *node) const
 {
     if (node == nullptr)
         return nullptr;
@@ -138,7 +138,7 @@ BinaryTree<T>::Node<T> *BinaryTree<T>::get_predecessor(Node<T> *node) const
 }
 
 template <typename T>
-BinaryTree<T>::Node<T> *BinaryTree<T>::get_successor(Node<T> *node) const
+IBinaryTree<T>::Node<T> *IBinaryTree<T>::get_successor(Node<T> *node) const
 {
     if (node == nullptr)
         return nullptr;
@@ -155,7 +155,7 @@ BinaryTree<T>::Node<T> *BinaryTree<T>::get_successor(Node<T> *node) const
 }
 
 template <typename T>
-void BinaryTree<T>::clear_recu(Node<T> *node)
+void IBinaryTree<T>::clear_recu(Node<T> *node)
 {
     if (node != nullptr)
     {
@@ -167,14 +167,14 @@ void BinaryTree<T>::clear_recu(Node<T> *node)
 }
 
 template <typename T>
-void BinaryTree<T>::not_null_check(std::shared_ptr<T> data) const
+void IBinaryTree<T>::not_null_check(std::shared_ptr<T> data) const
 {
     if (data == nullptr)
         throw std::invalid_argument("data must be not null.");
 }
 
 template <typename T>
-void BinaryTree<T>::traverse(TraverseOrder order, traverse_func func) const
+void IBinaryTree<T>::traverse(TraverseOrder order, traverse_func func) const
 {
     switch (order)
     {
@@ -194,7 +194,7 @@ void BinaryTree<T>::traverse(TraverseOrder order, traverse_func func) const
 }
 
 template <typename T>
-void BinaryTree<T>::inorder_traverse(Node<T> *node, traverse_func func) const
+void IBinaryTree<T>::inorder_traverse(Node<T> *node, traverse_func func) const
 {
     if (node != nullptr)
     {
@@ -208,7 +208,7 @@ void BinaryTree<T>::inorder_traverse(Node<T> *node, traverse_func func) const
 }
 
 template <typename T>
-void BinaryTree<T>::preorder_traverse(Node<T> *node, traverse_func func) const
+void IBinaryTree<T>::preorder_traverse(Node<T> *node, traverse_func func) const
 {
     if (node != nullptr)
     {
@@ -222,7 +222,7 @@ void BinaryTree<T>::preorder_traverse(Node<T> *node, traverse_func func) const
 }
 
 template <typename T>
-void BinaryTree<T>::postorder_traverse(Node<T> *node, traverse_func func) const
+void IBinaryTree<T>::postorder_traverse(Node<T> *node, traverse_func func) const
 {
     if (node != nullptr)
     {
@@ -236,7 +236,7 @@ void BinaryTree<T>::postorder_traverse(Node<T> *node, traverse_func func) const
 }
 
 template <typename T>
-void BinaryTree<T>::levelorder_traverse(Node<T> *node, traverse_func func) const
+void IBinaryTree<T>::levelorder_traverse(Node<T> *node, traverse_func func) const
 {
     if (node == nullptr)
         return;

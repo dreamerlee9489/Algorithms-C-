@@ -26,7 +26,7 @@ int main()
     tree.remove(std::make_shared<Person>(7, "Alice7"));
     tree.remove(std::make_shared<Person>(2, "Alice2"));
     tree.remove(std::make_shared<Person>(9, "Alice9"));
-    tree.traverse(BST<Person>::TraverseOrder::In);
+    tree.traverse();
     std::cout << "----------Test clear()----------\n";
     tree.clear();
     tree.add(std::make_shared<Person>(7, "Alice7"));
@@ -37,7 +37,7 @@ int main()
     std::cout << "----------Test operator<<()----------\n";
     std::cout << tree;
     std::cout << "----------Test traverse(In)----------\n";
-    tree.traverse(BST<Person>::TraverseOrder::In);
+    tree.traverse();
     std::cout << "height=" << tree.height() << "\n";
     std::cout << "is complete: " << tree.is_complete() << "\n";
 
