@@ -66,23 +66,26 @@ std::ostream &BinarySearchTree<T>::draw_tree(std::ostream &os, const BinarySearc
 {
     if (tree._root == nullptr)
         return os;
-    size_t height = 0;
+    size_t height = 0, total_height = tree.height();
     size_t level_count = 1;
     size_t str_size = 16;
-    size_t width = std::pow(2, tree.height() - 1) * str_size;
+    size_t width = std::pow(2, total_height - 1) * str_size;
     std::queue<Node<T> *> q = std::queue<Node<T> *>();
     q.push(tree._root);
     while (!q.empty())
     {
-        size_t space = width / (height + 1) - str_size / 2;
+        size_t space = width / std::pow(2, height + 1) - str_size / 2;
         Node<T> *elem = q.front();
         std::string str;
-        str = std::string(space, ' ') + ((IString &)*elem->_data).to_string() + std::string(space, ' ');
+        if(elem != nullptr)
+            str = std::string(space, ' ') + ((IString &)*elem->_data).to_string() + std::string(space, ' ');
+        else
+            str = std::string(str_size, ' '); 
         os << str;
         q.pop();
-        if (elem->_left != nullptr)
+        if (elem != nullptr)
             q.push(elem->_left);
-        if (elem->_right != nullptr)
+        if (elem != nullptr)
             q.push(elem->_right);
         level_count--;
         if (level_count == 0)
