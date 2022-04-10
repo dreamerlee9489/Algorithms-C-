@@ -3,13 +3,15 @@
 #include <iostream>
 #include <memory>
 #include <queue>
-#include <algorithm>
+#include <cmath>
+#include "./IString.h"
 
 template <typename T>
 class BinarySearchTree
 {
     // typedef void traverse_func(std::shared_ptr<T> data);
     using traverse_func = void (*)(std::shared_ptr<T> data);
+    friend inline std::ostream &operator<<(std::ostream &os, const BinarySearchTree<T> &tree) { return draw_tree(os, tree); }
 
 private:
     template <typename U>
@@ -20,8 +22,8 @@ private:
         Node(std::shared_ptr<U> data, Node<U> *parent = nullptr, Node<U> *left = nullptr, Node<U> *right = nullptr)
             : _data(data), _parent(parent), _left(left), _right(right) {}
         ~Node() { _data = nullptr; }
-        bool is_leaf() { return _left == nullptr && _right == nullptr; }
-        bool is_binary() { return _left != nullptr && _right != nullptr; }
+        bool is_leaf() const { return _left == nullptr && _right == nullptr; }
+        bool is_binary() const { return _left != nullptr && _right != nullptr; }
     };
     size_t _size = 0;
     void not_null_check(std::shared_ptr<T> data) const;
@@ -34,6 +36,7 @@ private:
     size_t height_recu(Node<T> *node) const;
     size_t height_iter(Node<T> *node) const;
     void clear_recu(Node<T> *node);
+    static std::ostream &draw_tree(std::ostream &os, const BinarySearchTree<T> &tree);
 
 public:
     enum class TraverseOrder
@@ -49,7 +52,7 @@ public:
     size_t size() const { return _size; }
     size_t height() const { return height_iter(_root); }
     bool is_empty() const { return _size == 0; }
-    bool is_complete();
+    bool is_complete() const;
     Node<T> *get_node(std::shared_ptr<T> data) const;
     void add(std::shared_ptr<T> data);
     void remove(std::shared_ptr<T> data);
@@ -57,6 +60,41 @@ public:
     void traverse(TraverseOrder order = TraverseOrder::In, traverse_func func = nullptr) const;
     void clear() { clear_recu(_root); }
 };
+
+template <typename T>
+std::ostream &BinarySearchTree<T>::draw_tree(std::ostream &os, const BinarySearchTree<T> &tree)
+{
+    if (tree._root == nullptr)
+        return os;
+    size_t height = 0;
+    size_t total_height = tree.height();
+    size_t level_count = 1;
+    size_t str_size = 16;
+    size_t width = std::pow(2, total_height - 1) * str_size;
+    std::queue<Node<T> *> q = std::queue<Node<T> *>();
+    q.push(tree._root);
+    while (!q.empty())
+    {
+        size_t space = width / (height + 1) - str_size / 2;
+        Node<T> *elem = q.front();
+        std::string str;
+        str = std::string(space, ' ') + ((IString &)*elem->_data).to_string() + std::string(space, ' ');
+        os << str;
+        q.pop();
+        if (elem->_left != nullptr)
+            q.push(elem->_left);
+        if (elem->_right != nullptr)
+            q.push(elem->_right);
+        level_count--;
+        if (level_count == 0)
+        {
+            level_count = q.size();
+            height++;
+            os << "\n";
+        }
+    }
+    return os;
+}
 
 template <typename T>
 size_t BinarySearchTree<T>::height_recu(Node<T> *node) const
@@ -71,9 +109,9 @@ size_t BinarySearchTree<T>::height_iter(Node<T> *node) const
 {
     if (node == nullptr)
         return 0;
+    size_t height = 0, level_count = 1;
     std::queue<Node<T> *> q = std::queue<Node<T> *>();
     q.push(node);
-    size_t height = 0, level_count = 1;
     while (!q.empty())
     {
         Node<T> *elem = q.front();
@@ -93,7 +131,7 @@ size_t BinarySearchTree<T>::height_iter(Node<T> *node) const
 }
 
 template <typename T>
-bool BinarySearchTree<T>::is_complete()
+bool BinarySearchTree<T>::is_complete() const
 {
     if (_root == nullptr)
         return false;
@@ -215,10 +253,8 @@ void BinarySearchTree<T>::clear_recu(Node<T> *node)
 {
     if (node != nullptr)
     {
-        if (node->_left != nullptr)
-            clear_recu(node->_left);
-        if (node->_right != nullptr)
-            clear_recu(node->_right);
+        clear_recu(node->_left);
+        clear_recu(node->_right);
         delete node;
         _root = nullptr;
     }
