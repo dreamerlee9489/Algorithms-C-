@@ -1,7 +1,7 @@
 #ifndef BST_H
 #define BST_H
 #include "./06_BinaryTree.h"
-// 二叉搜索树
+
 template <typename T>
 class BST : public BinaryTree<T>
 {
@@ -105,43 +105,26 @@ void BST<T>::remove(std::shared_ptr<T> data)
     {
         replace->_parent = node->_parent;
         if (node->_parent == nullptr)
-        {
-            delete this->_root;
             this->_root = replace;
-        }
         else if (node == node->_parent->_left)
-        {
-            delete node->_parent->_left;
             node->_parent->_left = replace;
-        }
         else
-        {
-            delete node->_parent->_right;
             node->_parent->_right = replace;
-        }
     }
-    else if (node->_parent == nullptr)
-    {
-        delete this->_root;
-        this->_root = nullptr;
-    }
-    else
+    else if (node->_parent != nullptr)
     {
         if (node == node->_parent->_left)
-        {
-            delete node->_parent->_left;
             node->_parent->_left = nullptr;
-        }
         else
-        {
-            delete node->_parent->_right;
             node->_parent->_right = nullptr;
-        }
     }
+    else
+        this->_root = nullptr;
+    delete node;
 }
 
 template <typename T>
-typename BST<T>::template Node<T> *BST<T>::get_node(std::shared_ptr<T> data) const
+typename BST<T>::BST::template Node<T> *BST<T>::get_node(std::shared_ptr<T> data) const
 {
     typename BST::template Node<T> *node = this->_root;
     while (node != nullptr)
