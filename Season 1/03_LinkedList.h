@@ -1,7 +1,7 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 #include "./03_IList.h"
-// 泛型双向循环链表(智能指针版)
+// 泛型双向循环链表
 template <typename T>
 class LinkedList : public IList<T>
 {

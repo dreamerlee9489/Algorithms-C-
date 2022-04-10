@@ -5,7 +5,7 @@
 #include <queue>
 #include <cmath>
 #include "./IString.h"
-// 二叉树基类
+// 二叉树基类(智能指针版)
 template <typename T>
 class BinaryTree
 {

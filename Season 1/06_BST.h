@@ -1,7 +1,7 @@
 #ifndef BST_H
 #define BST_H
 #include "./06_BinaryTree.h"
-
+// 二叉搜索树
 template <typename T>
 class BST : public BinaryTree<T>
 {

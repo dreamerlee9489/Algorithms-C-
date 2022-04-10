@@ -1,7 +1,7 @@
 #ifndef ARRAYLIST_H
 #define ARRAYLIST_H
 #include "./03_IList.h"
-// 泛型动态数组(智能指针版)
+// 泛型动态数组
 template <typename T>
 class ArrayList : public IList<T>
 {
