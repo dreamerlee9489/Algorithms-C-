@@ -1,19 +1,18 @@
-#ifndef BINARY_SEARCH_TREE_H
-#define BINARY_SEARCH_TREE_H
+#ifndef BINARY_TREE_H
+#define BINARY_TREE_H
 #include <iostream>
 #include <memory>
 #include <queue>
 #include <cmath>
 #include "./IString.h"
-
+// 二叉树基类
 template <typename T>
-class BinarySearchTree
+class BinaryTree
 {
     // typedef void traverse_func(std::shared_ptr<T> data);
     using traverse_func = void (*)(std::shared_ptr<T> data);
-    friend inline std::ostream &operator<<(std::ostream &os, const BinarySearchTree<T> &tree) { return draw_tree(os, tree); }
 
-private:
+protected:
     template <typename U>
     struct Node
     {
@@ -36,7 +35,6 @@ private:
     size_t height_recu(Node<T> *node) const;
     size_t height_iter(Node<T> *node) const;
     void clear_recu(Node<T> *node);
-    static std::ostream &draw_tree(std::ostream &os, const BinarySearchTree<T> &tree);
 
 public:
     enum class TraverseOrder
@@ -47,59 +45,22 @@ public:
         Level
     };
     Node<T> *_root = nullptr;
-    BinarySearchTree() = default;
-    ~BinarySearchTree() { clear_recu(_root); }
+    BinaryTree() = default;
+    ~BinaryTree() { clear_recu(_root); }
+    virtual Node<T> *get_node(std::shared_ptr<T> data) const = 0;
+    virtual void add(std::shared_ptr<T> data) = 0;
+    virtual void remove(std::shared_ptr<T> data) = 0;
     size_t size() const { return _size; }
     size_t height() const { return height_iter(_root); }
     bool is_empty() const { return _size == 0; }
     bool is_complete() const;
-    Node<T> *get_node(std::shared_ptr<T> data) const;
-    void add(std::shared_ptr<T> data);
-    void remove(std::shared_ptr<T> data);
     bool contains(std::shared_ptr<T> data) const { return get_node(data) != nullptr; }
     void traverse(TraverseOrder order = TraverseOrder::In, traverse_func func = nullptr) const;
     void clear() { clear_recu(_root); }
 };
 
 template <typename T>
-std::ostream &BinarySearchTree<T>::draw_tree(std::ostream &os, const BinarySearchTree<T> &tree)
-{
-    if (tree._root == nullptr)
-        return os;
-    size_t height = 0, total_height = tree.height();
-    size_t level_count = 1;
-    size_t str_size = 16;
-    size_t width = std::pow(2, total_height - 1) * str_size;
-    std::queue<Node<T> *> q = std::queue<Node<T> *>();
-    q.push(tree._root);
-    while (!q.empty())
-    {
-        size_t space = width / std::pow(2, height + 1) - str_size / 2;
-        Node<T> *elem = q.front();
-        std::string str;
-        if(elem != nullptr)
-            str = std::string(space, ' ') + ((IString &)*elem->_data).to_string() + std::string(space, ' ');
-        else
-            str = std::string(str_size, ' '); 
-        os << str;
-        q.pop();
-        if (elem != nullptr)
-            q.push(elem->_left);
-        if (elem != nullptr)
-            q.push(elem->_right);
-        level_count--;
-        if (level_count == 0)
-        {
-            level_count = q.size();
-            height++;
-            os << "\n";
-        }
-    }
-    return os;
-}
-
-template <typename T>
-size_t BinarySearchTree<T>::height_recu(Node<T> *node) const
+size_t BinaryTree<T>::height_recu(Node<T> *node) const
 {
     if (node == nullptr)
         return 0;
@@ -107,7 +68,7 @@ size_t BinarySearchTree<T>::height_recu(Node<T> *node) const
 }
 
 template <typename T>
-size_t BinarySearchTree<T>::height_iter(Node<T> *node) const
+size_t BinaryTree<T>::height_iter(Node<T> *node) const
 {
     if (node == nullptr)
         return 0;
@@ -133,7 +94,7 @@ size_t BinarySearchTree<T>::height_iter(Node<T> *node) const
 }
 
 template <typename T>
-bool BinarySearchTree<T>::is_complete() const
+bool BinaryTree<T>::is_complete() const
 {
     if (_root == nullptr)
         return false;
@@ -160,7 +121,7 @@ bool BinarySearchTree<T>::is_complete() const
 }
 
 template <typename T>
-BinarySearchTree<T>::Node<T> *BinarySearchTree<T>::get_predecessor(Node<T> *node) const
+BinaryTree<T>::Node<T> *BinaryTree<T>::get_predecessor(Node<T> *node) const
 {
     if (node == nullptr)
         return nullptr;
@@ -177,7 +138,7 @@ BinarySearchTree<T>::Node<T> *BinarySearchTree<T>::get_predecessor(Node<T> *node
 }
 
 template <typename T>
-BinarySearchTree<T>::Node<T> *BinarySearchTree<T>::get_successor(Node<T> *node) const
+BinaryTree<T>::Node<T> *BinaryTree<T>::get_successor(Node<T> *node) const
 {
     if (node == nullptr)
         return nullptr;
@@ -194,92 +155,26 @@ BinarySearchTree<T>::Node<T> *BinarySearchTree<T>::get_successor(Node<T> *node) 
 }
 
 template <typename T>
-void BinarySearchTree<T>::add(std::shared_ptr<T> data)
+void BinaryTree<T>::clear_recu(Node<T> *node)
 {
-    not_null_check(data);
-    if (_root == nullptr)
+    if (node != nullptr)
     {
-        _root = new Node<T>(data);
-        _size++;
-        return;
-    }
-    Node<T> *node = _root, *parent = _root;
-    while (node != nullptr)
-    {
-        parent = node;
-        if (*node->_data < *data)
-            node = node->_right;
-        else if (*node->_data > *data)
-            node = node->_left;
-        else
-        {
-            node->_data = data;
-            return;
-        }
-    }
-    Node<T> *temp = new Node<T>(data, parent);
-    if (*data > *parent->_data)
-        parent->_right = temp;
-    else
-        parent->_left = temp;
-    _size++;
-}
-
-template <typename T>
-void BinarySearchTree<T>::remove(std::shared_ptr<T> data)
-{
-    _size--;
-    Node<T> *node = get_node(data);
-    if(node == nullptr)
-        return;
-    if(node->is_binary())
-    {
-        Node<T>* s = get_successor(node);
-        node->_data = s->_data;
-        node = s;//删除前驱结点
-    }
-    Node<T>* replace = node->_left != nullptr ? node->_left : node->_right;
-    if(replace != nullptr)
-    {
-        replace->_parent = node->_parent;
-        if(node->_parent == nullptr)
-        {
-            delete _root;
-            _root = replace;
-        }
-        else if(node == node->_parent->_left)
-        {
-            delete node->_parent->_left;
-            node->_parent->_left = replace;
-        }
-        else
-        {
-            delete node->_parent->_right;
-            node->_parent->_right = replace;
-        }
-    }
-    else if(node->_parent == nullptr)
-    {
-        delete _root;
+        clear_recu(node->_left);
+        clear_recu(node->_right);
+        delete node;
         _root = nullptr;
     }
-    else
-    {
-        if(node == node->_parent->_left)
-        {
-            delete node->_parent->_left;
-            node->_parent->_left = nullptr;
-        }
-        else
-        {
-            delete node->_parent->_right;
-            node->_parent->_right = nullptr;
-        }
-    }
 }
 
 template <typename T>
-void BinarySearchTree<T>::traverse(TraverseOrder order, traverse_func func) const
+void BinaryTree<T>::not_null_check(std::shared_ptr<T> data) const
+{
+    if (data == nullptr)
+        throw std::invalid_argument("data must be not null.");
+}
+
+template <typename T>
+void BinaryTree<T>::traverse(TraverseOrder order, traverse_func func) const
 {
     switch (order)
     {
@@ -299,42 +194,7 @@ void BinarySearchTree<T>::traverse(TraverseOrder order, traverse_func func) cons
 }
 
 template <typename T>
-void BinarySearchTree<T>::clear_recu(Node<T> *node)
-{
-    if (node != nullptr)
-    {
-        clear_recu(node->_left);
-        clear_recu(node->_right);
-        delete node;
-        _root = nullptr;
-    }
-}
-
-template <typename T>
-void BinarySearchTree<T>::not_null_check(std::shared_ptr<T> data) const
-{
-    if (data == nullptr)
-        throw std::invalid_argument("data must be not null.");
-}
-
-template <typename T>
-BinarySearchTree<T>::Node<T> *BinarySearchTree<T>::get_node(std::shared_ptr<T> data) const
-{
-    Node<T> *node = _root;
-    while (node != nullptr)
-    {
-        if (*node->_data < *data)
-            node = node->_right;
-        else if (*node->_data > *data)
-            node = node->_left;
-        else
-            return node;
-    }
-    return nullptr;
-}
-
-template <typename T>
-void BinarySearchTree<T>::inorder_traverse(Node<T> *node, traverse_func func) const
+void BinaryTree<T>::inorder_traverse(Node<T> *node, traverse_func func) const
 {
     if (node != nullptr)
     {
@@ -348,7 +208,7 @@ void BinarySearchTree<T>::inorder_traverse(Node<T> *node, traverse_func func) co
 }
 
 template <typename T>
-void BinarySearchTree<T>::preorder_traverse(Node<T> *node, traverse_func func) const
+void BinaryTree<T>::preorder_traverse(Node<T> *node, traverse_func func) const
 {
     if (node != nullptr)
     {
@@ -362,7 +222,7 @@ void BinarySearchTree<T>::preorder_traverse(Node<T> *node, traverse_func func) c
 }
 
 template <typename T>
-void BinarySearchTree<T>::postorder_traverse(Node<T> *node, traverse_func func) const
+void BinaryTree<T>::postorder_traverse(Node<T> *node, traverse_func func) const
 {
     if (node != nullptr)
     {
@@ -376,7 +236,7 @@ void BinarySearchTree<T>::postorder_traverse(Node<T> *node, traverse_func func) 
 }
 
 template <typename T>
-void BinarySearchTree<T>::levelorder_traverse(Node<T> *node, traverse_func func) const
+void BinaryTree<T>::levelorder_traverse(Node<T> *node, traverse_func func) const
 {
     if (node == nullptr)
         return;
@@ -397,4 +257,4 @@ void BinarySearchTree<T>::levelorder_traverse(Node<T> *node, traverse_func func)
     }
 }
 
-#endif /* BINARY_SEARCH_TREE_H */
+#endif /* BINARY_TREE_H */
