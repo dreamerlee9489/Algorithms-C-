@@ -67,10 +67,9 @@ std::ostream &BinarySearchTree<T>::draw_tree(std::ostream &os, const BinarySearc
     if (tree._root == nullptr)
         return os;
     size_t height = 0;
-    size_t total_height = tree.height();
     size_t level_count = 1;
     size_t str_size = 16;
-    size_t width = std::pow(2, total_height - 1) * str_size;
+    size_t width = std::pow(2, tree.height() - 1) * str_size;
     std::queue<Node<T> *> q = std::queue<Node<T> *>();
     q.push(tree._root);
     while (!q.empty())
