@@ -11,6 +11,7 @@ class IBinaryTree
 {
     // typedef void traverse_func(std::shared_ptr<T> data);
     using traverse_func = void (*)(std::shared_ptr<T> data);
+    friend std::ostream &operator<<(std::ostream &os, const IBinaryTree<T> &tree) { return draw_tree(os, tree); }
 
 protected:
     template <typename U>
@@ -35,6 +36,7 @@ protected:
     size_t height_recu(Node<T> *node) const;
     size_t height_iter(Node<T> *node) const;
     void clear_recu(Node<T> *node);
+    static std::ostream &draw_tree(std::ostream &os, const IBinaryTree<T> &tree);
 
 public:
     enum class TraverseOrder
@@ -58,6 +60,43 @@ public:
     void traverse(TraverseOrder order = TraverseOrder::In, traverse_func func = nullptr) const;
     void clear() { clear_recu(_root); }
 };
+
+template <typename T>
+std::ostream &IBinaryTree<T>::draw_tree(std::ostream &os, const IBinaryTree<T> &tree)
+{
+    if (tree._root == nullptr)
+        return os;
+    size_t height = 0, total_height = tree.height();
+    size_t level_count = 1;
+    size_t str_size = 16;
+    size_t width = std::pow(2, total_height - 1) * str_size;
+    std::queue<typename IBinaryTree::template Node<T> *> q = std::queue<typename IBinaryTree::template Node<T> *>();
+    q.push(tree._root);
+    while (!q.empty())
+    {
+        size_t space = width / std::pow(2, height + 1) - str_size / 2;
+        typename IBinaryTree::template Node<T> *elem = q.front();
+        std::string str;
+        if (elem != nullptr)
+            str = std::string(space, ' ') + ((IString &)*elem->_data).to_string() + std::string(space, ' ');
+        else
+            str = std::string(str_size, ' ');
+        os << str;
+        q.pop();
+        if (elem != nullptr)
+            q.push(elem->_left);
+        if (elem != nullptr)
+            q.push(elem->_right);
+        level_count--;
+        if (level_count == 0)
+        {
+            level_count = q.size();
+            height++;
+            os << "\n";
+        }
+    }
+    return os;
+}
 
 template <typename T>
 size_t IBinaryTree<T>::height_recu(Node<T> *node) const

@@ -5,55 +5,13 @@
 template <typename T>
 class BST : public IBinaryTree<T>
 {
-    friend std::ostream &operator<<(std::ostream &os, const BST<T> &tree) { return draw_tree(os, tree); }
-
-private:
-    static std::ostream &draw_tree(std::ostream &os, const BST<T> &tree);
-
 public:
     BST() = default;
     ~BST() { this->clear_recu(this->_root); }
-    typename BST::template Node<T> *get_node(std::shared_ptr<T> data) const override;
-    void add(std::shared_ptr<T> data) override;
-    void remove(std::shared_ptr<T> data) override;
+    virtual typename BST::template Node<T> *get_node(std::shared_ptr<T> data) const override;
+    virtual void add(std::shared_ptr<T> data) override;
+    virtual void remove(std::shared_ptr<T> data) override;
 };
-
-template <typename T>
-std::ostream &BST<T>::draw_tree(std::ostream &os, const BST<T> &tree)
-{
-    if (tree._root == nullptr)
-        return os;
-    size_t height = 0, total_height = tree.height();
-    size_t level_count = 1;
-    size_t str_size = 16;
-    size_t width = std::pow(2, total_height - 1) * str_size;
-    std::queue<typename BST::template Node<T> *> q = std::queue<typename BST::template Node<T> *>();
-    q.push(tree._root);
-    while (!q.empty())
-    {
-        size_t space = width / std::pow(2, height + 1) - str_size / 2;
-        typename BST::template Node<T> *elem = q.front();
-        std::string str;
-        if (elem != nullptr)
-            str = std::string(space, ' ') + ((IString &)*elem->_data).to_string() + std::string(space, ' ');
-        else
-            str = std::string(str_size, ' ');
-        os << str;
-        q.pop();
-        if (elem != nullptr)
-            q.push(elem->_left);
-        if (elem != nullptr)
-            q.push(elem->_right);
-        level_count--;
-        if (level_count == 0)
-        {
-            level_count = q.size();
-            height++;
-            os << "\n";
-        }
-    }
-    return os;
-}
 
 template <typename T>
 void BST<T>::add(std::shared_ptr<T> data)
