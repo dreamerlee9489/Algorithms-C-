@@ -6,7 +6,7 @@ template <typename T>
 class ArrayList : public IList<T>
 {
 	template <typename U>
-	friend inline std::ostream &operator<<(std::ostream &os, const ArrayList<U> &list);
+	friend std::ostream &operator<<(std::ostream &os, const ArrayList<U> &list);
 
 private:
 	const size_t DEFAULT_CAPACITY = 8;
@@ -15,10 +15,10 @@ private:
 	void ensure_capacity();
 
 public:
-	inline ArrayList<T> &operator=(const ArrayList<T> &list);
-	inline ArrayList<T> &operator=(ArrayList<T> &&list) noexcept;
-	inline ArrayList();
-	inline ~ArrayList() { delete[] _array; }
+	ArrayList<T> &operator=(const ArrayList<T> &list);
+	ArrayList<T> &operator=(ArrayList<T> &&list) noexcept;
+	ArrayList();
+	~ArrayList() { delete[] _array; }
 	ArrayList(const ArrayList<T> &list) { *this = list; }
 	ArrayList(ArrayList<T> &&list) noexcept { *this = std::move(list); }
 	size_t capacity() const { return _capacity; }
@@ -31,7 +31,7 @@ public:
 };
 
 template <typename U>
-std::ostream &operator<<(std::ostream &os, const ArrayList<U> &list)
+inline std::ostream &operator<<(std::ostream &os, const ArrayList<U> &list)
 {
 	for (size_t i = 0; i < list._size; ++i)
 		if (list.get(i) != nullptr)
@@ -40,7 +40,7 @@ std::ostream &operator<<(std::ostream &os, const ArrayList<U> &list)
 }
 
 template <typename T>
-ArrayList<T> &ArrayList<T>::operator=(const ArrayList<T> &list)
+inline ArrayList<T> &ArrayList<T>::operator=(const ArrayList<T> &list)
 {
 	clear();
 	this->_size = 0;
@@ -52,7 +52,7 @@ ArrayList<T> &ArrayList<T>::operator=(const ArrayList<T> &list)
 }
 
 template <typename T>
-ArrayList<T> &ArrayList<T>::operator=(ArrayList<T> &&list) noexcept
+inline ArrayList<T> &ArrayList<T>::operator=(ArrayList<T> &&list) noexcept
 {
 	clear();
 	this->_size = list._size;
@@ -63,7 +63,7 @@ ArrayList<T> &ArrayList<T>::operator=(ArrayList<T> &&list) noexcept
 }
 
 template <typename T>
-ArrayList<T>::ArrayList()
+inline ArrayList<T>::ArrayList()
 {
 	this->_size = 0;
 	_capacity = DEFAULT_CAPACITY;
@@ -71,7 +71,7 @@ ArrayList<T>::ArrayList()
 }
 
 template <typename T>
-int ArrayList<T>::index_of(std::shared_ptr<T> data) const
+inline int ArrayList<T>::index_of(std::shared_ptr<T> data) const
 {
 	for (size_t i = 0; i < this->_size; ++i)
 		if (*_array[i] == *data)
@@ -80,7 +80,7 @@ int ArrayList<T>::index_of(std::shared_ptr<T> data) const
 }
 
 template <typename T>
-std::shared_ptr<T> ArrayList<T>::insert(int index, std::shared_ptr<T> data)
+inline std::shared_ptr<T> ArrayList<T>::insert(int index, std::shared_ptr<T> data)
 {
 	this->check_range(index, true);
 	ensure_capacity();
@@ -92,7 +92,7 @@ std::shared_ptr<T> ArrayList<T>::insert(int index, std::shared_ptr<T> data)
 }
 
 template <typename T>
-std::shared_ptr<T> ArrayList<T>::remove(int index)
+inline std::shared_ptr<T> ArrayList<T>::remove(int index)
 {
 	this->check_range(index);
 	auto old = _array[index];
@@ -103,14 +103,14 @@ std::shared_ptr<T> ArrayList<T>::remove(int index)
 }
 
 template <typename T>
-std::shared_ptr<T> ArrayList<T>::get(int index) const
+inline std::shared_ptr<T> ArrayList<T>::get(int index) const
 {
 	this->check_range(index);
 	return _array[index];
 }
 
 template <typename T>
-std::shared_ptr<T> ArrayList<T>::set(int index, std::shared_ptr<T> data)
+inline std::shared_ptr<T> ArrayList<T>::set(int index, std::shared_ptr<T> data)
 {
 	this->check_range(index);
 	_array[index] = data;
@@ -118,7 +118,7 @@ std::shared_ptr<T> ArrayList<T>::set(int index, std::shared_ptr<T> data)
 }
 
 template <typename T>
-void ArrayList<T>::clear()
+inline void ArrayList<T>::clear()
 {
 	for (size_t i = 0; i < _capacity; ++i)
 		_array[i] = nullptr;
@@ -126,7 +126,7 @@ void ArrayList<T>::clear()
 }
 
 template <typename T>
-void ArrayList<T>::ensure_capacity()
+inline void ArrayList<T>::ensure_capacity()
 {
 	if (this->_size >= _capacity)
 	{

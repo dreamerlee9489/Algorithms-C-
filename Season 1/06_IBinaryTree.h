@@ -5,7 +5,7 @@
 #include <queue>
 #include <cmath>
 #include "./IString.h"
-// 二叉树基类(智能指针版)
+// 二叉树基类
 template <typename T>
 class IBinaryTree
 {
@@ -13,7 +13,7 @@ class IBinaryTree
     using traverse_func = void (*)(std::shared_ptr<T> data);
     friend std::ostream &operator<<(std::ostream &os, const IBinaryTree<T> &tree) { return draw_tree(os, tree); }
 
-protected:
+public:
     template <typename U>
     struct Node
     {
@@ -24,8 +24,13 @@ protected:
         ~Node() { _data = nullptr; }
         bool is_leaf() const { return _left == nullptr && _right == nullptr; }
         bool is_binary() const { return _left != nullptr && _right != nullptr; }
+        bool is_left() const { return _parent != nullptr && this == _parent->_left; }
+        bool is_right() const { return _parent != nullptr && this == _parent->_right; }
     };
+
+protected:
     size_t _size = 0;
+    virtual Node<T> *create_node(std::shared_ptr<T> data, Node<T> *parent) { return new Node<T>(data, parent); }
     void not_null_check(std::shared_ptr<T> data) const;
     Node<T> *get_predecessor(Node<T> *node) const;
     Node<T> *get_successor(Node<T> *node) const;
@@ -62,44 +67,38 @@ public:
 };
 
 template <typename T>
-std::ostream &IBinaryTree<T>::draw_tree(std::ostream &os, const IBinaryTree<T> &tree)
+inline std::ostream &IBinaryTree<T>::draw_tree(std::ostream &os, const IBinaryTree<T> &tree)
 {
-    if (tree._root == nullptr)
-        return os;
-    size_t height = 0, total_height = tree.height();
-    size_t level_count = 1;
-    size_t str_size = 16;
-    size_t width = std::pow(2, total_height - 1) * str_size;
-    std::queue<typename IBinaryTree::template Node<T> *> q = std::queue<typename IBinaryTree::template Node<T> *>();
-    q.push(tree._root);
-    while (!q.empty())
+    if (tree._root != nullptr)
     {
-        size_t space = width / std::pow(2, height + 1) - str_size / 2;
-        typename IBinaryTree::template Node<T> *elem = q.front();
-        std::string str;
-        if (elem != nullptr)
-            str = std::string(space, ' ') + ((IString &)*elem->_data).to_string() + std::string(space, ' ');
-        else
-            str = std::string(str_size, ' ');
-        os << str;
-        q.pop();
-        if (elem != nullptr)
-            q.push(elem->_left);
-        if (elem != nullptr)
-            q.push(elem->_right);
-        level_count--;
-        if (level_count == 0)
+        size_t height = 0;
+        size_t level_count = 1;
+        std::queue<typename IBinaryTree::template Node<T> *> q = std::queue<typename IBinaryTree::template Node<T> *>();
+        q.push(tree._root);
+        while (!q.empty())
         {
-            level_count = q.size();
-            height++;
-            os << "\n";
+            typename IBinaryTree::template Node<T> *elem = q.front();
+            if (elem != nullptr)
+                os << ((IString &)*elem->_data).to_string() << "\t";
+            q.pop();
+            if (elem != nullptr)
+                q.push(elem->_left);
+            if (elem != nullptr)
+                q.push(elem->_right);
+            level_count--;
+            if (level_count == 0)
+            {
+                level_count = q.size();
+                height++;
+                os << "\n";
+            }
         }
     }
     return os;
 }
 
 template <typename T>
-size_t IBinaryTree<T>::height_recu(Node<T> *node) const
+inline size_t IBinaryTree<T>::height_recu(Node<T> *node) const
 {
     if (node == nullptr)
         return 0;
@@ -107,7 +106,7 @@ size_t IBinaryTree<T>::height_recu(Node<T> *node) const
 }
 
 template <typename T>
-size_t IBinaryTree<T>::height_iter(Node<T> *node) const
+inline size_t IBinaryTree<T>::height_iter(Node<T> *node) const
 {
     if (node == nullptr)
         return 0;
@@ -133,7 +132,7 @@ size_t IBinaryTree<T>::height_iter(Node<T> *node) const
 }
 
 template <typename T>
-bool IBinaryTree<T>::is_complete() const
+inline bool IBinaryTree<T>::is_complete() const
 {
     if (_root == nullptr)
         return false;
@@ -160,7 +159,7 @@ bool IBinaryTree<T>::is_complete() const
 }
 
 template <typename T>
-IBinaryTree<T>::Node<T> *IBinaryTree<T>::get_predecessor(Node<T> *node) const
+inline IBinaryTree<T>::Node<T> *IBinaryTree<T>::get_predecessor(Node<T> *node) const
 {
     if (node == nullptr)
         return nullptr;
@@ -177,7 +176,7 @@ IBinaryTree<T>::Node<T> *IBinaryTree<T>::get_predecessor(Node<T> *node) const
 }
 
 template <typename T>
-IBinaryTree<T>::Node<T> *IBinaryTree<T>::get_successor(Node<T> *node) const
+inline IBinaryTree<T>::Node<T> *IBinaryTree<T>::get_successor(Node<T> *node) const
 {
     if (node == nullptr)
         return nullptr;
@@ -194,7 +193,7 @@ IBinaryTree<T>::Node<T> *IBinaryTree<T>::get_successor(Node<T> *node) const
 }
 
 template <typename T>
-void IBinaryTree<T>::clear_recu(Node<T> *node)
+inline void IBinaryTree<T>::clear_recu(Node<T> *node)
 {
     if (node != nullptr)
     {
@@ -206,14 +205,14 @@ void IBinaryTree<T>::clear_recu(Node<T> *node)
 }
 
 template <typename T>
-void IBinaryTree<T>::not_null_check(std::shared_ptr<T> data) const
+inline void IBinaryTree<T>::not_null_check(std::shared_ptr<T> data) const
 {
     if (data == nullptr)
         throw std::invalid_argument("data must be not null.");
 }
 
 template <typename T>
-void IBinaryTree<T>::traverse(TraverseOrder order, traverse_func func) const
+inline void IBinaryTree<T>::traverse(TraverseOrder order, traverse_func func) const
 {
     switch (order)
     {
@@ -233,7 +232,7 @@ void IBinaryTree<T>::traverse(TraverseOrder order, traverse_func func) const
 }
 
 template <typename T>
-void IBinaryTree<T>::inorder_traverse(Node<T> *node, traverse_func func) const
+inline void IBinaryTree<T>::inorder_traverse(Node<T> *node, traverse_func func) const
 {
     if (node != nullptr)
     {
@@ -247,7 +246,7 @@ void IBinaryTree<T>::inorder_traverse(Node<T> *node, traverse_func func) const
 }
 
 template <typename T>
-void IBinaryTree<T>::preorder_traverse(Node<T> *node, traverse_func func) const
+inline void IBinaryTree<T>::preorder_traverse(Node<T> *node, traverse_func func) const
 {
     if (node != nullptr)
     {
@@ -261,7 +260,7 @@ void IBinaryTree<T>::preorder_traverse(Node<T> *node, traverse_func func) const
 }
 
 template <typename T>
-void IBinaryTree<T>::postorder_traverse(Node<T> *node, traverse_func func) const
+inline void IBinaryTree<T>::postorder_traverse(Node<T> *node, traverse_func func) const
 {
     if (node != nullptr)
     {
@@ -275,7 +274,7 @@ void IBinaryTree<T>::postorder_traverse(Node<T> *node, traverse_func func) const
 }
 
 template <typename T>
-void IBinaryTree<T>::levelorder_traverse(Node<T> *node, traverse_func func) const
+inline void IBinaryTree<T>::levelorder_traverse(Node<T> *node, traverse_func func) const
 {
     if (node == nullptr)
         return;

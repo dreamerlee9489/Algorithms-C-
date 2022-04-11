@@ -7,7 +7,7 @@ template <typename T>
 class CircleDeque
 {
     template <typename U>
-    friend inline std::ostream &operator<<(std::ostream &os, const CircleDeque<U> &deque);
+    friend std::ostream &operator<<(std::ostream &os, const CircleDeque<U> &deque);
 
 private:
     const size_t DEFAULT_CAPACITY = 8;
@@ -17,10 +17,10 @@ private:
     void ensure_capacity();
 
 public:
-    inline CircleDeque<T> &operator=(const CircleDeque<T> &deque);
-    inline CircleDeque<T> &operator=(CircleDeque<T> &&deque) noexcept;
-    inline CircleDeque();
-    inline ~CircleDeque();
+    CircleDeque<T> &operator=(const CircleDeque<T> &deque);
+    CircleDeque<T> &operator=(CircleDeque<T> &&deque) noexcept;
+    CircleDeque();
+    ~CircleDeque();
     CircleDeque(const CircleDeque<T> &deque) { *this = deque; }
     CircleDeque(CircleDeque<T> &&deque) noexcept { *this = std::move(deque); }
     size_t size() const { return _size; }
@@ -36,7 +36,7 @@ public:
 };
 
 template <typename U>
-std::ostream &operator<<(std::ostream &os, const CircleDeque<U> &deque)
+inline std::ostream &operator<<(std::ostream &os, const CircleDeque<U> &deque)
 {
     for (size_t i = 0; i < deque._capacity; ++i)
     {
@@ -49,7 +49,7 @@ std::ostream &operator<<(std::ostream &os, const CircleDeque<U> &deque)
 }
 
 template <typename T>
-CircleDeque<T> &CircleDeque<T>::operator=(const CircleDeque<T> &deque)
+inline CircleDeque<T> &CircleDeque<T>::operator=(const CircleDeque<T> &deque)
 {
     delete[] _array;
     _array = new std::shared_ptr<T>[deque._capacity];
@@ -62,7 +62,7 @@ CircleDeque<T> &CircleDeque<T>::operator=(const CircleDeque<T> &deque)
 }
 
 template <typename T>
-CircleDeque<T> &CircleDeque<T>::operator=(CircleDeque<T> &&deque) noexcept
+inline CircleDeque<T> &CircleDeque<T>::operator=(CircleDeque<T> &&deque) noexcept
 {
     _array = deque._array;
     _capacity = deque._capacity;
@@ -74,7 +74,7 @@ CircleDeque<T> &CircleDeque<T>::operator=(CircleDeque<T> &&deque) noexcept
 }
 
 template <typename T>
-CircleDeque<T>::CircleDeque()
+inline CircleDeque<T>::CircleDeque()
 {
     _size = 0;
     _front = 0;
@@ -83,14 +83,14 @@ CircleDeque<T>::CircleDeque()
 }
 
 template <typename T>
-CircleDeque<T>::~CircleDeque()
+inline CircleDeque<T>::~CircleDeque()
 {
     clear();
     delete[] _array;
 }
 
 template <typename T>
-std::shared_ptr<T> CircleDeque<T>::push(std::shared_ptr<T> data)
+inline std::shared_ptr<T> CircleDeque<T>::push(std::shared_ptr<T> data)
 {
     ensure_capacity();
     _array[true_index(_size)] = data;
@@ -99,7 +99,7 @@ std::shared_ptr<T> CircleDeque<T>::push(std::shared_ptr<T> data)
 }
 
 template <typename T>
-std::shared_ptr<T> CircleDeque<T>::pop()
+inline std::shared_ptr<T> CircleDeque<T>::pop()
 {
     std::shared_ptr<T> old = _array[_front];
     _array[_front] = nullptr;
@@ -109,7 +109,7 @@ std::shared_ptr<T> CircleDeque<T>::pop()
 }
 
 template <typename T>
-std::shared_ptr<T> CircleDeque<T>::push_front(std::shared_ptr<T> data)
+inline std::shared_ptr<T> CircleDeque<T>::push_front(std::shared_ptr<T> data)
 {
     ensure_capacity();
     _front = true_index(-1);
@@ -119,7 +119,7 @@ std::shared_ptr<T> CircleDeque<T>::push_front(std::shared_ptr<T> data)
 }
 
 template <typename T>
-std::shared_ptr<T> CircleDeque<T>::pop_rear()
+inline std::shared_ptr<T> CircleDeque<T>::pop_rear()
 {
     int rear = true_index(_size - 1);
     std::shared_ptr<T> old = _array[rear];
@@ -129,7 +129,7 @@ std::shared_ptr<T> CircleDeque<T>::pop_rear()
 }
 
 template <typename T>
-void CircleDeque<T>::clear()
+inline void CircleDeque<T>::clear()
 {
     for (size_t i = 0; i < _capacity; ++i)
         _array[i] = nullptr;
@@ -138,7 +138,7 @@ void CircleDeque<T>::clear()
 }
 
 template <typename T>
-int CircleDeque<T>::true_index(int index) const
+inline int CircleDeque<T>::true_index(int index) const
 {
     index += _front;
     if (index < 0)
@@ -147,7 +147,7 @@ int CircleDeque<T>::true_index(int index) const
 }
 
 template <typename T>
-void CircleDeque<T>::ensure_capacity()
+inline void CircleDeque<T>::ensure_capacity()
 {
     if (_size >= _capacity)
     {

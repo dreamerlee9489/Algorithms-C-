@@ -5,22 +5,27 @@
 template <typename T>
 class BST : public IBinaryTree<T>
 {
+protected:
+    virtual void after_add(typename BST::template Node<T> *node) {}
+    virtual void after_remove(typename BST::template Node<T> *node) {}
+
 public:
     BST() = default;
     ~BST() { this->clear_recu(this->_root); }
-    virtual typename BST::template Node<T> *get_node(std::shared_ptr<T> data) const override;
-    virtual void add(std::shared_ptr<T> data) override;
-    virtual void remove(std::shared_ptr<T> data) override;
+    typename BST::template Node<T> *get_node(std::shared_ptr<T> data) const override;
+    void add(std::shared_ptr<T> data) override;
+    void remove(std::shared_ptr<T> data) override;
 };
 
 template <typename T>
-void BST<T>::add(std::shared_ptr<T> data)
+inline void BST<T>::add(std::shared_ptr<T> data)
 {
     this->not_null_check(data);
     if (this->_root == nullptr)
     {
-        this->_root = new typename BST::template Node<T>(data);
+        this->_root = this->create_node(data, nullptr);
         this->_size++;
+        this->after_add(this->_root);
         return;
     }
     typename BST::template Node<T> *node = this->_root, *parent = this->_root;
@@ -37,16 +42,17 @@ void BST<T>::add(std::shared_ptr<T> data)
             return;
         }
     }
-    typename BST::template Node<T> *temp = new typename BST::template Node<T>(data, parent);
+    typename BST::template Node<T> *temp = this->create_node(data, parent);
     if (*data > *parent->_data)
         parent->_right = temp;
     else
         parent->_left = temp;
     this->_size++;
+    this->after_add(temp);
 }
 
 template <typename T>
-void BST<T>::remove(std::shared_ptr<T> data)
+inline void BST<T>::remove(std::shared_ptr<T> data)
 {
     this->_size--;
     typename BST::template Node<T> *node = get_node(data);
@@ -68,6 +74,7 @@ void BST<T>::remove(std::shared_ptr<T> data)
             node->_parent->_left = replace;
         else
             node->_parent->_right = replace;
+        this->after_remove(node);
     }
     else if (node->_parent != nullptr)
     {
@@ -75,14 +82,18 @@ void BST<T>::remove(std::shared_ptr<T> data)
             node->_parent->_left = nullptr;
         else
             node->_parent->_right = nullptr;
+        this->after_remove(node);
     }
     else
+    {
         this->_root = nullptr;
+        this->after_remove(node);
+    }
     delete node;
 }
 
 template <typename T>
-typename BST<T>::BST::template Node<T> *BST<T>::get_node(std::shared_ptr<T> data) const
+inline typename BST<T>::BST::template Node<T> *BST<T>::get_node(std::shared_ptr<T> data) const
 {
     typename BST::template Node<T> *node = this->_root;
     while (node != nullptr)

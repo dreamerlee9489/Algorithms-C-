@@ -11,8 +11,8 @@ private:
     LinkedList<T> *_list;
 
 public:
-    inline Deque<T> &operator=(const Deque<T> &deque);
-    inline Deque<T> &operator=(Deque<T> &&deque) noexcept;
+    Deque<T> &operator=(const Deque<T> &deque);
+    Deque<T> &operator=(Deque<T> &&deque) noexcept;
     Deque() { _list = new LinkedList<T>(); }
     ~Deque() { delete _list; }
     Deque(const Deque<T> &deque) { *this = deque; }
@@ -29,7 +29,7 @@ public:
 };
 
 template <typename T>
-Deque<T> &Deque<T>::operator=(const Deque<T> &deque)
+inline Deque<T> &Deque<T>::operator=(const Deque<T> &deque)
 {
     clear();
     delete _list;
@@ -39,7 +39,7 @@ Deque<T> &Deque<T>::operator=(const Deque<T> &deque)
 }
 
 template <typename T>
-Deque<T> &Deque<T>::operator=(Deque<T> &&deque) noexcept
+inline Deque<T> &Deque<T>::operator=(Deque<T> &&deque) noexcept
 {
     clear();
     delete _list;

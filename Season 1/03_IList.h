@@ -27,7 +27,7 @@ public:
 };
 
 template <typename T>
-void IList<T>::check_range(int index, bool isAdd) const
+inline void IList<T>::check_range(int index, bool isAdd) const
 {
     if (!isAdd && (index >= _size || index < 0))
         throw std::out_of_range("index = " + std::to_string(index) + " out of range: [0, " + std::to_string(_size - 1) + "].");

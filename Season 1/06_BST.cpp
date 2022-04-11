@@ -4,36 +4,36 @@
 int main()
 {
     BST<Person> tree = BST<Person>();
-    tree.add(std::make_shared<Person>(7, "Alice7"));
-    tree.add(std::make_shared<Person>(4, "Alice4"));
-    tree.add(std::make_shared<Person>(2, "Alice2"));
-    tree.add(std::make_shared<Person>(1, "Alice1"));
-    tree.add(std::make_shared<Person>(3, "Alice3"));
-    tree.add(std::make_shared<Person>(5, "Alice5"));
-    tree.add(std::make_shared<Person>(9, "Alice9"));
-    tree.add(std::make_shared<Person>(8, "Alice8"));
-    tree.add(std::make_shared<Person>(11, "Alice11"));
-    tree.add(std::make_shared<Person>(10, "Alice10"));
+    tree.add(std::make_shared<Person>(17, "Alice17"));
+    tree.add(std::make_shared<Person>(14, "Alice14"));
     tree.add(std::make_shared<Person>(12, "Alice12"));
+    tree.add(std::make_shared<Person>(11, "Alice11"));
+    tree.add(std::make_shared<Person>(13, "Alice13"));
+    tree.add(std::make_shared<Person>(15, "Alice15"));
+    tree.add(std::make_shared<Person>(19, "Alice19"));
+    tree.add(std::make_shared<Person>(18, "Alice18"));
+    tree.add(std::make_shared<Person>(21, "Alice21"));
+    tree.add(std::make_shared<Person>(20, "Alice20"));
+    tree.add(std::make_shared<Person>(22, "Alice22"));
     std::cout << "----------Test operator<<()----------\n";
     std::cout << tree;
     std::cout << "----------Test traverse(Level)----------\n";
     tree.traverse(BST<Person>::TraverseOrder::Level, [](std::shared_ptr<Person> data)
-                   { std::cout << "lambda: " << *data << "\n"; });
+                  { std::cout << "lambda: " << *data << "\n"; });
     std::cout << "height=" << tree.height() << "\n";
     std::cout << "is complete: " << tree.is_complete() << "\n";
     std::cout << "----------Test remove()----------\n";
-    tree.remove(std::make_shared<Person>(7, "Alice7"));
-    tree.remove(std::make_shared<Person>(2, "Alice2"));
-    tree.remove(std::make_shared<Person>(9, "Alice9"));
+    tree.remove(std::make_shared<Person>(17, "Alice17"));
+    tree.remove(std::make_shared<Person>(12, "Alice12"));
+    tree.remove(std::make_shared<Person>(19, "Alice19"));
     tree.traverse();
     std::cout << "----------Test clear()----------\n";
     tree.clear();
-    tree.add(std::make_shared<Person>(7, "Alice7"));
-    tree.add(std::make_shared<Person>(4, "Alice4"));
-    tree.add(std::make_shared<Person>(9, "Alice9"));
-    tree.add(std::make_shared<Person>(2, "Alice2"));
-    tree.add(std::make_shared<Person>(5, "Alice5"));
+    tree.add(std::make_shared<Person>(17, "Alice17"));
+    tree.add(std::make_shared<Person>(14, "Alice14"));
+    tree.add(std::make_shared<Person>(19, "Alice19"));
+    tree.add(std::make_shared<Person>(12, "Alice12"));
+    tree.add(std::make_shared<Person>(15, "Alice15"));
     std::cout << "----------Test operator<<()----------\n";
     std::cout << tree;
     std::cout << "----------Test traverse(In)----------\n";
@@ -48,65 +48,65 @@ int main()
 2022年4月9日 12:01:06
 输出：
 ----------Test operator<<()----------
-                                                        [7, Alice7]
-                        [4, Alice4]                                                [9, Alice9]
-        [2, Alice2]                [5, Alice5]                [8, Alice8]                [11, Alice11]
-[1, Alice1][3, Alice3]                                                                [10, Alice10][12, Alice12]
+[17, Alice17]
+[14, Alice14]   [19, Alice19]
+[12, Alice12]   [15, Alice15]   [18, Alice18]   [21, Alice21]
+[11, Alice11]   [13, Alice13]   [20, Alice20]   [22, Alice22]
 
 ----------Test traverse(Level)----------
-lambda: [7, Alice7]
-lambda: [4, Alice4]
-lambda: [9, Alice9]
-lambda: [2, Alice2]
-lambda: [5, Alice5]
-lambda: [8, Alice8]
-lambda: [11, Alice11]
-lambda: [1, Alice1]
-lambda: [3, Alice3]
-lambda: [10, Alice10]
+lambda: [17, Alice17]
+lambda: [14, Alice14]
+lambda: [19, Alice19]
 lambda: [12, Alice12]
+lambda: [15, Alice15]
+lambda: [18, Alice18]
+lambda: [21, Alice21]
+lambda: [11, Alice11]
+lambda: [13, Alice13]
+lambda: [20, Alice20]
+lambda: [22, Alice22]
 height=4
 is complete: 0
 ----------Test remove()----------
-delete 0x6f6660[7, Alice7]
-delete 0x6f6be0[7, Alice7]
-delete 0x6f6760[2, Alice2]
-delete 0x6f6660[2, Alice2]
-delete 0x6f6960[9, Alice9]
-delete 0x6f6660[9, Alice9]
-[1, Alice1]
-[3, Alice3]
-[4, Alice4]
-[5, Alice5]
-[8, Alice8]
-[10, Alice10]
+delete 0x746660[17, Alice17]
+delete 0x746be0[17, Alice17]
+delete 0x746760[12, Alice12]
+delete 0x746660[12, Alice12]
+delete 0x746960[19, Alice19]
+delete 0x746660[19, Alice19]
 [11, Alice11]
-[12, Alice12]
+[13, Alice13]
+[14, Alice14]
+[15, Alice15]
+[18, Alice18]
+[20, Alice20]
+[21, Alice21]
+[22, Alice22]
 ----------Test clear()----------
-delete 0x6f67e0[1, Alice1]
-delete 0x6f6860[3, Alice3]
-delete 0x6f68e0[5, Alice5]
-delete 0x6f66e0[4, Alice4]
-delete 0x6f6ae0[10, Alice10]
-delete 0x6f6b60[12, Alice12]
-delete 0x6f6a60[11, Alice11]
-delete 0x6f69e0[8, Alice8]
+delete 0x7467e0[11, Alice11]
+delete 0x746860[13, Alice13]
+delete 0x7468e0[15, Alice15]
+delete 0x7466e0[14, Alice14]
+delete 0x746ae0[20, Alice20]
+delete 0x746b60[22, Alice22]
+delete 0x746a60[21, Alice21]
+delete 0x7469e0[18, Alice18]
 ----------Test operator<<()----------
-                        [7, Alice7]
-        [4, Alice4]                [9, Alice9]
-[2, Alice2][5, Alice5]
+[17, Alice17]
+[14, Alice14]   [19, Alice19]
+[12, Alice12]   [15, Alice15]
 
 ----------Test traverse(In)----------
-[2, Alice2]
-[4, Alice4]
-[5, Alice5]
-[7, Alice7]
-[9, Alice9]
+[12, Alice12]
+[14, Alice14]
+[15, Alice15]
+[17, Alice17]
+[19, Alice19]
 height=3
 is complete: 1
-delete 0x6f67e0[2, Alice2]
-delete 0x6f6860[5, Alice5]
-delete 0x6f66e0[4, Alice4]
-delete 0x6f6760[9, Alice9]
-delete 0x6f6660[7, Alice7]
+delete 0x7467e0[12, Alice12]
+delete 0x746860[15, Alice15]
+delete 0x7466e0[14, Alice14]
+delete 0x746760[19, Alice19]
+delete 0x746660[17, Alice17]
 */

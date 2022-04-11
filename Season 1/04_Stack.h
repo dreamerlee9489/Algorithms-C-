@@ -11,8 +11,8 @@ private:
     ArrayList<T> *_list;
 
 public:
-    inline Stack<T> &operator=(const Stack<T> &stack);
-    inline Stack<T> &operator=(Stack<T> &&stack) noexcept;
+    Stack<T> &operator=(const Stack<T> &stack);
+    Stack<T> &operator=(Stack<T> &&stack) noexcept;
     Stack() { _list = new ArrayList<T>(); }
     ~Stack() { delete _list; }
     Stack(const Stack<T> &stack) { *this = stack; }
@@ -26,7 +26,7 @@ public:
 };
 
 template <typename T>
-Stack<T> &Stack<T>::operator=(const Stack<T> &stack)
+inline Stack<T> &Stack<T>::operator=(const Stack<T> &stack)
 {
     clear();
     delete _list;
@@ -36,7 +36,7 @@ Stack<T> &Stack<T>::operator=(const Stack<T> &stack)
 }
 
 template <typename T>
-Stack<T> &Stack<T>::operator=(Stack<T> &&stack) noexcept
+inline Stack<T> &Stack<T>::operator=(Stack<T> &&stack) noexcept
 {
     clear();
     delete _list;

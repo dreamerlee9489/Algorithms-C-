@@ -11,8 +11,8 @@ private:
     LinkedList<T> *_list;
 
 public:
-    inline Queue<T> operator=(const Queue<T> &queue);
-    inline Queue<T> operator=(Queue<T> &&queue) noexcept;
+    Queue<T> operator=(const Queue<T> &queue);
+    Queue<T> operator=(Queue<T> &&queue) noexcept;
     Queue() { _list = new LinkedList<T>(); }
     ~Queue() { delete _list; }
     Queue(const Queue<T> &queue) { *this = queue; }
@@ -26,7 +26,7 @@ public:
 };
 
 template <typename T>
-Queue<T> Queue<T>::operator=(const Queue<T> &queue)
+inline Queue<T> Queue<T>::operator=(const Queue<T> &queue)
 {
     clear();
     delete _list;
@@ -36,7 +36,7 @@ Queue<T> Queue<T>::operator=(const Queue<T> &queue)
 }
 
 template <typename T>
-Queue<T> Queue<T>::operator=(Queue<T> &&queue) noexcept
+inline Queue<T> Queue<T>::operator=(Queue<T> &&queue) noexcept
 {
     clear();
     delete _list;
