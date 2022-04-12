@@ -1,4 +1,4 @@
-#include <time.h>
+#include <ctime>
 #include <iostream>
 using namespace std;
 //斐波那契数列递归算法
@@ -16,18 +16,18 @@ int main()
     fib2(48);
     end2 = clock();
     cout << "time2 = " << double(end2 - end1) / CLOCKS_PER_SEC << "s" << endl;
-    std::getchar();
+
     return 0;
 }
 
-int fib1(int n)
+inline int fib1(int n)
 {
     if (n <= 1)
         return n;
     return fib1(n - 1) + fib1(n - 2);
 }
 
-int fib2(int n)
+inline int fib2(int n)
 {
     if (n <= 1)
         return n;

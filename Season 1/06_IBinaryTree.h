@@ -11,24 +11,26 @@ class IBinaryTree
 {
     // typedef void traverse_func(std::shared_ptr<T> data);
     using traverse_func = void (*)(std::shared_ptr<T> data);
-    friend std::ostream &operator<<(std::ostream &os, const IBinaryTree<T> &tree) { return draw_tree(os, tree); }
-
+    
 protected:
     template <typename U>
     struct Node
     {
+        friend std::ostream& operator<<(std::ostream& os, const Node<U>& node) { return os << *node._data; }
         std::shared_ptr<U> _data;
         Node<U> *_parent, *_left, *_right;
         Node(std::shared_ptr<U> data, Node<U> *parent = nullptr, Node<U> *left = nullptr, Node<U> *right = nullptr)
             : _data(data), _parent(parent), _left(left), _right(right) {}
-        ~Node() { _data = nullptr; }
+        virtual ~Node() { this->_data = nullptr; }
         bool is_leaf() const { return _left == nullptr && _right == nullptr; }
         bool is_binary() const { return _left != nullptr && _right != nullptr; }
         bool is_left() const { return _parent != nullptr && this == _parent->_left; }
         bool is_right() const { return _parent != nullptr && this == _parent->_right; }
+        Node<U>* get_sibling() const;
     };
     size_t _size = 0;
     virtual Node<T> *create_node(std::shared_ptr<T> data, Node<T> *parent) { return new Node<T>(data, parent); }
+    virtual Node<T> *get_node(std::shared_ptr<T> data) const = 0;
     void not_null_check(std::shared_ptr<T> data) const;
     Node<T> *get_predecessor(Node<T> *node) const;
     Node<T> *get_successor(Node<T> *node) const;
@@ -39,7 +41,6 @@ protected:
     size_t height_recu(Node<T> *node) const;
     size_t height_iter(Node<T> *node) const;
     void clear_recu(Node<T> *node);
-    static std::ostream &draw_tree(std::ostream &os, const IBinaryTree<T> &tree);
 
 public:
     enum class TraverseOrder
@@ -51,8 +52,7 @@ public:
     };
     Node<T> *_root = nullptr;
     IBinaryTree() = default;
-    ~IBinaryTree() { clear_recu(_root); }
-    virtual Node<T> *get_node(std::shared_ptr<T> data) const = 0;
+    virtual ~IBinaryTree() { this->clear_recu(this->_root); }
     virtual void add(std::shared_ptr<T> data) = 0;
     virtual void remove(std::shared_ptr<T> data) = 0;
     size_t size() const { return _size; }
@@ -65,34 +65,14 @@ public:
 };
 
 template <typename T>
-inline std::ostream &IBinaryTree<T>::draw_tree(std::ostream &os, const IBinaryTree<T> &tree)
+template <typename U>
+inline typename IBinaryTree<T>::template Node<U>* IBinaryTree<T>::Node<U>::get_sibling() const
 {
-    if (tree._root != nullptr)
-    {
-        size_t height = 0;
-        size_t level_count = 1;
-        std::queue<typename IBinaryTree::template Node<T> *> q = std::queue<typename IBinaryTree::template Node<T> *>();
-        q.push(tree._root);
-        while (!q.empty())
-        {
-            typename IBinaryTree::template Node<T> *elem = q.front();
-            if (elem != nullptr)
-                os << ((IString &)*elem->_data).to_string() << "\t";
-            q.pop();
-            if (elem != nullptr)
-                q.push(elem->_left);
-            if (elem != nullptr)
-                q.push(elem->_right);
-            level_count--;
-            if (level_count == 0)
-            {
-                level_count = q.size();
-                height++;
-                os << "\n";
-            }
-        }
-    }
-    return os;
+    if(this->is_left())
+        return this->_parent->_right;
+    else if(this->is_right())
+        return this->_parent->_left;
+    return nullptr;
 }
 
 template <typename T>

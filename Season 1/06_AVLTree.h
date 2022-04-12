@@ -1,14 +1,17 @@
 #ifndef AVL_TREE_H
 #define AVL_TREE_H
-#include "./06_BST.h"
-// 平衡二叉搜索树
+#include "./06_BBST.h"
+// AVL树
 template <typename T>
-class AVLTree : public BST<T>
+class AVLTree : public BBST<T>
 {
+    friend std::ostream &operator<<(std::ostream &os, const AVLTree<T> &tree) { return draw_tree(os, tree); }
+
 private:
     template <typename U>
     struct AVLNode : public AVLTree::template Node<U>
     {
+        friend std::ostream &operator<<(std::ostream &os, const AVLNode<U> &node) { return os << *node._data << " h:" << node._height; }
         size_t _height = 1;
         AVLNode(std::shared_ptr<U> data, AVLNode<T> *parent = nullptr, AVLNode<T> *left = nullptr, AVLNode<T> *right = nullptr)
             : AVLTree::template Node<U>(data, parent, left, right) {}
@@ -17,22 +20,52 @@ private:
         void update_height();
         AVLNode<U> *taller_child();
     };
+    static std::ostream &draw_tree(std::ostream &os, const AVLTree<T> &tree);
+    void rotate(typename BBST<T>::template Node<T> *r, typename BBST<T>::template Node<T> *b, typename BBST<T>::template Node<T> *c, typename BBST<T>::template Node<T> *d, typename BBST<T>::template Node<T> *e, typename BBST<T>::template Node<T> *f) override;
+    void after_rotate(typename BBST<T>::template Node<T> *grand, typename BBST<T>::template Node<T> *parent, typename BBST<T>::template Node<T> *child) override;
     void after_add(typename AVLTree::template Node<T> *node) override;
     void after_remove(typename AVLTree::template Node<T> *node) override;
     bool is_balanced(AVLNode<T> *node) { return std::abs(node->balance_factor()) <= 1; }
     void update_height(AVLNode<T> *node) { node->update_height(); }
     void rebalance(AVLNode<T> *grand);
-    void rotate(AVLNode<T> *r, AVLNode<T> *b, AVLNode<T> *c, AVLNode<T> *d, AVLNode<T> *e, AVLNode<T> *f);
-    void rotate_left(AVLNode<T> *grand);
-    void rotate_right(AVLNode<T> *grand);
-    void after_rotate(AVLNode<T> *grand, AVLNode<T> *parent, AVLNode<T> *child);
 
 public:
     AVLTree() = default;
     ~AVLTree() = default;
-    typename AVLTree::template Node<T> *create_node(std::shared_ptr<T> data, typename AVLTree::template Node<T> *parent) override 
-        { return new AVLNode<T>(data, (AVLNode<T> *)parent); }
+    typename AVLTree::template Node<T> *create_node(std::shared_ptr<T> data, typename AVLTree::template Node<T> *parent) override { return new AVLNode<T>(data, (AVLNode<T> *)parent); }
+    AVLNode<T> *get_node(std::shared_ptr<T> data) const;
 };
+
+template <typename T>
+inline std::ostream &AVLTree<T>::draw_tree(std::ostream &os, const AVLTree<T> &tree)
+{
+    if (tree._root != nullptr)
+    {
+        size_t height = 0;
+        size_t level_count = 1;
+        std::queue<AVLNode<T> *> q = std::queue<AVLNode<T> *>();
+        q.push((AVLNode<T> *)tree._root);
+        while (!q.empty())
+        {
+            AVLNode<T> *elem = q.front();
+            if (elem != nullptr)
+                os << *tree.get_node(elem->_data) << "\t";
+            q.pop();
+            if (elem != nullptr)
+                q.push((AVLNode<T> *)elem->_left);
+            if (elem != nullptr)
+                q.push((AVLNode<T> *)elem->_right);
+            level_count--;
+            if (level_count == 0)
+            {
+                level_count = q.size();
+                height++;
+                os << "\n";
+            }
+        }
+    }
+    return os;
+}
 
 template <typename T>
 inline void AVLTree<T>::after_add(typename AVLTree::template Node<T> *node)
@@ -101,97 +134,63 @@ inline void AVLTree<T>::rebalance(AVLNode<T> *grand)
     {
         if (node->is_left())
         {
-            // rotate_right(grand);
-            rotate(grand, node, (AVLNode<T> *)node->_right, parent, (AVLNode<T> *)parent->_right, grand);
+            this->rotate_right(grand);
+            // rotate(grand, node, (AVLNode<T> *)node->_right, parent, (AVLNode<T> *)parent->_right, grand);
         }
         else
         {
-            // rotate_left(parent);
-            // rotate_right(grand);
-            rotate(grand, parent, (AVLNode<T> *)node->_left, node, (AVLNode<T> *)node->_right, grand);
+            this->rotate_left(parent);
+            this->rotate_right(grand);
+            // rotate(grand, parent, (AVLNode<T> *)node->_left, node, (AVLNode<T> *)node->_right, grand);
         }
     }
     else
     {
         if (node->is_left())
         {
-            // rotate_right(parent);
-            // rotate_left(grand);
-            rotate(grand, parent, (AVLNode<T> *)node->_left, node, (AVLNode<T> *)node->_right, parent);
+            this->rotate_right(parent);
+            this->rotate_left(grand);
+            // rotate(grand, parent, (AVLNode<T> *)node->_left, node, (AVLNode<T> *)node->_right, parent);
         }
         else
         {
-            // rotate_left(grand);
-            rotate(grand, grand, (AVLNode<T> *)parent->_left, parent, (AVLNode<T> *)node->_left, node);
+            this->rotate_left(grand);
+            // rotate(grand, grand, (AVLNode<T> *)parent->_left, parent, (AVLNode<T> *)node->_left, node);
         }
     }
 }
 
 template <typename T>
-inline void AVLTree<T>::rotate(AVLNode<T> *r, AVLNode<T> *b, AVLNode<T> *c, AVLNode<T> *d, AVLNode<T> *e, AVLNode<T> *f)
+void AVLTree<T>::rotate(typename BBST<T>::template Node<T> *r, typename BBST<T>::template Node<T> *b, typename BBST<T>::template Node<T> *c, typename BBST<T>::template Node<T> *d, typename BBST<T>::template Node<T> *e, typename BBST<T>::template Node<T> *f)
 {
-    d->_parent = r->_parent;
-    if (r->is_left())
-        r->_parent->_left = d;
-    else if (r->is_right())
-        r->_parent->_right = d;
-    else
-        this->_root = d;
-
-    b->_right = c;
-    if (c != nullptr)
-        c->_parent = b;
-    update_height(b);
-
-    f->_left = e;
-    if (e != nullptr)
-        e->_parent = f;
-    update_height(f);
-
-    d->_left = b;
-    d->_right = f;
-    b->_parent = d;
-    f->_parent = d;
-    update_height(d);
+    BBST<T>::rotate(r, b, c, d, e, f);
+    update_height((AVLNode<T> *)b);
+    update_height((AVLNode<T> *)f);
+    update_height((AVLNode<T> *)d);
 }
 
 template <typename T>
-inline void AVLTree<T>::rotate_left(AVLNode<T> *grand)
+void AVLTree<T>::after_rotate(typename BBST<T>::template Node<T> *grand, typename BBST<T>::template Node<T> *parent, typename BBST<T>::template Node<T> *child)
 {
-    AVLNode<T> *parent = (AVLNode<T> *)grand->_right;
-    AVLNode<T> *child = (AVLNode<T> *)parent->_left;
-    grand->_right = child;
-    parent->_left = grand;
-    after_rotate(grand, parent, child);
+    BBST<T>::after_rotate(grand, parent, child);
+    update_height((AVLNode<T> *)grand);
+    update_height((AVLNode<T> *)parent);
 }
 
 template <typename T>
-inline void AVLTree<T>::rotate_right(AVLNode<T> *grand)
+inline AVLTree<T>::AVLNode<T> *AVLTree<T>::get_node(std::shared_ptr<T> data) const
 {
-    AVLNode<T> *parent = (AVLNode<T> *)grand->_left;
-    AVLNode<T> *child = (AVLNode<T> *)parent->_right;
-    grand->_left = child;
-    parent->_right = grand;
-    after_rotate(grand, parent, child);
-}
-
-template <typename T>
-inline void AVLTree<T>::after_rotate(AVLNode<T> *grand, AVLNode<T> *parent, AVLNode<T> *child)
-{
-    parent->_parent = grand->_parent;
-    if (grand->is_left())
-        grand->_parent->_left = parent;
-    else if (grand->is_right())
-        grand->_parent->_right = parent;
-    else
-        this->_root = parent;
-
-    if (child != nullptr)
-        child->_parent = grand;
-
-    grand->_parent = parent;
-    update_height(grand);
-    update_height(parent);
+    typename AVLTree<T>::template Node<T> *node = this->_root;
+    while (node != nullptr)
+    {
+        if (*node->_data < *data)
+            node = node->_right;
+        else if (*node->_data > *data)
+            node = node->_left;
+        else
+            return (typename AVLTree<T>::template AVLNode<T> *)node;
+    }
+    return nullptr;
 }
 
 #endif /* AVL_TREE_H */
