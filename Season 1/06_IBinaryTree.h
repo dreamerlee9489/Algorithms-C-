@@ -13,7 +13,7 @@ class IBinaryTree
     using traverse_func = void (*)(std::shared_ptr<T> data);
     friend std::ostream &operator<<(std::ostream &os, const IBinaryTree<T> &tree) { return draw_tree(os, tree); }
 
-public:
+protected:
     template <typename U>
     struct Node
     {
@@ -27,8 +27,6 @@ public:
         bool is_left() const { return _parent != nullptr && this == _parent->_left; }
         bool is_right() const { return _parent != nullptr && this == _parent->_right; }
     };
-
-protected:
     size_t _size = 0;
     virtual Node<T> *create_node(std::shared_ptr<T> data, Node<T> *parent) { return new Node<T>(data, parent); }
     void not_null_check(std::shared_ptr<T> data) const;
