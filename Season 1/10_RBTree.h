@@ -5,6 +5,7 @@
 template <typename T>
 class RBTree : public BBST<T>
 {
+    using BTNode = typename BBST<T>::template Node<T>;
     friend std::ostream &operator<<(std::ostream &os, const RBTree<T> &tree) { return draw_tree(os, tree); }
 
 private:
@@ -27,8 +28,8 @@ private:
         ~RBNode() = default;
     };
     static std::ostream &draw_tree(std::ostream &os, const RBTree<T> &tree);
-    void after_add(typename RBTree::template Node<T> *node) override;
-    void after_remove(typename RBTree::template Node<T> *node) override;
+    void after_add(BTNode *node) override;
+    void after_remove(BTNode *node) override;
     RBNode<T> *set_color(RBNode<T> *node, bool color);
     bool color_of(RBNode<T> *node) { return node == nullptr ? BLACK : node->_color; }
     bool is_black(RBNode<T> *node) { return color_of(node) == BLACK; }
@@ -37,7 +38,7 @@ private:
 public:
     RBTree() = default;
     ~RBTree() = default;
-    typename RBTree::template Node<T> *create_node(std::shared_ptr<T> data, typename RBTree::template Node<T> *parent) override { return new RBNode<T>(data, (RBNode<T> *)parent); }
+    BTNode *create_node(std::shared_ptr<T> data, BTNode *parent) override { return new RBNode<T>(data, (RBNode<T> *)parent); }
     RBNode<T> *get_node(std::shared_ptr<T> data) const;
 };
 
@@ -82,7 +83,7 @@ inline RBTree<T>::RBNode<T> *RBTree<T>::set_color(RBNode<T> *node, bool color)
 }
 
 template <typename T>
-inline void RBTree<T>::after_add(typename RBTree::template Node<T> *node)
+inline void RBTree<T>::after_add(BTNode *node)
 {
     RBNode<T> *parent = (RBNode<T> *)node->_parent;
     if (parent == nullptr)
@@ -127,7 +128,7 @@ inline void RBTree<T>::after_add(typename RBTree::template Node<T> *node)
 }
 
 template <typename T>
-inline void RBTree<T>::after_remove(typename RBTree::template Node<T> *node)
+inline void RBTree<T>::after_remove(BTNode *node)
 {
 }
 

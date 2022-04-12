@@ -5,11 +5,13 @@
 template <typename T>
 class BBST : public BST<T>
 {
+    using BTNode = typename BST<T>::template Node<T>;
+
 protected:
-    void rotate_left(typename BBST::template Node<T> *grand);
-    void rotate_right(typename BBST::template Node<T> *grand);
-    virtual void rotate(typename BBST::template Node<T> *r, typename BBST::template Node<T> *b, typename BBST::template Node<T> *c, typename BBST::template Node<T> *d, typename BBST::template Node<T> *e, typename BBST::template Node<T> *f);
-    virtual void after_rotate(typename BBST::template Node<T> *grand, typename BBST::template Node<T> *parent, typename BBST::template Node<T> *child);
+    void rotate_left(BTNode *grand);
+    void rotate_right(BTNode *grand);
+    virtual void rotate(BTNode *r, BTNode *b, BTNode *c, BTNode *d, BTNode *e, BTNode *f);
+    virtual void after_rotate(BTNode *grand, BTNode *parent, BTNode *child);
 
 public:
     BBST() = default;
@@ -17,27 +19,27 @@ public:
 };
 
 template <typename T>
-inline void BBST<T>::rotate_left(typename BBST::template Node<T> *grand)
+inline void BBST<T>::rotate_left(BTNode *grand)
 {
-    typename BBST::template Node<T> *parent = (typename BBST::template Node<T> *)grand->_right;
-    typename BBST::template Node<T> *child = (typename BBST::template Node<T> *)parent->_left;
+    BTNode *parent = (BTNode *)grand->_right;
+    BTNode *child = (BTNode *)parent->_left;
     grand->_right = child;
     parent->_left = grand;
     this->after_rotate(grand, parent, child);
 }
 
 template <typename T>
-inline void BBST<T>::rotate_right(typename BBST::template Node<T> *grand)
+inline void BBST<T>::rotate_right(BTNode *grand)
 {
-    typename BBST::template Node<T> *parent = (typename BBST::template Node<T> *)grand->_left;
-    typename BBST::template Node<T> *child = (typename BBST::template Node<T> *)parent->_right;
+    BTNode *parent = (BTNode *)grand->_left;
+    BTNode *child = (BTNode *)parent->_right;
     grand->_left = child;
     parent->_right = grand;
     this->after_rotate(grand, parent, child);
 }
 
 template <typename T>
-inline void BBST<T>::rotate(typename BBST::template Node<T> *r, typename BBST::template Node<T> *b, typename BBST::template Node<T> *c, typename BBST::template Node<T> *d, typename BBST::template Node<T> *e, typename BBST::template Node<T> *f)
+inline void BBST<T>::rotate(BTNode *r, BTNode *b, BTNode *c, BTNode *d, BTNode *e, BTNode *f)
 {
     d->_parent = r->_parent;
     if (r->is_left())
@@ -62,7 +64,7 @@ inline void BBST<T>::rotate(typename BBST::template Node<T> *r, typename BBST::t
 }
 
 template <typename T>
-inline void BBST<T>::after_rotate(typename BBST::template Node<T> *grand, typename BBST::template Node<T> *parent, typename BBST::template Node<T> *child)
+inline void BBST<T>::after_rotate(BTNode *grand, BTNode *parent, BTNode *child)
 {
     parent->_parent = grand->_parent;
     if (grand->is_left())
