@@ -21,8 +21,7 @@ private:
     void after_remove(typename AVLTree::template Node<T> *node) override;
     bool is_balanced(AVLNode<T> *node) { return std::abs(node->balance_factor()) <= 1; }
     void update_height(AVLNode<T> *node) { node->update_height(); }
-    void rebalance0(AVLNode<T> *grand);
-    void rebalance1(AVLNode<T> *grand);
+    void rebalance(AVLNode<T> *grand);
     void rotate(AVLNode<T> *r, AVLNode<T> *b, AVLNode<T> *c, AVLNode<T> *d, AVLNode<T> *e, AVLNode<T> *f);
     void rotate_left(AVLNode<T> *grand);
     void rotate_right(AVLNode<T> *grand);
@@ -31,10 +30,8 @@ private:
 public:
     AVLTree() = default;
     ~AVLTree() = default;
-    typename AVLTree::template Node<T> *create_node(std::shared_ptr<T> data, typename AVLTree::template Node<T> *parent) override
-    {
-        return new AVLNode<T>(data, (AVLNode<T> *)parent);
-    }
+    typename AVLTree::template Node<T> *create_node(std::shared_ptr<T> data, typename AVLTree::template Node<T> *parent) override 
+        { return new AVLNode<T>(data, (AVLNode<T> *)parent); }
 };
 
 template <typename T>
@@ -46,7 +43,7 @@ inline void AVLTree<T>::after_add(typename AVLTree::template Node<T> *node)
             update_height((AVLNode<T> *)node);
         else
         {
-            rebalance0((AVLNode<T> *)node);
+            rebalance((AVLNode<T> *)node);
             break;
         }
     }
@@ -60,7 +57,7 @@ inline void AVLTree<T>::after_remove(typename AVLTree::template Node<T> *node)
         if (is_balanced((AVLNode<T> *)node))
             update_height((AVLNode<T> *)node);
         else
-            rebalance0((AVLNode<T> *)node);
+            rebalance((AVLNode<T> *)node);
     }
 }
 
@@ -96,50 +93,37 @@ inline typename AVLTree<T>::template AVLNode<U> *AVLTree<T>::AVLNode<U>::taller_
 }
 
 template <typename T>
-inline void AVLTree<T>::rebalance0(AVLNode<T> *grand)
+inline void AVLTree<T>::rebalance(AVLNode<T> *grand)
 {
     AVLNode<T> *parent = grand->taller_child();
     AVLNode<T> *node = parent->taller_child();
     if (parent->is_left())
     {
         if (node->is_left())
+        {
+            // rotate_right(grand);
             rotate(grand, node, (AVLNode<T> *)node->_right, parent, (AVLNode<T> *)parent->_right, grand);
+        }
         else
+        {
+            // rotate_left(parent);
+            // rotate_right(grand);
             rotate(grand, parent, (AVLNode<T> *)node->_left, node, (AVLNode<T> *)node->_right, grand);
+        }
     }
     else
     {
         if (node->is_left())
+        {
+            // rotate_right(parent);
+            // rotate_left(grand);
             rotate(grand, parent, (AVLNode<T> *)node->_left, node, (AVLNode<T> *)node->_right, parent);
+        }
         else
+        {
+            // rotate_left(grand);
             rotate(grand, grand, (AVLNode<T> *)parent->_left, parent, (AVLNode<T> *)node->_left, node);
-    }
-}
-
-template <typename T>
-inline void AVLTree<T>::rebalance1(AVLNode<T> *grand)
-{
-    AVLNode<T> *parent = grand->taller_child();
-    AVLNode<T> *node = parent->taller_child();
-    if (parent->is_left())
-    {
-        if (node->is_left())
-            rotate_right(grand);
-        else
-        {
-            rotate_left(parent);
-            rotate_right(grand);
         }
-    }
-    else
-    {
-        if (node->is_left())
-        {
-            rotate_right(parent);
-            rotate_left(grand);
-        }
-        else
-            rotate_left(grand);
     }
 }
 
