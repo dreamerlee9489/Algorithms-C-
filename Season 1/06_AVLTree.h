@@ -1,5 +1,5 @@
-#ifndef AVL_TREE_h
-#define AVL_TREE_h
+#ifndef AVL_TREE_H
+#define AVL_TREE_H
 #include "./06_BST.h"
 // 平衡二叉搜索树
 template <typename T>
@@ -194,4 +194,4 @@ inline void AVLTree<T>::after_rotate(AVLNode<T> *grand, AVLNode<T> *parent, AVLN
     update_height(parent);
 }
 
-#endif /* AVL_TREE_h */
+#endif /* AVL_TREE_H */
