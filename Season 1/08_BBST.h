@@ -1,6 +1,6 @@
 #ifndef BBST_H
 #define BBST_H
-#include "06_BST.h"
+#include "./08_BST.h"
 // 平衡二叉搜索树基类
 template <typename T>
 class BBST : public BST<T>
@@ -77,4 +77,4 @@ inline void BBST<T>::after_rotate(typename BBST::template Node<T> *grand, typena
     grand->_parent = parent;
 }
 
-#endif //BBST_H
+#endif /* BBST_H */

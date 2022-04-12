@@ -1,6 +1,6 @@
 #ifndef AVL_TREE_H
 #define AVL_TREE_H
-#include "./06_BBST.h"
+#include "./08_BBST.h"
 // AVL树
 template <typename T>
 class AVLTree : public BBST<T>
