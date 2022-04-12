@@ -35,7 +35,7 @@ private:
     bool is_red(RBNode<T> *node) { return color_of(node) == RED; }
 
 public:
-    RBTree(/* args */) = default;
+    RBTree() = default;
     ~RBTree() = default;
     typename RBTree::template Node<T> *create_node(std::shared_ptr<T> data, typename RBTree::template Node<T> *parent) override { return new RBNode<T>(data, (RBNode<T> *)parent); }
     RBNode<T> *get_node(std::shared_ptr<T> data) const;
@@ -142,7 +142,7 @@ inline RBTree<T>::RBNode<T> *RBTree<T>::get_node(std::shared_ptr<T> data) const
         else if (*node->_data > *data)
             node = node->_left;
         else
-            return (typename RBTree<T>::template RBNode<T> *)node;
+            return (RBNode<T> *)node;
     }
     return nullptr;
 }

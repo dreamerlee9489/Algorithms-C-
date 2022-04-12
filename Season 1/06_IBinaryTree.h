@@ -29,7 +29,6 @@ protected:
     };
     size_t _size = 0;
     virtual Node<T> *create_node(std::shared_ptr<T> data, Node<T> *parent) { return new Node<T>(data, parent); }
-    virtual Node<T> *get_node(std::shared_ptr<T> data) const = 0;
     void not_null_check(std::shared_ptr<T> data) const;
     Node<T> *get_predecessor(Node<T> *node) const;
     Node<T> *get_successor(Node<T> *node) const;
