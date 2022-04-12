@@ -24,7 +24,7 @@ private:
         bool _color = RED;
         RBNode(std::shared_ptr<U> data, RBNode<T> *parent = nullptr, RBNode<T> *left = nullptr, RBNode<T> *right = nullptr)
             : RBTree::template Node<U>(data, parent, left, right) {}
-        ~RBNode() { this->_data = nullptr; }
+        ~RBNode() = default;
     };
     static std::ostream &draw_tree(std::ostream &os, const RBTree<T> &tree);
     void after_add(typename RBTree::template Node<T> *node) override;
@@ -147,4 +147,4 @@ inline RBTree<T>::RBNode<T> *RBTree<T>::get_node(std::shared_ptr<T> data) const
     return nullptr;
 }
 
-#endif
+#endif /* RB_TREE_H */

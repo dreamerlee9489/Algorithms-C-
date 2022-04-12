@@ -4,7 +4,6 @@
 #include <memory>
 #include <queue>
 #include <cmath>
-#include "./IString.h"
 // 二叉树基类
 template <typename T>
 class IBinaryTree

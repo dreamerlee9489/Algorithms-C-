@@ -74,7 +74,6 @@ inline void BBST<T>::after_rotate(typename BBST::template Node<T> *grand, typena
 
     if (child != nullptr)
         child->_parent = grand;
-
     grand->_parent = parent;
 }
 

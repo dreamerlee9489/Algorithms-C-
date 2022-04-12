@@ -15,7 +15,7 @@ private:
         size_t _height = 1;
         AVLNode(std::shared_ptr<U> data, AVLNode<T> *parent = nullptr, AVLNode<T> *left = nullptr, AVLNode<T> *right = nullptr)
             : AVLTree::template Node<U>(data, parent, left, right) {}
-        ~AVLNode() { this->_data = nullptr; }
+        ~AVLNode() = default;
         int balance_factor();
         void update_height();
         AVLNode<U> *taller_child();
