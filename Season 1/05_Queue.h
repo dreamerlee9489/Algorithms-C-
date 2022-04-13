@@ -1,7 +1,7 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 #include "./03_LinkedList.h"
-
+// 队列
 template <typename T>
 class Queue
 {

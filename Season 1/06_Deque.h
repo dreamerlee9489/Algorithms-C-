@@ -1,7 +1,7 @@
 #ifndef DEQUE_H
 #define DEQUE_H
 #include "./03_LinkedList.h"
-
+// 双端队列
 template <typename T>
 class Deque
 {

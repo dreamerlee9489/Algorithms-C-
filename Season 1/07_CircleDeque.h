@@ -2,7 +2,7 @@
 #define CIRCLE_DEQUE_H
 #include <iostream>
 #include <memory>
-
+// 循环双端队列
 template <typename T>
 class CircleDeque
 {

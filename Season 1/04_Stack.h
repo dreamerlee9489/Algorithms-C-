@@ -1,7 +1,7 @@
 #ifndef STACK_H
 #define STACK_H
 #include "./02_ArrayList.h"
-
+// 栈
 template <typename T>
 class Stack
 {
@@ -45,4 +45,4 @@ inline Stack<T> &Stack<T>::operator=(Stack<T> &&stack) noexcept
     return *this;
 }
 
-#endif
+#endif /* STACK_H */

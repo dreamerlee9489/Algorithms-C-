@@ -19,7 +19,7 @@ public:
     BST<T> &operator=(const BST<T> &tree);
     BST<T> &operator=(BST<T> &&tree);
     BST() = default;
-    ~BST() = default;
+    virtual ~BST() = default;
     BST(const BST<T> &tree) { *this = tree; }
     BST(BST<T> &&tree) { *this = std::move(tree); }
     NODE *get_node(std::shared_ptr<T> data) const;

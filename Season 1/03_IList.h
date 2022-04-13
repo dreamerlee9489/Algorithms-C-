@@ -35,4 +35,4 @@ inline void IList<T>::check_range(int index, bool isAdd) const
         throw std::out_of_range("index = " + std::to_string(index) + " out of range for add: [0, " + std::to_string(_size) + "].");
 }
 
-#endif
+#endif /* ILIST_H */

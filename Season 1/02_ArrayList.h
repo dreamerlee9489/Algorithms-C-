@@ -138,4 +138,4 @@ inline void ArrayList<T>::ensure_capacity()
 	}
 }
 
-#endif
+#endif /* ARRAYLIST_H */

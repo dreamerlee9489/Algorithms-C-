@@ -245,4 +245,4 @@ inline LinkedList<T>::Node<T> *LinkedList<T>::get_node(int index) const
     return p->_next;
 }
 
-#endif
+#endif /* LINKEDLIST_H */
