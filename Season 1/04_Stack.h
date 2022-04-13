@@ -8,7 +8,7 @@ class Stack
     friend std::ostream &operator<<(std::ostream &os, const Stack<T> &stack) { return os << *stack._list; }
 
 private:
-    ArrayList<T> *_list;
+    ArrayList<T> *_list = nullptr;
 
 public:
     Stack<T> &operator=(const Stack<T> &stack);

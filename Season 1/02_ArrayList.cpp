@@ -75,7 +75,6 @@ int main()
     *list3 = std::move(*list1);
     std::cout << *list3;
 
-    std::getchar();
     return 0;
 }
 

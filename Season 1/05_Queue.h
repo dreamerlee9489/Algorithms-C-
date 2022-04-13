@@ -8,7 +8,7 @@ class Queue
     friend std::ostream &operator<<(std::ostream &os, const Queue<T> &queue) { return os << *queue._list; }
 
 private:
-    LinkedList<T> *_list;
+    LinkedList<T> *_list = nullptr;
 
 public:
     Queue<T> operator=(const Queue<T> &queue);

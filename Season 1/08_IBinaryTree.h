@@ -15,16 +15,16 @@ protected:
     template <typename U>
     struct Node : public IString
     {
+        friend std::ostream &operator<<(std::ostream &os, const Node<U> &node) { return os << node.to_string(); }
         std::shared_ptr<U> _data = nullptr;
         Node<U> *_parent = nullptr, *_left = nullptr, *_right = nullptr;
-        friend std::ostream &operator<<(std::ostream &os, const Node<U> &node) { return os << node.to_string(); }
         Node<U> &operator=(const Node<U> &node);
         Node<U> &operator=(Node<U> &&node);
         Node(std::shared_ptr<U> data, Node<U> *parent = nullptr, Node<U> *left = nullptr, Node<U> *right = nullptr)
             : _data(data), _parent(parent), _left(left), _right(right) {}
+        virtual ~Node() { _data = nullptr; }
         Node(const Node<U> &node) { *this = node; }
         Node(Node<U> &&node) { *this = std::move(node); }
-        virtual ~Node() { _data = nullptr; }
         bool is_leaf() const { return _left == nullptr && _right == nullptr; }
         bool is_binary() const { return _left != nullptr && _right != nullptr; }
         bool is_left() const { return _parent != nullptr && this == _parent->_left; }
@@ -157,7 +157,7 @@ inline bool IBinaryTree<T>::is_complete() const
         if (elem->_right != nullptr)
             q.push(elem->_right);
         else
-            leaf = true; //度为1的结点不入队
+            leaf = true; //最后一个非叶结点结点不入队
     }
     return true;
 }

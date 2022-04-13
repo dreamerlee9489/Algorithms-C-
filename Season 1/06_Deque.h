@@ -8,7 +8,7 @@ class Deque
     friend std::ostream &operator<<(std::ostream &os, const Deque<T> &deque) { return os << *deque._list; }
 
 private:
-    LinkedList<T> *_list;
+    LinkedList<T> *_list = nullptr;
 
 public:
     Deque<T> &operator=(const Deque<T> &deque);

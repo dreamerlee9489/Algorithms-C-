@@ -19,9 +19,9 @@ private:
         RBNode<U> &operator=(RBNode<U> &&node);
         RBNode(std::shared_ptr<U> data, RBNode<T> *parent = nullptr, RBNode<T> *left = nullptr, RBNode<T> *right = nullptr)
             : RBTree::template Node<U>(data, parent, left, right) {}
+        ~RBNode() = default;
         RBNode(const RBNode<U> &node) { *this = node; }
         RBNode(RBNode<U> &&node) { *this = std::move(node); }
-        ~RBNode() = default;
         std::string to_string() const override;
     };
     static std::ostream &draw_tree(std::ostream &os, const RBTree<T> &tree);
@@ -63,7 +63,7 @@ inline RBTree<T>::RBNode<U> &RBTree<T>::RBNode<U>::operator=(RBNode<U> &&node)
     this->_parent = std::move(node._parent);
     this->_left = std::move(node._left);
     this->_right = std::move(node._right);
-    this->_color = std::move(node._color);
+    _color = std::move(node._color);
     return *this;
 }
 

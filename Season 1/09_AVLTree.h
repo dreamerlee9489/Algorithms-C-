@@ -17,13 +17,13 @@ private:
         AVLNode<U> &operator=(AVLNode<U> &&node);
         AVLNode(std::shared_ptr<U> data, AVLNode<T> *parent = nullptr, AVLNode<T> *left = nullptr, AVLNode<T> *right = nullptr)
             : AVLTree::template Node<U>(data, parent, left, right) {}
+        ~AVLNode() = default;
         AVLNode(const AVLNode<U> &node) { *this = node; }
         AVLNode(AVLNode<U> &&node) { *this = std::move(node); }
-        ~AVLNode() = default;
         int balance_factor();
         void update_height();
         NODE *taller_child();
-        std::string to_string() const override { return ((IString &)*this->_data).to_string() + " h: " + std::to_string(_height); }
+        std::string to_string() const override { return ((IString &)*this->_data).to_string() + " h=" + std::to_string(_height); }
     };
     static std::ostream &draw_tree(std::ostream &os, const AVLTree<T> &tree);
     void rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f) override;
@@ -65,7 +65,7 @@ inline AVLTree<T>::AVLNode<U> &AVLTree<T>::AVLNode<U>::operator=(AVLNode<U> &&no
     this->_parent = std::move(node._parent);
     this->_left = std::move(node._left);
     this->_right = std::move(node._right);
-    this->_height = std::move(node._height);
+    _height = std::move(node._height);
     return *this;
 }
 
