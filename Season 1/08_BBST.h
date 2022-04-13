@@ -5,13 +5,13 @@
 template <typename T>
 class BBST : public BST<T>
 {
-    using BTNode = typename BST<T>::template Node<T>;
+    using NODE = typename BST<T>::template Node<T>;
 
 protected:
-    void rotate_left(BTNode *grand);
-    void rotate_right(BTNode *grand);
-    virtual void rotate(BTNode *r, BTNode *b, BTNode *c, BTNode *d, BTNode *e, BTNode *f);
-    virtual void after_rotate(BTNode *grand, BTNode *parent, BTNode *child);
+    void rotate_left(NODE *grand);
+    void rotate_right(NODE *grand);
+    virtual void rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f);
+    virtual void after_rotate(NODE *grand, NODE *parent, NODE *child);
 
 public:
     BBST() = default;
@@ -19,27 +19,27 @@ public:
 };
 
 template <typename T>
-inline void BBST<T>::rotate_left(BTNode *grand)
+inline void BBST<T>::rotate_left(NODE *grand)
 {
-    BTNode *parent = (BTNode *)grand->_right;
-    BTNode *child = (BTNode *)parent->_left;
+    NODE *parent = (NODE *)grand->_right;
+    NODE *child = (NODE *)parent->_left;
     grand->_right = child;
     parent->_left = grand;
     this->after_rotate(grand, parent, child);
 }
 
 template <typename T>
-inline void BBST<T>::rotate_right(BTNode *grand)
+inline void BBST<T>::rotate_right(NODE *grand)
 {
-    BTNode *parent = (BTNode *)grand->_left;
-    BTNode *child = (BTNode *)parent->_right;
+    NODE *parent = (NODE *)grand->_left;
+    NODE *child = (NODE *)parent->_right;
     grand->_left = child;
     parent->_right = grand;
     this->after_rotate(grand, parent, child);
 }
 
 template <typename T>
-inline void BBST<T>::rotate(BTNode *r, BTNode *b, BTNode *c, BTNode *d, BTNode *e, BTNode *f)
+inline void BBST<T>::rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f)
 {
     d->_parent = r->_parent;
     if (r->is_left())
@@ -64,7 +64,7 @@ inline void BBST<T>::rotate(BTNode *r, BTNode *b, BTNode *c, BTNode *d, BTNode *
 }
 
 template <typename T>
-inline void BBST<T>::after_rotate(BTNode *grand, BTNode *parent, BTNode *child)
+inline void BBST<T>::after_rotate(NODE *grand, NODE *parent, NODE *child)
 {
     parent->_parent = grand->_parent;
     if (grand->is_left())
