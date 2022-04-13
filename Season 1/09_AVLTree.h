@@ -15,7 +15,7 @@ private:
         size_t _height = 1;
         AVLNode<U> &operator=(const AVLNode<U> &node);
         AVLNode<U> &operator=(AVLNode<U> &&node);
-        AVLNode(std::shared_ptr<U> data, AVLNode<T> *parent = nullptr, AVLNode<T> *left = nullptr, AVLNode<T> *right = nullptr)
+        AVLNode(std::shared_ptr<U> data, NODE *parent = nullptr, NODE *left = nullptr, NODE *right = nullptr)
             : AVLTree::template Node<U>(data, parent, left, right) {}
         ~AVLNode() = default;
         AVLNode(const AVLNode<U> &node) { *this = node; }
@@ -140,7 +140,7 @@ inline std::ostream &AVLTree<T>::draw_tree(std::ostream &os, const AVLTree<T> &t
     {
         size_t height = 0;
         size_t level_count = 1;
-        std::queue<NODE*> q = std::queue<NODE*>();
+        std::queue<NODE *> q = std::queue<NODE *>();
         q.push(tree._root);
         while (!q.empty())
         {

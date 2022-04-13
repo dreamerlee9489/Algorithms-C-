@@ -17,7 +17,7 @@ private:
         bool _color = RED;
         RBNode<U> &operator=(const RBNode<U> &node);
         RBNode<U> &operator=(RBNode<U> &&node);
-        RBNode(std::shared_ptr<U> data, RBNode<T> *parent = nullptr, RBNode<T> *left = nullptr, RBNode<T> *right = nullptr)
+        RBNode(std::shared_ptr<U> data, NODE *parent = nullptr, NODE *left = nullptr, NODE *right = nullptr)
             : RBTree::template Node<U>(data, parent, left, right) {}
         ~RBNode() = default;
         RBNode(const RBNode<U> &node) { *this = node; }
