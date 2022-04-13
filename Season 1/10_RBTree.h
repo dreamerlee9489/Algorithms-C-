@@ -69,7 +69,7 @@ inline RBTree<T>::RBNode<U> &RBTree<T>::RBNode<U>::operator=(RBNode<U> &&node)
 
 template <typename T>
 template <typename U>
-std::string RBTree<T>::RBNode<U>::to_string() const
+inline std::string RBTree<T>::RBNode<U>::to_string() const
 {
     std::string str = ((IString &)*this->_data).to_string();
     if (_color == RED)

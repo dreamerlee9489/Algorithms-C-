@@ -227,7 +227,7 @@ inline void AVLTree<T>::rebalance(NODE *grand)
 }
 
 template <typename T>
-void AVLTree<T>::rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f)
+inline void AVLTree<T>::rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f)
 {
     BBST<T>::rotate(r, b, c, d, e, f);
     update_height(b);
@@ -236,7 +236,7 @@ void AVLTree<T>::rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f)
 }
 
 template <typename T>
-void AVLTree<T>::after_rotate(NODE *grand, NODE *parent, NODE *child)
+inline void AVLTree<T>::after_rotate(NODE *grand, NODE *parent, NODE *child)
 {
     BBST<T>::after_rotate(grand, parent, child);
     update_height(grand);
