@@ -21,8 +21,8 @@ public:
 template <typename T>
 inline void BBST<T>::rotate_left(NODE *grand)
 {
-    NODE *parent = (NODE *)grand->_right;
-    NODE *child = (NODE *)parent->_left;
+    NODE *parent = grand->_right;
+    NODE *child = parent->_left;
     grand->_right = child;
     parent->_left = grand;
     this->after_rotate(grand, parent, child);
@@ -31,8 +31,8 @@ inline void BBST<T>::rotate_left(NODE *grand)
 template <typename T>
 inline void BBST<T>::rotate_right(NODE *grand)
 {
-    NODE *parent = (NODE *)grand->_left;
-    NODE *child = (NODE *)parent->_right;
+    NODE *parent = grand->_left;
+    NODE *child = parent->_right;
     grand->_left = child;
     parent->_right = grand;
     this->after_rotate(grand, parent, child);

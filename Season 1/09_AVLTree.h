@@ -70,6 +70,37 @@ inline AVLTree<T>::AVLNode<U> &AVLTree<T>::AVLNode<U>::operator=(AVLNode<U> &&no
 }
 
 template <typename T>
+template <typename U>
+inline int AVLTree<T>::AVLNode<U>::balance_factor()
+{
+    size_t leftH = (this->_left == nullptr) ? 0 : ((AVLNode<U> *)this->_left)->_height;
+    size_t rightH = (this->_right == nullptr) ? 0 : ((AVLNode<U> *)this->_right)->_height;
+    return (int)(leftH - rightH);
+}
+
+template <typename T>
+template <typename U>
+inline void AVLTree<T>::AVLNode<U>::update_height()
+{
+    size_t leftH = (this->_left == nullptr) ? 0 : ((AVLNode<U> *)this->_left)->_height;
+    size_t rightH = (this->_right == nullptr) ? 0 : ((AVLNode<U> *)this->_right)->_height;
+    _height = 1 + std::max(leftH, rightH);
+}
+
+template <typename T>
+template <typename U>
+inline typename AVLTree<T>::NODE *AVLTree<T>::AVLNode<U>::taller_child()
+{
+    size_t leftH = (this->_left == nullptr) ? 0 : ((AVLNode<U> *)this->_left)->_height;
+    size_t rightH = (this->_right == nullptr) ? 0 : ((AVLNode<U> *)this->_right)->_height;
+    if (leftH > rightH)
+        return this->_left;
+    if (leftH < rightH)
+        return this->_right;
+    return this->is_left() ? this->_left : this->_right;
+}
+
+template <typename T>
 inline AVLTree<T> &AVLTree<T>::operator=(const AVLTree<T> &tree)
 {
     this->clear();
@@ -109,18 +140,18 @@ inline std::ostream &AVLTree<T>::draw_tree(std::ostream &os, const AVLTree<T> &t
     {
         size_t height = 0;
         size_t level_count = 1;
-        std::queue<AVLNode<T> *> q = std::queue<AVLNode<T> *>();
-        q.push((AVLNode<T> *)tree._root);
+        std::queue<NODE*> q = std::queue<NODE*>();
+        q.push(tree._root);
         while (!q.empty())
         {
-            AVLNode<T> *elem = q.front();
+            NODE *elem = q.front();
             if (elem != nullptr)
                 os << *tree.get_node(elem->_data) << "\t";
             q.pop();
             if (elem != nullptr)
-                q.push((AVLNode<T> *)elem->_left);
+                q.push(elem->_left);
             if (elem != nullptr)
-                q.push((AVLNode<T> *)elem->_right);
+                q.push(elem->_right);
             level_count--;
             if (level_count == 0)
             {
@@ -138,11 +169,11 @@ inline void AVLTree<T>::after_add(NODE *node)
 {
     while ((node = node->_parent) != nullptr)
     {
-        if (is_balanced((AVLNode<T> *)node))
-            update_height((AVLNode<T> *)node);
+        if (is_balanced(node))
+            update_height(node);
         else
         {
-            rebalance((AVLNode<T> *)node);
+            rebalance(node);
             break;
         }
     }
@@ -153,42 +184,11 @@ inline void AVLTree<T>::after_remove(NODE *node)
 {
     while ((node = node->_parent) != nullptr)
     {
-        if (is_balanced((AVLNode<T> *)node))
-            update_height((AVLNode<T> *)node);
+        if (is_balanced(node))
+            update_height(node);
         else
-            rebalance((AVLNode<T> *)node);
+            rebalance(node);
     }
-}
-
-template <typename T>
-template <typename U>
-inline int AVLTree<T>::AVLNode<U>::balance_factor()
-{
-    size_t leftH = (this->_left == nullptr) ? 0 : ((AVLNode<U> *)this->_left)->_height;
-    size_t rightH = (this->_right == nullptr) ? 0 : ((AVLNode<U> *)this->_right)->_height;
-    return (int)(leftH - rightH);
-}
-
-template <typename T>
-template <typename U>
-inline void AVLTree<T>::AVLNode<U>::update_height()
-{
-    size_t leftH = (this->_left == nullptr) ? 0 : ((AVLNode<U> *)this->_left)->_height;
-    size_t rightH = (this->_right == nullptr) ? 0 : ((AVLNode<U> *)this->_right)->_height;
-    _height = 1 + std::max(leftH, rightH);
-}
-
-template <typename T>
-template <typename U>
-inline typename AVLTree<T>::NODE *AVLTree<T>::AVLNode<U>::taller_child()
-{
-    size_t leftH = (this->_left == nullptr) ? 0 : ((AVLNode<U> *)this->_left)->_height;
-    size_t rightH = (this->_right == nullptr) ? 0 : ((AVLNode<U> *)this->_right)->_height;
-    if (leftH > rightH)
-        return this->_left;
-    if (leftH < rightH)
-        return this->_right;
-    return this->is_left() ? this->_left : this->_right;
 }
 
 template <typename T>
