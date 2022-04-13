@@ -111,7 +111,7 @@ inline void BST<T>::remove(std::shared_ptr<T> data)
             node->_parent->_left = replace;
         else
             node->_parent->_right = replace;
-        this->after_remove(node);
+        this->after_remove(replace);
     }
     else if (node->_parent != nullptr)
     {

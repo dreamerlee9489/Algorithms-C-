@@ -4,18 +4,18 @@
 #include <memory>
 #include <queue>
 #include <cmath>
+#include "./IString.h"
 // 二叉树基类
 template <typename T>
 class IBinaryTree
 {
-    // typedef void traverse_func(std::shared_ptr<T> data);
     using traverse_func = void (*)(std::shared_ptr<T> data);
-    
+
 protected:
     template <typename U>
-    struct Node
+    struct Node : public IString
     {
-        friend std::ostream& operator<<(std::ostream& os, const Node<U>& node) { return os << *node._data; }
+        friend std::ostream &operator<<(std::ostream &os, const Node<U> &node) { return os << node.to_string(); }
         std::shared_ptr<U> _data;
         Node<U> *_parent, *_left, *_right;
         Node(std::shared_ptr<U> data, Node<U> *parent = nullptr, Node<U> *left = nullptr, Node<U> *right = nullptr)
@@ -25,7 +25,8 @@ protected:
         bool is_binary() const { return _left != nullptr && _right != nullptr; }
         bool is_left() const { return _parent != nullptr && this == _parent->_left; }
         bool is_right() const { return _parent != nullptr && this == _parent->_right; }
-        Node<U>* get_sibling() const;
+        Node<U> *get_sibling() const;
+        std::string to_string() const override { return ((IString &)*_data).to_string(); }
     };
     size_t _size = 0;
     virtual Node<T> *create_node(std::shared_ptr<T> data, Node<T> *parent) { return new Node<T>(data, parent); }
@@ -64,11 +65,11 @@ public:
 
 template <typename T>
 template <typename U>
-inline typename IBinaryTree<T>::template Node<U>* IBinaryTree<T>::Node<U>::get_sibling() const
+inline typename IBinaryTree<T>::template Node<U> *IBinaryTree<T>::Node<U>::get_sibling() const
 {
-    if(this->is_left())
+    if (this->is_left())
         return this->_parent->_right;
-    else if(this->is_right())
+    else if (this->is_right())
         return this->_parent->_left;
     return nullptr;
 }
@@ -121,15 +122,16 @@ inline bool IBinaryTree<T>::is_complete() const
         q.pop();
         if (leaf && !elem->is_leaf())
             return false;
-        if (elem->is_binary())
-        {
+
+        if (elem->_left != nullptr)
             q.push(elem->_left);
-            q.push(elem->_right);
-        }
-        else if (elem->_left == nullptr && elem->_right != nullptr)
+        else if(elem->_right != nullptr)
             return false;
+
+        if (elem->_right != nullptr)
+            q.push(elem->_right);
         else
-            leaf = true;
+            leaf = true;//度为1的结点不入队
     }
     return true;
 }
