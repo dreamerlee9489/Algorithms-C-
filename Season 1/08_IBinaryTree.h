@@ -15,12 +15,16 @@ protected:
     template <typename U>
     struct Node : public IString
     {
+        std::shared_ptr<U> _data = nullptr;
+        Node<U> *_parent = nullptr, *_left = nullptr, *_right = nullptr;
         friend std::ostream &operator<<(std::ostream &os, const Node<U> &node) { return os << node.to_string(); }
-        std::shared_ptr<U> _data;
-        Node<U> *_parent, *_left, *_right;
+        Node<U> &operator=(const Node<U> &node);
+        Node<U> &operator=(Node<U> &&node);
         Node(std::shared_ptr<U> data, Node<U> *parent = nullptr, Node<U> *left = nullptr, Node<U> *right = nullptr)
             : _data(data), _parent(parent), _left(left), _right(right) {}
-        virtual ~Node() { this->_data = nullptr; }
+        Node(const Node<U> &node) { *this = node; }
+        Node(Node<U> &&node) { *this = std::move(node); }
+        virtual ~Node() { _data = nullptr; }
         bool is_leaf() const { return _left == nullptr && _right == nullptr; }
         bool is_binary() const { return _left != nullptr && _right != nullptr; }
         bool is_left() const { return _parent != nullptr && this == _parent->_left; }
@@ -51,7 +55,7 @@ public:
     };
     Node<T> *_root = nullptr;
     IBinaryTree() = default;
-    virtual ~IBinaryTree() { this->clear_recu(this->_root); }
+    virtual ~IBinaryTree() { clear_recu(_root); }
     virtual void add(std::shared_ptr<T> data) = 0;
     virtual void remove(std::shared_ptr<T> data) = 0;
     size_t size() const { return _size; }
@@ -60,17 +64,39 @@ public:
     bool is_complete() const;
     bool contains(std::shared_ptr<T> data) const { return get_node(data) != nullptr; }
     void traverse(TraverseOrder order = TraverseOrder::In, traverse_func func = nullptr) const;
-    void clear() { clear_recu(_root); }
+    void clear();
 };
 
 template <typename T>
 template <typename U>
-inline typename IBinaryTree<T>::template Node<U> *IBinaryTree<T>::Node<U>::get_sibling() const
+inline IBinaryTree<T>::Node<U> &IBinaryTree<T>::Node<U>::operator=(const IBinaryTree<T>::Node<U> &node)
 {
-    if (this->is_left())
-        return this->_parent->_right;
-    else if (this->is_right())
-        return this->_parent->_left;
+    _data = node._data;
+    _parent = node._parent;
+    _left = node._left;
+    _right = node._right;
+    return *this;
+}
+
+template <typename T>
+template <typename U>
+inline IBinaryTree<T>::Node<U> &IBinaryTree<T>::Node<U>::operator=(Node<U> &&node)
+{
+    _data = std::move(node._data);
+    _parent = std::move(node._parent);
+    _left = std::move(node._left);
+    _right = std::move(node._right);
+    return *this;
+}
+
+template <typename T>
+template <typename U>
+inline IBinaryTree<T>::Node<U> *IBinaryTree<T>::Node<U>::get_sibling() const
+{
+    if (is_left())
+        return _parent->_right;
+    else if (is_right())
+        return _parent->_left;
     return nullptr;
 }
 
@@ -125,13 +151,13 @@ inline bool IBinaryTree<T>::is_complete() const
 
         if (elem->_left != nullptr)
             q.push(elem->_left);
-        else if(elem->_right != nullptr)
+        else if (elem->_right != nullptr)
             return false;
 
         if (elem->_right != nullptr)
             q.push(elem->_right);
         else
-            leaf = true;//度为1的结点不入队
+            leaf = true; //度为1的结点不入队
     }
     return true;
 }
@@ -178,8 +204,15 @@ inline void IBinaryTree<T>::clear_recu(Node<T> *node)
         clear_recu(node->_left);
         clear_recu(node->_right);
         delete node;
-        _root = nullptr;
     }
+}
+
+template <typename T>
+inline void IBinaryTree<T>::clear()
+{
+    clear_recu(_root);
+    _root = nullptr;
+    _size = 0;
 }
 
 template <typename T>

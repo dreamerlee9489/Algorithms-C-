@@ -40,6 +40,14 @@ int main()
     tree.traverse();
     std::cout << "height=" << tree.height() << "\n";
     std::cout << "is complete: " << tree.is_complete() << "\n";
+    std::cout << "----------Test operator=(const BST<T>&)----------\n";
+    BST<Person> tree2 = BST<Person>();
+    tree2 = tree;
+    std::cout << tree2;
+    std::cout << "----------Test operator=(BST<T>&&)----------\n";
+    BST<Person> tree3 = BST<Person>();
+    tree3 = std::move(tree);
+    std::cout << tree3;
 
     return 0;
 }
@@ -68,12 +76,12 @@ lambda: [22, Alice22]
 height=4
 is complete: 0
 ----------Test remove()----------
-delete 0x6a6660[17, Alice17]
-delete 0x6a6c90[17, Alice17]
-delete 0x6a6780[12, Alice12]
-delete 0x6a6660[12, Alice12]
-delete 0x6a69c0[19, Alice19]
-delete 0x6a6660[19, Alice19]
+delete 0x1066730[17, Alice17]
+delete 0x1066d60[17, Alice17]
+delete 0x1066850[12, Alice12]
+delete 0x1066730[12, Alice12]
+delete 0x1066a90[19, Alice19]
+delete 0x1066730[19, Alice19]
 [11, Alice11]
 [13, Alice13]
 [14, Alice14]
@@ -83,14 +91,14 @@ delete 0x6a6660[19, Alice19]
 [21, Alice21]
 [22, Alice22]
 ----------Test clear()----------
-delete 0x6a6810[11, Alice11]
-delete 0x6a68a0[13, Alice13]
-delete 0x6a6930[15, Alice15]
-delete 0x6a66f0[14, Alice14]
-delete 0x6a6b70[20, Alice20]
-delete 0x6a6c00[22, Alice22]
-delete 0x6a6ae0[21, Alice21]
-delete 0x6a6a50[18, Alice18]
+delete 0x10668e0[11, Alice11]
+delete 0x1066970[13, Alice13]
+delete 0x1066a00[15, Alice15]
+delete 0x10667c0[14, Alice14]
+delete 0x1066c40[20, Alice20]
+delete 0x1066cd0[22, Alice22]
+delete 0x1066bb0[21, Alice21]
+delete 0x1066b20[18, Alice18]
 ----------Test operator<<()----------
 [17, Alice17]
 [14, Alice14]   [19, Alice19]
@@ -104,9 +112,19 @@ delete 0x6a6a50[18, Alice18]
 [19, Alice19]
 height=3
 is complete: 1
-delete 0x6a6810[12, Alice12]
-delete 0x6a68a0[15, Alice15]
-delete 0x6a66f0[14, Alice14]
-delete 0x6a6780[19, Alice19]
-delete 0x6a6660[17, Alice17]
+----------Test operator=(const BST<T>&)----------
+[17, Alice17]
+[14, Alice14]   [19, Alice19]
+[12, Alice12]   [15, Alice15]
+
+----------Test operator=(BST<T>&&)----------
+[17, Alice17]
+[14, Alice14]   [19, Alice19]
+[12, Alice12]   [15, Alice15]
+
+delete 0x10668e0[12, Alice12]
+delete 0x1066970[15, Alice15]
+delete 0x10667c0[14, Alice14]
+delete 0x1066850[19, Alice19]
+delete 0x1066730[17, Alice17]
 */

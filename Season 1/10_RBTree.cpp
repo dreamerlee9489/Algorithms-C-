@@ -25,6 +25,14 @@ int main()
     tree.remove(std::make_shared<Person>(56, "Alice03"));
     std::cout << "height: " << tree.height() << "\n";
     std::cout << tree;
+    std::cout << "----------Test operator=(const RBTree<T>&)----------\n";
+    RBTree<Person> tree2 = RBTree<Person>();
+    tree2 = tree;
+    std::cout << tree2;
+    std::cout << "----------Test operator=(RBTree<T>&&)----------\n";
+    RBTree<Person> tree3 = RBTree<Person>();
+    tree3 = std::move(tree);
+    std::cout << tree3;
 
     return 0;
 }
@@ -36,30 +44,42 @@ int main()
 height: 5
 [70, Alice09] BLACK
 [56, Alice03] BLACK     [87, Alice02] BLACK
-[22, Alice06] RED       [62, Alice07] BLACK     [74, Alice04] BLACK     [96, Alice05] BLACK
-[20, Alice08] BLACK     [55, Alice01] BLACK     [68, Alice10] RED       [90, Alice11] RED
-[50, Alice12] RED
+[22, Alice06] R E D     [62, Alice07] BLACK     [74, Alice04] BLACK     [96, Alice05] BLACK
+[20, Alice08] BLACK     [55, Alice01] BLACK     [68, Alice10] R E D     [90, Alice11] R E D
+[50, Alice12] R E D
 
 ----------Test remove()----------
-delete 0x1016660[55, Alice01]
-delete 0x1016d20[55, Alice01]
-delete 0x10166f0[87, Alice02]
-delete 0x1016660[87, Alice02]
-delete 0x1016780[56, Alice03]
-delete 0x1016660[56, Alice03]
+delete 0x1076730[55, Alice01]
+delete 0x1076df0[55, Alice01]
+delete 0x10767c0[87, Alice02]
+delete 0x1076730[87, Alice02]
+delete 0x1076850[56, Alice03]
+delete 0x1076730[56, Alice03]
 height: 4
 [70, Alice09] BLACK
 [62, Alice07] BLACK     [90, Alice11] BLACK
-[22, Alice06] RED       [68, Alice10] BLACK     [74, Alice04] BLACK     [96, Alice05] BLACK
+[22, Alice06] R E D     [68, Alice10] BLACK     [74, Alice04] BLACK     [96, Alice05] BLACK
 [20, Alice08] BLACK     [50, Alice12] BLACK
 
-delete 0x1016a50[20, Alice08]
-delete 0x1016c90[50, Alice12]
-delete 0x1016930[22, Alice06]
-delete 0x1016b70[68, Alice10]
-delete 0x10169c0[62, Alice07]
-delete 0x1016810[74, Alice04]
-delete 0x10168a0[96, Alice05]
-delete 0x1016c00[90, Alice11]
-delete 0x1016ae0[70, Alice09]
+----------Test operator=(const RBTree<T>&)----------
+[70, Alice09] BLACK
+[62, Alice07] R E D     [90, Alice11] BLACK
+[22, Alice06] BLACK     [68, Alice10] BLACK     [74, Alice04] R E D     [96, Alice05] R E D
+[20, Alice08] R E D     [50, Alice12] R E D
+
+----------Test operator=(RBTree<T>&&)----------
+[70, Alice09] BLACK
+[62, Alice07] BLACK     [90, Alice11] BLACK
+[22, Alice06] R E D     [68, Alice10] BLACK     [74, Alice04] BLACK     [96, Alice05] BLACK
+[20, Alice08] BLACK     [50, Alice12] BLACK
+
+delete 0x1076b20[20, Alice08]
+delete 0x1076d60[50, Alice12]
+delete 0x1076a00[22, Alice06]
+delete 0x1076c40[68, Alice10]
+delete 0x1076a90[62, Alice07]
+delete 0x10768e0[74, Alice04]
+delete 0x1076970[96, Alice05]
+delete 0x1076cd0[90, Alice11]
+delete 0x1076bb0[70, Alice09]
 */

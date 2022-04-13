@@ -15,8 +15,12 @@ private:
     struct RBNode : public RBTree::template Node<U>
     {
         bool _color = RED;
+        RBNode<U> &operator=(const RBNode<U> &node);
+        RBNode<U> &operator=(RBNode<U> &&node);
         RBNode(std::shared_ptr<U> data, RBNode<T> *parent = nullptr, RBNode<T> *left = nullptr, RBNode<T> *right = nullptr)
             : RBTree::template Node<U>(data, parent, left, right) {}
+        RBNode(const RBNode<U> &node) { *this = node; }
+        RBNode(RBNode<U> &&node) { *this = std::move(node); }
         ~RBNode() = default;
         std::string to_string() const override;
     };
@@ -26,14 +30,42 @@ private:
     void after_remove(NODE *node) override;
     NODE *set_color(NODE *node, bool color);
     bool color_of(NODE *node) { return node == nullptr ? BLACK : ((RBNode<T> *)node)->_color; }
-    bool is_black(NODE *node) { return color_of((RBNode<T> *)node) == BLACK; }
-    bool is_red(NODE *node) { return color_of((RBNode<T> *)node) == RED; }
+    bool is_black(NODE *node) { return color_of(node) == BLACK; }
+    bool is_red(NODE *node) { return color_of(node) == RED; }
 
 public:
+    RBTree<T> &operator=(const RBTree<T> &tree);
+    RBTree<T> &operator=(RBTree<T> &&tree);
     RBTree() = default;
     ~RBTree() = default;
+    RBTree(const RBTree<T> &tree) { *this = tree; }
+    RBTree(RBTree<T> &&tree) { *this = std::move(tree); }
     NODE *create_node(std::shared_ptr<T> data, NODE *parent) override { return new RBNode<T>(data, (RBNode<T> *)parent); }
 };
+
+template <typename T>
+template <typename U>
+inline RBTree<T>::RBNode<U> &RBTree<T>::RBNode<U>::operator=(const RBNode<U> &node)
+{
+    this->_data = node._data;
+    this->_parent = node._parent;
+    this->_left = node._left;
+    this->_right = node._right;
+    _color = node._color;
+    return *this;
+}
+
+template <typename T>
+template <typename U>
+inline RBTree<T>::RBNode<U> &RBTree<T>::RBNode<U>::operator=(RBNode<U> &&node)
+{
+    this->_data = std::move(node._data);
+    this->_parent = std::move(node._parent);
+    this->_left = std::move(node._left);
+    this->_right = std::move(node._right);
+    this->_color = std::move(node._color);
+    return *this;
+}
 
 template <typename T>
 template <typename U>
@@ -41,10 +73,43 @@ std::string RBTree<T>::RBNode<U>::to_string() const
 {
     std::string str = ((IString &)*this->_data).to_string();
     if (_color == RED)
-        str += " RED  ";
+        str += " R E D";
     else
         str += " BLACK";
     return str;
+}
+
+template <typename T>
+inline RBTree<T> &RBTree<T>::operator=(const RBTree<T> &tree)
+{
+    this->clear();
+    if (tree._size > 0)
+    {
+        std::queue<NODE *> q = std::queue<NODE *>();
+        q.push(tree._root);
+        while (!q.empty())
+        {
+            NODE *elem = q.front();
+            this->add(elem->_data);
+            q.pop();
+            if (elem->_left != nullptr)
+                q.push(elem->_left);
+            if (elem->_right != nullptr)
+                q.push(elem->_right);
+        }
+    }
+    return *this;
+}
+
+template <typename T>
+inline RBTree<T> &RBTree<T>::operator=(RBTree<T> &&tree)
+{
+    this->clear();
+    this->_root = tree._root;
+    this->_size = tree._size;
+    tree._root = nullptr;
+    tree._size = 0;
+    return *this;
 }
 
 template <typename T>

@@ -16,12 +16,49 @@ protected:
     virtual void after_remove(NODE *node) {}
 
 public:
+    BST<T> &operator=(const BST<T> &tree);
+    BST<T> &operator=(BST<T> &&tree);
     BST() = default;
     ~BST() = default;
+    BST(const BST<T> &tree) { *this = tree; }
+    BST(BST<T> &&tree) { *this = std::move(tree); }
     NODE *get_node(std::shared_ptr<T> data) const;
     void add(std::shared_ptr<T> data) override;
     void remove(std::shared_ptr<T> data) override;
 };
+
+template <typename T>
+inline BST<T> &BST<T>::operator=(const BST<T> &tree)
+{
+    this->clear();
+    if (tree._size > 0)
+    {
+        std::queue<NODE *> q = std::queue<NODE *>();
+        q.push(tree._root);
+        while (!q.empty())
+        {
+            NODE *elem = q.front();
+            add(elem->_data);
+            q.pop();
+            if (elem->_left != nullptr)
+                q.push(elem->_left);
+            if (elem->_right != nullptr)
+                q.push(elem->_right);
+        }
+    }
+    return *this;
+}
+
+template <typename T>
+inline BST<T> &BST<T>::operator=(BST<T> &&tree)
+{
+    this->clear();
+    this->_root = tree._root;
+    this->_size = tree._size;
+    tree._root = nullptr;
+    tree._size = 0;
+    return *this;
+}
 
 template <typename T>
 inline std::ostream &BST<T>::draw_tree(std::ostream &os, const BST<T> &tree)

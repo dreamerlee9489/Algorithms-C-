@@ -13,8 +13,12 @@ private:
     struct AVLNode : public AVLTree::template Node<U>
     {
         size_t _height = 1;
+        AVLNode<U> &operator=(const AVLNode<U> &node);
+        AVLNode<U> &operator=(AVLNode<U> &&node);
         AVLNode(std::shared_ptr<U> data, AVLNode<T> *parent = nullptr, AVLNode<T> *left = nullptr, AVLNode<T> *right = nullptr)
             : AVLTree::template Node<U>(data, parent, left, right) {}
+        AVLNode(const AVLNode<U> &node) { *this = node; }
+        AVLNode(AVLNode<U> &&node) { *this = std::move(node); }
         ~AVLNode() = default;
         int balance_factor();
         void update_height();
@@ -31,11 +35,72 @@ private:
     void rebalance(NODE *grand);
 
 public:
+    AVLTree<T> &operator=(const AVLTree<T> &tree);
+    AVLTree<T> &operator=(AVLTree<T> &&tree);
     AVLTree() = default;
     ~AVLTree() = default;
+    AVLTree(const AVLTree<T> &tree) { *this = tree; }
+    AVLTree(AVLTree &&tree) { *this = std::move(tree); }
     NODE *create_node(std::shared_ptr<T> data, NODE *parent) override { return new AVLNode<T>(data, (AVLNode<T> *)parent); }
     AVLNode<T> *get_node(std::shared_ptr<T> data) const;
 };
+
+template <typename T>
+template <typename U>
+inline AVLTree<T>::AVLNode<U> &AVLTree<T>::AVLNode<U>::operator=(const AVLNode<U> &node)
+{
+    this->_data = node._data;
+    this->_parent = node._parent;
+    this->_left = node._left;
+    this->_right = node._right;
+    _height = node._height;
+    return *this;
+}
+
+template <typename T>
+template <typename U>
+inline AVLTree<T>::AVLNode<U> &AVLTree<T>::AVLNode<U>::operator=(AVLNode<U> &&node)
+{
+    this->_data = std::move(node._data);
+    this->_parent = std::move(node._parent);
+    this->_left = std::move(node._left);
+    this->_right = std::move(node._right);
+    this->_height = std::move(node._height);
+    return *this;
+}
+
+template <typename T>
+inline AVLTree<T> &AVLTree<T>::operator=(const AVLTree<T> &tree)
+{
+    this->clear();
+    if (tree._size > 0)
+    {
+        std::queue<NODE *> q = std::queue<NODE *>();
+        q.push(tree._root);
+        while (!q.empty())
+        {
+            NODE *elem = q.front();
+            this->add(elem->_data);
+            q.pop();
+            if (elem->_left != nullptr)
+                q.push(elem->_left);
+            if (elem->_right != nullptr)
+                q.push(elem->_right);
+        }
+    }
+    return *this;
+}
+
+template <typename T>
+inline AVLTree<T> &AVLTree<T>::operator=(AVLTree<T> &&tree)
+{
+    this->clear();
+    this->_root = tree._root;
+    this->_size = tree._size;
+    tree._root = nullptr;
+    tree._size = 0;
+    return *this;
+}
 
 template <typename T>
 inline std::ostream &AVLTree<T>::draw_tree(std::ostream &os, const AVLTree<T> &tree)
