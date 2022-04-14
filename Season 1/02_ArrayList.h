@@ -20,7 +20,7 @@ public:
 	ArrayList();
 	ArrayList(const ArrayList<T> &list) { *this = list; }
 	ArrayList(ArrayList<T> &&list) noexcept { *this = std::move(list); }
-	~ArrayList() { delete[] _array; }
+	~ArrayList() { clear(); }
 	size_t capacity() const { return _capacity; }
 	int index_of(std::shared_ptr<T> data) const override;
 	std::shared_ptr<T> insert(int index, std::shared_ptr<T> data) override;
@@ -43,7 +43,6 @@ template <typename T>
 inline ArrayList<T> &ArrayList<T>::operator=(const ArrayList<T> &list)
 {
 	clear();
-	this->_size = 0;
 	_capacity = DEFAULT_CAPACITY;
 	_array = new std::shared_ptr<T>[_capacity];
 	for (size_t i = 0; i < list._size; ++i)
@@ -59,13 +58,13 @@ inline ArrayList<T> &ArrayList<T>::operator=(ArrayList<T> &&list) noexcept
 	_array = list._array;
 	_capacity = list._capacity;
 	list._size = 0;
+	list._array = nullptr;
 	return *this;
 }
 
 template <typename T>
 inline ArrayList<T>::ArrayList()
 {
-	this->_size = 0;
 	_capacity = DEFAULT_CAPACITY;
 	_array = new std::shared_ptr<T>[_capacity];
 }
@@ -120,9 +119,12 @@ inline std::shared_ptr<T> ArrayList<T>::set(int index, std::shared_ptr<T> data)
 template <typename T>
 inline void ArrayList<T>::clear()
 {
-	for (size_t i = 0; i < _capacity; ++i)
-		_array[i] = nullptr;
-	this->_size = 0;
+	if(_array != nullptr)
+	{
+		delete[] _array;
+		_array = nullptr;
+		this->_size = 0;
+	}
 }
 
 template <typename T>

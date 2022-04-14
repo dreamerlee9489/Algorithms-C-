@@ -92,9 +92,11 @@ template <typename T>
 inline LinkedList<T> &LinkedList<T>::operator=(const LinkedList<T> &list)
 {
     clear();
-    _head = new Node<T>(nullptr);
-    _head->_prev = _head->_next = _head;
-    this->_size = 0;
+    if(_head == nullptr)
+    {
+        _head = new Node<T>(nullptr);
+        _head->_prev = _head->_next = _head;
+    }
     for (size_t i = 0; i < list._size; ++i)
         insert(i, list.get(i));
     return *this;
@@ -104,9 +106,11 @@ template <typename T>
 inline LinkedList<T> &LinkedList<T>::operator=(LinkedList<T> &&list) noexcept
 {
     clear();
-    _head = new Node<T>(nullptr);
-    _head->_prev = _head->_next = _head;
-    this->_size = 0;
+    if (_head == nullptr)
+    {
+        _head = new Node<T>(nullptr);
+        _head->_prev = _head->_next = _head;
+    }
     if (list._size > 0)
     {
         this->_size = list._size;
@@ -123,7 +127,6 @@ inline LinkedList<T>::LinkedList()
 {
     _head = new Node<T>(nullptr);
     _head->_prev = _head->_next = _head;
-    this->_size = 0;
 }
 
 template <typename T>
