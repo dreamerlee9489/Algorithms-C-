@@ -20,11 +20,11 @@ protected:
         std::shared_ptr<U> _data = nullptr;
         Node<U> *_parent = nullptr, *_left = nullptr, *_right = nullptr;
         Node<U> &operator=(const Node<U> &node);
-        Node<U> &operator=(Node<U> &&node);
+        Node<U> &operator=(Node<U> &&node) noexcept;
         Node(std::shared_ptr<U> data, Node<U> *parent = nullptr, Node<U> *left = nullptr, Node<U> *right = nullptr)
             : _data(data), _parent(parent), _left(left), _right(right) {}
         Node(const Node<U> &node) { *this = node; }
-        Node(Node<U> &&node) { *this = std::move(node); }
+        Node(Node<U> &&node) noexcept { *this = std::move(node); }
         virtual ~Node() { _data = nullptr; }
         bool is_leaf() const { return _left == nullptr && _right == nullptr; }
         bool is_binary() const { return _left != nullptr && _right != nullptr; }
@@ -83,7 +83,7 @@ inline IBinaryTree<T>::Node<U> &IBinaryTree<T>::Node<U>::operator=(const IBinary
 
 template <typename T>
 template <typename U>
-inline IBinaryTree<T>::Node<U> &IBinaryTree<T>::Node<U>::operator=(Node<U> &&node)
+inline IBinaryTree<T>::Node<U> &IBinaryTree<T>::Node<U>::operator=(Node<U> &&node) noexcept
 {
     _data = std::move(node._data);
     _parent = std::move(node._parent);

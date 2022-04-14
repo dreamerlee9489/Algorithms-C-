@@ -13,11 +13,11 @@ private:
     {
         size_t _height = 1;
         AVLNode<U> &operator=(const AVLNode<U> &node);
-        AVLNode<U> &operator=(AVLNode<U> &&node);
+        AVLNode<U> &operator=(AVLNode<U> &&node) noexcept;
         AVLNode(std::shared_ptr<U> data, NODE *parent = nullptr, NODE *left = nullptr, NODE *right = nullptr)
             : NODE(data, parent, left, right) {}
         AVLNode(const AVLNode<U> &node) { *this = node; }
-        AVLNode(AVLNode<U> &&node) { *this = std::move(node); }
+        AVLNode(AVLNode<U> &&node) noexcept { *this = std::move(node); }
         ~AVLNode() = default;
         int balance_factor();
         void update_height();
@@ -35,10 +35,10 @@ private:
 
 public:
     AVLTree<T> &operator=(const AVLTree<T> &tree);
-    AVLTree<T> &operator=(AVLTree<T> &&tree);
+    AVLTree<T> &operator=(AVLTree<T> &&tree) noexcept;
     AVLTree() = default;
     AVLTree(const AVLTree<T> &tree) { *this = tree; }
-    AVLTree(AVLTree &&tree) { *this = std::move(tree); }
+    AVLTree(AVLTree &&tree) noexcept { *this = std::move(tree); }
     ~AVLTree() = default;
     NODE *create_node(std::shared_ptr<T> data, NODE *parent) override { return new AVLNode<T>(data, parent); }
 };
@@ -57,7 +57,7 @@ inline AVLTree<T>::AVLNode<U> &AVLTree<T>::AVLNode<U>::operator=(const AVLNode<U
 
 template <typename T>
 template <typename U>
-inline AVLTree<T>::AVLNode<U> &AVLTree<T>::AVLNode<U>::operator=(AVLNode<U> &&node)
+inline AVLTree<T>::AVLNode<U> &AVLTree<T>::AVLNode<U>::operator=(AVLNode<U> &&node) noexcept
 {
     this->_data = std::move(node._data);
     this->_parent = std::move(node._parent);
@@ -121,7 +121,7 @@ inline AVLTree<T> &AVLTree<T>::operator=(const AVLTree<T> &tree)
 }
 
 template <typename T>
-inline AVLTree<T> &AVLTree<T>::operator=(AVLTree<T> &&tree)
+inline AVLTree<T> &AVLTree<T>::operator=(AVLTree<T> &&tree) noexcept
 {
     this->clear();
     this->_root = tree._root;

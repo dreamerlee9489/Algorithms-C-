@@ -14,10 +14,10 @@ protected:
 
 public:
     BST<T> &operator=(const BST<T> &tree);
-    BST<T> &operator=(BST<T> &&tree);
+    BST<T> &operator=(BST<T> &&tree) noexcept;
     BST() = default;
     BST(const BST<T> &tree) { *this = tree; }
-    BST(BST<T> &&tree) { *this = std::move(tree); }
+    BST(BST<T> &&tree) noexcept { *this = std::move(tree); }
     virtual ~BST() = default;
     void add(std::shared_ptr<T> data) override;
     void remove(std::shared_ptr<T> data) override;
@@ -46,7 +46,7 @@ inline BST<T> &BST<T>::operator=(const BST<T> &tree)
 }
 
 template <typename T>
-inline BST<T> &BST<T>::operator=(BST<T> &&tree)
+inline BST<T> &BST<T>::operator=(BST<T> &&tree) noexcept
 {
     this->clear();
     this->_root = tree._root;

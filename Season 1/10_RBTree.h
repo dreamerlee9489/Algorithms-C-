@@ -15,11 +15,11 @@ private:
     {
         bool _color = RED;
         RBNode<U> &operator=(const RBNode<U> &node);
-        RBNode<U> &operator=(RBNode<U> &&node);
+        RBNode<U> &operator=(RBNode<U> &&node) noexcept;
         RBNode(std::shared_ptr<U> data, NODE *parent = nullptr, NODE *left = nullptr, NODE *right = nullptr)
             : NODE(data, parent, left, right) {}
         RBNode(const RBNode<U> &node) { *this = node; }
-        RBNode(RBNode<U> &&node) { *this = std::move(node); }
+        RBNode(RBNode<U> &&node) noexcept { *this = std::move(node); }
         ~RBNode() = default;
         std::string to_string() const override;
     };
@@ -33,10 +33,10 @@ private:
 
 public:
     RBTree<T> &operator=(const RBTree<T> &tree);
-    RBTree<T> &operator=(RBTree<T> &&tree);
+    RBTree<T> &operator=(RBTree<T> &&tree) noexcept;
     RBTree() = default;
     RBTree(const RBTree<T> &tree) { *this = tree; }
-    RBTree(RBTree<T> &&tree) { *this = std::move(tree); }
+    RBTree(RBTree<T> &&tree) noexcept { *this = std::move(tree); }
     ~RBTree() = default;
     NODE *create_node(std::shared_ptr<T> data, NODE *parent) override { return new RBNode<T>(data, parent); }
 };
@@ -55,7 +55,7 @@ inline RBTree<T>::RBNode<U> &RBTree<T>::RBNode<U>::operator=(const RBNode<U> &no
 
 template <typename T>
 template <typename U>
-inline RBTree<T>::RBNode<U> &RBTree<T>::RBNode<U>::operator=(RBNode<U> &&node)
+inline RBTree<T>::RBNode<U> &RBTree<T>::RBNode<U>::operator=(RBNode<U> &&node) noexcept
 {
     this->_data = std::move(node._data);
     this->_parent = std::move(node._parent);
@@ -96,7 +96,7 @@ inline RBTree<T> &RBTree<T>::operator=(const RBTree<T> &tree)
 }
 
 template <typename T>
-inline RBTree<T> &RBTree<T>::operator=(RBTree<T> &&tree)
+inline RBTree<T> &RBTree<T>::operator=(RBTree<T> &&tree) noexcept
 {
     this->clear();
     this->_root = tree._root;
