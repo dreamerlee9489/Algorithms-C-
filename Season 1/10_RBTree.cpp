@@ -46,37 +46,37 @@ height: 5
 [50, Alice12] R E D
 
 ----------Test remove()----------
-delete 0x1076730[55, Alice01]
-delete 0x1076df0[55, Alice01]
-delete 0x10767c0[87, Alice02]
-delete 0x1076730[87, Alice02]
-delete 0x1076850[56, Alice03]
-delete 0x1076730[56, Alice03]
+delete 0x7b6660[55, Alice01]
+delete 0x7b6d20[55, Alice01]
+delete 0x7b66f0[87, Alice02]
+delete 0x7b6660[87, Alice02]
+delete 0x7b6780[56, Alice03]
+delete 0x7b6660[56, Alice03]
 height: 4
 [70, Alice09] BLACK
 [62, Alice07] BLACK     [90, Alice11] BLACK
 [22, Alice06] R E D     [68, Alice10] BLACK     [74, Alice04] BLACK     [96, Alice05] BLACK
 [20, Alice08] BLACK     [50, Alice12] BLACK
 
-----------Test operator=(const RBTree<T>&)----------
+----------Test RBTree(const RBTree<T> &)----------
 [70, Alice09] BLACK
 [62, Alice07] R E D     [90, Alice11] BLACK
 [22, Alice06] BLACK     [68, Alice10] BLACK     [74, Alice04] R E D     [96, Alice05] R E D
 [20, Alice08] R E D     [50, Alice12] R E D
 
-----------Test operator=(RBTree<T>&&)----------
+----------Test RBTree(RBTree<T> &&)----------
 [70, Alice09] BLACK
 [62, Alice07] BLACK     [90, Alice11] BLACK
 [22, Alice06] R E D     [68, Alice10] BLACK     [74, Alice04] BLACK     [96, Alice05] BLACK
 [20, Alice08] BLACK     [50, Alice12] BLACK
 
-delete 0x1076b20[20, Alice08]
-delete 0x1076d60[50, Alice12]
-delete 0x1076a00[22, Alice06]
-delete 0x1076c40[68, Alice10]
-delete 0x1076a90[62, Alice07]
-delete 0x10768e0[74, Alice04]
-delete 0x1076970[96, Alice05]
-delete 0x1076cd0[90, Alice11]
-delete 0x1076bb0[70, Alice09]
+delete 0x7b6a50[20, Alice08]
+delete 0x7b6c90[50, Alice12]
+delete 0x7b6930[22, Alice06]
+delete 0x7b6b70[68, Alice10]
+delete 0x7b69c0[62, Alice07]
+delete 0x7b6810[74, Alice04]
+delete 0x7b68a0[96, Alice05]
+delete 0x7b6c00[90, Alice11]
+delete 0x7b6ae0[70, Alice09]
 */

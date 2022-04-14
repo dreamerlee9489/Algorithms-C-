@@ -10,6 +10,7 @@ template <typename T>
 class IBinaryTree
 {
     using traverse_func = void (*)(std::shared_ptr<T> data);
+    friend std::ostream &operator<<(std::ostream &os, const IBinaryTree<T> &tree) { return draw_tree(os, tree); }
 
 protected:
     template <typename U>
@@ -33,6 +34,8 @@ protected:
         std::string to_string() const override { return ((IString &)*_data).to_string(); }
     };
     size_t _size = 0;
+    static std::ostream &draw_tree(std::ostream &os, const IBinaryTree<T> &tree);
+    virtual Node<T> *get_node(std::shared_ptr<T> data) const = 0;
     virtual Node<T> *create_node(std::shared_ptr<T> data, Node<T> *parent) { return new Node<T>(data, parent); }
     void not_null_check(std::shared_ptr<T> data) const;
     Node<T> *get_predecessor(Node<T> *node) const;
@@ -101,6 +104,37 @@ inline IBinaryTree<T>::Node<U> *IBinaryTree<T>::Node<U>::get_sibling() const
 }
 
 template <typename T>
+inline std::ostream &IBinaryTree<T>::draw_tree(std::ostream &os, const IBinaryTree<T> &tree)
+{
+    if (tree._root != nullptr)
+    {
+        size_t height = 0;
+        size_t level_count = 1;
+        std::queue<Node<T> *> q = std::queue<Node<T> *>();
+        q.push(tree._root);
+        while (!q.empty())
+        {
+            Node<T> *elem = q.front();
+            if (elem != nullptr)
+                os << *tree.get_node(elem->_data) << "\t";
+            q.pop();
+            if (elem != nullptr)
+                q.push(elem->_left);
+            if (elem != nullptr)
+                q.push(elem->_right);
+            level_count--;
+            if (level_count == 0)
+            {
+                level_count = q.size();
+                height++;
+                os << "\n";
+            }
+        }
+    }
+    return os;
+}
+
+template <typename T>
 inline void IBinaryTree<T>::not_null_check(std::shared_ptr<T> data) const
 {
     if (data == nullptr)
@@ -144,7 +178,6 @@ inline IBinaryTree<T>::Node<T> *IBinaryTree<T>::get_successor(Node<T> *node) con
     }
     return nullptr;
 }
-
 
 template <typename T>
 inline bool IBinaryTree<T>::is_complete() const

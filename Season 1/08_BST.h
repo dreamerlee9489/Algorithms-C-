@@ -6,15 +6,11 @@ template <typename T>
 class BST : public IBinaryTree<T>
 {
     using NODE = typename IBinaryTree<T>::template Node<T>;
-    friend std::ostream &operator<<(std::ostream &os, const BST<T> &tree) { return draw_tree(os, tree); }
-
-private:
-    static std::ostream &draw_tree(std::ostream &os, const BST<T> &tree);
 
 protected:
     virtual void after_add(NODE *node) {}
     virtual void after_remove(NODE *node) {}
-    virtual NODE *get_node(std::shared_ptr<T> data) const;
+    NODE *get_node(std::shared_ptr<T> data) const override;
 
 public:
     BST<T> &operator=(const BST<T> &tree);
@@ -58,37 +54,6 @@ inline BST<T> &BST<T>::operator=(BST<T> &&tree)
     tree._root = nullptr;
     tree._size = 0;
     return *this;
-}
-
-template <typename T>
-inline std::ostream &BST<T>::draw_tree(std::ostream &os, const BST<T> &tree)
-{
-    if (tree._root != nullptr)
-    {
-        size_t height = 0;
-        size_t level_count = 1;
-        std::queue<NODE *> q = std::queue<NODE *>();
-        q.push(tree._root);
-        while (!q.empty())
-        {
-            NODE *elem = q.front();
-            if (elem != nullptr)
-                os << *tree.get_node(elem->_data) << "\t";
-            q.pop();
-            if (elem != nullptr)
-                q.push(elem->_left);
-            if (elem != nullptr)
-                q.push(elem->_right);
-            level_count--;
-            if (level_count == 0)
-            {
-                level_count = q.size();
-                height++;
-                os << "\n";
-            }
-        }
-    }
-    return os;
 }
 
 template <typename T>

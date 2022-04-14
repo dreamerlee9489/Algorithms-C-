@@ -6,7 +6,6 @@ template <typename T>
 class AVLTree : public BBST<T>
 {
     using NODE = typename BBST<T>::template Node<T>;
-    friend std::ostream &operator<<(std::ostream &os, const AVLTree<T> &tree) { return draw_tree(os, tree); }
 
 private:
     template <typename U>
@@ -25,8 +24,7 @@ private:
         NODE *taller_child();
         std::string to_string() const override { return ((IString &)*this->_data).to_string() + " h=" + std::to_string(_height); }
     };
-    static std::ostream &draw_tree(std::ostream &os, const AVLTree<T> &tree);
-    AVLNode<T> *get_node(std::shared_ptr<T> data) const override { return (AVLNode<T> *)BST<T>::get_node(data); }
+    AVLNode<T> *get_node(std::shared_ptr<T> data) const override { return (AVLNode<T> *)BBST<T>::get_node(data); }
     void rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f) override;
     void after_rotate(NODE *grand, NODE *parent, NODE *child) override;
     void after_add(NODE *node) override;
@@ -131,37 +129,6 @@ inline AVLTree<T> &AVLTree<T>::operator=(AVLTree<T> &&tree)
     tree._root = nullptr;
     tree._size = 0;
     return *this;
-}
-
-template <typename T>
-inline std::ostream &AVLTree<T>::draw_tree(std::ostream &os, const AVLTree<T> &tree)
-{
-    if (tree._root != nullptr)
-    {
-        size_t height = 0;
-        size_t level_count = 1;
-        std::queue<NODE *> q = std::queue<NODE *>();
-        q.push(tree._root);
-        while (!q.empty())
-        {
-            NODE *elem = q.front();
-            if (elem != nullptr)
-                os << *tree.get_node(elem->_data) << "\t";
-            q.pop();
-            if (elem != nullptr)
-                q.push(elem->_left);
-            if (elem != nullptr)
-                q.push(elem->_right);
-            level_count--;
-            if (level_count == 0)
-            {
-                level_count = q.size();
-                height++;
-                os << "\n";
-            }
-        }
-    }
-    return os;
 }
 
 template <typename T>

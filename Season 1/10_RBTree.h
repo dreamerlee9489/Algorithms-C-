@@ -6,7 +6,6 @@ template <typename T>
 class RBTree : public BBST<T>
 {
     using NODE = typename BBST<T>::template Node<T>;
-    friend std::ostream &operator<<(std::ostream &os, const RBTree<T> &tree) { return draw_tree(os, tree); }
 
 private:
     static const bool BLACK = false;
@@ -24,8 +23,7 @@ private:
         ~RBNode() = default;
         std::string to_string() const override;
     };
-    static std::ostream &draw_tree(std::ostream &os, const RBTree<T> &tree);
-    RBNode<T> *get_node(std::shared_ptr<T> data) const override { return (RBNode<T> *)BST<T>::get_node(data); }
+    RBNode<T> *get_node(std::shared_ptr<T> data) const override { return (RBNode<T> *)BBST<T>::get_node(data); }
     void after_add(NODE *node) override;
     void after_remove(NODE *node) override;
     NODE *set_color(NODE *node, bool color);
@@ -72,7 +70,7 @@ template <typename U>
 inline std::string RBTree<T>::RBNode<U>::to_string() const
 {
     std::string str = ((IString &)*this->_data).to_string();
-    return str += _color == RED ? "R E D" : "BLACK";
+    return str += _color == RED ? " R E D" : " BLACK";
 }
 
 template <typename T>
@@ -106,37 +104,6 @@ inline RBTree<T> &RBTree<T>::operator=(RBTree<T> &&tree)
     tree._root = nullptr;
     tree._size = 0;
     return *this;
-}
-
-template <typename T>
-inline std::ostream &RBTree<T>::draw_tree(std::ostream &os, const RBTree<T> &tree)
-{
-    if (tree._root != nullptr)
-    {
-        size_t height = 0;
-        size_t level_count = 1;
-        std::queue<NODE *> q = std::queue<NODE *>();
-        q.push(tree._root);
-        while (!q.empty())
-        {
-            NODE *elem = q.front();
-            if (elem != nullptr)
-                os << *tree.get_node(elem->_data) << "\t";
-            q.pop();
-            if (elem != nullptr)
-                q.push(elem->_left);
-            if (elem != nullptr)
-                q.push(elem->_right);
-            level_count--;
-            if (level_count == 0)
-            {
-                level_count = q.size();
-                height++;
-                os << "\n";
-            }
-        }
-    }
-    return os;
 }
 
 template <typename T>
