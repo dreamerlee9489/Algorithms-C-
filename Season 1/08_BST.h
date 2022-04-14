@@ -14,15 +14,15 @@ private:
 protected:
     virtual void after_add(NODE *node) {}
     virtual void after_remove(NODE *node) {}
+    virtual NODE *get_node(std::shared_ptr<T> data) const;
 
 public:
     BST<T> &operator=(const BST<T> &tree);
     BST<T> &operator=(BST<T> &&tree);
     BST() = default;
-    virtual ~BST() = default;
     BST(const BST<T> &tree) { *this = tree; }
     BST(BST<T> &&tree) { *this = std::move(tree); }
-    NODE *get_node(std::shared_ptr<T> data) const;
+    virtual ~BST() = default;
     void add(std::shared_ptr<T> data) override;
     void remove(std::shared_ptr<T> data) override;
 };
@@ -130,40 +130,41 @@ inline void BST<T>::remove(std::shared_ptr<T> data)
 {
     this->_size--;
     NODE *node = get_node(data);
-    if (node == nullptr)
-        return;
-    if (node->is_binary())
+    if (node != nullptr)
     {
-        NODE *s = this->get_successor(node);
-        node->_data = s->_data;
-        node = s; //删除前驱结点
-    }
-    NODE *replace = node->_left != nullptr ? node->_left : node->_right;
-    if (replace != nullptr)
-    {
-        replace->_parent = node->_parent;
-        if (node->_parent == nullptr)
-            this->_root = replace;
-        else if (node == node->_parent->_left)
-            node->_parent->_left = replace;
+        if (node->is_binary())
+        {
+            NODE *s = this->get_successor(node);
+            node->_data = s->_data;
+            node = s; //删除前驱结点
+        }
+        NODE *replace = node->_left != nullptr ? node->_left : node->_right;
+        if (replace != nullptr)
+        {
+            replace->_parent = node->_parent;
+            if (node->_parent == nullptr)
+                this->_root = replace;
+            else if (node == node->_parent->_left)
+                node->_parent->_left = replace;
+            else
+                node->_parent->_right = replace;
+            this->after_remove(replace);
+        }
+        else if (node->_parent != nullptr)
+        {
+            if (node == node->_parent->_left)
+                node->_parent->_left = nullptr;
+            else
+                node->_parent->_right = nullptr;
+            this->after_remove(node);
+        }
         else
-            node->_parent->_right = replace;
-        this->after_remove(replace);
+        {
+            this->_root = nullptr;
+            this->after_remove(node);
+        }
+        delete node;
     }
-    else if (node->_parent != nullptr)
-    {
-        if (node == node->_parent->_left)
-            node->_parent->_left = nullptr;
-        else
-            node->_parent->_right = nullptr;
-        this->after_remove(node);
-    }
-    else
-    {
-        this->_root = nullptr;
-        this->after_remove(node);
-    }
-    delete node;
 }
 
 template <typename T>

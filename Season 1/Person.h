@@ -20,9 +20,9 @@ public:
     Person &operator=(Person &&rhs) noexcept;
     Person() = default;
     Person(int age, std::string name) : _age(age), _name(name) {}
-    ~Person() { std::cout << "delete " << this << to_string() << "\n"; }
     Person(const Person &p) { *this = p; }
     Person(Person &&p) noexcept { *this = std::move(p); }
+    ~Person() { std::cout << "delete " << this << to_string() << "\n"; }
     std::string to_string() const override { return "[" + std::to_string(_age) + ", " + _name + "]"; }
 };
 

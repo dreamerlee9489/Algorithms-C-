@@ -17,15 +17,16 @@ private:
         AVLNode<U> &operator=(AVLNode<U> &&node);
         AVLNode(std::shared_ptr<U> data, NODE *parent = nullptr, NODE *left = nullptr, NODE *right = nullptr)
             : NODE(data, parent, left, right) {}
-        ~AVLNode() = default;
         AVLNode(const AVLNode<U> &node) { *this = node; }
         AVLNode(AVLNode<U> &&node) { *this = std::move(node); }
+        ~AVLNode() = default;
         int balance_factor();
         void update_height();
         NODE *taller_child();
         std::string to_string() const override { return ((IString &)*this->_data).to_string() + " h=" + std::to_string(_height); }
     };
     static std::ostream &draw_tree(std::ostream &os, const AVLTree<T> &tree);
+    AVLNode<T> *get_node(std::shared_ptr<T> data) const override { return (AVLNode<T> *)BST<T>::get_node(data); }
     void rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f) override;
     void after_rotate(NODE *grand, NODE *parent, NODE *child) override;
     void after_add(NODE *node) override;
@@ -38,11 +39,10 @@ public:
     AVLTree<T> &operator=(const AVLTree<T> &tree);
     AVLTree<T> &operator=(AVLTree<T> &&tree);
     AVLTree() = default;
-    ~AVLTree() = default;
     AVLTree(const AVLTree<T> &tree) { *this = tree; }
     AVLTree(AVLTree &&tree) { *this = std::move(tree); }
+    ~AVLTree() = default;
     NODE *create_node(std::shared_ptr<T> data, NODE *parent) override { return new AVLNode<T>(data, parent); }
-    AVLNode<T> *get_node(std::shared_ptr<T> data) const;
 };
 
 template <typename T>
@@ -241,22 +241,6 @@ inline void AVLTree<T>::after_rotate(NODE *grand, NODE *parent, NODE *child)
     BBST<T>::after_rotate(grand, parent, child);
     update_height(grand);
     update_height(parent);
-}
-
-template <typename T>
-inline AVLTree<T>::AVLNode<T> *AVLTree<T>::get_node(std::shared_ptr<T> data) const
-{
-    NODE *node = this->_root;
-    while (node != nullptr)
-    {
-        if (*node->_data < *data)
-            node = node->_right;
-        else if (*node->_data > *data)
-            node = node->_left;
-        else
-            return (AVLNode<T> *)node;
-    }
-    return nullptr;
 }
 
 #endif /* AVL_TREE_H */

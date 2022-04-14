@@ -23,7 +23,6 @@ int main()
     std::cout << "----------Test pop()----------\n";
     while (!deque.is_empty())
         std::cout << *deque.pop() << "\n";
-
     return 0;
 }
 

@@ -14,9 +14,9 @@ public:
     Deque<T> &operator=(const Deque<T> &deque);
     Deque<T> &operator=(Deque<T> &&deque) noexcept;
     Deque() { _list = new LinkedList<T>(); }
-    ~Deque() { delete _list; }
     Deque(const Deque<T> &deque) { *this = deque; }
     Deque(Deque<T> &&deque) noexcept { *this = std::move(deque); }
+    ~Deque() { delete _list; }
     size_t size() const { return _list->size(); }
     bool is_empty() const { return _list->size() == 0; }
     std::shared_ptr<T> push(std::shared_ptr<T> data) { return _list->add(data); }

@@ -18,9 +18,9 @@ public:
 	ArrayList<T> &operator=(const ArrayList<T> &list);
 	ArrayList<T> &operator=(ArrayList<T> &&list) noexcept;
 	ArrayList();
-	~ArrayList() { delete[] _array; }
 	ArrayList(const ArrayList<T> &list) { *this = list; }
 	ArrayList(ArrayList<T> &&list) noexcept { *this = std::move(list); }
+	~ArrayList() { delete[] _array; }
 	size_t capacity() const { return _capacity; }
 	int index_of(std::shared_ptr<T> data) const override;
 	std::shared_ptr<T> insert(int index, std::shared_ptr<T> data) override;

@@ -22,9 +22,9 @@ protected:
         Node<U> &operator=(Node<U> &&node);
         Node(std::shared_ptr<U> data, Node<U> *parent = nullptr, Node<U> *left = nullptr, Node<U> *right = nullptr)
             : _data(data), _parent(parent), _left(left), _right(right) {}
-        virtual ~Node() { _data = nullptr; }
         Node(const Node<U> &node) { *this = node; }
         Node(Node<U> &&node) { *this = std::move(node); }
+        virtual ~Node() { _data = nullptr; }
         bool is_leaf() const { return _left == nullptr && _right == nullptr; }
         bool is_binary() const { return _left != nullptr && _right != nullptr; }
         bool is_left() const { return _parent != nullptr && this == _parent->_left; }
@@ -101,99 +101,79 @@ inline IBinaryTree<T>::Node<U> *IBinaryTree<T>::Node<U>::get_sibling() const
 }
 
 template <typename T>
-inline size_t IBinaryTree<T>::height_recu(Node<T> *node) const
+inline void IBinaryTree<T>::not_null_check(std::shared_ptr<T> data) const
 {
-    if (node == nullptr)
-        return 0;
-    return 1 + std::max(height_recu(node->_left), height_recu(node->_right));
-}
-
-template <typename T>
-inline size_t IBinaryTree<T>::height_iter(Node<T> *node) const
-{
-    if (node == nullptr)
-        return 0;
-    size_t height = 0, level_count = 1;
-    std::queue<Node<T> *> q = std::queue<Node<T> *>();
-    q.push(node);
-    while (!q.empty())
-    {
-        Node<T> *elem = q.front();
-        q.pop();
-        level_count--;
-        if (elem->_left != nullptr)
-            q.push(elem->_left);
-        if (elem->_right != nullptr)
-            q.push(elem->_right);
-        if (level_count == 0)
-        {
-            level_count = q.size();
-            height++;
-        }
-    }
-    return height;
-}
-
-template <typename T>
-inline bool IBinaryTree<T>::is_complete() const
-{
-    if (_root == nullptr)
-        return false;
-    std::queue<Node<T> *> q = std::queue<Node<T> *>();
-    q.push(_root);
-    bool leaf = false;
-    while (!q.empty())
-    {
-        Node<T> *elem = q.front();
-        q.pop();
-        if (leaf && !elem->is_leaf())
-            return false;
-
-        if (elem->_left != nullptr)
-            q.push(elem->_left);
-        else if (elem->_right != nullptr)
-            return false;
-
-        if (elem->_right != nullptr)
-            q.push(elem->_right);
-        else
-            leaf = true; //最后一个非叶结点结点不入队
-    }
-    return true;
+    if (data == nullptr)
+        throw std::invalid_argument("data must be not null.");
 }
 
 template <typename T>
 inline IBinaryTree<T>::Node<T> *IBinaryTree<T>::get_predecessor(Node<T> *node) const
 {
-    if (node == nullptr)
-        return nullptr;
-    Node<T> *p = node->_left;
-    if (p != nullptr)
+    if (node != nullptr)
     {
-        while (p->_right != nullptr)
-            p = p->_right;
-        return p;
+        Node<T> *p = node->_left;
+        if (p != nullptr)
+        {
+            while (p->_right != nullptr)
+                p = p->_right;
+            return p;
+        }
+        while (node->_parent != nullptr && node == node->_parent->_left)
+            node = node->_parent;
+        return node->_parent;
     }
-    while (node->_parent != nullptr && node == node->_parent->_left)
-        node = node->_parent;
-    return node->_parent;
+    return nullptr;
 }
 
 template <typename T>
 inline IBinaryTree<T>::Node<T> *IBinaryTree<T>::get_successor(Node<T> *node) const
 {
-    if (node == nullptr)
-        return nullptr;
-    Node<T> *p = node->_right;
-    if (p != nullptr)
+    if (node != nullptr)
     {
-        while (p->_left != nullptr)
-            p = p->_left;
-        return p;
+        Node<T> *p = node->_right;
+        if (p != nullptr)
+        {
+            while (p->_left != nullptr)
+                p = p->_left;
+            return p;
+        }
+        while (node->_parent != nullptr && node == node->_parent->_right)
+            node = node->_parent;
+        return node->_parent;
     }
-    while (node->_parent != nullptr && node == node->_parent->_right)
-        node = node->_parent;
-    return node->_parent;
+    return nullptr;
+}
+
+
+template <typename T>
+inline bool IBinaryTree<T>::is_complete() const
+{
+    if (_root != nullptr)
+    {
+        std::queue<Node<T> *> q = std::queue<Node<T> *>();
+        q.push(_root);
+        bool leaf = false;
+        while (!q.empty())
+        {
+            Node<T> *elem = q.front();
+            q.pop();
+            if (leaf && !elem->is_leaf())
+                return false;
+
+            if (elem->_left != nullptr)
+                q.push(elem->_left);
+            else if (elem->_right != nullptr)
+                return false;
+
+            if (elem->_right != nullptr)
+                q.push(elem->_right);
+            else
+                leaf = true; //最后一个非叶结点不入队
+        }
+        return true;
+    }
+    return false;
 }
 
 template <typename T>
@@ -208,18 +188,47 @@ inline void IBinaryTree<T>::clear_recu(Node<T> *node)
 }
 
 template <typename T>
+inline size_t IBinaryTree<T>::height_recu(Node<T> *node) const
+{
+    if (node != nullptr)
+        return 1 + std::max(height_recu(node->_left), height_recu(node->_right));
+    return 0;
+}
+
+template <typename T>
+inline size_t IBinaryTree<T>::height_iter(Node<T> *node) const
+{
+    if (node != nullptr)
+    {
+        size_t height = 0, level_count = 1;
+        std::queue<Node<T> *> q = std::queue<Node<T> *>();
+        q.push(node);
+        while (!q.empty())
+        {
+            Node<T> *elem = q.front();
+            q.pop();
+            level_count--;
+            if (elem->_left != nullptr)
+                q.push(elem->_left);
+            if (elem->_right != nullptr)
+                q.push(elem->_right);
+            if (level_count == 0)
+            {
+                level_count = q.size();
+                height++;
+            }
+        }
+        return height;
+    }
+    return 0;
+}
+
+template <typename T>
 inline void IBinaryTree<T>::clear()
 {
     clear_recu(_root);
     _root = nullptr;
     _size = 0;
-}
-
-template <typename T>
-inline void IBinaryTree<T>::not_null_check(std::shared_ptr<T> data) const
-{
-    if (data == nullptr)
-        throw std::invalid_argument("data must be not null.");
 }
 
 template <typename T>
@@ -287,22 +296,23 @@ inline void IBinaryTree<T>::postorder_traverse(Node<T> *node, traverse_func func
 template <typename T>
 inline void IBinaryTree<T>::levelorder_traverse(Node<T> *node, traverse_func func) const
 {
-    if (node == nullptr)
-        return;
-    std::queue<Node<T> *> q = std::queue<Node<T> *>();
-    q.push(node);
-    while (!q.empty())
+    if (node != nullptr)
     {
-        Node<T> *elem = q.front();
-        q.pop();
-        if (elem->_left != nullptr)
-            q.push(elem->_left);
-        if (elem->_right != nullptr)
-            q.push(elem->_right);
-        if (func != nullptr)
-            func(elem->_data);
-        else
-            std::cout << *elem->_data << "\n";
+        std::queue<Node<T> *> q = std::queue<Node<T> *>();
+        q.push(node);
+        while (!q.empty())
+        {
+            Node<T> *elem = q.front();
+            q.pop();
+            if (elem->_left != nullptr)
+                q.push(elem->_left);
+            if (elem->_right != nullptr)
+                q.push(elem->_right);
+            if (func != nullptr)
+                func(elem->_data);
+            else
+                std::cout << *elem->_data << "\n";
+        }
     }
 }
 

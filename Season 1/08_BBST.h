@@ -8,10 +8,10 @@ class BBST : public BST<T>
     using NODE = typename BST<T>::template Node<T>;
 
 protected:
-    void rotate_left(NODE *grand);
-    void rotate_right(NODE *grand);
     virtual void rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f);
     virtual void after_rotate(NODE *grand, NODE *parent, NODE *child);
+    void rotate_left(NODE *grand);
+    void rotate_right(NODE *grand);
 
 public:
     BBST() = default;
@@ -48,15 +48,12 @@ inline void BBST<T>::rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f
         r->_parent->_right = d;
     else
         this->_root = d;
-
     b->_right = c;
     if (c != nullptr)
         c->_parent = b;
-
     f->_left = e;
     if (e != nullptr)
         e->_parent = f;
-
     d->_left = b;
     d->_right = f;
     b->_parent = d;
@@ -73,7 +70,6 @@ inline void BBST<T>::after_rotate(NODE *grand, NODE *parent, NODE *child)
         grand->_parent->_right = parent;
     else
         this->_root = parent;
-
     if (child != nullptr)
         child->_parent = grand;
     grand->_parent = parent;

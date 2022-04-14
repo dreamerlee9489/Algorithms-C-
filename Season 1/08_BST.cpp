@@ -40,15 +40,12 @@ int main()
     tree.traverse();
     std::cout << "height=" << tree.height() << "\n";
     std::cout << "is complete: " << tree.is_complete() << "\n";
-    std::cout << "----------Test operator=(const BST<T>&)----------\n";
-    BST<Person> tree2 = BST<Person>();
-    tree2 = tree;
+    std::cout << "----------Test BST(const BST<T> &)----------\n";
+    BST<Person> tree2 = BST<Person>(tree);
     std::cout << tree2;
-    std::cout << "----------Test operator=(BST<T>&&)----------\n";
-    BST<Person> tree3 = BST<Person>();
-    tree3 = std::move(tree);
+    std::cout << "----------Test BST(BST<T> &&)----------\n";
+    BST<Person> tree3 = BST<Person>(std::move(tree));
     std::cout << tree3;
-
     return 0;
 }
 

@@ -20,9 +20,9 @@ public:
     CircleDeque<T> &operator=(const CircleDeque<T> &deque);
     CircleDeque<T> &operator=(CircleDeque<T> &&deque) noexcept;
     CircleDeque();
-    ~CircleDeque();
     CircleDeque(const CircleDeque<T> &deque) { *this = deque; }
     CircleDeque(CircleDeque<T> &&deque) noexcept { *this = std::move(deque); }
+    ~CircleDeque();
     size_t size() const { return _size; }
     size_t capacity() const { return _capacity; }
     bool is_empty() const { return _size == 0; }

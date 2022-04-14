@@ -25,15 +25,12 @@ int main()
     tree.remove(std::make_shared<Person>(56, "Alice03"));
     std::cout << "height: " << tree.height() << "\n";
     std::cout << tree;
-    std::cout << "----------Test operator=(const RBTree<T>&)----------\n";
-    RBTree<Person> tree2 = RBTree<Person>();
-    tree2 = tree;
+    std::cout << "----------Test RBTree(const RBTree<T> &)----------\n";
+    RBTree<Person> tree2 = RBTree<Person>(tree);
     std::cout << tree2;
-    std::cout << "----------Test operator=(RBTree<T>&&)----------\n";
-    RBTree<Person> tree3 = RBTree<Person>();
-    tree3 = std::move(tree);
+    std::cout << "----------Test RBTree(RBTree<T> &&)----------\n";
+    RBTree<Person> tree3 = RBTree<Person>(std::move(tree));
     std::cout << tree3;
-
     return 0;
 }
 

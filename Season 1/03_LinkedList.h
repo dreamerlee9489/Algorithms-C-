@@ -17,9 +17,9 @@ private:
         Node<U> &operator=(const Node<U> &node);
         Node<U> &operator=(Node<U> &&node) noexcept;
         Node(std::shared_ptr<T> data, Node<U> *prev = nullptr, Node<U> *next = nullptr);
-        ~Node() { _data = nullptr; }
         Node(const Node<U> &node) { *this = node; }
         Node(Node<U> &&node) noexcept { *this = std::move(node); }
+        ~Node() { _data = nullptr; }
         std::shared_ptr<T> disconnect();
     };
     Node<T> *get_node(int index) const;
@@ -29,9 +29,9 @@ public:
     LinkedList<T> &operator=(const LinkedList<T> &list);
     LinkedList<T> &operator=(LinkedList<T> &&list) noexcept;
     LinkedList();
-    ~LinkedList();
     LinkedList(const LinkedList<T> &list) { *this = list; }
     LinkedList(LinkedList<T> &&list) noexcept { *this = std::move(list); }
+    ~LinkedList();
     int index_of(std::shared_ptr<T> data) const override;
     std::shared_ptr<T> insert(int index, std::shared_ptr<T> data) override;
     std::shared_ptr<T> remove(int index) override;

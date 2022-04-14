@@ -19,13 +19,13 @@ private:
         RBNode<U> &operator=(RBNode<U> &&node);
         RBNode(std::shared_ptr<U> data, NODE *parent = nullptr, NODE *left = nullptr, NODE *right = nullptr)
             : NODE(data, parent, left, right) {}
-        ~RBNode() = default;
         RBNode(const RBNode<U> &node) { *this = node; }
         RBNode(RBNode<U> &&node) { *this = std::move(node); }
+        ~RBNode() = default;
         std::string to_string() const override;
     };
     static std::ostream &draw_tree(std::ostream &os, const RBTree<T> &tree);
-    RBNode<T> *get_node(std::shared_ptr<T> data) const;
+    RBNode<T> *get_node(std::shared_ptr<T> data) const override { return (RBNode<T> *)BST<T>::get_node(data); }
     void after_add(NODE *node) override;
     void after_remove(NODE *node) override;
     NODE *set_color(NODE *node, bool color);
@@ -37,9 +37,9 @@ public:
     RBTree<T> &operator=(const RBTree<T> &tree);
     RBTree<T> &operator=(RBTree<T> &&tree);
     RBTree() = default;
-    ~RBTree() = default;
     RBTree(const RBTree<T> &tree) { *this = tree; }
     RBTree(RBTree<T> &&tree) { *this = std::move(tree); }
+    ~RBTree() = default;
     NODE *create_node(std::shared_ptr<T> data, NODE *parent) override { return new RBNode<T>(data, parent); }
 };
 
@@ -72,11 +72,7 @@ template <typename U>
 inline std::string RBTree<T>::RBNode<U>::to_string() const
 {
     std::string str = ((IString &)*this->_data).to_string();
-    if (_color == RED)
-        str += " R E D";
-    else
-        str += " BLACK";
-    return str;
+    return str += _color == RED ? "R E D" : "BLACK";
 }
 
 template <typename T>
@@ -146,9 +142,8 @@ inline std::ostream &RBTree<T>::draw_tree(std::ostream &os, const RBTree<T> &tre
 template <typename T>
 inline typename RBTree<T>::NODE *RBTree<T>::set_color(NODE *node, bool color)
 {
-    if (node == nullptr)
-        return node;
-    ((RBNode<T> *)node)->_color = color;
+    if (node != nullptr)
+        ((RBNode<T> *)node)->_color = color;
     return node;
 }
 
@@ -161,39 +156,39 @@ inline void RBTree<T>::after_add(NODE *node)
         set_color(node, BLACK);
         return;
     }
-    if (is_black(parent))
-        return;
-    NODE *uncle = parent->get_sibling();
-    NODE *grand = set_color(parent->_parent, RED);
-    if (is_red(uncle))
+    if (is_red(parent))
     {
-        set_color(parent, BLACK);
-        set_color(uncle, BLACK);
-        after_add(grand);
-        return;
-    }
-
-    if (parent->is_left())
-    {
-        if (node->is_left())
+        NODE *uncle = parent->get_sibling();
+        NODE *grand = set_color(parent->_parent, RED);
+        if (is_red(uncle))
+        {
             set_color(parent, BLACK);
-        else
-        {
-            set_color(node, BLACK);
-            this->rotate_left(parent);
+            set_color(uncle, BLACK);
+            after_add(grand);
+            return;
         }
-        this->rotate_right(grand);
-    }
-    else
-    {
-        if (node->is_left())
+        if (parent->is_left())
         {
-            set_color(node, BLACK);
-            this->rotate_right(parent);
+            if (node->is_left())
+                set_color(parent, BLACK);
+            else
+            {
+                set_color(node, BLACK);
+                this->rotate_left(parent);
+            }
+            this->rotate_right(grand);
         }
         else
-            set_color(parent, BLACK);
-        this->rotate_left(grand);
+        {
+            if (node->is_left())
+            {
+                set_color(node, BLACK);
+                this->rotate_right(parent);
+            }
+            else
+                set_color(parent, BLACK);
+            this->rotate_left(grand);
+        }
     }
 }
 
@@ -206,86 +201,71 @@ inline void RBTree<T>::after_remove(NODE *node)
         return;
     }
     NODE *parent = node->_parent;
-    if (parent == nullptr)
-        return;
-    bool is_left = parent->_left == nullptr || node->is_left();
-    NODE *sibling = is_left ? parent->_right : parent->_left;
-    if (is_left)
+    if (parent != nullptr)
     {
-        if (is_red(sibling))
+        bool is_left = parent->_left == nullptr || node->is_left();
+        NODE *sibling = is_left ? parent->_right : parent->_left;
+        if (is_left)
         {
-            set_color(sibling, BLACK);
-            set_color(parent, RED);
-            this->rotate_left(parent);
-            sibling = parent->_right;
-        }
-        if (is_black(sibling->_left) && is_black(sibling->_right))
-        {
-            bool parent_black = is_black(parent);
-            set_color(parent, BLACK);
-            set_color(sibling, RED);
-            if (parent_black)
-                after_remove(parent);
-        }
-        else
-        {
-            if (is_black(sibling->_right))
+            if (is_red(sibling))
             {
-                this->rotate_right(sibling);
+                set_color(sibling, BLACK);
+                set_color(parent, RED);
+                this->rotate_left(parent);
                 sibling = parent->_right;
             }
-            set_color(sibling, color_of(parent));
-            set_color(sibling->_right, BLACK);
-            set_color(parent, BLACK);
-            this->rotate_left(parent);
-        }
-    }
-    else
-    {
-        if (is_red(sibling))
-        {
-            set_color(sibling, BLACK);
-            set_color(parent, RED);
-            this->rotate_right(parent);
-            sibling = parent->_left;
-        }
-        if (is_black(sibling->_left) && is_black(sibling->_right))
-        {
-            bool parent_black = is_black(parent);
-            set_color(parent, BLACK);
-            set_color(sibling, RED);
-            if (parent_black)
-                after_remove(parent);
+            if (is_black(sibling->_left) && is_black(sibling->_right))
+            {
+                bool parent_black = is_black(parent);
+                set_color(parent, BLACK);
+                set_color(sibling, RED);
+                if (parent_black)
+                    after_remove(parent);
+            }
+            else
+            {
+                if (is_black(sibling->_right))
+                {
+                    this->rotate_right(sibling);
+                    sibling = parent->_right;
+                }
+                set_color(sibling, color_of(parent));
+                set_color(sibling->_right, BLACK);
+                set_color(parent, BLACK);
+                this->rotate_left(parent);
+            }
         }
         else
         {
-            if (is_black(sibling->_left))
+            if (is_red(sibling))
             {
-                this->rotate_left(sibling);
+                set_color(sibling, BLACK);
+                set_color(parent, RED);
+                this->rotate_right(parent);
                 sibling = parent->_left;
             }
-            set_color(sibling, color_of(parent));
-            set_color(sibling->_left, BLACK);
-            set_color(parent, BLACK);
-            this->rotate_right(parent);
+            if (is_black(sibling->_left) && is_black(sibling->_right))
+            {
+                bool parent_black = is_black(parent);
+                set_color(parent, BLACK);
+                set_color(sibling, RED);
+                if (parent_black)
+                    after_remove(parent);
+            }
+            else
+            {
+                if (is_black(sibling->_left))
+                {
+                    this->rotate_left(sibling);
+                    sibling = parent->_left;
+                }
+                set_color(sibling, color_of(parent));
+                set_color(sibling->_left, BLACK);
+                set_color(parent, BLACK);
+                this->rotate_right(parent);
+            }
         }
     }
-}
-
-template <typename T>
-inline RBTree<T>::RBNode<T> *RBTree<T>::get_node(std::shared_ptr<T> data) const
-{
-    NODE *node = this->_root;
-    while (node != nullptr)
-    {
-        if (*node->_data < *data)
-            node = node->_right;
-        else if (*node->_data > *data)
-            node = node->_left;
-        else
-            return (RBNode<T> *)node;
-    }
-    return nullptr;
 }
 
 #endif /* RB_TREE_H */

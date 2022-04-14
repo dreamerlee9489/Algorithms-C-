@@ -15,7 +15,6 @@ int main()
     std::cout << "Add: " << *list->add(std::make_shared<Person>(27, "Alice7")) << "\n";
     std::cout << "size=" << list->size() << std::endl;
     std::cout << *list;
-
     std::cout << "----------Test insert()----------\n";
     try
     {
@@ -28,7 +27,6 @@ int main()
     }
     std::cout << "size=" << list->size() << std::endl;
     std::cout << *list;
-
     std::cout << "----------Test contains() & index_of()----------\n";
     if (list->contains(std::make_shared<Person>(30, "Bob0")))
         std::cout << "Bob0 at index=" << list->index_of(std::make_shared<Person>(30, "Bob0")) << std::endl;
@@ -37,7 +35,6 @@ int main()
     std::cout << "Set: " << *list->set(5, std::make_shared<Person>(25, "Jack")) << "\n";
     std::cout << "size=" << list->size() << std::endl;
     std::cout << *list;
-
     std::cout << "----------Test remove()----------\n";
     try
     {
@@ -50,11 +47,9 @@ int main()
     }
     std::cout << "size=" << list->size() << std::endl;
     std::cout << *list;
-
     std::cout << "----------Test clear()----------\n";
     list->clear();
     std::cout << "size=" << list->size() << std::endl;
-
     std::cout << "----------Test operator=(const LinkedList<T> &)----------\n";
     auto list1 = std::make_shared<LinkedList<Person>>();
     list1->add(std::make_shared<Person>(10, "test10"));
@@ -66,7 +61,6 @@ int main()
     list2->add(std::make_shared<Person>(22, "test22"));
     *list2 = *list1;
     std::cout << *list2;
-
     std::cout << "----------Test operator=(LinkedList<T> &&)----------\n";
     auto list3 = std::make_shared<LinkedList<Person>>();
     list3->add(std::make_shared<Person>(30, "test30"));
@@ -74,7 +68,6 @@ int main()
     list3->add(std::make_shared<Person>(32, "test32"));
     *list3 = std::move(*list1);
     std::cout << *list3;
-
     return 0;
 }
 

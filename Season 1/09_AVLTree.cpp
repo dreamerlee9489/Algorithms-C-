@@ -25,15 +25,12 @@ int main()
     tree.remove(std::make_shared<Person>(56, "Alice03"));
     std::cout << "height: " << tree.height() << "\n";
     std::cout << tree;
-    std::cout << "----------Test operator=(const AVLTree<T>&)----------\n";
-    AVLTree<Person> tree2 = AVLTree<Person>();
-    tree2 = tree;
+    std::cout << "----------Test AVLTree(const AVLTree<T> &)----------\n";
+    AVLTree<Person> tree2 = AVLTree<Person>(tree);
     std::cout << tree2;
-    std::cout << "----------Test operator=(AVLTree<T>&&)----------\n";
-    AVLTree<Person> tree3 = AVLTree<Person>();
-    tree3 = std::move(tree);
+    std::cout << "----------Test AVLTree(AVLTree<T> &&)----------\n";
+    AVLTree<Person> tree3 = AVLTree<Person>(std::move(tree));
     std::cout << tree3;
-
     return 0;
 }
 
