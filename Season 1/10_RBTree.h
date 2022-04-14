@@ -12,13 +12,13 @@ private:
     static const bool BLACK = false;
     static const bool RED = true;
     template <typename U>
-    struct RBNode : public RBTree::template Node<U>
+    struct RBNode : public NODE
     {
         bool _color = RED;
         RBNode<U> &operator=(const RBNode<U> &node);
         RBNode<U> &operator=(RBNode<U> &&node);
         RBNode(std::shared_ptr<U> data, NODE *parent = nullptr, NODE *left = nullptr, NODE *right = nullptr)
-            : RBTree::template Node<U>(data, parent, left, right) {}
+            : NODE(data, parent, left, right) {}
         ~RBNode() = default;
         RBNode(const RBNode<U> &node) { *this = node; }
         RBNode(RBNode<U> &&node) { *this = std::move(node); }
@@ -40,7 +40,7 @@ public:
     ~RBTree() = default;
     RBTree(const RBTree<T> &tree) { *this = tree; }
     RBTree(RBTree<T> &&tree) { *this = std::move(tree); }
-    NODE *create_node(std::shared_ptr<T> data, NODE *parent) override { return new RBNode<T>(data, (RBNode<T> *)parent); }
+    NODE *create_node(std::shared_ptr<T> data, NODE *parent) override { return new RBNode<T>(data, parent); }
 };
 
 template <typename T>

@@ -10,13 +10,13 @@ class AVLTree : public BBST<T>
 
 private:
     template <typename U>
-    struct AVLNode : public AVLTree::template Node<U>
+    struct AVLNode : public NODE
     {
         size_t _height = 1;
         AVLNode<U> &operator=(const AVLNode<U> &node);
         AVLNode<U> &operator=(AVLNode<U> &&node);
         AVLNode(std::shared_ptr<U> data, NODE *parent = nullptr, NODE *left = nullptr, NODE *right = nullptr)
-            : AVLTree::template Node<U>(data, parent, left, right) {}
+            : NODE(data, parent, left, right) {}
         ~AVLNode() = default;
         AVLNode(const AVLNode<U> &node) { *this = node; }
         AVLNode(AVLNode<U> &&node) { *this = std::move(node); }
@@ -41,7 +41,7 @@ public:
     ~AVLTree() = default;
     AVLTree(const AVLTree<T> &tree) { *this = tree; }
     AVLTree(AVLTree &&tree) { *this = std::move(tree); }
-    NODE *create_node(std::shared_ptr<T> data, NODE *parent) override { return new AVLNode<T>(data, (AVLNode<T> *)parent); }
+    NODE *create_node(std::shared_ptr<T> data, NODE *parent) override { return new AVLNode<T>(data, parent); }
     AVLNode<T> *get_node(std::shared_ptr<T> data) const;
 };
 
