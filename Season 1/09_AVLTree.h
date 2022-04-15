@@ -64,6 +64,7 @@ inline AVLTree<T>::AVLNode<U> &AVLTree<T>::AVLNode<U>::operator=(AVLNode<U> &&no
     this->_left = std::move(node._left);
     this->_right = std::move(node._right);
     _height = std::move(node._height);
+    node._data = node._parent = node._left = node._right = nullptr;
     return *this;
 }
 

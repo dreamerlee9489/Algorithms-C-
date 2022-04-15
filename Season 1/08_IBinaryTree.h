@@ -89,6 +89,7 @@ inline IBinaryTree<T>::Node<U> &IBinaryTree<T>::Node<U>::operator=(Node<U> &&nod
     _parent = std::move(node._parent);
     _left = std::move(node._left);
     _right = std::move(node._right);
+    node._data = node._parent = node._left = node._right = nullptr;
     return *this;
 }
 

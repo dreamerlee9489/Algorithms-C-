@@ -8,8 +8,7 @@ class RBTree : public BBST<T>
     using NODE = typename BBST<T>::template Node<T>;
 
 private:
-    static const bool BLACK = false;
-    static const bool RED = true;
+    static const bool BLACK = false, RED = true;
     template <typename U>
     struct RBNode : public NODE
     {
@@ -62,6 +61,7 @@ inline RBTree<T>::RBNode<U> &RBTree<T>::RBNode<U>::operator=(RBNode<U> &&node) n
     this->_left = std::move(node._left);
     this->_right = std::move(node._right);
     _color = std::move(node._color);
+    node._data = node._parent = node._left = node._right = nullptr;
     return *this;
 }
 

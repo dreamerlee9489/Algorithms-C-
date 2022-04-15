@@ -66,6 +66,7 @@ inline LinkedList<T>::Node<U> &LinkedList<T>::Node<U>::operator=(Node<U> &&node)
     _data = std::move((std::shared_ptr<T>)node._data);
     _prev = std::move((Node<U> *)node._prev);
     _next = std::move((Node<U> *)node._next);
+    node._data = node._prev = node._next = nullptr;
     return *this;
 }
 
@@ -118,6 +119,7 @@ inline LinkedList<T> &LinkedList<T>::operator=(LinkedList<T> &&list) noexcept
         _head->_prev = list._head->_prev;
         list._head->_next->_prev = _head;
         list._size = 0;
+        list._head = nullptr;
     }
     return *this;
 }
