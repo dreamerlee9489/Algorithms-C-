@@ -1,43 +1,51 @@
 #include <iostream>
 #include "./04_Stack.h"
 #include "./Person.h"
+using namespace std;
 
 int main()
 {
     Stack<Person> stack = Stack<Person>();
-    stack.push(std::make_shared<Person>(10, "Alice0"));
-    stack.push(std::make_shared<Person>(11, "Alice1"));
-    stack.push(std::make_shared<Person>(12, "Alice2"));
-    stack.push(std::make_shared<Person>(13, "Alice3"));
-    stack.push(std::make_shared<Person>(14, "Alice4"));
-    std::cout << "----------Test operator<<()----------\n";
-    std::cout << stack;
-    std::cout << "----------Test top()----------\n";
-    std::cout << "top: " << *stack.top() << "\n";
-    std::cout << "----------Test pop()----------\n";
-    std::cout << "size=" << stack.size() << std::endl;
+    stack.push(make_shared<Person>(10, "Alice0"));
+    stack.push(make_shared<Person>(11, "Alice1"));
+    stack.push(make_shared<Person>(12, "Alice2"));
+    stack.push(make_shared<Person>(13, "Alice3"));
+    stack.push(make_shared<Person>(14, "Alice4"));
+    cout << "----------Test operator<<()----------\n";
+    cout << stack;
+    cout << "----------Test top()----------\n";
+    cout << "top: " << *stack.top() << "\n";
+    cout << "----------Test pop()----------\n";
+    cout << "size=" << stack.size() << endl;
     while (!stack.is_empty())
-        std::cout << *stack.pop() << "\n";
-    std::cout << "size=" << stack.size() << std::endl;
+        cout << *stack.pop() << "\n";
+    cout << "size=" << stack.size() << endl;
     return 0;
 }
 
 /*
 2022年4月5日 16:44:41
 输出:
+----------Test operator<<()----------
+[10, Alice0]
+[11, Alice1]
+[12, Alice2]
+[13, Alice3]
+[14, Alice4]
 ----------Test top()----------
-top: 0x6b6880[14, Alice4]
+top: [14, Alice4]
 ----------Test pop()----------
 size=5
-0x6b6880[14, Alice4]
-delete 0x6b6880[14, Alice4]
-0x6b6840[13, Alice3]
-delete 0x6b6840[13, Alice3]
-0x6b6800[12, Alice2]
-delete 0x6b6800[12, Alice2]
-0x6b67c0[11, Alice1]
-delete 0x6b67c0[11, Alice1]
-0x6b6780[10, Alice0]
+[14, Alice4]
+delete 0x6d68f0[14, Alice4]
+[13, Alice3]
+delete 0x6d68a0[13, Alice3]
+[12, Alice2]
+delete 0x6d6850[12, Alice2]
+[11, Alice1]
+delete 0x6d6800[11, Alice1]
+[10, Alice0]
+delete 0x6d67b0[10, Alice0]
 size=0
-delete 0x6b6780[10, Alice0]
+PS D:\M
 */

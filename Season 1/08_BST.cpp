@@ -1,51 +1,52 @@
 #include "./08_BST.h"
 #include "./Person.h"
+using namespace std;
 
 int main()
 {
     BST<Person> tree = BST<Person>();
-    tree.add(std::make_shared<Person>(17, "Alice17"));
-    tree.add(std::make_shared<Person>(14, "Alice14"));
-    tree.add(std::make_shared<Person>(12, "Alice12"));
-    tree.add(std::make_shared<Person>(11, "Alice11"));
-    tree.add(std::make_shared<Person>(13, "Alice13"));
-    tree.add(std::make_shared<Person>(15, "Alice15"));
-    tree.add(std::make_shared<Person>(19, "Alice19"));
-    tree.add(std::make_shared<Person>(18, "Alice18"));
-    tree.add(std::make_shared<Person>(21, "Alice21"));
-    tree.add(std::make_shared<Person>(20, "Alice20"));
-    tree.add(std::make_shared<Person>(22, "Alice22"));
-    std::cout << "----------Test operator<<()----------\n";
-    std::cout << tree;
-    std::cout << "----------Test traverse(Level)----------\n";
-    tree.traverse(BST<Person>::TraverseOrder::Level, [](std::shared_ptr<Person> data)
-                  { std::cout << "lambda: " << *data << "\n"; });
-    std::cout << "height=" << tree.height() << "\n";
-    std::cout << "is complete: " << tree.is_complete() << "\n";
-    std::cout << "----------Test remove()----------\n";
-    tree.remove(std::make_shared<Person>(17, "Alice17"));
-    tree.remove(std::make_shared<Person>(12, "Alice12"));
-    tree.remove(std::make_shared<Person>(19, "Alice19"));
+    tree.add(make_shared<Person>(17, "Alice17"));
+    tree.add(make_shared<Person>(14, "Alice14"));
+    tree.add(make_shared<Person>(12, "Alice12"));
+    tree.add(make_shared<Person>(11, "Alice11"));
+    tree.add(make_shared<Person>(13, "Alice13"));
+    tree.add(make_shared<Person>(15, "Alice15"));
+    tree.add(make_shared<Person>(19, "Alice19"));
+    tree.add(make_shared<Person>(18, "Alice18"));
+    tree.add(make_shared<Person>(21, "Alice21"));
+    tree.add(make_shared<Person>(20, "Alice20"));
+    tree.add(make_shared<Person>(22, "Alice22"));
+    cout << "----------Test operator<<()----------\n";
+    cout << tree;
+    cout << "----------Test traverse(Level)----------\n";
+    tree.traverse(BST<Person>::TraverseOrder::Level, [](shared_ptr<Person> data)
+                  { cout << "lambda: " << *data << "\n"; });
+    cout << "height=" << tree.height() << "\n";
+    cout << "is complete: " << tree.is_complete() << "\n";
+    cout << "----------Test remove()----------\n";
+    tree.remove(make_shared<Person>(17, "Alice17"));
+    tree.remove(make_shared<Person>(12, "Alice12"));
+    tree.remove(make_shared<Person>(19, "Alice19"));
     tree.traverse();
-    std::cout << "----------Test clear()----------\n";
+    cout << "----------Test clear()----------\n";
     tree.clear();
-    tree.add(std::make_shared<Person>(17, "Alice17"));
-    tree.add(std::make_shared<Person>(14, "Alice14"));
-    tree.add(std::make_shared<Person>(19, "Alice19"));
-    tree.add(std::make_shared<Person>(12, "Alice12"));
-    tree.add(std::make_shared<Person>(15, "Alice15"));
-    std::cout << "----------Test operator<<()----------\n";
-    std::cout << tree;
-    std::cout << "----------Test traverse(In)----------\n";
+    tree.add(make_shared<Person>(17, "Alice17"));
+    tree.add(make_shared<Person>(14, "Alice14"));
+    tree.add(make_shared<Person>(19, "Alice19"));
+    tree.add(make_shared<Person>(12, "Alice12"));
+    tree.add(make_shared<Person>(15, "Alice15"));
+    cout << "----------Test operator<<()----------\n";
+    cout << tree;
+    cout << "----------Test traverse(In)----------\n";
     tree.traverse();
-    std::cout << "height=" << tree.height() << "\n";
-    std::cout << "is complete: " << tree.is_complete() << "\n";
-    std::cout << "----------Test BST(const BST<T> &)----------\n";
+    cout << "height=" << tree.height() << "\n";
+    cout << "is complete: " << tree.is_complete() << "\n";
+    cout << "----------Test BST(const BST<T> &)----------\n";
     BST<Person> tree2 = BST<Person>(tree);
-    std::cout << tree2;
-    std::cout << "----------Test BST(BST<T> &&)----------\n";
-    BST<Person> tree3 = BST<Person>(std::move(tree));
-    std::cout << tree3;
+    cout << tree2;
+    cout << "----------Test BST(BST<T> &&)----------\n";
+    BST<Person> tree3 = BST<Person>(move(tree));
+    cout << tree3;
     return 0;
 }
 

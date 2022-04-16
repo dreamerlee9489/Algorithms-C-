@@ -1,36 +1,37 @@
 #include "./09_AVLTree.h"
 #include "./Person.h"
+using namespace std;
 
 int main()
 {
     AVLTree<Person> tree = AVLTree<Person>();
-    std::cout << "----------Test add()----------\n";
-    tree.add(std::make_shared<Person>(55, "Alice01"));
-    tree.add(std::make_shared<Person>(87, "Alice02"));
-    tree.add(std::make_shared<Person>(56, "Alice03"));
-    tree.add(std::make_shared<Person>(74, "Alice04"));
-    tree.add(std::make_shared<Person>(96, "Alice05"));
-    tree.add(std::make_shared<Person>(22, "Alice06"));
-    tree.add(std::make_shared<Person>(62, "Alice07"));
-    tree.add(std::make_shared<Person>(20, "Alice08"));
-    tree.add(std::make_shared<Person>(70, "Alice09"));
-    tree.add(std::make_shared<Person>(68, "Alice10"));
-    tree.add(std::make_shared<Person>(90, "Alice11"));
-    tree.add(std::make_shared<Person>(50, "Alice12"));
-    std::cout << "height: " << tree.height() << "\n";
-    std::cout << tree;
-    std::cout << "----------Test remove()----------\n";
-    tree.remove(std::make_shared<Person>(55, "Alice01"));
-    tree.remove(std::make_shared<Person>(87, "Alice02"));
-    tree.remove(std::make_shared<Person>(56, "Alice03"));
-    std::cout << "height: " << tree.height() << "\n";
-    std::cout << tree;
-    std::cout << "----------Test AVLTree(const AVLTree<T> &)----------\n";
+    cout << "----------Test add()----------\n";
+    tree.add(make_shared<Person>(55, "Alice01"));
+    tree.add(make_shared<Person>(87, "Alice02"));
+    tree.add(make_shared<Person>(56, "Alice03"));
+    tree.add(make_shared<Person>(74, "Alice04"));
+    tree.add(make_shared<Person>(96, "Alice05"));
+    tree.add(make_shared<Person>(22, "Alice06"));
+    tree.add(make_shared<Person>(62, "Alice07"));
+    tree.add(make_shared<Person>(20, "Alice08"));
+    tree.add(make_shared<Person>(70, "Alice09"));
+    tree.add(make_shared<Person>(68, "Alice10"));
+    tree.add(make_shared<Person>(90, "Alice11"));
+    tree.add(make_shared<Person>(50, "Alice12"));
+    cout << "height: " << tree.height() << "\n";
+    cout << tree;
+    cout << "----------Test remove()----------\n";
+    tree.remove(make_shared<Person>(55, "Alice01"));
+    tree.remove(make_shared<Person>(87, "Alice02"));
+    tree.remove(make_shared<Person>(56, "Alice03"));
+    cout << "height: " << tree.height() << "\n";
+    cout << tree;
+    cout << "----------Test AVLTree(const AVLTree<T> &)----------\n";
     AVLTree<Person> tree2 = AVLTree<Person>(tree);
-    std::cout << tree2;
-    std::cout << "----------Test AVLTree(AVLTree<T> &&)----------\n";
-    AVLTree<Person> tree3 = AVLTree<Person>(std::move(tree));
-    std::cout << tree3;
+    cout << tree2;
+    cout << "----------Test AVLTree(AVLTree<T> &&)----------\n";
+    AVLTree<Person> tree3 = AVLTree<Person>(move(tree));
+    cout << tree3;
     return 0;
 }
 

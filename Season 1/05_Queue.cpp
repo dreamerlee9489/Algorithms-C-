@@ -1,43 +1,45 @@
 #include <iostream>
 #include "./05_Queue.h"
 #include "./Person.h"
+using namespace std;
 
 int main()
 {
     Queue<Person> queue = Queue<Person>();
-    queue.push(std::make_shared<Person>(10, "Alice0"));
-    queue.push(std::make_shared<Person>(11, "Alice1"));
-    queue.push(std::make_shared<Person>(12, "Alice2"));
-    queue.push(std::make_shared<Person>(13, "Alice3"));
-    queue.push(std::make_shared<Person>(14, "Alice4"));
-    std::cout << "----------Test operator<<()----------\n";
-    std::cout << queue;
-    std::cout << "----------Test front()----------\n";
-    std::cout << "front: " << *queue.front() << "\n";
-    std::cout << "----------Test pop()----------\n";
-    std::cout << "size=" << queue.size() << std::endl;
+    queue.push(make_shared<Person>(10, "Alice0"));
+    queue.push(make_shared<Person>(11, "Alice1"));
+    queue.push(make_shared<Person>(12, "Alice2"));
+    queue.push(make_shared<Person>(13, "Alice3"));
+    queue.push(make_shared<Person>(14, "Alice4"));
+    cout << "----------Test operator<<()----------\n";
+    cout << queue;
+    cout << "----------Test front()----------\n";
+    cout << "front: " << *queue.front() << "\n";
+    cout << "----------Test pop()----------\n";
+    cout << "size=" << queue.size() << endl;
     while (!queue.is_empty())
-        std::cout << *queue.pop();
-    std::cout << "size=" << queue.size() << std::endl;
+        cout << *queue.pop();
+    cout << "size=" << queue.size() << endl;
     return 0;
 }
 
 /*
 2022年4月5日 23:19:03
 输出:
+----------Test operator<<()----------
+[10, Alice0]
+[11, Alice1]
+[12, Alice2]
+[13, Alice3]
+[14, Alice4]
 ----------Test front()----------
-front: 0x686710[10, Alice0]
+front: [10, Alice0]
 ----------Test pop()----------
 size=5
-0x686710[10, Alice0]
-delete 0x686710[10, Alice0]
-0x686780[11, Alice1]
-delete 0x686780[11, Alice1]
-0x6867f0[12, Alice2]
-delete 0x6867f0[12, Alice2]
-0x686860[13, Alice3]
-delete 0x686860[13, Alice3]
-0x6868d0[14, Alice4]
-delete 0x6868d0[14, Alice4]
+[10, Alice0]delete 0x1b6740[10, Alice0]
+[11, Alice1]delete 0x1b67c0[11, Alice1]
+[12, Alice2]delete 0x1b6840[12, Alice2]
+[13, Alice3]delete 0x1b68c0[13, Alice3]
+[14, Alice4]delete 0x1b6940[14, Alice4]
 size=0
 */
