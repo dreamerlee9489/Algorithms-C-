@@ -19,7 +19,7 @@ public:
     ~Queue() { delete _list; }
     size_t size() const { return _list->size(); }
     bool is_empty() const { return _list->is_empty(); }
-    std::shared_ptr<T> push(std::shared_ptr<T> data) { return _list->add(data); }
+    void push(std::shared_ptr<T> data) { _list->add(data); }
     std::shared_ptr<T> pop() { return _list->remove(0); }
     std::shared_ptr<T> const front() { return _list->get(0); }
     void clear() { _list->clear(); }

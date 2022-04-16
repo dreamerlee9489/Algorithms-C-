@@ -26,9 +26,9 @@ public:
     size_t size() const { return _size; }
     size_t capacity() const { return _capacity; }
     bool is_empty() const { return _size == 0; }
-    std::shared_ptr<T> push(std::shared_ptr<T> data);
+    void push(std::shared_ptr<T> data);
     std::shared_ptr<T> pop();
-    std::shared_ptr<T> push_front(std::shared_ptr<T> data);
+    void push_front(std::shared_ptr<T> data);
     std::shared_ptr<T> pop_rear();
     std::shared_ptr<T> front() const { return _array[_front]; }
     std::shared_ptr<T> rear() const { return _array[true_index(_size - 1)]; }
@@ -90,12 +90,11 @@ inline CircleDeque<T>::~CircleDeque()
 }
 
 template <typename T>
-inline std::shared_ptr<T> CircleDeque<T>::push(std::shared_ptr<T> data)
+inline void CircleDeque<T>::push(std::shared_ptr<T> data)
 {
     ensure_capacity();
     _array[true_index(_size)] = data;
     _size++;
-    return data;
 }
 
 template <typename T>
@@ -109,13 +108,12 @@ inline std::shared_ptr<T> CircleDeque<T>::pop()
 }
 
 template <typename T>
-inline std::shared_ptr<T> CircleDeque<T>::push_front(std::shared_ptr<T> data)
+inline void CircleDeque<T>::push_front(std::shared_ptr<T> data)
 {
     ensure_capacity();
     _front = true_index(-1);
     _array[_front] = data;
     _size++;
-    return data;
 }
 
 template <typename T>

@@ -13,7 +13,7 @@ int main()
     std::cout << "----------Test operator<<()----------\n";
     std::cout << queue;
     std::cout << "----------Test front()----------\n";
-    std::cout << "front: " << *queue.front();
+    std::cout << "front: " << *queue.front() << "\n";
     std::cout << "----------Test pop()----------\n";
     std::cout << "size=" << queue.size() << std::endl;
     while (!queue.is_empty())

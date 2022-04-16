@@ -33,10 +33,10 @@ public:
     LinkedList(LinkedList<T> &&list) noexcept { *this = std::move(list); }
     ~LinkedList();
     int index_of(std::shared_ptr<T> data) const override;
-    std::shared_ptr<T> insert(int index, std::shared_ptr<T> data) override;
+    void insert(int index, std::shared_ptr<T> data) override;
     std::shared_ptr<T> remove(int index) override;
     std::shared_ptr<T> get(int index) const override;
-    std::shared_ptr<T> set(int index, std::shared_ptr<T> data) override;
+    void set(int index, std::shared_ptr<T> data) override;
     void clear() override;
 };
 
@@ -152,7 +152,7 @@ inline int LinkedList<T>::index_of(std::shared_ptr<T> data) const
 }
 
 template <typename T>
-inline std::shared_ptr<T> LinkedList<T>::insert(int index, std::shared_ptr<T> data)
+inline void LinkedList<T>::insert(int index, std::shared_ptr<T> data)
 {
     this->check_range(index, true);
     Node<T> *prev = get_node(index - 1);
@@ -170,7 +170,6 @@ inline std::shared_ptr<T> LinkedList<T>::insert(int index, std::shared_ptr<T> da
         _head->_prev = temp;
     }
     this->_size++;
-    return data;
 }
 
 template <typename T>
@@ -210,14 +209,13 @@ inline std::shared_ptr<T> LinkedList<T>::get(int index) const
 }
 
 template <typename T>
-inline std::shared_ptr<T> LinkedList<T>::set(int index, std::shared_ptr<T> data)
+inline void LinkedList<T>::set(int index, std::shared_ptr<T> data)
 {
     this->check_range(index);
     Node<T> *p = _head->_next;
     for (size_t i = 0; i < index; ++i)
         p = p->_next;
     p->_data = data;
-    return p->_data;
 }
 
 template <typename T>
