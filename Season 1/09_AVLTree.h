@@ -25,6 +25,7 @@ private:
         std::string to_string() const override { return ((IString &)*this->_data).to_string() + " h=" + std::to_string(_height); }
     };
     AVLNode<T> *get_node(std::shared_ptr<T> data) const override { return (AVLNode<T> *)BBST<T>::get_node(data); }
+    NODE *create_node(std::shared_ptr<T> data, NODE *parent) override { return new AVLNode<T>(data, parent); }
     void rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f) override;
     void after_rotate(NODE *grand, NODE *parent, NODE *child) override;
     void after_add(NODE *node) override;
@@ -40,7 +41,6 @@ public:
     AVLTree(const AVLTree<T> &tree) { *this = tree; }
     AVLTree(AVLTree &&tree) noexcept { *this = std::move(tree); }
     ~AVLTree() = default;
-    NODE *create_node(std::shared_ptr<T> data, NODE *parent) override { return new AVLNode<T>(data, parent); }
 };
 
 template <typename T>

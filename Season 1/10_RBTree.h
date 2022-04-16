@@ -23,6 +23,7 @@ private:
         std::string to_string() const override;
     };
     RBNode<T> *get_node(std::shared_ptr<T> data) const override { return (RBNode<T> *)BBST<T>::get_node(data); }
+    NODE *create_node(std::shared_ptr<T> data, NODE *parent) override { return new RBNode<T>(data, parent); }
     void after_add(NODE *node) override;
     void after_remove(NODE *node) override;
     NODE *set_color(NODE *node, bool color);
@@ -37,7 +38,6 @@ public:
     RBTree(const RBTree<T> &tree) { *this = tree; }
     RBTree(RBTree<T> &&tree) noexcept { *this = std::move(tree); }
     ~RBTree() = default;
-    NODE *create_node(std::shared_ptr<T> data, NODE *parent) override { return new RBNode<T>(data, parent); }
 };
 
 template <typename T>
