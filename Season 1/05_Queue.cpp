@@ -18,7 +18,7 @@ int main()
     cout << "----------Test pop()----------\n";
     cout << "size=" << queue.size() << endl;
     while (!queue.is_empty())
-        cout << *queue.pop();
+        cout << *queue.pop() << "\n";
     cout << "size=" << queue.size() << endl;
     return 0;
 }
@@ -36,10 +36,15 @@ int main()
 front: [10, Alice0]
 ----------Test pop()----------
 size=5
-[10, Alice0]delete 0x1b6740[10, Alice0]
-[11, Alice1]delete 0x1b67c0[11, Alice1]
-[12, Alice2]delete 0x1b6840[12, Alice2]
-[13, Alice3]delete 0x1b68c0[13, Alice3]
-[14, Alice4]delete 0x1b6940[14, Alice4]
+[10, Alice0]
+delete 0x6d6740[10, Alice0]
+[11, Alice1]
+delete 0x6d67c0[11, Alice1]
+[12, Alice2]
+delete 0x6d6840[12, Alice2]
+[13, Alice3]
+delete 0x6d68c0[13, Alice3]
+[14, Alice4]
+delete 0x6d6940[14, Alice4]
 size=0
 */
