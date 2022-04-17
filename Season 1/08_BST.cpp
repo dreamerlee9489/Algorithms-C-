@@ -20,7 +20,10 @@ int main()
     cout << tree;
     cout << "----------Test traverse(Level)----------\n";
     tree.traverse(BST<Person>::TraverseOrder::Level, [](shared_ptr<Person> data)
-                  { cout << "lambda: " << *data << "\n"; });
+    { 
+        cout << "lambda: " << *data << "\n"; 
+        return false; 
+    });
     cout << "height=" << tree.height() << "\n";
     cout << "is complete: " << tree.is_complete() << "\n";
     cout << "----------Test remove()----------\n";

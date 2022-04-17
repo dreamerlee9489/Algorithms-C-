@@ -9,7 +9,7 @@
 template <typename T>
 class IBinaryTree
 {
-    using traverse_func = void (*)(std::shared_ptr<T> data);
+    using traverse_func = bool (*)(std::shared_ptr<T> data);
     friend std::ostream &operator<<(std::ostream &os, const IBinaryTree<T> &tree) { return draw_tree(os, tree); }
 
 protected:

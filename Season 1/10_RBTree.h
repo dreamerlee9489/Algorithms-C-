@@ -5,9 +5,8 @@
 template <typename T>
 class RBTree : public BBST<T>
 {
-    using NODE = typename BBST<T>::template Node<T>;
-
 private:
+    using NODE = typename BBST<T>::template Node<T>;
     static const bool BLACK = false, RED = true;
     template <typename U>
     struct RBNode : public NODE
