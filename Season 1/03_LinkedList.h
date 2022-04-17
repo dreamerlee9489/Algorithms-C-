@@ -7,8 +7,6 @@ class LinkedList : public IList<T>
 {
     template <typename U>
     friend std::ostream &operator<<(std::ostream &os, const LinkedList<U> &list);
-
-private:
     template <typename U>
     struct Node
     {

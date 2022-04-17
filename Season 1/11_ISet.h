@@ -1,7 +1,7 @@
 #ifndef ISET_H
 #define ISET_H
 #include <memory>
-
+// 集合基类
 template <typename T>
 class ISet
 {

@@ -8,8 +8,6 @@ class CircleDeque
 {
     template <typename U>
     friend std::ostream &operator<<(std::ostream &os, const CircleDeque<U> &deque);
-
-private:
     const size_t DEFAULT_CAPACITY = 8;
     size_t _capacity = 0, _size = 0, _front = 0;
     std::shared_ptr<T> *_array = nullptr;

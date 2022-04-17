@@ -6,8 +6,6 @@ template <typename T>
 class Deque
 {
     friend std::ostream &operator<<(std::ostream &os, const Deque<T> &deque) { return os << *deque._list; }
-
-private:
     LinkedList<T> *_list = nullptr;
 
 public:

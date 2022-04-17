@@ -1,10 +1,10 @@
-#include "./11_TreeSet.h"
+#include "./11_Set.h"
 #include "./Person.h"
 using namespace std;
 
 int main(int argc, char const *argv[])
 {
-    TreeSet<Person> tree;
+    Set<Person> tree;
     tree.add(make_shared<Person>(12, "Alice12"));
     tree.add(make_shared<Person>(10, "Alice10"));
     tree.add(make_shared<Person>(7, "Alice17"));

@@ -2,16 +2,15 @@
 #define TREE_SET_H
 #include "./11_ISet.h"
 #include "./10_RBtree.h"
-
+// 集合
 template <typename T>
-class TreeSet : public ISet<T>
+class Set : public ISet<T>
 {
-private:
     RBTree<T> *tree;
 
 public:
-    TreeSet() { tree = new RBTree<T>(); }
-    ~TreeSet() { delete tree; }
+    Set() { tree = new RBTree<T>(); }
+    ~Set() { delete tree; }
     size_t size() override { return tree->size(); }
     bool is_empty() override { return tree->is_empty(); }
     bool contains(std::shared_ptr<T> data) override { return tree->contains(data); }

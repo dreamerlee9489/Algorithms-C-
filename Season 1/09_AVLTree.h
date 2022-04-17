@@ -5,7 +5,6 @@
 template <typename T>
 class AVLTree : public BBST<T>
 {
-private:
     using NODE = typename BBST<T>::template Node<T>;
     template <typename U>
     struct AVLNode : public NODE
