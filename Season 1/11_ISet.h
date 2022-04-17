@@ -6,7 +6,8 @@ template <typename T>
 class ISet
 {
 protected:
-    using traverse_func = bool (*)(std::shared_ptr<T> data);
+    using TraverseFunc = bool (*)(std::shared_ptr<T> data);
+    using Comparator = int (*)(std::shared_ptr<T> a, std::shared_ptr<T> b);
     ISet() = default;
     ~ISet() = default;
     virtual size_t size() = 0;
@@ -14,7 +15,7 @@ protected:
     virtual bool contains(std::shared_ptr<T> data) = 0;
     virtual void add(std::shared_ptr<T> data) = 0;
     virtual void remove(std::shared_ptr<T> data) = 0;
-    virtual void traverse(traverse_func func = nullptr) = 0;
+    virtual void traverse(TraverseFunc func = nullptr) = 0;
     virtual void clear() = 0;
 };
 

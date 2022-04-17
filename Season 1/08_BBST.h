@@ -5,7 +5,7 @@
 template <typename T>
 class BBST : public BST<T>
 {
-    using NODE = typename BST<T>::template Node<T>;
+    using NODE = typename IBinaryTree<T>::template Node<T>;
 
 protected:
     virtual void rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f);
@@ -14,7 +14,7 @@ protected:
     void rotate_right(NODE *grand);
 
 public:
-    BBST() = default;
+    BBST(typename IBinaryTree<T>::Comparator comparator = nullptr) : BST<T>(comparator) {}
     virtual ~BBST() = default;
 };
 

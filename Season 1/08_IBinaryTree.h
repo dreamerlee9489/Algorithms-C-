@@ -9,10 +9,11 @@
 template <typename T>
 class IBinaryTree
 {
-    using traverse_func = bool (*)(std::shared_ptr<T> data);
     friend std::ostream &operator<<(std::ostream &os, const IBinaryTree<T> &tree) { return draw_tree(os, tree); }
 
 protected:
+    using TraverseFunc = bool (*)(std::shared_ptr<T> data);
+    using Comparator = int (*)(std::shared_ptr<T> a, std::shared_ptr<T> b);
     template <typename U>
     struct Node : public IString
     {
@@ -34,16 +35,18 @@ protected:
         std::string to_string() const override { return ((IString &)*_data).to_string(); }
     };
     size_t _size = 0;
+    Node<T> *_root = nullptr;
+    Comparator _comparator = nullptr;
     static std::ostream &draw_tree(std::ostream &os, const IBinaryTree<T> &tree);
     virtual Node<T> *get_node(std::shared_ptr<T> data) const = 0;
     virtual Node<T> *create_node(std::shared_ptr<T> data, Node<T> *parent) { return new Node<T>(data, parent); }
     void not_null_check(std::shared_ptr<T> data) const;
     Node<T> *get_predecessor(Node<T> *node) const;
     Node<T> *get_successor(Node<T> *node) const;
-    void inorder_traverse(Node<T> *node, traverse_func func) const;
-    void preorder_traverse(Node<T> *node, traverse_func func) const;
-    void postorder_traverse(Node<T> *node, traverse_func func) const;
-    void levelorder_traverse(Node<T> *node, traverse_func func) const;
+    void inorder_traverse(Node<T> *node, TraverseFunc func) const;
+    void preorder_traverse(Node<T> *node, TraverseFunc func) const;
+    void postorder_traverse(Node<T> *node, TraverseFunc func) const;
+    void levelorder_traverse(Node<T> *node, TraverseFunc func) const;
     size_t height_recu(Node<T> *node) const;
     size_t height_iter(Node<T> *node) const;
     void clear_recu(Node<T> *node);
@@ -56,8 +59,7 @@ public:
         Post,
         Level
     };
-    Node<T> *_root = nullptr;
-    IBinaryTree() = default;
+    IBinaryTree(Comparator comparator = nullptr) { _comparator = comparator; }
     virtual ~IBinaryTree() { clear_recu(_root); }
     virtual void add(std::shared_ptr<T> data) = 0;
     virtual void remove(std::shared_ptr<T> data) = 0;
@@ -66,7 +68,7 @@ public:
     bool is_empty() const { return _size == 0; }
     bool is_complete() const;
     bool contains(std::shared_ptr<T> data) const { return get_node(data) != nullptr; }
-    void traverse(TraverseOrder order = TraverseOrder::In, traverse_func func = nullptr) const;
+    void traverse(TraverseOrder order = TraverseOrder::In, TraverseFunc func = nullptr) const;
     void clear();
 };
 
@@ -266,7 +268,7 @@ inline void IBinaryTree<T>::clear()
 }
 
 template <typename T>
-inline void IBinaryTree<T>::traverse(TraverseOrder order, traverse_func func) const
+inline void IBinaryTree<T>::traverse(TraverseOrder order, TraverseFunc func) const
 {
     switch (order)
     {
@@ -286,7 +288,7 @@ inline void IBinaryTree<T>::traverse(TraverseOrder order, traverse_func func) co
 }
 
 template <typename T>
-inline void IBinaryTree<T>::inorder_traverse(Node<T> *node, traverse_func func) const
+inline void IBinaryTree<T>::inorder_traverse(Node<T> *node, TraverseFunc func) const
 {
     if (node != nullptr)
     {
@@ -300,7 +302,7 @@ inline void IBinaryTree<T>::inorder_traverse(Node<T> *node, traverse_func func) 
 }
 
 template <typename T>
-inline void IBinaryTree<T>::preorder_traverse(Node<T> *node, traverse_func func) const
+inline void IBinaryTree<T>::preorder_traverse(Node<T> *node, TraverseFunc func) const
 {
     if (node != nullptr)
     {
@@ -314,7 +316,7 @@ inline void IBinaryTree<T>::preorder_traverse(Node<T> *node, traverse_func func)
 }
 
 template <typename T>
-inline void IBinaryTree<T>::postorder_traverse(Node<T> *node, traverse_func func) const
+inline void IBinaryTree<T>::postorder_traverse(Node<T> *node, TraverseFunc func) const
 {
     if (node != nullptr)
     {
@@ -328,7 +330,7 @@ inline void IBinaryTree<T>::postorder_traverse(Node<T> *node, traverse_func func
 }
 
 template <typename T>
-inline void IBinaryTree<T>::levelorder_traverse(Node<T> *node, traverse_func func) const
+inline void IBinaryTree<T>::levelorder_traverse(Node<T> *node, TraverseFunc func) const
 {
     if (node != nullptr)
     {

@@ -15,7 +15,7 @@ protected:
 public:
     BST<T> &operator=(const BST<T> &tree);
     BST<T> &operator=(BST<T> &&tree) noexcept;
-    BST() = default;
+    BST(typename IBinaryTree<T>::Comparator comparator = nullptr) : IBinaryTree<T>(comparator) {}
     BST(const BST<T> &tree) { *this = tree; }
     BST(BST<T> &&tree) noexcept { *this = std::move(tree); }
     virtual ~BST() = default;
@@ -71,21 +71,46 @@ inline void BST<T>::add(std::shared_ptr<T> data)
     while (node != nullptr)
     {
         parent = node;
-        if (*node->_data < *data)
-            node = node->_right;
-        else if (*node->_data > *data)
-            node = node->_left;
+        if(this->_comparator == nullptr)
+        {
+            if (*node->_data < *data)
+                node = node->_right;
+            else if (*node->_data > *data)
+                node = node->_left;
+            else
+            {
+                node->_data = data;
+                return;
+            }
+        }
         else
         {
-            node->_data = data;
-            return;
+            if (this->_comparator(node->_data, data) < 0)
+                node = node->_right;
+            else if (this->_comparator(node->_data, data) > 0)
+                node = node->_left;
+            else
+            {
+                node->_data = data;
+                return;
+            }
         }
     }
     NODE *temp = this->create_node(data, parent);
-    if (*data > *parent->_data)
-        parent->_right = temp;
+    if(this->_comparator == nullptr)
+    {
+        if (*parent->_data < *data)
+            parent->_right = temp;
+        else
+            parent->_left = temp;
+    }
     else
-        parent->_left = temp;
+    {
+        if (this->_comparator(parent->_data, data) < 0)
+            parent->_right = temp;
+        else
+            parent->_left = temp;
+    }
     this->_size++;
     this->after_add(temp);
 }
@@ -138,12 +163,24 @@ inline typename BST<T>::NODE *BST<T>::get_node(std::shared_ptr<T> data) const
     NODE *node = this->_root;
     while (node != nullptr)
     {
-        if (*node->_data < *data)
-            node = node->_right;
-        else if (*node->_data > *data)
-            node = node->_left;
+        if (this->_comparator == nullptr)
+        {
+            if (*node->_data < *data)
+                node = node->_right;
+            else if (*node->_data > *data)
+                node = node->_left;
+            else
+                return node;
+        }
         else
-            return node;
+        {
+            if (this->_comparator(node->_data, data) < 0)
+                node = node->_right;
+            else if (this->_comparator(node->_data, data) > 0)
+                node = node->_left;
+            else
+                return node;
+        }
     }
     return nullptr;
 }

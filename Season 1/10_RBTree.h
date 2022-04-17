@@ -5,7 +5,7 @@
 template <typename T>
 class RBTree : public BBST<T>
 {
-    using NODE = typename BBST<T>::template Node<T>;
+    using NODE = typename IBinaryTree<T>::template Node<T>;
     static const bool BLACK = false, RED = true;
     template <typename U>
     struct RBNode : public NODE
@@ -32,7 +32,7 @@ class RBTree : public BBST<T>
 public:
     RBTree<T> &operator=(const RBTree<T> &tree);
     RBTree<T> &operator=(RBTree<T> &&tree) noexcept;
-    RBTree() = default;
+    RBTree(typename IBinaryTree<T>::Comparator comparator = nullptr) : BBST<T>(comparator) {}
     RBTree(const RBTree<T> &tree) { *this = tree; }
     RBTree(RBTree<T> &&tree) noexcept { *this = std::move(tree); }
     ~RBTree() = default;

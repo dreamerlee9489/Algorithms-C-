@@ -5,7 +5,7 @@
 template <typename T>
 class AVLTree : public BBST<T>
 {
-    using NODE = typename BBST<T>::template Node<T>;
+    using NODE = typename IBinaryTree<T>::template Node<T>;
     template <typename U>
     struct AVLNode : public NODE
     {
@@ -35,7 +35,7 @@ class AVLTree : public BBST<T>
 public:
     AVLTree<T> &operator=(const AVLTree<T> &tree);
     AVLTree<T> &operator=(AVLTree<T> &&tree) noexcept;
-    AVLTree() = default;
+    AVLTree(typename IBinaryTree<T>::Comparator comparator = nullptr) : BBST<T>(comparator) {}
     AVLTree(const AVLTree<T> &tree) { *this = tree; }
     AVLTree(AVLTree &&tree) noexcept { *this = std::move(tree); }
     ~AVLTree() = default;
