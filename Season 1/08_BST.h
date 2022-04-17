@@ -118,10 +118,10 @@ inline void BST<T>::add(std::shared_ptr<T> data)
 template <typename T>
 inline void BST<T>::remove(std::shared_ptr<T> data)
 {
-    this->_size--;
     NODE *node = get_node(data);
     if (node != nullptr)
     {
+        this->_size--;
         if (node->is_binary())
         {
             NODE *s = this->get_successor(node);

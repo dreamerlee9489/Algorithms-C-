@@ -1,6 +1,8 @@
 #ifndef MAP_H
 #define MAP_H
 #include <memory>
+#include <queue>
+#include "./IString.h"
 
 template <typename T, typename U>
 class Map
@@ -10,7 +12,7 @@ private:
     using Comparator = int (*)(std::shared_ptr<T> a, std::shared_ptr<T> b);
     static const bool BLACK = false, RED = true;
     template <typename K, typename V>
-    struct Node
+    struct Node : public IString
     {
         friend std::ostream &operator<<(std::ostream &os, const Node<K, V> &node) { return os << node.to_string(); }
         std::shared_ptr<K> _key;
@@ -19,7 +21,7 @@ private:
         Node<K, V> *_parent = nullptr, *_left = nullptr, *_right = nullptr;
         Node<K, V> &operator=(const Node<K, V> &node);
         Node<K, V> &operator=(Node<K, V> &&node) noexcept;
-        Node(std::shared_ptr<K> key, std::shared_ptr<K> value, Node<K, V> *parent = nullptr, Node<K, V> *left = nullptr, Node<K, V> *right = nullptr)
+        Node(std::shared_ptr<K> key, std::shared_ptr<V> value, Node<K, V> *parent = nullptr, Node<K, V> *left = nullptr, Node<K, V> *right = nullptr)
             : _key(key), _value(value), _parent(parent), _left(left), _right(right) {}
         Node(const Node<K, V> &node) { *this = node; }
         Node(Node<K, V> &&node) noexcept { *this = std::move(node); }
@@ -44,9 +46,10 @@ private:
     void rotate_right(Node<T, U> *grand);
     void after_rotate(Node<T, U> *grand, Node<T, U> *parent, Node<T, U> *child);
     Node<T, U> *set_color(Node<T, U> *node, bool color);
-    bool color_of(Node<T, U> *node) { return node == nullptr ? BLACK : ((RBNode<T> *)node)->_color; }
+    bool color_of(Node<T, U> *node) { return node == nullptr ? BLACK : node->_color; }
     bool is_black(Node<T, U> *node) { return color_of(node) == BLACK; }
     bool is_red(Node<T, U> *node) { return color_of(node) == RED; }
+    void inorder_traverse(Node<T, U> *node, TraverseFunc func = nullptr) const;
     void clear_recu(Node<T, U> *node);
 
 public:
@@ -54,12 +57,12 @@ public:
     ~Map() { clear_recu(_root); }
     size_t size() const { return _size; }
     bool is_empty() const { return _size == 0; }
-    bool contains_key(std::shared_ptr<T> key);
+    bool contains_key(std::shared_ptr<T> key) { return get_node(key) != nullptr; }
     bool contains_value(std::shared_ptr<U> value);
-    void add(std::shared_ptr<T> key, std::shared_ptr<U> value);
-    void get(std::shared_ptr<T> key);
-    void remove(std::shared_ptr<T> key);
-    void traverse(TraverseFunc func = nullptr) const;
+    void get_value(std::shared_ptr<T> key);
+    std::shared_ptr<U> add(std::shared_ptr<T> key, std::shared_ptr<U> value);
+    std::shared_ptr<U> remove(std::shared_ptr<T> key);
+    void traverse(TraverseFunc func = nullptr) const { inorder_traverse(_root, func); }
     void clear();
 };
 
@@ -78,7 +81,7 @@ inline Map<T, U>::Node<K, V> &Map<T, U>::Node<K, V>::operator=(const Map<T, U>::
 
 template <typename T, typename U>
 template <typename K, typename V>
-inline Map<T, U>::Node<K, V> &Map<T, U>::Node<K, V>::operator=(Map<T, U>::Node<K, V> &&node)
+inline Map<T, U>::Node<K, V> &Map<T, U>::Node<K, V>::operator=(Map<T, U>::Node<K, V> &&node) noexcept
 {
     _key = std::move(node._key);
     _value = std::move(node._value);
@@ -110,51 +113,231 @@ inline void Map<T, U>::not_null_check(std::shared_ptr<T> key) const
 template <typename T, typename U>
 inline Map<T, U>::Node<T, U> *Map<T, U>::get_node(std::shared_ptr<T> key) const
 {
-
+    typename Map<T, U>::template Node<T, U> *node = _root;
+    while (node != nullptr)
+    {
+        if (_comparator == nullptr)
+        {
+            if (*node->_key < *key)
+                node = node->_right;
+            else if (*node->_key > *key)
+                node = node->_left;
+            else
+                return node;
+        }
+        else
+        {
+            if (_comparator(node->_key, key) < 0)
+                node = node->_right;
+            else if (_comparator(node->_key, key) > 0)
+                node = node->_left;
+            else
+                return node;
+        }
+    }
+    return nullptr;
 }
 
 template <typename T, typename U>
 inline Map<T, U>::Node<T, U> *Map<T, U>::get_predecessor(Map<T, U>::Node<T, U> *node) const
 {
-
+    if (node != nullptr)
+    {
+        typename Map<T, U>::template Node<T, U> *p = node->_left;
+        if (p != nullptr)
+        {
+            while (p->_right != nullptr)
+                p = p->_right;
+            return p;
+        }
+        while (node->_parent != nullptr && node == node->_parent->_left)
+            node = node->_parent;
+        return node->_parent;
+    }
+    return nullptr;
 }
 
 template <typename T, typename U>
 inline Map<T, U>::Node<T, U> *Map<T, U>::get_successor(Map<T, U>::Node<T, U> *node) const
 {
-
+    if (node != nullptr)
+    {
+        typename Map<T, U>::template Node<T, U> *p = node->_right;
+        if (p != nullptr)
+        {
+            while (p->_left != nullptr)
+                p = p->_left;
+            return p;
+        }
+        while (node->_parent != nullptr && node == node->_parent->_right)
+            node = node->_parent;
+        return node->_parent;
+    }
+    return nullptr;
 }
 
 template <typename T, typename U>
 inline void Map<T, U>::after_add(Map<T, U>::Node<T, U> *node)
 {
-
+    typename Map<T, U>::template Node<T, U> *parent = node->_parent;
+    if (parent == nullptr)
+    {
+        set_color(node, BLACK);
+        return;
+    }
+    if (is_red(parent))
+    {
+        typename Map<T, U>::template Node<T, U> *uncle = parent->get_sibling();
+        typename Map<T, U>::template Node<T, U> *grand = set_color(parent->_parent, RED);
+        if (is_red(uncle))
+        {
+            set_color(parent, BLACK);
+            set_color(uncle, BLACK);
+            after_add(grand);
+            return;
+        }
+        if (parent->is_left())
+        {
+            if (node->is_left())
+                set_color(parent, BLACK);
+            else
+            {
+                set_color(node, BLACK);
+                rotate_left(parent);
+            }
+            rotate_right(grand);
+        }
+        else
+        {
+            if (node->is_left())
+            {
+                set_color(node, BLACK);
+                rotate_right(parent);
+            }
+            else
+                set_color(parent, BLACK);
+            rotate_left(grand);
+        }
+    }
 }
 
 template <typename T, typename U>
 inline void Map<T, U>::after_remove(Map<T, U>::Node<T, U> *node)
 {
-
+    if (is_red(node))
+    {
+        set_color(node, BLACK);
+        return;
+    }
+    typename Map<T, U>::template Node<T, U> *parent = node->_parent;
+    if (parent != nullptr)
+    {
+        bool is_left = parent->_left == nullptr || node->is_left();
+        typename Map<T, U>::template Node<T, U> *sibling = is_left ? parent->_right : parent->_left;
+        if (is_left)
+        {
+            if (is_red(sibling))
+            {
+                set_color(sibling, BLACK);
+                set_color(parent, RED);
+                rotate_left(parent);
+                sibling = parent->_right;
+            }
+            if (is_black(sibling->_left) && is_black(sibling->_right))
+            {
+                bool parent_black = is_black(parent);
+                set_color(parent, BLACK);
+                set_color(sibling, RED);
+                if (parent_black)
+                    after_remove(parent);
+            }
+            else
+            {
+                if (is_black(sibling->_right))
+                {
+                    rotate_right(sibling);
+                    sibling = parent->_right;
+                }
+                set_color(sibling, color_of(parent));
+                set_color(sibling->_right, BLACK);
+                set_color(parent, BLACK);
+                rotate_left(parent);
+            }
+        }
+        else
+        {
+            if (is_red(sibling))
+            {
+                set_color(sibling, BLACK);
+                set_color(parent, RED);
+                rotate_right(parent);
+                sibling = parent->_left;
+            }
+            if (is_black(sibling->_left) && is_black(sibling->_right))
+            {
+                bool parent_black = is_black(parent);
+                set_color(parent, BLACK);
+                set_color(sibling, RED);
+                if (parent_black)
+                    after_remove(parent);
+            }
+            else
+            {
+                if (is_black(sibling->_left))
+                {
+                    rotate_left(sibling);
+                    sibling = parent->_left;
+                }
+                set_color(sibling, color_of(parent));
+                set_color(sibling->_left, BLACK);
+                set_color(parent, BLACK);
+                rotate_right(parent);
+            }
+        }
+    }
 }
 
 template <typename T, typename U>
 inline void Map<T, U>::rotate_left(Map<T, U>::Node<T, U> *grand)
 {
+    typename Map<T, U>::template Node<T, U> *parent = grand->_right;
+    typename Map<T, U>::template Node<T, U> *child = parent->_left;
+    grand->_right = child;
+    parent->_left = grand;
+    after_rotate(grand, parent, child);
 }
 
 template <typename T, typename U>
 inline void Map<T, U>::rotate_right(Map<T, U>::Node<T, U> *grand)
 {
+    typename Map<T, U>::template Node<T, U> *parent = grand->_left;
+    typename Map<T, U>::template Node<T, U> *child = parent->_right;
+    grand->_left = child;
+    parent->_right = grand;
+    after_rotate(grand, parent, child);
 }
 
 template <typename T, typename U>
 inline void Map<T, U>::after_rotate(Map<T, U>::Node<T, U> *grand, Map<T, U>::Node<T, U> *parent, Map<T, U>::Node<T, U> *child)
 {
+    parent->_parent = grand->_parent;
+    if (grand->is_left())
+        grand->_parent->_left = parent;
+    else if (grand->is_right())
+        grand->_parent->_right = parent;
+    else
+        _root = parent;
+    if (child != nullptr)
+        child->_parent = grand;
+    grand->_parent = parent;
 }
 
 template <typename T, typename U>
 inline Map<T, U>::Node<T, U> *Map<T, U>::set_color(Map<T, U>::Node<T, U> *node, bool color)
 {
+    if (node != nullptr)
+        node->_color = color;
+    return node;
 }
 
 template <typename T, typename U>
@@ -169,39 +352,163 @@ inline void Map<T, U>::clear_recu(Map<T, U>::Node<T, U> *node)
 }
 
 template <typename T, typename U>
-inline bool Map<T, U>::contains_key(std::shared_ptr<T> key)
-{
-
-}
-
-template <typename T, typename U>
 inline bool Map<T, U>::contains_value(std::shared_ptr<U> value)
 {
-
+    if (_root != nullptr)
+    {
+        std::queue<Map<T, U>::Node<T, U> *> q = new std::queue<Map<T, U>::Node<T, U> *>();
+        q.push(_root);
+        while (!q.empty())
+        {
+            Map<T, U>::Node<T, U> *node = q.front();
+            q.pop();
+            if (node->_left != nullptr)
+                q.push(node->_left);
+            if (node->_right != nullptr)
+                q.push(node->_right);
+            if (_comparator == nullptr)
+            {
+                if (*node->_value == *value)
+                    return true;
+            }
+            else
+            {
+                if (_comparator(node->_value, value) == 0)
+                    return true;
+            }
+        }
+    }
+    return false;
 }
 
 template <typename T, typename U>
-inline void Map<T, U>::add(std::shared_ptr<T> key, std::shared_ptr<U> value)
+inline void Map<T, U>::get_value(std::shared_ptr<T> key)
 {
-
+    Map<T, U>::Node<T, U> *node = get_node(key);
+    return node != nullptr ? node->_value : nullptr;
 }
 
 template <typename T, typename U>
-inline void Map<T, U>::get(std::shared_ptr<T> key)
+inline std::shared_ptr<U> Map<T, U>::add(std::shared_ptr<T> key, std::shared_ptr<U> value)
 {
-
+    not_null_check(key);
+    if (_root == nullptr)
+    {
+        _root = new Node<T, U>(key, value, nullptr);
+        _size++;
+        after_add(_root);
+        return nullptr;
+    }
+    typename Map<T, U>::template Node<T, U> *node = _root, *parent = _root;
+    while (node != nullptr)
+    {
+        parent = node;
+        if (_comparator == nullptr)
+        {
+            if (*node->_key < *key)
+                node = node->_right;
+            else if (*node->_key > *key)
+                node = node->_left;
+            else
+            {
+                node->_key = key;
+                std::shared_ptr<U> old = node->_value;
+                node->_value = value;
+                return old;
+            }
+        }
+        else
+        {
+            if (_comparator(node->_key, key) < 0)
+                node = node->_right;
+            else if (_comparator(node->_key, key) > 0)
+                node = node->_left;
+            else
+            {
+                node->_key = key;
+                std::shared_ptr<U> old = node->_value;
+                node->_value = value;
+                return old;
+            }
+        }
+    }
+    typename Map<T, U>::template Node<T, U> *temp = new Node<T, U>(key, value, parent);
+    if (_comparator == nullptr)
+    {
+        if (*parent->_key < *key)
+            parent->_right = temp;
+        else
+            parent->_left = temp;
+    }
+    else
+    {
+        if (_comparator(parent->_key, key) < 0)
+            parent->_right = temp;
+        else
+            parent->_left = temp;
+    }
+    _size++;
+    after_add(temp);
+    return nullptr;
 }
 
 template <typename T, typename U>
-inline void Map<T, U>::remove(std::shared_ptr<T> key)
+inline std::shared_ptr<U> Map<T, U>::remove(std::shared_ptr<T> key)
 {
-
+    typename Map<T, U>::template Node<T, U> *node = get_node(key);
+    if (node != nullptr)
+    {
+        _size--;
+        std::shared_ptr<U> old = node->_value;
+        if (node->is_binary())
+        {
+            typename Map<T, U>::template Node<T, U> *s = get_successor(node);
+            node->_key = s->_key;
+            node->_value = s->_value;
+            node = s; //删除前驱结点
+        }
+        typename Map<T, U>::template Node<T, U> *replace = node->_left != nullptr ? node->_left : node->_right;
+        if (replace != nullptr)
+        {
+            replace->_parent = node->_parent;
+            if (node->_parent == nullptr)
+                _root = replace;
+            else if (node == node->_parent->_left)
+                node->_parent->_left = replace;
+            else
+                node->_parent->_right = replace;
+            after_remove(replace);
+        }
+        else if (node->_parent != nullptr)
+        {
+            if (node == node->_parent->_left)
+                node->_parent->_left = nullptr;
+            else
+                node->_parent->_right = nullptr;
+            after_remove(node);
+        }
+        else
+        {
+            _root = nullptr;
+        }
+        delete node;
+        return old;
+    }
+    return nullptr;
 }
 
 template <typename T, typename U>
-inline void Map<T, U>::traverse(TraverseFunc func) const
+inline void Map<T, U>::inorder_traverse(typename Map<T, U>::template Node<T, U> *node, TraverseFunc func) const
 {
-
+    if (node != nullptr)
+    {
+        inorder_traverse(node->_left, func);
+        if (func != nullptr)
+            func(node->_key);
+        else
+            std::cout << *node->_key << "\n";
+        inorder_traverse(node->_right, func);
+    }
 }
 
 template <typename T, typename U>
