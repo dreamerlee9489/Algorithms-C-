@@ -3,11 +3,10 @@
 #include <memory>
 #include <queue>
 #include "./IString.h"
-
+// 映射
 template <typename T, typename U>
 class Map
 {
-private:
     using TraverseFunc = bool (*)(std::shared_ptr<T> key);
     using Comparator = int (*)(std::shared_ptr<T> a, std::shared_ptr<T> b);
     static const bool BLACK = false, RED = true;
@@ -53,7 +52,11 @@ private:
     void clear_recu(Node<T, U> *node);
 
 public:
+    Map<T, U> &operator=(const Map<T, U> &map);
+    Map<T, U> &operator=(Map<T, U> &&map);
     Map(Comparator comparator = nullptr) { _comparator = comparator; }
+    Map(const Map<T, U> &map) { *this = map; }
+    Map(Map<T, U> &&map) { *this = std::move(map); }
     ~Map() { clear_recu(_root); }
     size_t size() const { return _size; }
     bool is_empty() const { return _size == 0; }
@@ -101,6 +104,42 @@ inline Map<T, U>::Node<K, V> *Map<T, U>::Node<K, V>::get_sibling() const
     else if (is_right())
         return _parent->_left;
     return nullptr;
+}
+
+template <typename T, typename U>
+inline Map<T, U> &Map<T, U>::operator=(const Map<T, U> &map)
+{
+    clear();
+    if (map._size > 0)
+    {
+        _comparator = map._comparator;
+        std::queue<Node<T, U> *> q = std::queue<Node<T, U> *>();
+        q.push(map._root);
+        while (!q.empty())
+        {
+            Node<T, U> *node = q.front();
+            add(node->_key, node->_value);
+            q.pop();
+            if (node->_left != nullptr)
+                q.push(node->_left);
+            if (node->_right != nullptr)
+                q.push(node->_right);
+        }
+    }
+    return *this;
+}
+
+template <typename T, typename U>
+inline Map<T, U> &Map<T, U>::operator=(Map<T, U> &&map)
+{
+    clear();
+    _size = map._size;
+    _root = map._root;
+    _comparator = map._comparator;
+    map._size = 0;
+    map._root = nullptr;
+    map._comparator = nullptr;
+    return *this;
 }
 
 template <typename T, typename U>
@@ -467,7 +506,7 @@ inline std::shared_ptr<U> Map<T, U>::remove(std::shared_ptr<T> key)
             node->_value = s->_value;
             node = s; //删除前驱结点
         }
-       Node<T, U> *replace = node->_left != nullptr ? node->_left : node->_right;
+        Node<T, U> *replace = node->_left != nullptr ? node->_left : node->_right;
         if (replace != nullptr)
         {
             replace->_parent = node->_parent;

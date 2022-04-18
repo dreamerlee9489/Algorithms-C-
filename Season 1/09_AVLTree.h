@@ -103,6 +103,7 @@ inline AVLTree<T> &AVLTree<T>::operator=(const AVLTree<T> &tree)
     this->clear();
     if (tree._size > 0)
     {
+        this->_comparator = tree._comparator;
         std::queue<NODE *> q = std::queue<NODE *>();
         q.push(tree._root);
         while (!q.empty())
@@ -123,10 +124,12 @@ template <typename T>
 inline AVLTree<T> &AVLTree<T>::operator=(AVLTree<T> &&tree) noexcept
 {
     this->clear();
-    this->_root = tree._root;
     this->_size = tree._size;
-    tree._root = nullptr;
+    this->_root = tree._root;
+    this->_comparator = tree._comparator;
     tree._size = 0;
+    tree._root = nullptr;
+    tree._comparator = nullptr;
     return *this;
 }
 
