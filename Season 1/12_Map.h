@@ -24,7 +24,7 @@ class Map
             : _key(key), _value(value), _parent(parent), _left(left), _right(right) {}
         Node(const Node<K, V> &node) { *this = node; }
         Node(Node<K, V> &&node) noexcept { *this = std::move(node); }
-        virtual ~Node() { _key = nullptr; }
+        virtual ~Node();
         bool is_leaf() const { return _left == nullptr && _right == nullptr; }
         bool is_binary() const { return _left != nullptr && _right != nullptr; }
         bool is_left() const { return _parent != nullptr && this == _parent->_left; }
@@ -86,9 +86,18 @@ template <typename T, typename U>
 template <typename K, typename V>
 inline Map<T, U>::Node<K, V> &Map<T, U>::Node<K, V>::operator=(Node<K, V> &&node) noexcept
 {
-    delete this;
+    _key = nullptr;
+    _value = nullptr;
     this = &node;
     return *this;
+}
+
+template <typename T, typename U>
+template <typename K, typename V>
+inline Map<T, U>::Node<K, V>::~Node()
+{
+    _key = nullptr;
+    _value = nullptr;
 }
 
 template <typename T, typename U>

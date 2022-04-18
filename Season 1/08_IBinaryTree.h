@@ -87,7 +87,7 @@ template <typename T>
 template <typename U>
 inline IBinaryTree<T>::Node<U> &IBinaryTree<T>::Node<U>::operator=(Node<U> &&node) noexcept
 {
-    delete this;
+    _data = nullptr;
     this = &node;
     return *this;
 }

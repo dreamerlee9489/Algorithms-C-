@@ -61,7 +61,7 @@ template <typename T>
 template <typename U>
 inline LinkedList<T>::Node<U> &LinkedList<T>::Node<U>::operator=(Node<U> &&node) noexcept
 {
-    delete this;
+    _data = nullptr;
     this = &node;
     return *this;
 }

@@ -54,7 +54,7 @@ template <typename T>
 template <typename U>
 inline RBTree<T>::RBNode<U> &RBTree<T>::RBNode<U>::operator=(RBNode<U> &&node) noexcept
 {
-    delete this;
+    this->_data = nullptr;
     this = &node;
     return *this;
 }

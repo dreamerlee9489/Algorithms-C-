@@ -57,7 +57,7 @@ template <typename T>
 template <typename U>
 inline AVLTree<T>::AVLNode<U> &AVLTree<T>::AVLNode<U>::operator=(AVLNode<U> &&node) noexcept
 {
-    delete this;
+    this->_data = nullptr;
     this = &node;
     return *this;
 }
