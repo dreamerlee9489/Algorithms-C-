@@ -2,14 +2,9 @@
 #define ISET_H
 #include <memory>
 /**
- * @file 11_ISet.h
- * @author dreamerlee9489@outlook.com
  * @brief 集合基类
- * @version 0.1
+ * @tparam T
  * @date 2022-04-17
- *
- * @copyright Copyright (c) 2022
- *
  */
 template <typename T>
 class ISet

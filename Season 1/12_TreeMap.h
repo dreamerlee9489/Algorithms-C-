@@ -4,14 +4,10 @@
 #include <queue>
 #include "./IString.h"
 /**
- * @file 12_TreeMap.h
- * @author dreamerlee9489@outlook.com
  * @brief 基于红黑树的映射
- * @version 0.1
- * @date 2022-04-18
- *
- * @copyright Copyright (c) 2022
- *
+ * @tparam K 
+ * @tparam V 
+ * @date 2022-04-17
  */
 template <typename K, typename V>
 class TreeMap

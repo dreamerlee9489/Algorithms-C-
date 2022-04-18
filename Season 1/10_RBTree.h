@@ -2,14 +2,9 @@
 #define RB_TREE_H
 #include "./08_BBST.h"
 /**
- * @file 10_RBTree.h
- * @author dreamerlee9489@outlook.com
  * @brief 红黑树
- * @version 0.1
+ * @tparam T
  * @date 2022-04-13
- *
- * @copyright Copyright (c) 2022
- *
  */
 template <typename T>
 class RBTree : public BBST<T>

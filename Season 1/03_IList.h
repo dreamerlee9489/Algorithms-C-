@@ -4,14 +4,9 @@
 #include <string>
 #include <memory>
 /**
- * @file 03_IList.h
- * @author dreamerlee9489@outlook.com
- * @brief 线性表基类(智能指针版)
- * @version 0.1
+ * @brief 线性表基类
+ * @tparam T
  * @date 2022-03-30
- *
- * @copyright Copyright (c) 2022
- *
  */
 template <typename T>
 class IList

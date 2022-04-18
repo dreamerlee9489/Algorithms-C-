@@ -6,14 +6,9 @@
 #include <cmath>
 #include "./IString.h"
 /**
- * @file 08_IBinaryTree.h
- * @author dreamerlee9489@outlook.com
  * @brief 二叉树基类
- * @version 0.1
+ * @tparam T
  * @date 2022-04-10
- *
- * @copyright Copyright (c) 2022
- *
  */
 template <typename T>
 class IBinaryTree

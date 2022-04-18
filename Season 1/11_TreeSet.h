@@ -3,14 +3,9 @@
 #include "./11_ISet.h"
 #include "./10_RBtree.h"
 /**
- * @file 11_TreeSet.h
- * @author dreamerlee9489@outlook.com
  * @brief 基于红黑树的集合
- * @version 0.1
+ * @tparam T
  * @date 2022-04-17
- *
- * @copyright Copyright (c) 2022
- *
  */
 template <typename T>
 class TreeSet : public ISet<T>

@@ -2,14 +2,9 @@
 #define LINKEDLIST_H
 #include "./03_IList.h"
 /**
- * @file 03_LinkedList.h
- * @author dreamerlee9489@outlook.com
  * @brief 泛型双向循环链表
- * @version 0.1
+ * @tparam T
  * @date 2022-03-30
- *
- * @copyright Copyright (c) 2022
- *
  */
 template <typename T>
 class LinkedList : public IList<T>

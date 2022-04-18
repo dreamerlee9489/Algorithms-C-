@@ -2,14 +2,9 @@
 #define STACK_H
 #include "./02_ArrayList.h"
 /**
- * @file 04_Stack.h
- * @author dreamerlee9489@outlook.com
  * @brief 栈
- * @version 0.1
+ * @tparam T
  * @date 2022-04-05
- *
- * @copyright Copyright (c) 2022
- *
  */
 template <typename T>
 class Stack
