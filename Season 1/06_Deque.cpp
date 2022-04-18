@@ -4,7 +4,7 @@ using namespace std;
 
 int main(int argc, char const *argv[])
 {
-    Deque<Person> deque = Deque<Person>();
+    Deque<Person> deque;
     deque.push(make_shared<Person>(10, "Alice10"));
     deque.push(make_shared<Person>(11, "Alice11"));
     deque.push(make_shared<Person>(12, "Alice12"));

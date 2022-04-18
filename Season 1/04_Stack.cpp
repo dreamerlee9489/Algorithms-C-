@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    Stack<Person> stack = Stack<Person>();
+    Stack<Person> stack;
     stack.push(make_shared<Person>(10, "Alice0"));
     stack.push(make_shared<Person>(11, "Alice1"));
     stack.push(make_shared<Person>(12, "Alice2"));

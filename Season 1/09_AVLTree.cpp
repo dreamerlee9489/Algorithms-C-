@@ -4,7 +4,7 @@ using namespace std;
 
 int main()
 {
-    AVLTree<Person> tree = AVLTree<Person>();
+    AVLTree<Person> tree;
     cout << "----------Test add()----------\n";
     tree.add(make_shared<Person>(55, "Alice01"));
     tree.add(make_shared<Person>(87, "Alice02"));

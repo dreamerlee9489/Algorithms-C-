@@ -4,7 +4,7 @@ using namespace std;
 
 int main()
 {
-    BST<Person> tree = BST<Person>();
+    BST<Person> tree;
     tree.add(make_shared<Person>(17, "Alice17"));
     tree.add(make_shared<Person>(14, "Alice14"));
     tree.add(make_shared<Person>(12, "Alice12"));

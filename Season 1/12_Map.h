@@ -68,7 +68,7 @@ public:
 
 template <typename T, typename U>
 template <typename K, typename V>
-inline Map<T, U>::Node<K, V> &Map<T, U>::Node<K, V>::operator=(const Map<T, U>::Node<K, V> &node)
+inline Map<T, U>::Node<K, V> &Map<T, U>::Node<K, V>::operator=(const Node<K, V> &node)
 {
     _key = node._key;
     _value = node._value;
@@ -81,7 +81,7 @@ inline Map<T, U>::Node<K, V> &Map<T, U>::Node<K, V>::operator=(const Map<T, U>::
 
 template <typename T, typename U>
 template <typename K, typename V>
-inline Map<T, U>::Node<K, V> &Map<T, U>::Node<K, V>::operator=(Map<T, U>::Node<K, V> &&node) noexcept
+inline Map<T, U>::Node<K, V> &Map<T, U>::Node<K, V>::operator=(Node<K, V> &&node) noexcept
 {
     _key = std::move(node._key);
     _value = std::move(node._value);
@@ -113,7 +113,7 @@ inline void Map<T, U>::not_null_check(std::shared_ptr<T> key) const
 template <typename T, typename U>
 inline Map<T, U>::Node<T, U> *Map<T, U>::get_node(std::shared_ptr<T> key) const
 {
-    typename Map<T, U>::template Node<T, U> *node = _root;
+    Node<T, U> *node = _root;
     while (node != nullptr)
     {
         if (_comparator == nullptr)
@@ -139,11 +139,11 @@ inline Map<T, U>::Node<T, U> *Map<T, U>::get_node(std::shared_ptr<T> key) const
 }
 
 template <typename T, typename U>
-inline Map<T, U>::Node<T, U> *Map<T, U>::get_predecessor(Map<T, U>::Node<T, U> *node) const
+inline Map<T, U>::Node<T, U> *Map<T, U>::get_predecessor(Node<T, U> *node) const
 {
     if (node != nullptr)
     {
-        typename Map<T, U>::template Node<T, U> *p = node->_left;
+        Node<T, U> *p = node->_left;
         if (p != nullptr)
         {
             while (p->_right != nullptr)
@@ -158,11 +158,11 @@ inline Map<T, U>::Node<T, U> *Map<T, U>::get_predecessor(Map<T, U>::Node<T, U> *
 }
 
 template <typename T, typename U>
-inline Map<T, U>::Node<T, U> *Map<T, U>::get_successor(Map<T, U>::Node<T, U> *node) const
+inline Map<T, U>::Node<T, U> *Map<T, U>::get_successor(Node<T, U> *node) const
 {
     if (node != nullptr)
     {
-        typename Map<T, U>::template Node<T, U> *p = node->_right;
+        Node<T, U> *p = node->_right;
         if (p != nullptr)
         {
             while (p->_left != nullptr)
@@ -177,9 +177,9 @@ inline Map<T, U>::Node<T, U> *Map<T, U>::get_successor(Map<T, U>::Node<T, U> *no
 }
 
 template <typename T, typename U>
-inline void Map<T, U>::after_add(Map<T, U>::Node<T, U> *node)
+inline void Map<T, U>::after_add(Node<T, U> *node)
 {
-    typename Map<T, U>::template Node<T, U> *parent = node->_parent;
+    Node<T, U> *parent = node->_parent;
     if (parent == nullptr)
     {
         set_color(node, BLACK);
@@ -187,8 +187,8 @@ inline void Map<T, U>::after_add(Map<T, U>::Node<T, U> *node)
     }
     if (is_red(parent))
     {
-        typename Map<T, U>::template Node<T, U> *uncle = parent->get_sibling();
-        typename Map<T, U>::template Node<T, U> *grand = set_color(parent->_parent, RED);
+        Node<T, U> *uncle = parent->get_sibling();
+        Node<T, U> *grand = set_color(parent->_parent, RED);
         if (is_red(uncle))
         {
             set_color(parent, BLACK);
@@ -222,18 +222,18 @@ inline void Map<T, U>::after_add(Map<T, U>::Node<T, U> *node)
 }
 
 template <typename T, typename U>
-inline void Map<T, U>::after_remove(Map<T, U>::Node<T, U> *node)
+inline void Map<T, U>::after_remove(Node<T, U> *node)
 {
     if (is_red(node))
     {
         set_color(node, BLACK);
         return;
     }
-    typename Map<T, U>::template Node<T, U> *parent = node->_parent;
+    Node<T, U> *parent = node->_parent;
     if (parent != nullptr)
     {
         bool is_left = parent->_left == nullptr || node->is_left();
-        typename Map<T, U>::template Node<T, U> *sibling = is_left ? parent->_right : parent->_left;
+        Node<T, U> *sibling = is_left ? parent->_right : parent->_left;
         if (is_left)
         {
             if (is_red(sibling))
@@ -298,27 +298,27 @@ inline void Map<T, U>::after_remove(Map<T, U>::Node<T, U> *node)
 }
 
 template <typename T, typename U>
-inline void Map<T, U>::rotate_left(Map<T, U>::Node<T, U> *grand)
+inline void Map<T, U>::rotate_left(Node<T, U> *grand)
 {
-    typename Map<T, U>::template Node<T, U> *parent = grand->_right;
-    typename Map<T, U>::template Node<T, U> *child = parent->_left;
+    Node<T, U> *parent = grand->_right;
+    Node<T, U> *child = parent->_left;
     grand->_right = child;
     parent->_left = grand;
     after_rotate(grand, parent, child);
 }
 
 template <typename T, typename U>
-inline void Map<T, U>::rotate_right(Map<T, U>::Node<T, U> *grand)
+inline void Map<T, U>::rotate_right(Node<T, U> *grand)
 {
-    typename Map<T, U>::template Node<T, U> *parent = grand->_left;
-    typename Map<T, U>::template Node<T, U> *child = parent->_right;
+    Node<T, U> *parent = grand->_left;
+    Node<T, U> *child = parent->_right;
     grand->_left = child;
     parent->_right = grand;
     after_rotate(grand, parent, child);
 }
 
 template <typename T, typename U>
-inline void Map<T, U>::after_rotate(Map<T, U>::Node<T, U> *grand, Map<T, U>::Node<T, U> *parent, Map<T, U>::Node<T, U> *child)
+inline void Map<T, U>::after_rotate(Node<T, U> *grand, Node<T, U> *parent, Node<T, U> *child)
 {
     parent->_parent = grand->_parent;
     if (grand->is_left())
@@ -333,7 +333,7 @@ inline void Map<T, U>::after_rotate(Map<T, U>::Node<T, U> *grand, Map<T, U>::Nod
 }
 
 template <typename T, typename U>
-inline Map<T, U>::Node<T, U> *Map<T, U>::set_color(Map<T, U>::Node<T, U> *node, bool color)
+inline Map<T, U>::Node<T, U> *Map<T, U>::set_color(Node<T, U> *node, bool color)
 {
     if (node != nullptr)
         node->_color = color;
@@ -341,7 +341,7 @@ inline Map<T, U>::Node<T, U> *Map<T, U>::set_color(Map<T, U>::Node<T, U> *node, 
 }
 
 template <typename T, typename U>
-inline void Map<T, U>::clear_recu(Map<T, U>::Node<T, U> *node)
+inline void Map<T, U>::clear_recu(Node<T, U> *node)
 {
     if (node != nullptr)
     {
@@ -356,11 +356,11 @@ inline bool Map<T, U>::contains_value(std::shared_ptr<U> value)
 {
     if (_root != nullptr)
     {
-        std::queue<Map<T, U>::Node<T, U> *> q = new std::queue<Map<T, U>::Node<T, U> *>();
+        std::queue<Node<T, U> *> q = new std::queue<Node<T, U> *>();
         q.push(_root);
         while (!q.empty())
         {
-            Map<T, U>::Node<T, U> *node = q.front();
+            Node<T, U> *node = q.front();
             q.pop();
             if (node->_left != nullptr)
                 q.push(node->_left);
@@ -384,7 +384,7 @@ inline bool Map<T, U>::contains_value(std::shared_ptr<U> value)
 template <typename T, typename U>
 inline void Map<T, U>::get_value(std::shared_ptr<T> key)
 {
-    Map<T, U>::Node<T, U> *node = get_node(key);
+    Node<T, U> *node = get_node(key);
     return node != nullptr ? node->_value : nullptr;
 }
 
@@ -399,7 +399,7 @@ inline std::shared_ptr<U> Map<T, U>::add(std::shared_ptr<T> key, std::shared_ptr
         after_add(_root);
         return nullptr;
     }
-    typename Map<T, U>::template Node<T, U> *node = _root, *parent = _root;
+    Node<T, U> *node = _root, *parent = _root;
     while (node != nullptr)
     {
         parent = node;
@@ -432,7 +432,7 @@ inline std::shared_ptr<U> Map<T, U>::add(std::shared_ptr<T> key, std::shared_ptr
             }
         }
     }
-    typename Map<T, U>::template Node<T, U> *temp = new Node<T, U>(key, value, parent);
+    Node<T, U> *temp = new Node<T, U>(key, value, parent);
     if (_comparator == nullptr)
     {
         if (*parent->_key < *key)
@@ -455,19 +455,19 @@ inline std::shared_ptr<U> Map<T, U>::add(std::shared_ptr<T> key, std::shared_ptr
 template <typename T, typename U>
 inline std::shared_ptr<U> Map<T, U>::remove(std::shared_ptr<T> key)
 {
-    typename Map<T, U>::template Node<T, U> *node = get_node(key);
+    Node<T, U> *node = get_node(key);
     if (node != nullptr)
     {
         _size--;
         std::shared_ptr<U> old = node->_value;
         if (node->is_binary())
         {
-            typename Map<T, U>::template Node<T, U> *s = get_successor(node);
+            Node<T, U> *s = get_successor(node);
             node->_key = s->_key;
             node->_value = s->_value;
             node = s; //删除前驱结点
         }
-        typename Map<T, U>::template Node<T, U> *replace = node->_left != nullptr ? node->_left : node->_right;
+       Node<T, U> *replace = node->_left != nullptr ? node->_left : node->_right;
         if (replace != nullptr)
         {
             replace->_parent = node->_parent;
@@ -498,7 +498,7 @@ inline std::shared_ptr<U> Map<T, U>::remove(std::shared_ptr<T> key)
 }
 
 template <typename T, typename U>
-inline void Map<T, U>::inorder_traverse(typename Map<T, U>::template Node<T, U> *node, TraverseFunc func) const
+inline void Map<T, U>::inorder_traverse(Node<T, U> *node, TraverseFunc func) const
 {
     if (node != nullptr)
     {
@@ -506,7 +506,7 @@ inline void Map<T, U>::inorder_traverse(typename Map<T, U>::template Node<T, U> 
         if (func != nullptr)
             func(node->_key);
         else
-            std::cout << *node->_key << "\n";
+            std::cout << "[" << *node->_key << "-" << *node->_value << "]\n";
         inorder_traverse(node->_right, func);
     }
 }

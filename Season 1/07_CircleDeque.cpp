@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    CircleDeque<Person> deque = CircleDeque<Person>();
+    CircleDeque<Person> deque;
     for (size_t i = 0; i < 10; ++i)
     {
         deque.push_front(make_shared<Person>(i + 1, "Alice" + to_string(i + 1)));
