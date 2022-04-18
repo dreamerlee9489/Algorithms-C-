@@ -7,7 +7,7 @@
 template <typename K, typename V>
 class Map
 {
-    using KraverseFunc = bool (*)(std::shared_ptr<K> key);
+    using TraverseFunc = bool (*)(std::shared_ptr<K> key);
     using Comparator = int (*)(std::shared_ptr<K> a, std::shared_ptr<K> b);
     static const bool BLACK = false, RED = true;
     template <typename _K, typename _V>
@@ -48,7 +48,7 @@ class Map
     bool color_of(Node<K, V> *node) { return node == nullptr ? BLACK : node->_color; }
     bool is_black(Node<K, V> *node) { return color_of(node) == BLACK; }
     bool is_red(Node<K, V> *node) { return color_of(node) == RED; }
-    void inorder_traverse(Node<K, V> *node, KraverseFunc func = nullptr) const;
+    void inorder_traverse(Node<K, V> *node, TraverseFunc func = nullptr) const;
     void clear_recu(Node<K, V> *node);
 
 public:
@@ -65,7 +65,7 @@ public:
     std::shared_ptr<V> get_value(std::shared_ptr<K> key);
     std::shared_ptr<V> add(std::shared_ptr<K> key, std::shared_ptr<V> value);
     std::shared_ptr<V> remove(std::shared_ptr<K> key);
-    void traverse(KraverseFunc func = nullptr) const { inorder_traverse(_root, func); }
+    void traverse(TraverseFunc func = nullptr) const { inorder_traverse(_root, func); }
     void clear();
 };
 
@@ -542,7 +542,7 @@ inline std::shared_ptr<V> Map<K, V>::remove(std::shared_ptr<K> key)
 }
 
 template <typename K, typename V>
-inline void Map<K, V>::inorder_traverse(Node<K, V> *node, KraverseFunc func) const
+inline void Map<K, V>::inorder_traverse(Node<K, V> *node, TraverseFunc func) const
 {
     if (node != nullptr)
     {
