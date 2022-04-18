@@ -1,5 +1,5 @@
 /**
- * @file 11_Set.h
+ * @file 11_TreeSet.h
  * @author dreamerlee9489@outlook.com
  * @brief 基于红黑树的集合
  * @version 0.1
@@ -14,13 +14,13 @@
 #include "./10_RBtree.h"
 
 template <typename T>
-class Set : public ISet<T>
+class TreeSet : public ISet<T>
 {
     RBTree<T> *tree = nullptr;
 
 public:
-    Set(typename ISet<T>::Comparator comparator = nullptr) { tree = new RBTree<T>(comparator); }
-    ~Set() { delete tree; }
+    TreeSet(typename ISet<T>::Comparator comparator = nullptr) { tree = new RBTree<T>(comparator); }
+    ~TreeSet() { delete tree; }
     size_t size() override { return tree->size(); }
     bool is_empty() override { return tree->is_empty(); }
     bool contains(std::shared_ptr<T> data) override { return tree->contains(data); }

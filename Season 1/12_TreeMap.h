@@ -1,5 +1,5 @@
 /**
- * @file 12_Map.h
+ * @file 12_TreeMap.h
  * @author dreamerlee9489@outlook.com
  * @brief 基于红黑树的映射
  * @version 0.1
@@ -15,7 +15,7 @@
 #include "./IString.h"
 
 template <typename K, typename V>
-class Map
+class TreeMap
 {
     using TraverseFunc = bool (*)(std::shared_ptr<K> key);
     using Comparator = int (*)(std::shared_ptr<K> a, std::shared_ptr<K> b);
@@ -62,12 +62,12 @@ class Map
     void clear_recu(Node<K, V> *node);
 
 public:
-    Map<K, V> &operator=(const Map<K, V> &map);
-    Map<K, V> &operator=(Map<K, V> &&map);
-    Map(Comparator comparator = nullptr) { _comparator = comparator; }
-    Map(const Map<K, V> &map) { *this = map; }
-    Map(Map<K, V> &&map) { *this = std::move(map); }
-    ~Map() { clear_recu(_root); }
+    TreeMap<K, V> &operator=(const TreeMap<K, V> &map);
+    TreeMap<K, V> &operator=(TreeMap<K, V> &&map);
+    TreeMap(Comparator comparator = nullptr) { _comparator = comparator; }
+    TreeMap(const TreeMap<K, V> &map) { *this = map; }
+    TreeMap(TreeMap<K, V> &&map) { *this = std::move(map); }
+    ~TreeMap() { clear_recu(_root); }
     size_t size() const { return _size; }
     bool is_empty() const { return _size == 0; }
     bool contains_key(std::shared_ptr<K> key) { return get_node(key) != nullptr; }
@@ -81,7 +81,7 @@ public:
 
 template <typename K, typename V>
 template <typename _K, typename _V>
-inline Map<K, V>::Node<_K, _V> &Map<K, V>::Node<_K, _V>::operator=(const Node<_K, _V> &node)
+inline TreeMap<K, V>::Node<_K, _V> &TreeMap<K, V>::Node<_K, _V>::operator=(const Node<_K, _V> &node)
 {
     _key = node._key;
     _value = node._value;
@@ -94,7 +94,7 @@ inline Map<K, V>::Node<_K, _V> &Map<K, V>::Node<_K, _V>::operator=(const Node<_K
 
 template <typename K, typename V>
 template <typename _K, typename _V>
-inline Map<K, V>::Node<_K, _V> &Map<K, V>::Node<_K, _V>::operator=(Node<_K, _V> &&node) noexcept
+inline TreeMap<K, V>::Node<_K, _V> &TreeMap<K, V>::Node<_K, _V>::operator=(Node<_K, _V> &&node) noexcept
 {
     _key = nullptr;
     _value = nullptr;
@@ -104,7 +104,7 @@ inline Map<K, V>::Node<_K, _V> &Map<K, V>::Node<_K, _V>::operator=(Node<_K, _V> 
 
 template <typename K, typename V>
 template <typename _K, typename _V>
-inline Map<K, V>::Node<_K, _V>::~Node()
+inline TreeMap<K, V>::Node<_K, _V>::~Node()
 {
     _key = nullptr;
     _value = nullptr;
@@ -112,7 +112,7 @@ inline Map<K, V>::Node<_K, _V>::~Node()
 
 template <typename K, typename V>
 template <typename _K, typename _V>
-inline Map<K, V>::Node<_K, _V> *Map<K, V>::Node<_K, _V>::get_sibling() const
+inline TreeMap<K, V>::Node<_K, _V> *TreeMap<K, V>::Node<_K, _V>::get_sibling() const
 {
     if (is_left())
         return _parent->_right;
@@ -122,7 +122,7 @@ inline Map<K, V>::Node<_K, _V> *Map<K, V>::Node<_K, _V>::get_sibling() const
 }
 
 template <typename K, typename V>
-inline Map<K, V> &Map<K, V>::operator=(const Map<K, V> &map)
+inline TreeMap<K, V> &TreeMap<K, V>::operator=(const TreeMap<K, V> &map)
 {
     clear();
     if (map._size > 0)
@@ -145,7 +145,7 @@ inline Map<K, V> &Map<K, V>::operator=(const Map<K, V> &map)
 }
 
 template <typename K, typename V>
-inline Map<K, V> &Map<K, V>::operator=(Map<K, V> &&map)
+inline TreeMap<K, V> &TreeMap<K, V>::operator=(TreeMap<K, V> &&map)
 {
     clear();
     _size = map._size;
@@ -158,14 +158,14 @@ inline Map<K, V> &Map<K, V>::operator=(Map<K, V> &&map)
 }
 
 template <typename K, typename V>
-inline void Map<K, V>::not_null_check(std::shared_ptr<K> key) const
+inline void TreeMap<K, V>::not_null_check(std::shared_ptr<K> key) const
 {
     if (key == nullptr)
         throw std::invalid_argument("key must be not null.");
 }
 
 template <typename K, typename V>
-inline Map<K, V>::Node<K, V> *Map<K, V>::get_node(std::shared_ptr<K> key) const
+inline TreeMap<K, V>::Node<K, V> *TreeMap<K, V>::get_node(std::shared_ptr<K> key) const
 {
     Node<K, V> *node = _root;
     while (node != nullptr)
@@ -193,7 +193,7 @@ inline Map<K, V>::Node<K, V> *Map<K, V>::get_node(std::shared_ptr<K> key) const
 }
 
 template <typename K, typename V>
-inline Map<K, V>::Node<K, V> *Map<K, V>::get_predecessor(Node<K, V> *node) const
+inline TreeMap<K, V>::Node<K, V> *TreeMap<K, V>::get_predecessor(Node<K, V> *node) const
 {
     if (node != nullptr)
     {
@@ -212,7 +212,7 @@ inline Map<K, V>::Node<K, V> *Map<K, V>::get_predecessor(Node<K, V> *node) const
 }
 
 template <typename K, typename V>
-inline Map<K, V>::Node<K, V> *Map<K, V>::get_successor(Node<K, V> *node) const
+inline TreeMap<K, V>::Node<K, V> *TreeMap<K, V>::get_successor(Node<K, V> *node) const
 {
     if (node != nullptr)
     {
@@ -231,7 +231,7 @@ inline Map<K, V>::Node<K, V> *Map<K, V>::get_successor(Node<K, V> *node) const
 }
 
 template <typename K, typename V>
-inline void Map<K, V>::after_add(Node<K, V> *node)
+inline void TreeMap<K, V>::after_add(Node<K, V> *node)
 {
     Node<K, V> *parent = node->_parent;
     if (parent == nullptr)
@@ -276,7 +276,7 @@ inline void Map<K, V>::after_add(Node<K, V> *node)
 }
 
 template <typename K, typename V>
-inline void Map<K, V>::after_remove(Node<K, V> *node)
+inline void TreeMap<K, V>::after_remove(Node<K, V> *node)
 {
     if (is_red(node))
     {
@@ -352,7 +352,7 @@ inline void Map<K, V>::after_remove(Node<K, V> *node)
 }
 
 template <typename K, typename V>
-inline void Map<K, V>::rotate_left(Node<K, V> *grand)
+inline void TreeMap<K, V>::rotate_left(Node<K, V> *grand)
 {
     Node<K, V> *parent = grand->_right;
     Node<K, V> *child = parent->_left;
@@ -362,7 +362,7 @@ inline void Map<K, V>::rotate_left(Node<K, V> *grand)
 }
 
 template <typename K, typename V>
-inline void Map<K, V>::rotate_right(Node<K, V> *grand)
+inline void TreeMap<K, V>::rotate_right(Node<K, V> *grand)
 {
     Node<K, V> *parent = grand->_left;
     Node<K, V> *child = parent->_right;
@@ -372,7 +372,7 @@ inline void Map<K, V>::rotate_right(Node<K, V> *grand)
 }
 
 template <typename K, typename V>
-inline void Map<K, V>::after_rotate(Node<K, V> *grand, Node<K, V> *parent, Node<K, V> *child)
+inline void TreeMap<K, V>::after_rotate(Node<K, V> *grand, Node<K, V> *parent, Node<K, V> *child)
 {
     parent->_parent = grand->_parent;
     if (grand->is_left())
@@ -387,7 +387,7 @@ inline void Map<K, V>::after_rotate(Node<K, V> *grand, Node<K, V> *parent, Node<
 }
 
 template <typename K, typename V>
-inline Map<K, V>::Node<K, V> *Map<K, V>::set_color(Node<K, V> *node, bool color)
+inline TreeMap<K, V>::Node<K, V> *TreeMap<K, V>::set_color(Node<K, V> *node, bool color)
 {
     if (node != nullptr)
         node->_color = color;
@@ -395,7 +395,7 @@ inline Map<K, V>::Node<K, V> *Map<K, V>::set_color(Node<K, V> *node, bool color)
 }
 
 template <typename K, typename V>
-inline void Map<K, V>::clear_recu(Node<K, V> *node)
+inline void TreeMap<K, V>::clear_recu(Node<K, V> *node)
 {
     if (node != nullptr)
     {
@@ -406,7 +406,7 @@ inline void Map<K, V>::clear_recu(Node<K, V> *node)
 }
 
 template <typename K, typename V>
-inline bool Map<K, V>::contains_value(std::shared_ptr<V> value)
+inline bool TreeMap<K, V>::contains_value(std::shared_ptr<V> value)
 {
     if (_root != nullptr)
     {
@@ -436,14 +436,14 @@ inline bool Map<K, V>::contains_value(std::shared_ptr<V> value)
 }
 
 template <typename K, typename V>
-inline std::shared_ptr<V> Map<K, V>::get_value(std::shared_ptr<K> key)
+inline std::shared_ptr<V> TreeMap<K, V>::get_value(std::shared_ptr<K> key)
 {
     Node<K, V> *node = get_node(key);
     return node != nullptr ? node->_value : nullptr;
 }
 
 template <typename K, typename V>
-inline std::shared_ptr<V> Map<K, V>::add(std::shared_ptr<K> key, std::shared_ptr<V> value)
+inline std::shared_ptr<V> TreeMap<K, V>::add(std::shared_ptr<K> key, std::shared_ptr<V> value)
 {
     not_null_check(key);
     if (_root == nullptr)
@@ -507,7 +507,7 @@ inline std::shared_ptr<V> Map<K, V>::add(std::shared_ptr<K> key, std::shared_ptr
 }
 
 template <typename K, typename V>
-inline std::shared_ptr<V> Map<K, V>::remove(std::shared_ptr<K> key)
+inline std::shared_ptr<V> TreeMap<K, V>::remove(std::shared_ptr<K> key)
 {
     Node<K, V> *node = get_node(key);
     if (node != nullptr)
@@ -552,7 +552,7 @@ inline std::shared_ptr<V> Map<K, V>::remove(std::shared_ptr<K> key)
 }
 
 template <typename K, typename V>
-inline void Map<K, V>::inorder_traverse(Node<K, V> *node, TraverseFunc func) const
+inline void TreeMap<K, V>::inorder_traverse(Node<K, V> *node, TraverseFunc func) const
 {
     if (node != nullptr)
     {
@@ -560,13 +560,13 @@ inline void Map<K, V>::inorder_traverse(Node<K, V> *node, TraverseFunc func) con
         if (func != nullptr)
             func(node->_key);
         else
-            std::cout << "[" << *node->_key << "-" << *node->_value << "]\n";
+            std::cout << "<" << *node->_key << "-" << *node->_value << ">\n";
         inorder_traverse(node->_right, func);
     }
 }
 
 template <typename K, typename V>
-inline void Map<K, V>::clear()
+inline void TreeMap<K, V>::clear()
 {
     clear_recu(_root);
     _root = nullptr;

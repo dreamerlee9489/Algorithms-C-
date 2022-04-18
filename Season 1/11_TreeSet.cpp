@@ -1,10 +1,10 @@
-#include "./11_Set.h"
+#include "./11_TreeSet.h"
 #include "./Person.h"
 using namespace std;
 
 int main(int argc, char const *argv[])
 {
-    Set<Person> tree = Set<Person>([](shared_ptr<Person> a, shared_ptr<Person> b)
+    TreeSet<Person> tree = TreeSet<Person>([](shared_ptr<Person> a, shared_ptr<Person> b)
     {
         if((*a)._age < (*b)._age)
             return -1;
