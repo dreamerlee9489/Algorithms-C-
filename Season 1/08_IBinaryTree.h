@@ -87,11 +87,8 @@ template <typename T>
 template <typename U>
 inline IBinaryTree<T>::Node<U> &IBinaryTree<T>::Node<U>::operator=(Node<U> &&node) noexcept
 {
-    _data = std::move(node._data);
-    _parent = std::move(node._parent);
-    _left = std::move(node._left);
-    _right = std::move(node._right);
-    node._data = node._parent = node._left = node._right = nullptr;
+    delete this;
+    this = &node;
     return *this;
 }
 

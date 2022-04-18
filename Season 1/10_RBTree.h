@@ -54,12 +54,8 @@ template <typename T>
 template <typename U>
 inline RBTree<T>::RBNode<U> &RBTree<T>::RBNode<U>::operator=(RBNode<U> &&node) noexcept
 {
-    this->_data = std::move(node._data);
-    this->_parent = std::move(node._parent);
-    this->_left = std::move(node._left);
-    this->_right = std::move(node._right);
-    _color = std::move(node._color);
-    node._data = node._parent = node._left = node._right = nullptr;
+    delete this;
+    this = &node;
     return *this;
 }
 

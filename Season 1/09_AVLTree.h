@@ -57,12 +57,8 @@ template <typename T>
 template <typename U>
 inline AVLTree<T>::AVLNode<U> &AVLTree<T>::AVLNode<U>::operator=(AVLNode<U> &&node) noexcept
 {
-    this->_data = std::move(node._data);
-    this->_parent = std::move(node._parent);
-    this->_left = std::move(node._left);
-    this->_right = std::move(node._right);
-    _height = std::move(node._height);
-    node._data = node._parent = node._left = node._right = nullptr;
+    delete this;
+    this = &node;
     return *this;
 }
 

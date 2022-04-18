@@ -86,12 +86,8 @@ template <typename T, typename U>
 template <typename K, typename V>
 inline Map<T, U>::Node<K, V> &Map<T, U>::Node<K, V>::operator=(Node<K, V> &&node) noexcept
 {
-    _key = std::move(node._key);
-    _value = std::move(node._value);
-    _parent = std::move(node._parent);
-    _left = std::move(node._left);
-    _right = std::move(node._right);
-    _color = std::move(node._color);
+    delete this;
+    this = &node;
     return *this;
 }
 

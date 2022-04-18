@@ -61,10 +61,8 @@ template <typename T>
 template <typename U>
 inline LinkedList<T>::Node<U> &LinkedList<T>::Node<U>::operator=(Node<U> &&node) noexcept
 {
-    _data = std::move((std::shared_ptr<T>)node._data);
-    _prev = std::move((Node<U> *)node._prev);
-    _next = std::move((Node<U> *)node._next);
-    node._data = node._prev = node._next = nullptr;
+    delete this;
+    this = &node;
     return *this;
 }
 
