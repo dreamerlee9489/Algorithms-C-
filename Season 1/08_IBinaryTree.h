@@ -1,3 +1,13 @@
+/**
+ * @file 08_IBinaryTree.h
+ * @author dreamerlee9489@outlook.com
+ * @brief 二叉树基类
+ * @version 0.1
+ * @date 2022-04-09
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #ifndef BINARY_TREE_H
 #define BINARY_TREE_H
 #include <iostream>
@@ -5,7 +15,7 @@
 #include <queue>
 #include <cmath>
 #include "./IString.h"
-// 二叉树基类
+
 template <typename T>
 class IBinaryTree
 {

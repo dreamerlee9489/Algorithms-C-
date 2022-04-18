@@ -1,9 +1,19 @@
+/**
+ * @file 03_IList.h
+ * @author dreamerlee9489@outlook.com
+ * @brief 线性表基类(智能指针版)
+ * @version 0.1
+ * @date 2022-03-30
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #ifndef ILIST_H
 #define ILIST_H
 #include <iostream>
 #include <string>
 #include <memory>
-// 线性表基类(智能指针版)
+
 template <typename T>
 class IList
 {

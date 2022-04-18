@@ -28,7 +28,6 @@ int main()
 }
 
 /*
-2022年4月8日 00:29:05
 输出:
 delete 0x2521de0[10, Alice10]
 delete 0x25221a0[109, Alice109]

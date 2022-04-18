@@ -1,7 +1,17 @@
+/**
+ * @file 08_BBST.h
+ * @author dreamerlee9489@outlook.com
+ * @brief 平衡二叉搜索树基类
+ * @version 0.1
+ * @date 2022-04-09
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #ifndef BBST_H
 #define BBST_H
 #include "./08_BST.h"
-// 平衡二叉搜索树基类
+
 template <typename T>
 class BBST : public BST<T>
 {

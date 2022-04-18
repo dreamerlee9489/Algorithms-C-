@@ -1,7 +1,17 @@
+/**
+ * @file 10_RBTree.h
+ * @author dreamerlee9489@outlook.com
+ * @brief 红黑树
+ * @version 0.1
+ * @date 2022-04-13
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #ifndef RB_TREE_H
 #define RB_TREE_H
 #include "./08_BBST.h"
-// 红黑树
+
 template <typename T>
 class RBTree : public BBST<T>
 {

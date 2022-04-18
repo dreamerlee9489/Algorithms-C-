@@ -1,8 +1,18 @@
+/**
+ * @file 11_Set.h
+ * @author dreamerlee9489@outlook.com
+ * @brief 基于红黑树的集合
+ * @version 0.1
+ * @date 2022-04-17
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #ifndef SET_H
 #define SET_H
 #include "./11_ISet.h"
 #include "./10_RBtree.h"
-// 集合
+
 template <typename T>
 class Set : public ISet<T>
 {

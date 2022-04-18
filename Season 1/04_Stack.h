@@ -1,7 +1,17 @@
+/**
+ * @file 04_Stack.h
+ * @author dreamerlee9489@outlook.com
+ * @brief 栈
+ * @version 0.1
+ * @date 2022-04-05
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #ifndef STACK_H
 #define STACK_H
 #include "./02_ArrayList.h"
-// 栈
+
 template <typename T>
 class Stack
 {

@@ -1,7 +1,17 @@
+/**
+ * @file 11_ISet.h
+ * @author dreamerlee9489@outlook.com
+ * @brief 集合基类
+ * @version 0.1
+ * @date 2022-04-17
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #ifndef ISET_H
 #define ISET_H
 #include <memory>
-// 集合基类
+
 template <typename T>
 class ISet
 {

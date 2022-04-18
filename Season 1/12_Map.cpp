@@ -16,7 +16,6 @@ int main(int argc, char const *argv[])
 }
 
 /*
-2022年4月18日 09:32:38
 输出：
 [10002-[16, Alice16]]
 [10005-[18, Alice18]]

@@ -1,8 +1,18 @@
+/**
+ * @file 07_CircleDeque.h
+ * @author dreamerlee9489@outlook.com
+ * @brief 循环双端队列
+ * @version 0.1
+ * @date 2022-04-08
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #ifndef CIRCLE_DEQUE_H
 #define CIRCLE_DEQUE_H
 #include <iostream>
 #include <memory>
-// 循环双端队列
+
 template <typename T>
 class CircleDeque
 {

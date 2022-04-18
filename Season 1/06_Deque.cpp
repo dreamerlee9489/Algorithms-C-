@@ -26,7 +26,6 @@ int main(int argc, char const *argv[])
 }
 
 /*
-2022年4月8日 08:28:26
 输出:
 ----------Test operator<<()----------
 [15, Alice15]

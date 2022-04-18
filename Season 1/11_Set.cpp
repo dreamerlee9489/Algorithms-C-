@@ -28,7 +28,6 @@ int main(int argc, char const *argv[])
 }
 
 /*
-2022年4月17日 19:35:24
 输出：
 delete 0x6e6770[10, Alice10]
 delete 0x6e6890[11, Alice11]

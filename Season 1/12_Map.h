@@ -1,9 +1,19 @@
+/**
+ * @file 12_Map.h
+ * @author dreamerlee9489@outlook.com
+ * @brief 基于红黑树的映射
+ * @version 0.1
+ * @date 2022-04-18
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #ifndef MAP_H
 #define MAP_H
 #include <memory>
 #include <queue>
 #include "./IString.h"
-// 映射
+
 template <typename K, typename V>
 class Map
 {

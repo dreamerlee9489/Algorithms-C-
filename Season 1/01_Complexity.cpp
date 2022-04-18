@@ -1,9 +1,19 @@
+/**
+ * @file 01_Complexity.cpp
+ * @author dreamerlee9489@outlook.com
+ * @brief 斐波那契数列
+ * @version 0.1
+ * @date 2022-03-15
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #include <ctime>
 #include <iostream>
 using namespace std;
-//斐波那契数列递归算法
+// 递归算法
 int fib1(int n);
-//斐波那契数列迭代算法
+// 迭代算法
 int fib2(int n);
 
 int main()
@@ -41,7 +51,6 @@ inline int fib2(int n)
 }
 
 /*
-2022年3月15日 12:17:58
 输出：
 time1 = 13.218s
 time2 = 0.002s

@@ -1,7 +1,17 @@
+/**
+ * @file 08_BST.h
+ * @author dreamerlee9489@outlook.com
+ * @brief 二叉搜索树基类
+ * @version 0.1
+ * @date 2022-04-09
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #ifndef BST_H
 #define BST_H
 #include "./08_IBinaryTree.h"
-// 二叉搜索树基类
+
 template <typename T>
 class BST : public IBinaryTree<T>
 {
