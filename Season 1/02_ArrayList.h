@@ -1,3 +1,6 @@
+#ifndef ARRAYLIST_H
+#define ARRAYLIST_H
+#include "./03_IList.h"
 /**
  * @file 02_ArrayList.h
  * @author dreamerlee9489@outlook.com
@@ -8,10 +11,6 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef ARRAYLIST_H
-#define ARRAYLIST_H
-#include "./03_IList.h"
-
 template <typename T>
 class ArrayList : public IList<T>
 {

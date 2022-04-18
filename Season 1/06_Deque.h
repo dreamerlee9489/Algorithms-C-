@@ -1,3 +1,6 @@
+#ifndef DEQUE_H
+#define DEQUE_H
+#include "./03_LinkedList.h"
 /**
  * @file 06_Deque.h
  * @author dreamerlee9489@outlook.com
@@ -8,10 +11,6 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef DEQUE_H
-#define DEQUE_H
-#include "./03_LinkedList.h"
-
 template <typename T>
 class Deque
 {

@@ -1,3 +1,6 @@
+#ifndef RB_TREE_H
+#define RB_TREE_H
+#include "./08_BBST.h"
 /**
  * @file 10_RBTree.h
  * @author dreamerlee9489@outlook.com
@@ -8,10 +11,6 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef RB_TREE_H
-#define RB_TREE_H
-#include "./08_BBST.h"
-
 template <typename T>
 class RBTree : public BBST<T>
 {

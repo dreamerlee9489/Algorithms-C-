@@ -1,3 +1,8 @@
+#ifndef MAP_H
+#define MAP_H
+#include <memory>
+#include <queue>
+#include "./IString.h"
 /**
  * @file 12_TreeMap.h
  * @author dreamerlee9489@outlook.com
@@ -8,12 +13,6 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef MAP_H
-#define MAP_H
-#include <memory>
-#include <queue>
-#include "./IString.h"
-
 template <typename K, typename V>
 class TreeMap
 {

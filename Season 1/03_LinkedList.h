@@ -1,3 +1,6 @@
+#ifndef LINKEDLIST_H
+#define LINKEDLIST_H
+#include "./03_IList.h"
 /**
  * @file 03_LinkedList.h
  * @author dreamerlee9489@outlook.com
@@ -8,10 +11,6 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef LINKEDLIST_H
-#define LINKEDLIST_H
-#include "./03_IList.h"
-
 template <typename T>
 class LinkedList : public IList<T>
 {

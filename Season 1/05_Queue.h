@@ -1,3 +1,6 @@
+#ifndef QUEUE_H
+#define QUEUE_H
+#include "./03_LinkedList.h"
 /**
  * @file 05_Queue.h
  * @author dreamerlee9489@outlook.com
@@ -8,10 +11,6 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef QUEUE_H
-#define QUEUE_H
-#include "./03_LinkedList.h"
-
 template <typename T>
 class Queue
 {

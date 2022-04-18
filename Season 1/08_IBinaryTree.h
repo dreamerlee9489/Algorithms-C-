@@ -1,3 +1,10 @@
+#ifndef BINARY_TREE_H
+#define BINARY_TREE_H
+#include <iostream>
+#include <memory>
+#include <queue>
+#include <cmath>
+#include "./IString.h"
 /**
  * @file 08_IBinaryTree.h
  * @author dreamerlee9489@outlook.com
@@ -8,14 +15,6 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef BINARY_TREE_H
-#define BINARY_TREE_H
-#include <iostream>
-#include <memory>
-#include <queue>
-#include <cmath>
-#include "./IString.h"
-
 template <typename T>
 class IBinaryTree
 {

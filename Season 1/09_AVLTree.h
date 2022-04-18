@@ -1,3 +1,6 @@
+#ifndef AVL_TREE_H
+#define AVL_TREE_H
+#include "./08_BBST.h"
 /**
  * @file 09_AVLTree.h
  * @author dreamerlee9489@outlook.com
@@ -8,10 +11,6 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef AVL_TREE_H
-#define AVL_TREE_H
-#include "./08_BBST.h"
-
 template <typename T>
 class AVLTree : public BBST<T>
 {

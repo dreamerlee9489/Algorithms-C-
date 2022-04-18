@@ -1,3 +1,7 @@
+#ifndef CIRCLE_DEQUE_H
+#define CIRCLE_DEQUE_H
+#include <iostream>
+#include <memory>
 /**
  * @file 07_CircleDeque.h
  * @author dreamerlee9489@outlook.com
@@ -8,11 +12,6 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef CIRCLE_DEQUE_H
-#define CIRCLE_DEQUE_H
-#include <iostream>
-#include <memory>
-
 template <typename T>
 class CircleDeque
 {

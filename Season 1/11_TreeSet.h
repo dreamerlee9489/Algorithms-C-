@@ -1,3 +1,7 @@
+#ifndef SET_H
+#define SET_H
+#include "./11_ISet.h"
+#include "./10_RBtree.h"
 /**
  * @file 11_TreeSet.h
  * @author dreamerlee9489@outlook.com
@@ -8,11 +12,6 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef SET_H
-#define SET_H
-#include "./11_ISet.h"
-#include "./10_RBtree.h"
-
 template <typename T>
 class TreeSet : public ISet<T>
 {

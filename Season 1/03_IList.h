@@ -1,3 +1,8 @@
+#ifndef ILIST_H
+#define ILIST_H
+#include <iostream>
+#include <string>
+#include <memory>
 /**
  * @file 03_IList.h
  * @author dreamerlee9489@outlook.com
@@ -8,12 +13,6 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef ILIST_H
-#define ILIST_H
-#include <iostream>
-#include <string>
-#include <memory>
-
 template <typename T>
 class IList
 {

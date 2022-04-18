@@ -1,3 +1,6 @@
+#ifndef BST_H
+#define BST_H
+#include "./08_IBinaryTree.h"
 /**
  * @file 08_BST.h
  * @author dreamerlee9489@outlook.com
@@ -8,10 +11,6 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef BST_H
-#define BST_H
-#include "./08_IBinaryTree.h"
-
 template <typename T>
 class BST : public IBinaryTree<T>
 {

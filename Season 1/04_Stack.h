@@ -1,3 +1,6 @@
+#ifndef STACK_H
+#define STACK_H
+#include "./02_ArrayList.h"
 /**
  * @file 04_Stack.h
  * @author dreamerlee9489@outlook.com
@@ -8,10 +11,6 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef STACK_H
-#define STACK_H
-#include "./02_ArrayList.h"
-
 template <typename T>
 class Stack
 {

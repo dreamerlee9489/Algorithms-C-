@@ -1,3 +1,6 @@
+#ifndef ISET_H
+#define ISET_H
+#include <memory>
 /**
  * @file 11_ISet.h
  * @author dreamerlee9489@outlook.com
@@ -8,10 +11,6 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef ISET_H
-#define ISET_H
-#include <memory>
-
 template <typename T>
 class ISet
 {

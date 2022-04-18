@@ -40,4 +40,4 @@ inline Person &Person::operator=(Person &&rhs) noexcept
     return *this;
 }
 
-#endif // !PERSON_H
+#endif /* PERSON_H */

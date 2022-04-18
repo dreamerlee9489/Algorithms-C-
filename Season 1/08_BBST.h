@@ -1,3 +1,6 @@
+#ifndef BBST_H
+#define BBST_H
+#include "./08_BST.h"
 /**
  * @file 08_BBST.h
  * @author dreamerlee9489@outlook.com
@@ -8,10 +11,6 @@
  * @copyright Copyright (c) 2022
  *
  */
-#ifndef BBST_H
-#define BBST_H
-#include "./08_BST.h"
-
 template <typename T>
 class BBST : public BST<T>
 {
