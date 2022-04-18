@@ -7,8 +7,8 @@
 #include "./IString.h"
 /**
  * @brief 二叉树基类
- * @tparam T
  * @date 2022-04-10
+ * @tparam T
  */
 template <typename T>
 class IBinaryTree

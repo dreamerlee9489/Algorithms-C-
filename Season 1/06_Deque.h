@@ -3,8 +3,8 @@
 #include "./03_LinkedList.h"
 /**
  * @brief 双端队列
- * @tparam T
  * @date 2022-04-08
+ * @tparam T
  */
 template <typename T>
 class Deque

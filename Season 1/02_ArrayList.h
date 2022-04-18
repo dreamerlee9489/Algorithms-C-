@@ -3,8 +3,8 @@
 #include "./03_IList.h"
 /**
  * @brief 泛型动态数组
- * @tparam T
  * @date 2022-03-30
+ * @tparam T
  */
 template <typename T>
 class ArrayList : public IList<T>

@@ -5,8 +5,8 @@
 #include <memory>
 /**
  * @brief 线性表基类
- * @tparam T
  * @date 2022-03-30
+ * @tparam T
  */
 template <typename T>
 class IList
