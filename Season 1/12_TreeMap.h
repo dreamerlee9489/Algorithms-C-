@@ -1,8 +1,6 @@
-#ifndef MAP_H
-#define MAP_H
-#include <memory>
-#include <queue>
-#include "./IString.h"
+#ifndef TREE_MAP_H
+#define TREE_MAP_H
+#include "./12_IMap.h"
 /**
  * @brief 基于红黑树的映射
  * @date 2022-04-17
@@ -10,18 +8,16 @@
  * @tparam V
  */
 template <typename K, typename V>
-class TreeMap
+class TreeMap : public IMap<K, V>
 {
-    using TraverseFunc = bool (*)(std::shared_ptr<K> key);
-    using Comparator = int (*)(std::shared_ptr<K> a, std::shared_ptr<K> b);
     static const bool BLACK = false, RED = true;
     template <typename _K, typename _V>
-    struct Node : public IString
+    struct Node 
     {
-        friend std::ostream &operator<<(std::ostream &os, const Node<_K, _V> &node) { return os << node.to_string(); }
+        friend std::ostream &operator<<(std::ostream &os, const Node<_K, _V> &node) { return os << "<" << *node->_key << "-" << *node->_value << ">"; }
+        bool _color = RED;
         std::shared_ptr<_K> _key;
         std::shared_ptr<_V> _value;
-        bool _color = RED;
         Node<_K, _V> *_parent = nullptr, *_left = nullptr, *_right = nullptr;
         Node<_K, _V> &operator=(const Node<_K, _V> &node);
         Node<_K, _V> &operator=(Node<_K, _V> &&node) noexcept;
@@ -35,11 +31,10 @@ class TreeMap
         bool is_left() const { return _parent != nullptr && this == _parent->_left; }
         bool is_right() const { return _parent != nullptr && this == _parent->_right; }
         Node<_K, _V> *get_sibling() const;
-        std::string to_string() const override { return ((IString &)*_key).to_string(); }
     };
     size_t _size = 0;
     Node<K, V> *_root = nullptr;
-    Comparator _comparator = nullptr;
+    typename IMap<K, V>::Comparator _comparator = nullptr;
     void not_null_check(std::shared_ptr<K> key) const;
     Node<K, V> *get_node(std::shared_ptr<K> key) const;
     Node<K, V> *get_predecessor(Node<K, V> *node) const;
@@ -53,25 +48,25 @@ class TreeMap
     bool color_of(Node<K, V> *node) { return node == nullptr ? BLACK : node->_color; }
     bool is_black(Node<K, V> *node) { return color_of(node) == BLACK; }
     bool is_red(Node<K, V> *node) { return color_of(node) == RED; }
-    void inorder_traverse(Node<K, V> *node, TraverseFunc func = nullptr) const;
+    void inorder_traverse(Node<K, V> *node, typename IMap<K, V>::TraverseFunc func = nullptr) const;
     void clear_recu(Node<K, V> *node);
 
 public:
     TreeMap<K, V> &operator=(const TreeMap<K, V> &map);
     TreeMap<K, V> &operator=(TreeMap<K, V> &&map);
-    TreeMap(Comparator comparator = nullptr) { _comparator = comparator; }
+    TreeMap(typename IMap<K, V>::Comparator comparator = nullptr) { _comparator = comparator; }
     TreeMap(const TreeMap<K, V> &map) { *this = map; }
     TreeMap(TreeMap<K, V> &&map) { *this = std::move(map); }
     ~TreeMap() { clear_recu(_root); }
-    size_t size() const { return _size; }
-    bool is_empty() const { return _size == 0; }
-    bool contains_key(std::shared_ptr<K> key) { return get_node(key) != nullptr; }
-    bool contains_value(std::shared_ptr<V> value);
-    std::shared_ptr<V> get_value(std::shared_ptr<K> key);
-    std::shared_ptr<V> add(std::shared_ptr<K> key, std::shared_ptr<V> value);
-    std::shared_ptr<V> remove(std::shared_ptr<K> key);
-    void traverse(TraverseFunc func = nullptr) const { inorder_traverse(_root, func); }
-    void clear();
+    size_t size() const override { return _size; }
+    bool is_empty() const override { return _size == 0; }
+    bool contains_key(std::shared_ptr<K> key) override { return get_node(key) != nullptr; }
+    bool contains_value(std::shared_ptr<V> value) override;
+    std::shared_ptr<V> get_value(std::shared_ptr<K> key) override;
+    std::shared_ptr<V> add(std::shared_ptr<K> key, std::shared_ptr<V> value) override;
+    std::shared_ptr<V> remove(std::shared_ptr<K> key) override;
+    void traverse(typename IMap<K, V>::TraverseFunc func = nullptr) const override { inorder_traverse(_root, func); }
+    void clear() override;
 };
 
 template <typename K, typename V>
@@ -405,26 +400,18 @@ inline bool TreeMap<K, V>::contains_value(std::shared_ptr<V> value)
 {
     if (_root != nullptr)
     {
-        std::queue<Node<K, V> *> q = new std::queue<Node<K, V> *>();
+        std::queue<Node<K, V> *> q = std::queue<Node<K, V> *>();
         q.push(_root);
         while (!q.empty())
         {
             Node<K, V> *node = q.front();
+            if (*node->_value == *value)
+                return true;
             q.pop();
             if (node->_left != nullptr)
                 q.push(node->_left);
             if (node->_right != nullptr)
                 q.push(node->_right);
-            if (_comparator == nullptr)
-            {
-                if (*node->_value == *value)
-                    return true;
-            }
-            else
-            {
-                if (_comparator(node->_value, value) == 0)
-                    return true;
-            }
         }
     }
     return false;
@@ -547,7 +534,7 @@ inline std::shared_ptr<V> TreeMap<K, V>::remove(std::shared_ptr<K> key)
 }
 
 template <typename K, typename V>
-inline void TreeMap<K, V>::inorder_traverse(Node<K, V> *node, TraverseFunc func) const
+inline void TreeMap<K, V>::inorder_traverse(Node<K, V> *node, typename IMap<K, V>::TraverseFunc func) const
 {
     if (node != nullptr)
     {
@@ -568,4 +555,4 @@ inline void TreeMap<K, V>::clear()
     _size = 0;
 }
 
-#endif /* MAP_H */
+#endif /* TREE_MAP_H */

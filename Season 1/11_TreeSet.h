@@ -1,5 +1,5 @@
-#ifndef SET_H
-#define SET_H
+#ifndef TREE_SET_H
+#define TREE_SET_H
 #include "./11_ISet.h"
 #include "./10_RBtree.h"
 /**
@@ -24,4 +24,4 @@ public:
     void clear() override { tree->clear(); }
 };
 
-#endif /* SET_H */
+#endif /* TREE_SET_H */

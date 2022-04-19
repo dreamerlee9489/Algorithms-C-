@@ -3,8 +3,9 @@
 #include <iostream>
 #include <string>
 #include "./IString.h"
+#include "./IHashable.h"
 // 测试类
-class Person : public IString 
+class Person : public IString, public IHashable
 {
     friend std::istream &operator>>(std::istream &in, Person &p) { return in >> p._age >> p._name; }
     friend std::ostream &operator<<(std::ostream &out, const Person &p) { return out << p.to_string(); }
@@ -14,16 +15,18 @@ class Person : public IString
     friend bool operator>(const Person &lhs, const Person &rhs) { return lhs._age > rhs._age; }
 
 public:
-    int _age = 0;
+    size_t _age = 0;
     std::string _name = "name";
     Person &operator=(const Person &rhs);
     Person &operator=(Person &&rhs) noexcept;
     Person() = default;
-    Person(int age, std::string name) : _age(age), _name(name) {}
+    Person(size_t age, std::string name) : _age(age), _name(name) {}
     Person(const Person &p) { *this = p; }
     Person(Person &&p) noexcept { *this = std::move(p); }
     ~Person() { std::cout << "delete " << this << to_string() << "\n"; }
     std::string to_string() const override { return "[" + std::to_string(_age) + ", " + _name + "]"; }
+    int hash_code() override;
+    bool equals(void *data) override;
 };
 
 inline Person &Person::operator=(const Person &rhs)
@@ -38,6 +41,24 @@ inline Person &Person::operator=(Person &&rhs) noexcept
     _age = std::move(rhs._age);
     _name = std::move((std::string)rhs._name);
     return *this;
+}
+
+int Person::hash_code()
+{
+    int hash = _age;
+    for(size_t i = 0; i < _name.size(); ++i)
+        hash = hash << 5 - hash + _name[i];
+    return hash;
+}
+
+bool Person::equals(void *data)
+{
+    if(this == data)
+        return true;
+    Person *other = (Person *)data;
+    if (data == nullptr || typeid(*other) != typeid(*this))
+        return false;
+    return other->_age == _age && other->_name == _name;
 }
 
 #endif /* PERSON_H */
