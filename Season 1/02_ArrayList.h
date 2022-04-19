@@ -2,7 +2,7 @@
 #define ARRAYLIST_H
 #include "./03_IList.h"
 /**
- * @brief 泛型动态数组
+ * @brief 动态数组
  * @date 2022-03-30
  * @tparam T
  */
