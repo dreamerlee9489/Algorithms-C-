@@ -4,9 +4,9 @@
 #include <string>
 #include "./IString.h"
 #include "./IHashable.h"
-// #include "./IComparable.h"
+#include "./IComparable.h"
 // 测试类
-class Person : public IString, public IHashable
+class Person : public IString, public IHashable, public IComparable
 {
     friend std::istream &operator>>(std::istream &in, Person &p) { return in >> p._age >> p._name; }
     friend std::ostream &operator<<(std::ostream &out, const Person &p) { return out << p.to_string(); }
@@ -25,7 +25,7 @@ public:
     Person(const Person &p) { *this = p; }
     Person(Person &&p) noexcept { *this = std::move(p); }
     ~Person() { std::cout << "delete " << this << to_string() << "\n"; }
-    // int compare_to(void *data) const override;
+    int compare_to(void *data) const override;
     int hash_code() const override;
     bool equals(void *data) const override;
     std::string to_string() const override { return "[" + std::to_string(_age) + ", " + _name + "]"; }
@@ -45,27 +45,27 @@ inline Person &Person::operator=(Person &&rhs) noexcept
     return *this;
 }
 
-// inline int Person::compare_to(void *data) const
-// {
-//     Person *other = (Person *)data;
-//     if(_age < other->_age)
-//         return -1;
-//     else if(_age > other->_age)
-//         return 1;
-//     return 0;
-// }
+inline int Person::compare_to(void *data) const
+{
+    Person *other = (Person *)data;
+    if(_age < other->_age)
+        return -1;
+    else if(_age > other->_age)
+        return 1;
+    return 0;
+}
 
 inline int Person::hash_code() const
 {
-    int hash = _age;
-    for(size_t i = 0; i < _name.size(); ++i)
-        hash = hash << 5 - hash + _name[i];
-    return hash;
+    int hash = 0;
+    for (size_t i = 0; i < _name.size(); ++i)
+        hash = (hash << 5) - hash + _name[i];
+    return hash + _age;
 }
 
 inline bool Person::equals(void *data) const
 {
-    if(this == data)
+    if (this == data)
         return true;
     Person *other = (Person *)data;
     if (data == nullptr || typeid(*other) != typeid(*this))

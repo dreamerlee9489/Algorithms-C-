@@ -2,7 +2,12 @@
 #define HASH_MAP_H
 #include "./12_IMap.h"
 #include "./IHashable.h"
-
+/**
+ * @brief 基于哈希表的映射
+ * @date 2022-04-20
+ * @tparam K 键必须继承类IHashable
+ * @tparam V 
+ */
 template <typename K, typename V>
 class HashMap : public IMap<K, V>
 {
@@ -39,8 +44,8 @@ class HashMap : public IMap<K, V>
     Node<K, V> *get_node(std::shared_ptr<K> key) const;
     Node<K, V> *get_node(Node<K, V> *node, std::shared_ptr<K> key1) const;
     Node<K, V> *get_successor(Node<K, V> *node) const;
-    int get_index(Node<K, V> *node) const;
-    int get_index(std::shared_ptr<K> key) const;
+    int get_index(Node<K, V> *node) const { return node->_hash & (_capacity - 1); }
+    int get_index(std::shared_ptr<K> key) const { return get_hash(key) & (_capacity - 1); }
     int get_hash(std::shared_ptr<K> key) const;
     void resize();
     void move_node(Node<K, V> *newnode);
@@ -60,7 +65,7 @@ public:
     ~HashMap();
     size_t size() const override { return _size; }
     bool is_empty() const override { return _size == 0; }
-    bool contains_key(std::shared_ptr<K> key) const override;
+    bool contains_key(std::shared_ptr<K> key) const override { return get_node(key) != nullptr; }
     bool contains_value(std::shared_ptr<V> value) const override;
     std::shared_ptr<V> get_value(std::shared_ptr<K> key) const override;
     std::shared_ptr<V> add(std::shared_ptr<K> key, std::shared_ptr<V> value) override;
@@ -169,18 +174,15 @@ inline HashMap<K, V>::HashMap(typename IMap<K, V>::Comparator comparator)
 {
     _comparator = comparator;
     _table = new Node<K, V> *[DEFAULT_CAPACITY];
+    for (size_t i = 0; i < _capacity; i++)
+        _table[i] = nullptr;
 }
 
 template <typename K, typename V>
 inline HashMap<K, V>::~HashMap()
 {
+    clear();
     delete[] _table;
-}
-
-template <typename K, typename V>
-bool HashMap<K, V>::contains_key(std::shared_ptr<K> key) const
-{
-    return get_node(key) != nullptr;
 }
 
 template <typename K, typename V>
@@ -344,6 +346,7 @@ void HashMap<K, V>::traverse(TraverseFunc func) const
     {
         if (_table[i] != nullptr)
         {
+            std::cout << "---------- " << i << " ----------\n";
             q.push(_table[i]);
             while (!q.empty())
             {
@@ -373,18 +376,6 @@ inline void HashMap<K, V>::clear()
 }
 
 template <typename K, typename V>
-inline int HashMap<K, V>::get_index(std::shared_ptr<K> key) const
-{
-    return get_hash(key) & (_capacity - 1);
-}
-
-template <typename K, typename V>
-inline int HashMap<K, V>::get_index(Node<K, V> *node) const
-{
-    return node->_hash & (_capacity - 1);
-}
-
-template <typename K, typename V>
 inline int HashMap<K, V>::get_hash(std::shared_ptr<K> key) const
 {
     if (key == nullptr)
@@ -399,6 +390,8 @@ void HashMap<K, V>::resize()
     {
         Node<K, V> **old = _table;
         _table = new Node<K, V> *[_capacity << 1];
+        for (size_t i = 0; i < _capacity << 1; i++)
+            _table[i] = nullptr;
         std::queue<Node<K, V> *> q;
         for (size_t i = 0; i < _capacity; ++i)
         {
