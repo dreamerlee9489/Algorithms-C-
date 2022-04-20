@@ -5,8 +5,8 @@
 class IHashable
 {
 public:
-    virtual int hash_code() = 0;
-    virtual bool equals(void *data) = 0;
+    virtual int hash_code() const = 0;
+    virtual bool equals(void *data) const = 0;
 };
 
 #endif /* IHASHABLE_H */

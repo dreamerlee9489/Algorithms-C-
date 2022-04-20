@@ -14,7 +14,7 @@ class TreeMap : public IMap<K, V>
     template <typename _K, typename _V>
     struct Node 
     {
-        friend std::ostream &operator<<(std::ostream &os, const Node<_K, _V> &node) { return os << "<" << *node->_key << "-" << *node->_value << ">"; }
+        friend std::ostream &operator<<(std::ostream &os, const Node &node) { return os << "<" << *node._key << "-" << *node._value << ">"; }
         bool _color = RED;
         std::shared_ptr<_K> _key;
         std::shared_ptr<_V> _value;
@@ -32,6 +32,7 @@ class TreeMap : public IMap<K, V>
         bool is_right() const { return _parent != nullptr && this == _parent->_right; }
         Node<_K, _V> *get_sibling() const;
     };
+    using TraverseFunc = bool (*)(Node<K, V> *node);
     size_t _size = 0;
     Node<K, V> *_root = nullptr;
     typename IMap<K, V>::Comparator _comparator = nullptr;
@@ -45,10 +46,10 @@ class TreeMap : public IMap<K, V>
     void rotate_right(Node<K, V> *grand);
     void after_rotate(Node<K, V> *grand, Node<K, V> *parent, Node<K, V> *child);
     Node<K, V> *set_color(Node<K, V> *node, bool color);
-    bool color_of(Node<K, V> *node) { return node == nullptr ? BLACK : node->_color; }
-    bool is_black(Node<K, V> *node) { return color_of(node) == BLACK; }
-    bool is_red(Node<K, V> *node) { return color_of(node) == RED; }
-    void inorder_traverse(Node<K, V> *node, typename IMap<K, V>::TraverseFunc func = nullptr) const;
+    bool color_of(Node<K, V> *node) const { return node == nullptr ? BLACK : node->_color; }
+    bool is_black(Node<K, V> *node) const { return color_of(node) == BLACK; }
+    bool is_red(Node<K, V> *node) const { return color_of(node) == RED; }
+    void inorder_traverse(Node<K, V> *node, TraverseFunc func = nullptr) const;
     void clear_recu(Node<K, V> *node);
 
 public:
@@ -60,12 +61,12 @@ public:
     ~TreeMap() { clear_recu(_root); }
     size_t size() const override { return _size; }
     bool is_empty() const override { return _size == 0; }
-    bool contains_key(std::shared_ptr<K> key) override { return get_node(key) != nullptr; }
-    bool contains_value(std::shared_ptr<V> value) override;
-    std::shared_ptr<V> get_value(std::shared_ptr<K> key) override;
+    bool contains_key(std::shared_ptr<K> key) const override { return get_node(key) != nullptr; }
+    bool contains_value(std::shared_ptr<V> value) const override;
+    std::shared_ptr<V> get_value(std::shared_ptr<K> key) const override;
     std::shared_ptr<V> add(std::shared_ptr<K> key, std::shared_ptr<V> value) override;
     std::shared_ptr<V> remove(std::shared_ptr<K> key) override;
-    void traverse(typename IMap<K, V>::TraverseFunc func = nullptr) const override { inorder_traverse(_root, func); }
+    void traverse(TraverseFunc func = nullptr) const { inorder_traverse(_root, func); }
     void clear() override;
 };
 
@@ -396,7 +397,7 @@ inline void TreeMap<K, V>::clear_recu(Node<K, V> *node)
 }
 
 template <typename K, typename V>
-inline bool TreeMap<K, V>::contains_value(std::shared_ptr<V> value)
+inline bool TreeMap<K, V>::contains_value(std::shared_ptr<V> value) const
 {
     if (_root != nullptr)
     {
@@ -418,7 +419,7 @@ inline bool TreeMap<K, V>::contains_value(std::shared_ptr<V> value)
 }
 
 template <typename K, typename V>
-inline std::shared_ptr<V> TreeMap<K, V>::get_value(std::shared_ptr<K> key)
+inline std::shared_ptr<V> TreeMap<K, V>::get_value(std::shared_ptr<K> key) const
 {
     Node<K, V> *node = get_node(key);
     return node != nullptr ? node->_value : nullptr;
@@ -534,15 +535,15 @@ inline std::shared_ptr<V> TreeMap<K, V>::remove(std::shared_ptr<K> key)
 }
 
 template <typename K, typename V>
-inline void TreeMap<K, V>::inorder_traverse(Node<K, V> *node, typename IMap<K, V>::TraverseFunc func) const
+inline void TreeMap<K, V>::inorder_traverse(Node<K, V> *node, TraverseFunc func) const
 {
     if (node != nullptr)
     {
         inorder_traverse(node->_left, func);
         if (func != nullptr)
-            func(node->_key);
+            func(node);
         else
-            std::cout << "<" << *node->_key << "-" << *node->_value << ">\n";
+            std::cout << *node << "\n";
         inorder_traverse(node->_right, func);
     }
 }
