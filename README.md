@@ -11,3 +11,4 @@
 >>红黑树(RBTree)  
 >>集合(TreeSet)  
 >>映射(TreeMap)  
+>>哈希映射(HashMap)  
