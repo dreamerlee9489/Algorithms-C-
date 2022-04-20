@@ -6,7 +6,7 @@
  * @brief 基于哈希表的映射
  * @date 2022-04-20
  * @tparam K 键必须继承类IHashable
- * @tparam V 
+ * @tparam V
  */
 template <typename K, typename V>
 class HashMap : public IMap<K, V>
@@ -64,6 +64,7 @@ public:
     HashMap(typename IMap<K, V>::Comparator comparator = nullptr);
     ~HashMap();
     size_t size() const override { return _size; }
+    size_t capacity() const { return _capacity; }
     bool is_empty() const override { return _size == 0; }
     bool contains_key(std::shared_ptr<K> key) const override { return get_node(key) != nullptr; }
     bool contains_value(std::shared_ptr<V> value) const override;
