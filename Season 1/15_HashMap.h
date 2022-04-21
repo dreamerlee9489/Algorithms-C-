@@ -28,10 +28,7 @@ protected:
         Node<_K, _V> &operator=(Node<_K, _V> &&node) noexcept;
         Node() = default;
         Node(std::shared_ptr<_K> key, std::shared_ptr<_V> value, Node<_K, _V> *parent = nullptr, Node<_K, _V> *left = nullptr, Node<_K, _V> *right = nullptr)
-            : _key(key), _value(value), _parent(parent), _left(left), _right(right)
-        {
-            _hash = _key == nullptr ? 0 : ((IHashable &)*_key).hash_code();
-        }
+            : _key(key), _value(value), _parent(parent), _left(left), _right(right) { _hash = _key == nullptr ? 0 : ((IHashable &)*_key).hash_code(); }
         Node(const Node<_K, _V> &node) { *this = node; }
         Node(Node<_K, _V> &&node) noexcept { *this = std::move(node); }
         virtual ~Node();
@@ -329,18 +326,17 @@ std::shared_ptr<V> HashMap<K, V>::remove(std::shared_ptr<K> key)
                 node->_parent->_right = replace;
             after_remove(replace);
         }
-        else if (node->_parent == nullptr)
-        {
-            // delete _table[index];
-            _table[index] = nullptr;
-        }
-        else
+        else if (node->_parent != nullptr)
         {
             if (node == node->_parent->_left)
                 node->_parent->_left = nullptr;
             else
                 node->_parent->_right = nullptr;
             after_remove(node);
+        }
+        else
+        {
+            _table[index] = nullptr;
         }
         this->derived_after_remove(willnode, node);
         return old;
@@ -422,8 +418,8 @@ void HashMap<K, V>::resize()
                 }
             }
         }
-        _capacity <<= 1;
         delete[] old;
+        _capacity <<= 1;
     }
 }
 
