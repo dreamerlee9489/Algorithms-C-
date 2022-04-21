@@ -78,7 +78,7 @@ inline RBTree<T> &RBTree<T>::operator=(const RBTree<T> &tree)
     if (tree._size > 0)
     {
         this->_comparator = tree._comparator;
-        std::queue<NODE *> q = std::queue<NODE *>();
+        std::queue<NODE *> q;
         q.push(tree._root);
         while (!q.empty())
         {

@@ -119,7 +119,7 @@ inline TreeMap<K, V> &TreeMap<K, V>::operator=(const TreeMap<K, V> &map)
     if (map._size > 0)
     {
         _comparator = map._comparator;
-        std::queue<Node<K, V> *> q = std::queue<Node<K, V> *>();
+        std::queue<Node<K, V> *> q;
         q.push(map._root);
         while (!q.empty())
         {
@@ -401,7 +401,7 @@ inline bool TreeMap<K, V>::contains_value(std::shared_ptr<V> value) const
 {
     if (_root != nullptr)
     {
-        std::queue<Node<K, V> *> q = std::queue<Node<K, V> *>();
+        std::queue<Node<K, V> *> q;
         q.push(_root);
         while (!q.empty())
         {

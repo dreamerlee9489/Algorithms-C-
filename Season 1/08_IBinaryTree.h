@@ -114,7 +114,7 @@ inline std::ostream &IBinaryTree<T>::draw_tree(std::ostream &os, const IBinaryTr
     {
         size_t height = 0;
         size_t level_count = 1;
-        std::queue<Node<T> *> q = std::queue<Node<T> *>();
+        std::queue<Node<T> *> q;
         q.push(tree._root);
         while (!q.empty())
         {
@@ -188,7 +188,7 @@ inline bool IBinaryTree<T>::is_complete() const
 {
     if (_root != nullptr)
     {
-        std::queue<Node<T> *> q = std::queue<Node<T> *>();
+        std::queue<Node<T> *> q;
         q.push(_root);
         bool leaf = false;
         while (!q.empty())
@@ -238,7 +238,7 @@ inline size_t IBinaryTree<T>::height_iter(Node<T> *node) const
     if (node != nullptr)
     {
         size_t height = 0, level_count = 1;
-        std::queue<Node<T> *> q = std::queue<Node<T> *>();
+        std::queue<Node<T> *> q;
         q.push(node);
         while (!q.empty())
         {
@@ -335,7 +335,7 @@ inline void IBinaryTree<T>::levelorder_traverse(Node<T> *node, TraverseFunc func
 {
     if (node != nullptr)
     {
-        std::queue<Node<T> *> q = std::queue<Node<T> *>();
+        std::queue<Node<T> *> q;
         q.push(node);
         while (!q.empty())
         {
