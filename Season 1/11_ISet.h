@@ -11,7 +11,7 @@ class ISet
 {
 protected:
     ISet() = default;
-    ~ISet() = default;
+    virtual ~ISet() = default;
     virtual size_t size() = 0;
     virtual bool is_empty() = 0;
     virtual bool contains(std::shared_ptr<K> data) = 0;
