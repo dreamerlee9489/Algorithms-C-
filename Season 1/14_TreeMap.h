@@ -1,8 +1,8 @@
 #ifndef TREE_MAP_H
 #define TREE_MAP_H
-#include "./12_IMap.h"
+#include "./14_IMap.h"
 /**
- * @brief 基于红黑树的映射
+ * @brief 红黑树映射
  * @date 2022-04-17
  * @tparam K
  * @tparam V
@@ -32,10 +32,11 @@ class TreeMap : public IMap<K, V>
         bool is_right() const { return _parent != nullptr && this == _parent->_right; }
         Node<_K, _V> *get_sibling() const;
     };
-    using TraverseFunc = bool (*)(Node<K, V> *node);
+    using TraverseFunc = bool (*)(std::shared_ptr<K> key, std::shared_ptr<V> value);
+    using Comparator = int (*)(std::shared_ptr<K> a, std::shared_ptr<K> b);
     size_t _size = 0;
     Node<K, V> *_root = nullptr;
-    typename IMap<K, V>::Comparator _comparator = nullptr;
+    Comparator _comparator = nullptr;
     void not_null_check(std::shared_ptr<K> key) const;
     Node<K, V> *get_node(std::shared_ptr<K> key) const;
     Node<K, V> *get_predecessor(Node<K, V> *node) const;
@@ -55,7 +56,7 @@ class TreeMap : public IMap<K, V>
 public:
     TreeMap<K, V> &operator=(const TreeMap<K, V> &map);
     TreeMap<K, V> &operator=(TreeMap<K, V> &&map);
-    TreeMap(typename IMap<K, V>::Comparator comparator = nullptr) { _comparator = comparator; }
+    TreeMap(Comparator comparator = nullptr) { _comparator = comparator; }
     TreeMap(const TreeMap<K, V> &map) { *this = map; }
     TreeMap(TreeMap<K, V> &&map) { *this = std::move(map); }
     ~TreeMap() { clear_recu(_root); }
@@ -541,7 +542,7 @@ inline void TreeMap<K, V>::inorder_traverse(Node<K, V> *node, TraverseFunc func)
     {
         inorder_traverse(node->_left, func);
         if (func != nullptr)
-            func(node);
+            func(node->_key, node->_value);
         else
             std::cout << *node << "\n";
         inorder_traverse(node->_right, func);
