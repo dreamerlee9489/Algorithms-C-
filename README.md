@@ -10,5 +10,8 @@
 >>AVL树(AVLTree)  
 >>红黑树(RBTree)  
 >>集合(TreeSet)  
+>>哈希集合(HashSet)  
+>>有序哈希集合(LinkedHashSet)  
 >>映射(TreeMap)  
 >>哈希映射(HashMap)  
+>>有序哈希映射(LinkedHashMap)  
