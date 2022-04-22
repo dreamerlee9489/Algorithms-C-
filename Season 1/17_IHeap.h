@@ -29,7 +29,7 @@ public:
     virtual std::shared_ptr<T> remove() = 0;
     virtual std::shared_ptr<T> replace(std::shared_ptr<T> data) = 0;
     virtual void clear() = 0;
-    virtual void traverse(TraverseFunc func = nullptr) = 0;
+    virtual void traverse(TraverseFunc func = nullptr) const = 0;
 };
 
 template <typename T>

@@ -12,6 +12,8 @@ class ISet
 protected:
     using Comparator = int (*)(std::shared_ptr<K> a, std::shared_ptr<K> b);
     using TraverseFunc = bool (*)(std::shared_ptr<K> key, std::shared_ptr<bool> value);
+    
+protected:
     ISet() = default;
     virtual ~ISet() = default;
     virtual size_t size() = 0;

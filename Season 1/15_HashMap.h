@@ -46,7 +46,7 @@ protected:
     int get_index(Node<K, V> *node) const { return node->_hash & (_capacity - 1); }
     int get_index(std::shared_ptr<K> key) const { return get_hash(key) & (_capacity - 1); }
     int get_hash(std::shared_ptr<K> key) const;
-    void resize();
+    void ensure_capacity();
     void move_node(Node<K, V> *newnode);
     void after_add(Node<K, V> *node);
     void after_remove(Node<K, V> *node);
@@ -224,7 +224,7 @@ inline std::shared_ptr<V> HashMap<K, V>::get_value(std::shared_ptr<K> key) const
 template <typename K, typename V>
 inline std::shared_ptr<V> HashMap<K, V>::add(std::shared_ptr<K> key, std::shared_ptr<V> value)
 {
-    resize();
+    ensure_capacity();
     int index = get_index(key);
     Node<K, V> *root = _table[index];
     if (root == nullptr)
@@ -396,7 +396,7 @@ inline int HashMap<K, V>::get_hash(std::shared_ptr<K> key) const
 }
 
 template <typename K, typename V>
-inline void HashMap<K, V>::resize()
+inline void HashMap<K, V>::ensure_capacity()
 {
     if (_size * 1.0 / _capacity > LOAD_FACTOR)
     {
@@ -422,8 +422,8 @@ inline void HashMap<K, V>::resize()
                 }
             }
         }
-        delete[] old;
         _capacity <<= 1;
+        delete[] old;
     }
 }
 
