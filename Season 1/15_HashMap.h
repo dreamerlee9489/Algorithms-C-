@@ -62,8 +62,12 @@ protected:
     virtual void after_remove_derived(Node<K, V> *willnode, Node<K, V> *rmvnode) { delete rmvnode; }
 
 public:
+    HashMap<K, V> &operator=(const HashMap<K, V> &map);
+    HashMap<K, V> &operator=(HashMap<K, V> &&map);
     HashMap(typename IMap<K, V>::Comparator comparator = nullptr);
     virtual ~HashMap();
+    HashMap(const HashMap<K, V> &map) { *this = map; }
+    HashMap(HashMap<K, V> &&map) { *this = std::move(map); }
     size_t size() const override { return _size; }
     size_t capacity() const { return _capacity; }
     bool is_empty() const override { return _size == 0; }
@@ -117,6 +121,53 @@ inline HashMap<K, V>::Node<_K, _V> *HashMap<K, V>::Node<_K, _V>::get_sibling() c
     else if (is_right())
         return _parent->_left;
     return nullptr;
+}
+
+template <typename K, typename V>
+HashMap<K, V> &HashMap<K, V>::operator=(const HashMap<K, V> &map)
+{
+    clear();
+    if (map._size > 0)
+    {
+        _capacity = map._capacity;
+        _comparator = map._comparator;
+        _table = new Node<K, V> *[_capacity];
+        for (size_t i = 0; i < _capacity; ++i)
+            _table[i] = nullptr;
+        std::queue<Node<K, V> *> q;
+        for (size_t i = 0; i < map._capacity; ++i)
+        {
+            if (map._table[i] != nullptr)
+            {
+                q.push(map._table[i]);
+                while (!q.empty())
+                {
+                    Node<K, V> *node = q.front();
+                    add(node->_key, node->_value);
+                    q.pop();
+                    if (node->_left != nullptr)
+                        q.push(node->_left);
+                    if (node->_right != nullptr)
+                        q.push(node->_right);
+                }
+            }
+        }
+    }
+    return *this;
+}
+
+template <typename K, typename V>
+HashMap<K, V> &HashMap<K, V>::operator=(HashMap<K, V> &&map)
+{
+    clear();
+    _size = map._size;
+    _capacity = map._capacity;
+    _comparator = map._comparator;
+    _table = map._table;
+    map._size = 0;
+    map._comparator = nullptr;
+    map._table = nullptr;
+    return *this;
 }
 
 template <typename K, typename V>
@@ -190,24 +241,25 @@ inline HashMap<K, V>::~HashMap()
 template <typename K, typename V>
 inline bool HashMap<K, V>::contains_value(std::shared_ptr<V> value) const
 {
-    if (_size == 0)
-        return false;
-    std::queue<Node<K, V> *> q;
-    for (size_t i = 0; i < _capacity; ++i)
+    if (_size != 0)
     {
-        if (_table[i] != nullptr)
+        std::queue<Node<K, V> *> q;
+        for (size_t i = 0; i < _capacity; ++i)
         {
-            q.push(_table[i]);
-            while (!q.empty())
+            if (_table[i] != nullptr)
             {
-                Node<K, V> *node = q.front();
-                q.pop();
-                if (*value == *node->_value)
-                    return true;
-                if (node->_left != nullptr)
-                    q.push(node->_left);
-                if (node->_right != nullptr)
-                    q.push(node->_right);
+                q.push(_table[i]);
+                while (!q.empty())
+                {
+                    Node<K, V> *node = q.front();
+                    q.pop();
+                    if (*value == *node->_value)
+                        return true;
+                    if (node->_left != nullptr)
+                        q.push(node->_left);
+                    if (node->_right != nullptr)
+                        q.push(node->_right);
+                }
             }
         }
     }
@@ -344,33 +396,34 @@ inline std::shared_ptr<V> HashMap<K, V>::remove(std::shared_ptr<K> key)
 template <typename K, typename V>
 inline void HashMap<K, V>::traverse(typename IMap<K, V>::TraverseFunc func) const
 {
-    if (_size == 0)
-        return;
-    std::queue<Node<K, V> *> q;
-    for (size_t i = 0; i < _capacity; ++i)
+    if (_size > 0)
     {
-        if (_table[i] != nullptr)
+        std::queue<Node<K, V> *> q;
+        for (size_t i = 0; i < _capacity; ++i)
         {
-            std::cout << "---------- " << i << " ----------\n";
-            q.push(_table[i]);
-            size_t lv_cnt = 1;
-            while (!q.empty())
+            if (_table[i] != nullptr)
             {
-                Node<K, V> *node = q.front();
-                q.pop();
-                lv_cnt--;
-                if (node->_left != nullptr)
-                    q.push(node->_left);
-                if (node->_right != nullptr)
-                    q.push(node->_right);
-                if (func != nullptr)
-                    func(node->_key, node->_value);
-                else
-                    std::cout << *node << "\t";
-                if(lv_cnt == 0)
+                std::cout << "---------- " << i << " ----------\n";
+                q.push(_table[i]);
+                size_t lv_cnt = 1;
+                while (!q.empty())
                 {
-                    lv_cnt = q.size();
-                    std::cout << "\n";
+                    Node<K, V> *node = q.front();
+                    q.pop();
+                    lv_cnt--;
+                    if (node->_left != nullptr)
+                        q.push(node->_left);
+                    if (node->_right != nullptr)
+                        q.push(node->_right);
+                    if (func != nullptr)
+                        func(node->_key, node->_value);
+                    else
+                        std::cout << *node << "\t";
+                    if (lv_cnt == 0)
+                    {
+                        lv_cnt = q.size();
+                        std::cout << "\n";
+                    }
                 }
             }
         }
@@ -380,19 +433,20 @@ inline void HashMap<K, V>::traverse(typename IMap<K, V>::TraverseFunc func) cons
 template <typename K, typename V>
 inline void HashMap<K, V>::clear()
 {
-    if (_size == 0)
-        return;
-    _size = 0;
-    for (size_t i = 0; i < _capacity; ++i)
-        clear_recu(_table[i]);
+    if (_size != 0)
+    {
+        _size = 0;
+        for (size_t i = 0; i < _capacity; ++i)
+            clear_recu(_table[i]);
+    }
 }
 
 template <typename K, typename V>
 inline int HashMap<K, V>::get_hash(std::shared_ptr<K> key) const
 {
-    if (key == nullptr)
-        return 0;
-    return ((IHashable &)*key).hash_code();
+    if (key != nullptr)
+        return ((IHashable &)*key).hash_code();
+    return 0;
 }
 
 template <typename K, typename V>

@@ -21,6 +21,15 @@ int main(int argc, char const *argv[])
     map.add(make_shared<Person>(14, "Alice14"), make_shared<int>(42));
     cout << "size=" << map.size() << ", capacity=" << map.capacity() << "\n";
     map.traverse();
+    cout << "----------Test HashMap(const LinkedHashMap<K, V> &)----------\n";
+    LinkedHashMap<Person, int> map1 = LinkedHashMap<Person, int>(map);
+    cout << "size=" << map1.size() << ", capacity=" << map1.capacity() << "\n";
+    map1.traverse();
+    cout << "----------Test HashMap(LinkedHashMap<K, V> &&)----------\n";
+    LinkedHashMap<Person, int> map2 = LinkedHashMap<Person, int>(std::move(map1));
+    cout << "size=" << map2.size() << ", capacity=" << map2.capacity() << "\n";
+    map2.traverse();
+    cout << "----------Test traverse()----------\n";
     for (size_t i = 0; i < 10; ++i)
     {
         map.add(make_shared<Person>(i + 2, "Bob" + std::to_string(i + 2)), make_shared<int>(i + 2));
@@ -39,21 +48,32 @@ size=5, capacity=16
 <[12, Alice12]-12>
 <[13, Alice13]-13>
 <[14, Alice14]-14>
-delete 0xf96850[11, Alice11]
-delete 0xf96bb0[11, Alice11]
-delete 0xf96a10[13, Alice13]
-delete 0xf96830[13, Alice13]
+delete 0xd36850[11, Alice11]
+delete 0xd36bb0[11, Alice11]
+delete 0xd36a10[13, Alice13]
+delete 0xd36830[13, Alice13]
 size=3, capacity=16
 <[10, Alice10]-10>
 <[12, Alice12]-12>
 <[14, Alice14]-14>
-delete 0xf96770[10, Alice10]
-delete 0xf96930[12, Alice12]
-delete 0xf96af0[14, Alice14]
+delete 0xd36770[10, Alice10]
+delete 0xd36930[12, Alice12]
+delete 0xd36af0[14, Alice14]
 size=3, capacity=16
 <[10, Alice10]-30>
 <[12, Alice12]-36>
 <[14, Alice14]-42>
+----------Test HashMap(const LinkedHashMap<K, V> &)----------
+size=3, capacity=16
+<[14, Alice14]-42>
+<[10, Alice10]-30>
+<[12, Alice12]-36>
+----------Test HashMap(LinkedHashMap<K, V> &&)----------
+size=3, capacity=16
+<[14, Alice14]-42>
+<[10, Alice10]-30>
+<[12, Alice12]-36>
+----------Test traverse()----------
 size=23, capacity=32
 <[10, Alice10]-30>
 <[12, Alice12]-36>
@@ -78,27 +98,28 @@ size=23, capacity=32
 <[16, Jack16]-16>
 <[11, Bob11]-11>
 <[18, Jack18]-18>
-delete 0xf97d30[11, Bob11]
-delete 0xf96c10[3, Bob3]
-delete 0x25c2350[8, Jack8]
-delete 0xf968d0[14, Alice14]
-delete 0xf96ab0[0, Jack0]
-delete 0xf96d90[4, Bob4]
-delete 0x25c2410[5, Bob5]
-delete 0xf96cd0[2, Jack2]
-delete 0x25c2230[6, Bob6]
-delete 0x25c1f90[10, Jack10]
-delete 0x25c23b0[7, Bob7]
-delete 0xf96850[10, Alice10]
-delete 0x25c20b0[4, Jack4]
-delete 0x25c2050[8, Bob8]
-delete 0x25c1e10[12, Jack12]
-delete 0x25c1f30[9, Bob9]
-delete 0xf96750[12, Alice12]
-delete 0x25c21d0[6, Jack6]
-delete 0xf969f0[2, Bob2]
-delete 0xf971f0[14, Jack14]
-delete 0xf979d0[16, Jack16]
-delete 0xf97430[18, Jack18]
-delete 0xf97730[10, Bob10]
+
+delete 0xd37090[11, Bob11]
+delete 0xd36c90[3, Bob3]
+delete 0x2532110[8, Jack8]
+delete 0xd368d0[14, Alice14]
+delete 0xd36bb0[0, Jack0]
+delete 0x2532050[4, Bob4]
+delete 0x2531ed0[5, Bob5]
+delete 0x2531ca0[2, Jack2]
+delete 0x2531f90[6, Bob6]
+delete 0x2532290[10, Jack10]
+delete 0x2532170[7, Bob7]
+delete 0xd36850[10, Alice10]
+delete 0x2531e10[4, Jack4]
+delete 0x25323b0[8, Bob8]
+delete 0x2532470[12, Jack12]
+delete 0xd37b10[9, Bob9]
+delete 0xd36750[12, Alice12]
+delete 0x2531e70[6, Jack6]
+delete 0xd36930[2, Bob2]
+delete 0xd372d0[14, Jack14]
+delete 0xd37f30[16, Jack16]
+delete 0xd37a50[18, Jack18]
+delete 0xd37390[10, Bob10]
 */

@@ -15,8 +15,12 @@ class LinkedHashMap : public HashMap<K, V>
     struct LinkedNode : public NODE
     {
         LinkedNode<_K, _V> *_prev = nullptr, *_next = nullptr;
+        LinkedNode &operator=(const LinkedNode<_K, _V> &node);
+        LinkedNode &operator=(LinkedNode<_K, _V> &&node);
         LinkedNode(std::shared_ptr<_K> key, std::shared_ptr<_V> value, NODE *parent = nullptr)
             : NODE(key, value, parent, nullptr, nullptr) {}
+        LinkedNode(const LinkedNode<_K, _V> &node) { *this = node; }
+        LinkedNode(LinkedNode<_K, _V> &&node) { *this = std::move(node); }
         ~LinkedNode() = default;
     };
     LinkedNode<K, V> *_head = nullptr, *_tail = nullptr;
@@ -24,12 +28,40 @@ class LinkedHashMap : public HashMap<K, V>
     void after_remove_derived(NODE *willnode, NODE *rmvnode) override;
 
 public:
-    LinkedHashMap(typename HashMap<K, V>::Comparator comparator = nullptr) : HashMap<K, V>(comparator) { }
+    LinkedHashMap<K, V> &operator=(const LinkedHashMap<K, V> &map);
+    LinkedHashMap<K, V> &operator=(LinkedHashMap<K, V> &&map);
+    LinkedHashMap(typename HashMap<K, V>::Comparator comparator = nullptr) : HashMap<K, V>(comparator) {}
+    LinkedHashMap(const LinkedHashMap<K, V> &map) { *this = map; }
+    LinkedHashMap(LinkedHashMap<K, V> &&map) { *this = std::move(map); }
     ~LinkedHashMap() = default;
     bool contains_value(std::shared_ptr<V> value) const override;
     void traverse(typename HashMap<K, V>::TraverseFunc func = nullptr) const override;
     void clear() override;
 };
+
+template <typename K, typename V>
+template <typename _K, typename _V>
+LinkedHashMap<K, V>::LinkedNode<_K, _V> &LinkedHashMap<K, V>::LinkedNode<_K, _V>::operator=(const LinkedNode<_K, _V> &node)
+{
+    this->_key = node._key;
+    this->_value = node._value;
+    this->_parent = node._parent;
+    this->_left = node._left;
+    this->_right = node._right;
+    _prev = node._prev;
+    _next = node._next;
+    return *this;
+}
+
+template <typename K, typename V>
+template <typename _K, typename _V>
+LinkedHashMap<K, V>::LinkedNode<_K, _V> &LinkedHashMap<K, V>::LinkedNode<_K, _V>::operator=(LinkedNode<_K, _V> &&node)
+{
+    this->_key = nullptr;
+    this->_value = nullptr;
+    this = &node;
+    return *this;
+}
 
 template <typename K, typename V>
 inline LinkedHashMap<K, V>::LinkedNode<K, V> *LinkedHashMap<K, V>::create_node(std::shared_ptr<K> key, std::shared_ptr<V> value, NODE *parent)
@@ -87,6 +119,56 @@ inline void LinkedHashMap<K, V>::after_remove_derived(NODE *willnode, NODE *rmvn
     else
         next->_prev = prev;
     delete node2;
+}
+
+template <typename K, typename V>
+LinkedHashMap<K, V> &LinkedHashMap<K, V>::operator=(const LinkedHashMap<K, V> &map)
+{
+    clear();
+    if (map._size > 0)
+    {
+        this->_capacity = map._capacity;
+        this->_table = new NODE *[this->_capacity];
+        this->_comparator = map._comparator;
+        for (size_t i = 0; i < this->_capacity; ++i)
+            this->_table[i] = nullptr;
+        std::queue<NODE *> q;
+        for (size_t i = 0; i < map._capacity; ++i)
+        {
+            if (map._table[i] != nullptr)
+            {
+                q.push(map._table[i]);
+                while (!q.empty())
+                {
+                    NODE *node = q.front();
+                    this->add(node->_key, node->_value);
+                    q.pop();
+                    if (node->_left != nullptr)
+                        q.push(node->_left);
+                    if (node->_right != nullptr)
+                        q.push(node->_right);
+                }
+            }
+        }
+    }
+    return *this;
+}
+
+template <typename K, typename V>
+LinkedHashMap<K, V> &LinkedHashMap<K, V>::operator=(LinkedHashMap<K, V> &&map)
+{
+    clear();
+    this->_size = map._size;
+    this->_capacity = map._capacity;
+    this->_comparator = map._comparator;
+    this->_table = map._table;
+    _head = map._head;
+    _tail = map._tail;
+    map._size = 0;
+    map._comparator = nullptr;
+    map._table = nullptr;
+    map._head = map._tail = nullptr;
+    return *this;
 }
 
 template <typename K, typename V>
