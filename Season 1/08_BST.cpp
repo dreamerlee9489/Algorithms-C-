@@ -54,7 +54,6 @@ int main()
 }
 
 /*
-输出：
 ----------Test operator<<()----------
 [17, Alice17]
 [14, Alice14]   [19, Alice19]

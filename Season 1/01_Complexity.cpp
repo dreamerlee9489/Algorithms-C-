@@ -51,7 +51,6 @@ inline int fib2(int n)
 }
 
 /*
-输出：
 time1 = 13.218s
 time2 = 0.002s
 */

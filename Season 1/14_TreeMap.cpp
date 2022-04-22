@@ -16,7 +16,6 @@ int main(int argc, char const *argv[])
 }
 
 /*
-输出：
 <10002-[16, Alice16]>
 <10005-[18, Alice18]>
 <10006-[12, Alice12]>

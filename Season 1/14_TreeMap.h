@@ -32,11 +32,9 @@ class TreeMap : public IMap<K, V>
         bool is_right() const { return _parent != nullptr && this == _parent->_right; }
         Node<_K, _V> *get_sibling() const;
     };
-    using TraverseFunc = bool (*)(std::shared_ptr<K> key, std::shared_ptr<V> value);
-    using Comparator = int (*)(std::shared_ptr<K> a, std::shared_ptr<K> b);
     size_t _size = 0;
     Node<K, V> *_root = nullptr;
-    Comparator _comparator = nullptr;
+    typename IMap<K, V>::Comparator _comparator = nullptr;
     void not_null_check(std::shared_ptr<K> key) const;
     Node<K, V> *get_node(std::shared_ptr<K> key) const;
     Node<K, V> *get_predecessor(Node<K, V> *node) const;
@@ -50,13 +48,13 @@ class TreeMap : public IMap<K, V>
     bool color_of(Node<K, V> *node) const { return node == nullptr ? BLACK : node->_color; }
     bool is_black(Node<K, V> *node) const { return color_of(node) == BLACK; }
     bool is_red(Node<K, V> *node) const { return color_of(node) == RED; }
-    void inorder_traverse(Node<K, V> *node, TraverseFunc func = nullptr) const;
+    void inorder_traverse(Node<K, V> *node, typename IMap<K, V>::TraverseFunc func = nullptr) const;
     void clear_recu(Node<K, V> *node);
 
 public:
     TreeMap<K, V> &operator=(const TreeMap<K, V> &map);
     TreeMap<K, V> &operator=(TreeMap<K, V> &&map);
-    TreeMap(Comparator comparator = nullptr) { _comparator = comparator; }
+    TreeMap(typename IMap<K, V>::Comparator comparator = nullptr) { _comparator = comparator; }
     TreeMap(const TreeMap<K, V> &map) { *this = map; }
     TreeMap(TreeMap<K, V> &&map) { *this = std::move(map); }
     ~TreeMap() { clear_recu(_root); }
@@ -67,7 +65,7 @@ public:
     std::shared_ptr<V> get_value(std::shared_ptr<K> key) const override;
     std::shared_ptr<V> add(std::shared_ptr<K> key, std::shared_ptr<V> value) override;
     std::shared_ptr<V> remove(std::shared_ptr<K> key) override;
-    void traverse(TraverseFunc func = nullptr) const { inorder_traverse(_root, func); }
+    void traverse(typename IMap<K, V>::TraverseFunc func = nullptr) const { inorder_traverse(_root, func); }
     void clear() override;
 };
 
@@ -536,7 +534,7 @@ inline std::shared_ptr<V> TreeMap<K, V>::remove(std::shared_ptr<K> key)
 }
 
 template <typename K, typename V>
-inline void TreeMap<K, V>::inorder_traverse(Node<K, V> *node, TraverseFunc func) const
+inline void TreeMap<K, V>::inorder_traverse(Node<K, V> *node, typename IMap<K, V>::TraverseFunc func) const
 {
     if (node != nullptr)
     {

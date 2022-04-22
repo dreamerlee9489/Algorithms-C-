@@ -10,19 +10,17 @@
 template <typename K>
 class LinkedHashSet : public ISet<K>
 {
-    using Comparator = int (*)(std::shared_ptr<K> a, std::shared_ptr<K> b);
-    using TraverseFunc = bool (*)(std::shared_ptr<K> key, std::shared_ptr<bool> value);
     LinkedHashMap<K, bool> *map = nullptr;
 
 public:
-    LinkedHashSet(Comparator comparator = nullptr) { map = new LinkedHashMap<K, bool>(comparator); }
+    LinkedHashSet(typename ISet<K>::Comparator comparator = nullptr) { map = new LinkedHashMap<K, bool>(comparator); }
     ~LinkedHashSet() { delete map; }
     size_t size() override { return map->size(); }
     bool is_empty() override { return map->is_empty(); }
     bool contains(std::shared_ptr<K> data) override { return map->contains_key(data); }
     void add(std::shared_ptr<K> data) override { map->add(data, std::make_shared<bool>(true)); }
     void remove(std::shared_ptr<K> data) override { map->remove(data); }
-    void traverse(TraverseFunc func = nullptr) { map->traverse(func); }
+    void traverse(typename ISet<K>::TraverseFunc func = nullptr) { map->traverse(func); }
     void clear() override { map->clear(); }
 };
 

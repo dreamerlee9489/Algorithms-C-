@@ -15,3 +15,4 @@
 >>映射(TreeMap)  
 >>哈希映射(HashMap)  
 >>有序哈希映射(LinkedHashMap)  
+>>二叉堆(BinaryHeap)  

@@ -24,7 +24,6 @@ int main()
 }
 
 /*
-输出:
 ----------Test operator<<()----------
 [10, Alice0]
 [11, Alice1]

@@ -21,7 +21,6 @@ int main(int argc, char const *argv[])
 }
 
 /*
-输出：
 delete 0xe26870[10, Alice10]
 delete 0xe26a30[11, Alice11]
 lamdba: [12, Alice12]

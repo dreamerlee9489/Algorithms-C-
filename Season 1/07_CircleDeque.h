@@ -151,13 +151,14 @@ inline void CircleDeque<T>::ensure_capacity()
 {
     if (_size >= _capacity)
     {
+        std::shared_ptr<T> *old = _array;
         size_t new_cap = _capacity << 1;
-        auto temp = new std::shared_ptr<T>[new_cap];
+        _array = new std::shared_ptr<T>[new_cap];
         for (size_t i = 0; i < _size; ++i)
-            temp[i] = _array[true_index(i)];
-        _array = temp;
+            _array[i] = old[true_index(i)];
         _front = 0;
         _capacity = new_cap;
+        delete[] old;
     }
 }
 

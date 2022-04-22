@@ -36,7 +36,6 @@ int main()
 }
 
 /*
-输出：
 ----------Test add()----------
 height: 5
 [70, Alice09] BLACK

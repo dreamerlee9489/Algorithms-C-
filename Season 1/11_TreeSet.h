@@ -10,12 +10,11 @@
 template <typename K>
 class TreeSet : public ISet<K>
 {
-    using Comparator = int (*)(std::shared_ptr<K> a, std::shared_ptr<K> b);
     using TraverseFunc = bool (*)(std::shared_ptr<K> data);
     RBTree<K> *tree = nullptr;
 
 public:
-    TreeSet(Comparator comparator = nullptr) { tree = new RBTree<K>(comparator); }
+    TreeSet(typename ISet<K>::Comparator comparator = nullptr) { tree = new RBTree<K>(comparator); }
     ~TreeSet() { delete tree; }
     size_t size() override { return tree->size(); }
     bool is_empty() override { return tree->is_empty(); }

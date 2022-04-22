@@ -26,7 +26,6 @@ int main(int argc, char const *argv[])
 }
 
 /*
-输出:
 ----------Test operator<<()----------
 [15, Alice15]
 [14, Alice14]

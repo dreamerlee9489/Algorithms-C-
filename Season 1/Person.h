@@ -16,12 +16,12 @@ class Person : public IString, public IHashable, public IComparable
     friend bool operator>(const Person &lhs, const Person &rhs) { return lhs._age > rhs._age; }
 
 public:
-    size_t _age = 0;
+    int _age = 0;
     std::string _name = "name";
     Person &operator=(const Person &rhs);
     Person &operator=(Person &&rhs) noexcept;
     Person() = default;
-    Person(size_t age, std::string name) : _age(age), _name(name) {}
+    Person(int age, std::string name = "unnamed") : _age(age), _name(name) {}
     Person(const Person &p) { *this = p; }
     Person(Person &&p) noexcept { *this = std::move(p); }
     ~Person() { std::cout << "delete " << this << to_string() << "\n"; }
@@ -48,11 +48,7 @@ inline Person &Person::operator=(Person &&rhs) noexcept
 inline int Person::compare_to(void *data) const
 {
     Person *other = (Person *)data;
-    if(_age < other->_age)
-        return -1;
-    else if(_age > other->_age)
-        return 1;
-    return 0;
+    return _age - other->_age;
 }
 
 inline int Person::hash_code() const

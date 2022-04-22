@@ -32,7 +32,6 @@ int main(int argc, char const *argv[])
 }
 
 /*
-输出：
 size=5, capacity=16
 <[10, Alice10]-10>
 <[11, Alice11]-11>

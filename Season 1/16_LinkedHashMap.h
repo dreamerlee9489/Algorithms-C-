@@ -24,7 +24,7 @@ class LinkedHashMap : public HashMap<K, V>
     void derived_after_remove(NODE *willnode, NODE *rmvnode) override;
 
 public:
-    LinkedHashMap(typename HashMap<K, V>::Comparator comparator = nullptr) {}
+    LinkedHashMap(typename HashMap<K, V>::Comparator comparator = nullptr) : HashMap<K, V>(comparator) { }
     ~LinkedHashMap() = default;
     bool contains_value(std::shared_ptr<V> value) const override;
     void traverse(typename HashMap<K, V>::TraverseFunc func = nullptr) const override;

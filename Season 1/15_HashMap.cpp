@@ -29,14 +29,13 @@ int main(int argc, char const *argv[])
     cout << "size=" << map.size() << ", capacity=" << map.capacity() << "\n";
     map.traverse([](shared_ptr<Person> key, shared_ptr<int> value)
     {
-        cout << "lamdba: " << *key << "-" << *value << "\n";
+        cout << "lamdba<" << *key << "-" << *value << ">\t";
         return false;
     });
     return 0;
 }
 
 /*
-输出：
 size=5, capacity=16
 ---------- 1 ----------
 <[14, Alice14]-14>
@@ -48,8 +47,10 @@ size=5, capacity=16
 <[12, Alice12]-12>
 ---------- 15 ----------
 <[13, Alice13]-13>
-delete 0xe96c00[11, Alice11]
-delete 0xe96c00[13, Alice13]
+delete 0xf16830[11, Alice11]
+delete 0xf16b50[11, Alice11]
+delete 0xf169d0[13, Alice13]
+delete 0xf16810[13, Alice13]
 size=3, capacity=16
 ---------- 1 ----------
 <[14, Alice14]-14>
@@ -57,9 +58,9 @@ size=3, capacity=16
 <[10, Alice10]-10>
 ---------- 13 ----------
 <[12, Alice12]-12>
-delete 0xe96810[10, Alice10]
-delete 0xe969b0[12, Alice12]
-delete 0xe96b50[14, Alice14]
+delete 0xf16760[10, Alice10]
+delete 0xf16900[12, Alice12]
+delete 0xf16aa0[14, Alice14]
 size=3, capacity=16
 ---------- 1 ----------
 <[14, Alice14]-42>
@@ -69,64 +70,61 @@ size=3, capacity=16
 <[12, Alice12]-36>
 size=23, capacity=32
 ---------- 0 ----------
-<[11, Bob11]-11>
+lamdba<[11, Bob11]-11>
 ---------- 1 ----------
-<[0, Jack0]-0>
-<[3, Bob3]-3>
-<[14, Alice14]-42>
-<[8, Jack8]-8>
+lamdba<[0, Jack0]-0>
+lamdba<[3, Bob3]-3>     lamdba<[14, Alice14]-42>
+lamdba<[8, Jack8]-8>
 ---------- 3 ----------
-<[4, Bob4]-4>
+lamdba<[4, Bob4]-4>
 ---------- 5 ----------
-<[2, Jack2]-2>
-<[5, Bob5]-5>
+lamdba<[2, Jack2]-2>
+lamdba<[5, Bob5]-5>
 ---------- 7 ----------
-<[6, Bob6]-6>
+lamdba<[6, Bob6]-6>
 ---------- 8 ----------
-<[10, Jack10]-10>
+lamdba<[10, Jack10]-10>
 ---------- 9 ----------
-<[4, Jack4]-4>
-<[7, Bob7]-7>
-<[10, Alice10]-30>
+lamdba<[4, Jack4]-4>
+lamdba<[7, Bob7]-7>     lamdba<[10, Alice10]-30>
 ---------- 11 ----------
-<[8, Bob8]-8>
+lamdba<[8, Bob8]-8>
 ---------- 12 ----------
-<[12, Jack12]-12>
+lamdba<[12, Jack12]-12>
 ---------- 13 ----------
-<[6, Jack6]-6>
-<[9, Bob9]-9>
-<[12, Alice12]-36>
+lamdba<[6, Jack6]-6>
+lamdba<[9, Bob9]-9>     lamdba<[12, Alice12]-36>
 ---------- 15 ----------
-<[2, Bob2]-2>
+lamdba<[2, Bob2]-2>
 ---------- 16 ----------
-<[14, Jack14]-14>
+lamdba<[14, Jack14]-14>
 ---------- 20 ----------
-<[16, Jack16]-16>
+lamdba<[16, Jack16]-16>
 ---------- 24 ----------
-<[18, Jack18]-18>
+lamdba<[18, Jack18]-18>
 ---------- 30 ----------
-<[10, Bob10]-10>
-delete 0xe978e0[11, Bob11]
-delete 0xe96dc0[3, Bob3]
-delete 0xd527c0[8, Jack8]
-delete 0xe969b0[14, Alice14]
-delete 0xe96cf0[0, Jack0]
-delete 0xe96f60[4, Bob4]
-delete 0xd525b0[5, Bob5]
-delete 0xe96e90[2, Jack2]
-delete 0xd52710[6, Bob6]
-delete 0xe96760[10, Jack10]
-delete 0xd52870[7, Bob7]
-delete 0xe96c20[10, Alice10]
-delete 0xd52500[4, Jack4]
-delete 0xe97940[8, Bob8]
-delete 0xe979a0[12, Jack12]
-delete 0xe97a00[9, Bob9]
-delete 0xe96810[12, Alice12]
-delete 0xd52660[6, Jack6]
-delete 0xe96b50[2, Bob2]
-delete 0xe97e80[14, Jack14]
-delete 0xe97ac0[16, Jack16]
-delete 0xe97e20[18, Jack18]
-delete 0xe97a60[10, Bob10]
+lamdba<[10, Bob10]-10>
+delete 0xf17ea0[11, Bob11]
+delete 0xf16ba0[3, Bob3]
+delete 0xe025b0[8, Jack8]
+delete 0xf168b0[14, Alice14]
+delete 0xf16a60[0, Jack0]
+delete 0xf16d20[4, Bob4]
+delete 0xf16ec0[5, Bob5]
+delete 0xf16c50[2, Jack2]
+delete 0xe02500[6, Bob6]
+delete 0xe027d0[10, Jack10]
+delete 0xe02660[7, Bob7]
+delete 0xf16830[10, Alice10]
+delete 0xf16df0[4, Jack4]
+delete 0xe02880[8, Bob8]
+delete 0xe02930[12, Jack12]
+delete 0xf17c60[9, Bob9]
+delete 0xf16740[12, Alice12]
+delete 0xf16f70[6, Jack6]
+delete 0xf169b0[2, Bob2]
+delete 0xf17ba0[14, Jack14]
+delete 0xf17f00[16, Jack16]
+delete 0xf17960[18, Jack18]
+delete 0xf17cc0[10, Bob10]
 */

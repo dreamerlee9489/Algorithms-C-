@@ -73,7 +73,6 @@ int main()
 }
 
 /*
-输出:
 ----------Test add()----------
 size=8, capacity=8
 [20, Alice0]
@@ -85,7 +84,7 @@ size=8, capacity=8
 [26, Alice6]
 [27, Alice7]
 ----------Test insert()----------
-delete 0xdd6bd0[35, Bob1]
+delete 0x1f6700[35, Bob1]
 index = 15 out of range for add: [0, 9].
 size=9, capacity=16
 [20, Alice0]
@@ -98,11 +97,11 @@ size=9, capacity=16
 [26, Alice6]
 [27, Alice7]
 ----------Test contains() & index_of()----------
-delete 0xdd6d00[30, Bob0]
+delete 0x1f6700[30, Bob0]
 Bob0 at index=5
-delete 0xdd6d00[30, Bob0]
+delete 0x1f6700[30, Bob0]
 ----------Test set()----------
-delete 0xdd6a70[30, Bob0]
+delete 0x1f6a90[30, Bob0]
 size=9, capacity=16
 [20, Alice0]
 [21, Alice1]
@@ -115,7 +114,7 @@ size=9, capacity=16
 [27, Alice7]
 ----------Test remove()----------
 Remove: [25, Jack]
-delete 0xdd6d00[25, Jack]
+delete 0x1f6700[25, Jack]
 Remove: index = -1 out of range: [0, 7].
 size=8, capacity=16
 [20, Alice0]
@@ -127,22 +126,30 @@ size=8, capacity=16
 [26, Alice6]
 [27, Alice7]
 ----------Test clear()----------
+delete 0x1f6790[20, Alice0]
+delete 0x1f67f0[21, Alice1]
+delete 0x1f6850[22, Alice2]
+delete 0x1f68b0[23, Alice3]
+delete 0x1f6910[24, Alice4]
+delete 0x1f6970[25, Alice5]
+delete 0x1f69d0[26, Alice6]
+delete 0x1f6a30[27, Alice7]
 size=0, capacity=16
 ----------Test operator=(const ArrayList<T> &)----------
-delete 0xdd6f90[20, test20]
-delete 0x2591ca0[21, test21]
-delete 0x2591cf0[22, test22]
+delete 0x1f6790[20, test20]
+delete 0x1f67f0[21, test21]
+delete 0x1f6850[22, test22]
 [10, test10]
 [11, test11]
 [12, test12]
 ----------Test operator=(ArrayList<T> &&)----------
-delete 0x2591d30[30, test30]
-delete 0x2591d80[31, test31]
-delete 0x2591dd0[32, test32]
+delete 0x1f6860[30, test30]
+delete 0x1f68c0[31, test31]
+delete 0x1f6920[32, test32]
 [10, test10]
 [11, test11]
 [12, test12]
-delete 0xdd6bd0[10, test10]
-delete 0xdd6c20[11, test11]
-delete 0xdd6c70[12, test12]
+delete 0x1f6ed0[12, test12]
+delete 0x1f6e70[11, test11]
+delete 0x1f6c00[10, test10]
 */
