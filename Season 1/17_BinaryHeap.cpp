@@ -4,11 +4,19 @@ using namespace std;
 
 void test1();
 void test2();
+/**
+ * @brief 找出数组中最大的前k个数
+ * @param array
+ * @param k
+ */
+void top_k(int array[], size_t k);
 
 int main(int argc, char const *argv[])
 {
-    test1();
+    // test1();
     // test2();
+    int array[] = {36, 15, 74, 44, 98, 99, 71, 12, 94, 32, 80, 22, 79, 38, 17, 6, 1, 28, 84, 73, 96, 62, 16, 24, 34};
+    top_k(array, 5);
     return 0;
 }
 
@@ -46,25 +54,41 @@ void test2()
     shared_ptr<Person> *array = new shared_ptr<Person>[15]
     {
         make_shared<Person>(88),
-        make_shared<Person>(44),
-        make_shared<Person>(53),
-        make_shared<Person>(41),
-        make_shared<Person>(16),
-        make_shared<Person>(6),
-        make_shared<Person>(70),
-        make_shared<Person>(18),
-        make_shared<Person>(85),
-        make_shared<Person>(98),
-        make_shared<Person>(81),
-        make_shared<Person>(23),
-        make_shared<Person>(36),
-        make_shared<Person>(43),
-        make_shared<Person>(37)
+            make_shared<Person>(44),
+            make_shared<Person>(53),
+            make_shared<Person>(41),
+            make_shared<Person>(16),
+            make_shared<Person>(6),
+            make_shared<Person>(70),
+            make_shared<Person>(18),
+            make_shared<Person>(85),
+            make_shared<Person>(98),
+            make_shared<Person>(81),
+            make_shared<Person>(23),
+            make_shared<Person>(36),
+            make_shared<Person>(43),
+            make_shared<Person>(37)
     };
-    BinaryHeap<Person> heap = BinaryHeap<Person>(array, 15, [](shared_ptr<Person> a, shared_ptr<Person> b) { return (*b)._age - (*a)._age; });
+    BinaryHeap<Person> heap = BinaryHeap<Person>([](shared_ptr<Person> a, shared_ptr<Person> b)
+                                                 { return (*b)._age - (*a)._age; },
+                                                 array, 15);
     cout << "size=" << heap.size() << ", capacity=" << heap.capacity() << "\n";
     heap.traverse();
     delete[] array;
+}
+
+void top_k(int array[], size_t k)
+{
+    BinaryHeap<int> heap = BinaryHeap<int>([](shared_ptr<int> a, shared_ptr<int> b)
+                                           { return *b - *a; });
+    for (size_t i = 0; i < 25; ++i)
+    {
+        if (heap.size() < k)
+            heap.add(make_shared<int>(array[i]));
+        else if (array[i] > *heap.get())
+            heap.replace(make_shared<int>(array[i]));
+    }
+    heap.traverse();
 }
 
 /*

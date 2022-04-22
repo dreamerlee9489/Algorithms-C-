@@ -20,7 +20,7 @@ class BinaryHeap : public IHeap<T>
     void heapify();
 
 public:
-    BinaryHeap(std::shared_ptr<T> *array = nullptr, size_t size = 0, typename IHeap<T>::Comparator comparator = nullptr);
+    BinaryHeap(typename IHeap<T>::Comparator comparator = nullptr, std::shared_ptr<T> *array = nullptr, size_t size = 0);
     ~BinaryHeap() { delete[] _array; }
     size_t capacity() const { return _capacity; }
     void add(std::shared_ptr<T> data) override;
@@ -32,7 +32,7 @@ public:
 };
 
 template <typename T>
-inline BinaryHeap<T>::BinaryHeap(std::shared_ptr<T> *array, size_t size, typename IHeap<T>::Comparator comparator) : IHeap<T>(comparator)
+inline BinaryHeap<T>::BinaryHeap(typename IHeap<T>::Comparator comparator, std::shared_ptr<T> *array, size_t size) : IHeap<T>(comparator)
 {
     if (array == nullptr || size == 0)
         _array = new std::shared_ptr<T>[DEFAULT_CAPACITY];
