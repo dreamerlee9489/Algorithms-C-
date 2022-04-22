@@ -24,6 +24,7 @@ int main()
     cout << "----------Test pop()----------\n";
     while (!deque.is_empty())
         cout << *deque.pop() << "\n";
+    std::getchar();
     return 0;
 }
 

@@ -13,6 +13,7 @@ int main(int argc, char const *argv[])
     q.push(make_shared<Person>(20));
     while (!q.is_empty())
         cout << *q.pop() << "\n";
+    std::getchar();
     return 0;
 }
 

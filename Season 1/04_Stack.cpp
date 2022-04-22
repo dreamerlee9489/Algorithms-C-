@@ -20,6 +20,7 @@ int main()
     while (!stack.is_empty())
         cout << *stack.pop() << "\n";
     cout << "size=" << stack.size() << endl;
+    std::getchar();
     return 0;
 }
 

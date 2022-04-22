@@ -17,6 +17,7 @@ int main(int argc, char const *argv[])
     // test2();
     int array[] = {36, 15, 74, 44, 98, 99, 71, 12, 94, 32, 80, 22, 79, 38, 17, 6, 1, 28, 84, 73, 96, 62, 16, 24, 34};
     top_k(array, 5);
+    std::getchar();
     return 0;
 }
 

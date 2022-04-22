@@ -59,7 +59,7 @@ protected:
     bool is_red(Node<K, V> *node) const { return color_of(node) == RED; }
     void clear_recu(Node<K, V> *root);
     virtual Node<K, V> *create_node(std::shared_ptr<K> key, std::shared_ptr<V> value, Node<K, V> *parent) { return new Node<K, V>(key, value, parent); }
-    virtual void after_remove_derived(Node<K, V> *willnode, Node<K, V> *rmvnode) { delete rmvnode; }
+    virtual void derived_after_remove(Node<K, V> *willnode, Node<K, V> *rmvnode) { delete rmvnode; }
 
 public:
     HashMap(typename IMap<K, V>::Comparator comparator = nullptr);
@@ -335,7 +335,7 @@ inline std::shared_ptr<V> HashMap<K, V>::remove(std::shared_ptr<K> key)
         {
             _table[index] = nullptr;
         }
-        this->after_remove_derived(willnode, node);
+        this->derived_after_remove(willnode, node);
         return old;
     }
     return nullptr;

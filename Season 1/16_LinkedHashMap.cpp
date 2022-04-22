@@ -28,6 +28,7 @@ int main(int argc, char const *argv[])
     }
     cout << "size=" << map.size() << ", capacity=" << map.capacity() << "\n";
     map.traverse();
+    std::getchar();
     return 0;
 }
 

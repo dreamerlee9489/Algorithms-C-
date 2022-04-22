@@ -32,6 +32,7 @@ int main(int argc, char const *argv[])
         cout << "lamdba<" << *key << "-" << *value << ">\t";
         return false;
     });
+    std::getchar();
     return 0;
 }
 

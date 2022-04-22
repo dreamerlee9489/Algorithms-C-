@@ -69,6 +69,7 @@ int main()
     list3->add(make_shared<Person>(32, "test32"));
     *list3 = move(*list1);
     cout << *list3;
+    std::getchar();
     return 0;
 }
 

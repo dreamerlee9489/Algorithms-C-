@@ -20,6 +20,7 @@ int main()
     while (!queue.is_empty())
         cout << *queue.pop() << "\n";
     cout << "size=" << queue.size() << endl;
+    std::getchar();
     return 0;
 }
 

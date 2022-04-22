@@ -12,6 +12,7 @@ int main(int argc, char const *argv[])
     map.add(make_shared<int>(10002), make_shared<Person>(16, "Alice16"));
     map.add(make_shared<int>(10005), make_shared<Person>(18, "Alice18"));
     map.traverse();
+    std::getchar();
     return 0;
 }
 

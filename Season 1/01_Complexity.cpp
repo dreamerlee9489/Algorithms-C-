@@ -26,6 +26,7 @@ int main()
     fib2(48);
     end2 = clock();
     cout << "time2 = " << double(end2 - end1) / CLOCKS_PER_SEC << "s" << endl;
+    std::getchar();
     return 0;
 }
 
