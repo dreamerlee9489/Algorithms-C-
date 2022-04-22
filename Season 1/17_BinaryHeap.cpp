@@ -54,20 +54,20 @@ void test2()
     shared_ptr<Person> *array = new shared_ptr<Person>[15]
     {
         make_shared<Person>(88),
-            make_shared<Person>(44),
-            make_shared<Person>(53),
-            make_shared<Person>(41),
-            make_shared<Person>(16),
-            make_shared<Person>(6),
-            make_shared<Person>(70),
-            make_shared<Person>(18),
-            make_shared<Person>(85),
-            make_shared<Person>(98),
-            make_shared<Person>(81),
-            make_shared<Person>(23),
-            make_shared<Person>(36),
-            make_shared<Person>(43),
-            make_shared<Person>(37)
+        make_shared<Person>(44),
+        make_shared<Person>(53),
+        make_shared<Person>(41),
+        make_shared<Person>(16),
+        make_shared<Person>(6),
+        make_shared<Person>(70),
+        make_shared<Person>(18),
+        make_shared<Person>(85),
+        make_shared<Person>(98),
+        make_shared<Person>(81),
+        make_shared<Person>(23),
+        make_shared<Person>(36),
+        make_shared<Person>(43),
+        make_shared<Person>(37)
     };
     BinaryHeap<Person> heap = BinaryHeap<Person>([](shared_ptr<Person> a, shared_ptr<Person> b)
                                                  { return (*b)._age - (*a)._age; },
@@ -124,7 +124,6 @@ delete 0xdf67b0[44, unnamed]
 delete 0xdf6990[70, unnamed]
 delete 0xdf6da0[75, unnamed]
 delete 0xdf6bc0[81, unnamed]
-
 test2():
 size=15, capacity=15
 [6, unnamed]
@@ -146,4 +145,8 @@ delete 0x1006a60[18, unnamed]
 delete 0x1006be0[23, unnamed]
 delete 0x1006940[16, unnamed]
 delete 0x10069a0[6, unnamed]
+top_k():
+84
+94      96
+99      98
 */
