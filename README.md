@@ -16,3 +16,4 @@
 >>哈希映射(HashMap)  
 >>有序哈希映射(LinkedHashMap)  
 >>二叉堆(BinaryHeap)  
+>>优先级队列(PriorityQueue)  

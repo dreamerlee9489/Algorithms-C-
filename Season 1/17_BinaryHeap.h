@@ -138,14 +138,14 @@ template <typename T>
 inline void BinaryHeap<T>::heap_empty_check() const
 {
     if (this->_size == 0)
-        throw std::out_of_range("Heap is empty.");
+        throw std::out_of_range("heap is empty.");
 }
 
 template <typename T>
 inline void BinaryHeap<T>::not_null_check(std::shared_ptr<T> data) const
 {
     if (data == nullptr)
-        throw std::invalid_argument("Data must be not null.");
+        throw std::invalid_argument("data must be not null.");
 }
 
 template <typename T>

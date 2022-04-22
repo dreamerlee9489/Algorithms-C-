@@ -21,7 +21,7 @@ class LinkedHashMap : public HashMap<K, V>
     };
     LinkedNode<K, V> *_head = nullptr, *_tail = nullptr;
     LinkedNode<K, V> *create_node(std::shared_ptr<K> key, std::shared_ptr<V> value, NODE *parent) override;
-    void derived_after_remove(NODE *willnode, NODE *rmvnode) override;
+    void after_remove_derived(NODE *willnode, NODE *rmvnode) override;
 
 public:
     LinkedHashMap(typename HashMap<K, V>::Comparator comparator = nullptr) : HashMap<K, V>(comparator) { }
@@ -47,7 +47,7 @@ inline LinkedHashMap<K, V>::LinkedNode<K, V> *LinkedHashMap<K, V>::create_node(s
 }
 
 template <typename K, typename V>
-inline void LinkedHashMap<K, V>::derived_after_remove(NODE *willnode, NODE *rmvnode)
+inline void LinkedHashMap<K, V>::after_remove_derived(NODE *willnode, NODE *rmvnode)
 {
     LinkedNode<K, V> *node1 = (LinkedNode<K, V> *)willnode;
     LinkedNode<K, V> *node2 = (LinkedNode<K, V> *)rmvnode;
