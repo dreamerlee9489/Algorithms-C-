@@ -1,7 +1,7 @@
 #ifndef HASH_MAP_H
 #define HASH_MAP_H
 #include "./14_IMap.h"
-#include "./IHashable.h"
+#include "./Person.h"
 /**
  * @brief 哈希映射
  * @date 2022-04-20
@@ -19,7 +19,7 @@ protected:
     struct Node
     {
         friend std::ostream &operator<<(std::ostream &os, const Node &node) { return os << "<" << *node._key << "-" << *node._value << ">"; }
-        int _hash = 0;
+        size_t _hash = 0;
         bool _color = RED;
         std::shared_ptr<_K> _key = nullptr;
         std::shared_ptr<_V> _value = nullptr;
@@ -27,7 +27,7 @@ protected:
         Node<_K, _V> &operator=(const Node<_K, _V> &node);
         Node<_K, _V> &operator=(Node<_K, _V> &&node) noexcept;
         Node(std::shared_ptr<_K> key, std::shared_ptr<_V> value, Node<_K, _V> *parent = nullptr, Node<_K, _V> *left = nullptr, Node<_K, _V> *right = nullptr)
-            : _key(key), _value(value), _parent(parent), _left(left), _right(right) { _hash = _key == nullptr ? 0 : ((IHashable &)*_key).hash_code(); }
+            : _key(key), _value(value), _parent(parent), _left(left), _right(right) { _hash = _key == nullptr ? 0 : std::hash<K>()(*key); }
         Node(const Node<_K, _V> &node) { *this = node; }
         Node(Node<_K, _V> &&node) noexcept { *this = std::move(node); }
         virtual ~Node();
@@ -382,7 +382,7 @@ inline void HashMap<K, V>::traverse(typename IMap<K, V>::TraverseFunc func) cons
 template <typename K, typename V>
 inline void HashMap<K, V>::clear()
 {
-    if (_size != 0)
+    if (_size > 0)
     {
         _size = 0;
         for (size_t i = 0; i < _capacity; ++i)
@@ -446,7 +446,7 @@ template <typename K, typename V>
 inline int HashMap<K, V>::get_hash(std::shared_ptr<K> key) const
 {
     if (key != nullptr)
-        return ((IHashable &)*key).hash_code();
+        return std::hash<K>()(*key);
     return 0;
 }
 

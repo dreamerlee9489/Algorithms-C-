@@ -33,7 +33,7 @@ public:
 };
 
 template <typename T>
-int IHeap<T>::compare(std::shared_ptr<T> a, std::shared_ptr<T> b)
+inline int IHeap<T>::compare(std::shared_ptr<T> a, std::shared_ptr<T> b)
 {
     if (_comparator != nullptr)
         return _comparator(a, b);

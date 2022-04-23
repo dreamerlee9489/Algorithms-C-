@@ -8,13 +8,13 @@ int main(int argc, char const *argv[])
     Person *p2 = new Person(16, "alice16");
     shared_ptr<Person> *array = new shared_ptr<Person>[8];
 
-    if (typeid(p1) == typeid(Person))
+    if (typeid(*p1) == typeid(Person))
         cout << "==Person\n";
-    if (typeid(p1) == typeid(IHashable))
+    if (typeid(*p1) == typeid(IHashable))
         cout << "==IHashable\n";
 
-    for(size_t i = 0; i < 8; ++i)
-        cout << array[i].get() << "\n";
+    char ch = 'a';
+    cout << hash<char>()(ch) << "\n";
 
     return 0;
 }

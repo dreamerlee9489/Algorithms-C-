@@ -36,7 +36,12 @@ public:
     ~LinkedHashMap() = default;
     bool contains_value(std::shared_ptr<V> value) const override;
     void traverse(typename HashMap<K, V>::TraverseFunc func = nullptr) const override;
-    void clear() override;
+    void clear() override
+    {
+        HashMap<K, V>::clear();
+        _head = nullptr;
+        _tail = nullptr;
+    }
 };
 
 template <typename K, typename V>
@@ -186,14 +191,6 @@ inline void LinkedHashMap<K, V>::traverse(typename HashMap<K, V>::TraverseFunc f
             std::cout << *node << "\n";
         node = node->_next;
     }
-}
-
-template <typename K, typename V>
-inline void LinkedHashMap<K, V>::clear()
-{
-    HashMap<K, V>::clear();
-    _head = nullptr;
-    _tail = nullptr;
 }
 
 #endif /* LINKED_HASH_MAP_H */

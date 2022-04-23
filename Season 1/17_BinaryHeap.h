@@ -12,12 +12,24 @@ class BinaryHeap : public IHeap<T>
     const size_t DEFAULT_CAPACITY = 8;
     size_t _capacity = 0;
     std::shared_ptr<T> *_array = nullptr;
-    void heap_empty_check() const;
-    void not_null_check(std::shared_ptr<T> data) const;
     void ensure_capacity();
     void sift_up(int index);
     void sift_down(int index);
-    void heapify();
+    void heapify()
+    {
+        for (int i = (this->_size >> 1) - 1; i >= 0; --i)
+            sift_down(i);
+    }
+    void heap_empty_check() const
+    {
+        if (this->_size == 0)
+            throw std::out_of_range("heap is empty.");
+    }
+    void not_null_check(std::shared_ptr<T> data) const
+    {
+        if (data == nullptr)
+            throw std::invalid_argument("data must be not null.");
+    }
 
 public:
     BinaryHeap<T> &operator=(const BinaryHeap<T> &heap);
@@ -28,10 +40,19 @@ public:
     ~BinaryHeap() { delete[] _array; }
     size_t capacity() const { return _capacity; }
     void add(std::shared_ptr<T> data) override;
-    std::shared_ptr<T> get() const override;
     std::shared_ptr<T> remove() override;
     std::shared_ptr<T> replace(std::shared_ptr<T> data) override;
-    void clear() override;
+    std::shared_ptr<T> get() const override
+    {
+        heap_empty_check();
+        return _array[0];
+    }
+    void clear() override
+    {
+        for (size_t i = 0; i < _capacity; ++i)
+            _array[i] = nullptr;
+        this->_size = 0;
+    }
     void traverse(typename IHeap<T>::TraverseFunc func = nullptr) const override;
 };
 
@@ -90,13 +111,6 @@ inline void BinaryHeap<T>::add(std::shared_ptr<T> data)
 }
 
 template <typename T>
-inline std::shared_ptr<T> BinaryHeap<T>::get() const
-{
-    heap_empty_check();
-    return _array[0];
-}
-
-template <typename T>
 inline std::shared_ptr<T> BinaryHeap<T>::remove()
 {
     heap_empty_check();
@@ -125,14 +139,6 @@ inline std::shared_ptr<T> BinaryHeap<T>::replace(std::shared_ptr<T> data)
         sift_down(0);
     }
     return root;
-}
-
-template <typename T>
-inline void BinaryHeap<T>::clear()
-{
-    for (size_t i = 0; i < _capacity; ++i)
-        _array[i] = nullptr;
-    this->_size = 0;
 }
 
 template <typename T>
@@ -165,20 +171,6 @@ inline void BinaryHeap<T>::traverse(typename IHeap<T>::TraverseFunc func) const
             }
         }
     }
-}
-
-template <typename T>
-inline void BinaryHeap<T>::heap_empty_check() const
-{
-    if (this->_size == 0)
-        throw std::out_of_range("heap is empty.");
-}
-
-template <typename T>
-inline void BinaryHeap<T>::not_null_check(std::shared_ptr<T> data) const
-{
-    if (data == nullptr)
-        throw std::invalid_argument("data must be not null.");
 }
 
 template <typename T>
@@ -228,13 +220,6 @@ inline void BinaryHeap<T>::sift_down(int index)
         index = child_index;
     }
     _array[index] = parent;
-}
-
-template <typename T>
-inline void BinaryHeap<T>::heapify()
-{
-    for (int i = (this->_size >> 1) - 1; i >= 0; --i)
-        sift_down(i);
 }
 
 #endif /* BINARY_HEAP_H */
