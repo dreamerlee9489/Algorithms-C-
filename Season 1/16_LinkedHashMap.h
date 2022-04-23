@@ -125,6 +125,8 @@ template <typename K, typename V>
 LinkedHashMap<K, V> &LinkedHashMap<K, V>::operator=(const LinkedHashMap<K, V> &map)
 {
     clear();
+    delete[] this->_table;
+    this->_table = nullptr;
     if (map._size > 0)
     {
         this->_capacity = map._capacity;
@@ -132,23 +134,11 @@ LinkedHashMap<K, V> &LinkedHashMap<K, V>::operator=(const LinkedHashMap<K, V> &m
         this->_comparator = map._comparator;
         for (size_t i = 0; i < this->_capacity; ++i)
             this->_table[i] = nullptr;
-        std::queue<NODE *> q;
-        for (size_t i = 0; i < map._capacity; ++i)
+        LinkedNode<K, V> *node = map._head;
+        while (node != nullptr)
         {
-            if (map._table[i] != nullptr)
-            {
-                q.push(map._table[i]);
-                while (!q.empty())
-                {
-                    NODE *node = q.front();
-                    this->add(node->_key, node->_value);
-                    q.pop();
-                    if (node->_left != nullptr)
-                        q.push(node->_left);
-                    if (node->_right != nullptr)
-                        q.push(node->_right);
-                }
-            }
+            this->add(node->_key, node->_value);
+            node = node->_next;
         }
     }
     return *this;

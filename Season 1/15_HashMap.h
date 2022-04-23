@@ -14,7 +14,7 @@ class HashMap : public IMap<K, V>
 protected:
     static const bool BLACK = false, RED = true;
     static const size_t DEFAULT_CAPACITY = 16;
-    static constexpr double LOAD_FACTOR = 0.75;
+    static constexpr float LOAD_FACTOR = 0.75f;
     template <typename _K, typename _V>
     struct Node
     {
@@ -127,13 +127,14 @@ template <typename K, typename V>
 HashMap<K, V> &HashMap<K, V>::operator=(const HashMap<K, V> &map)
 {
     clear();
+    delete[] _table;
+    _capacity = DEFAULT_CAPACITY;
+    _table = new Node<K, V> *[_capacity];
+    _comparator = map._comparator;
+    for (size_t i = 0; i < _capacity; ++i)
+        _table[i] = nullptr;
     if (map._size > 0)
     {
-        _capacity = map._capacity;
-        _comparator = map._comparator;
-        _table = new Node<K, V> *[_capacity];
-        for (size_t i = 0; i < _capacity; ++i)
-            _table[i] = nullptr;
         std::queue<Node<K, V> *> q;
         for (size_t i = 0; i < map._capacity; ++i)
         {
@@ -171,63 +172,11 @@ HashMap<K, V> &HashMap<K, V>::operator=(HashMap<K, V> &&map)
 }
 
 template <typename K, typename V>
-inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::get_node(std::shared_ptr<K> key) const
-{
-    Node<K, V> *root = _table[get_index(key)];
-    return root == nullptr ? nullptr : get_node(root, key);
-}
-
-template <typename K, typename V>
-inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::get_node(Node<K, V> *node, std::shared_ptr<K> key1) const
-{
-    int hash1 = get_hash(key1);
-    Node<K, V> *result = nullptr;
-    int cmp = 0;
-    while (node != nullptr)
-    {
-        std::shared_ptr<K> key2 = node->_key;
-        int hash2 = node->_hash;
-        if (hash1 > hash2)
-            node = node->_right;
-        else if (hash1 < hash2)
-            node = node->_left;
-        else if (*key1 == *key2)
-            return node;
-        else if (key1 != nullptr && key2 != nullptr && _comparator != nullptr && typeid(*key1) == typeid(*key2) && (cmp = _comparator(key1, key2)) != 0)
-            node = cmp > 0 ? node->_right : node->_left;
-        else if (node->_right != nullptr && (result = get_node(node->_right, key1)) != nullptr)
-            return result;
-        else
-            node = node->_left;
-    }
-    return nullptr;
-}
-
-template <typename K, typename V>
-inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::get_successor(Node<K, V> *node) const
-{
-    if (node != nullptr)
-    {
-        Node<K, V> *p = node->_right;
-        if (p != nullptr)
-        {
-            while (p->_left != nullptr)
-                p = p->_left;
-            return p;
-        }
-        while (node->_parent != nullptr && node == node->_parent->_right)
-            node = node->_parent;
-        return node->_parent;
-    }
-    return nullptr;
-}
-
-template <typename K, typename V>
 inline HashMap<K, V>::HashMap(typename IMap<K, V>::Comparator comparator)
 {
     _comparator = comparator;
     _table = new Node<K, V> *[DEFAULT_CAPACITY];
-    for (size_t i = 0; i < _capacity; i++)
+    for (size_t i = 0; i < _capacity; ++i)
         _table[i] = nullptr;
 }
 
@@ -442,6 +391,58 @@ inline void HashMap<K, V>::clear()
 }
 
 template <typename K, typename V>
+inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::get_node(std::shared_ptr<K> key) const
+{
+    Node<K, V> *root = _table[get_index(key)];
+    return root == nullptr ? nullptr : get_node(root, key);
+}
+
+template <typename K, typename V>
+inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::get_node(Node<K, V> *node, std::shared_ptr<K> key1) const
+{
+    int hash1 = get_hash(key1);
+    Node<K, V> *result = nullptr;
+    int cmp = 0;
+    while (node != nullptr)
+    {
+        std::shared_ptr<K> key2 = node->_key;
+        int hash2 = node->_hash;
+        if (hash1 > hash2)
+            node = node->_right;
+        else if (hash1 < hash2)
+            node = node->_left;
+        else if (*key1 == *key2)
+            return node;
+        else if (key1 != nullptr && key2 != nullptr && _comparator != nullptr && typeid(*key1) == typeid(*key2) && (cmp = _comparator(key1, key2)) != 0)
+            node = cmp > 0 ? node->_right : node->_left;
+        else if (node->_right != nullptr && (result = get_node(node->_right, key1)) != nullptr)
+            return result;
+        else
+            node = node->_left;
+    }
+    return nullptr;
+}
+
+template <typename K, typename V>
+inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::get_successor(Node<K, V> *node) const
+{
+    if (node != nullptr)
+    {
+        Node<K, V> *p = node->_right;
+        if (p != nullptr)
+        {
+            while (p->_left != nullptr)
+                p = p->_left;
+            return p;
+        }
+        while (node->_parent != nullptr && node == node->_parent->_right)
+            node = node->_parent;
+        return node->_parent;
+    }
+    return nullptr;
+}
+
+template <typename K, typename V>
 inline int HashMap<K, V>::get_hash(std::shared_ptr<K> key) const
 {
     if (key != nullptr)
@@ -452,11 +453,11 @@ inline int HashMap<K, V>::get_hash(std::shared_ptr<K> key) const
 template <typename K, typename V>
 inline void HashMap<K, V>::ensure_capacity()
 {
-    if (_size * 1.0 / _capacity > LOAD_FACTOR)
+    if (_size * 1.0f / _capacity * 1.0f > LOAD_FACTOR)
     {
         Node<K, V> **old = _table;
         _table = new Node<K, V> *[_capacity << 1];
-        for (size_t i = 0; i < _capacity << 1; i++)
+        for (size_t i = 0; i < _capacity << 1; ++i)
             _table[i] = nullptr;
         std::queue<Node<K, V> *> q;
         for (size_t i = 0; i < _capacity; ++i)
