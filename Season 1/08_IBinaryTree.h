@@ -4,6 +4,7 @@
 #include <memory>
 #include <queue>
 #include <cmath>
+#include <stack>
 #include "./IString.h"
 /**
  * @brief 二叉树基类
@@ -47,10 +48,13 @@ protected:
     void not_null_check(std::shared_ptr<T> data) const;
     Node<T> *get_predecessor(Node<T> *node) const;
     Node<T> *get_successor(Node<T> *node) const;
-    void inorder_traverse(Node<T> *node, TraverseFunc func) const;
-    void preorder_traverse(Node<T> *node, TraverseFunc func) const;
-    void postorder_traverse(Node<T> *node, TraverseFunc func) const;
-    void levelorder_traverse(Node<T> *node, TraverseFunc func) const;
+    void inorder_recu(Node<T> *node, TraverseFunc func) const;
+    void preorder_recu(Node<T> *node, TraverseFunc func) const;
+    void postorder_recu(Node<T> *node, TraverseFunc func) const;
+    void inorder_iter(TraverseFunc func) const;
+    void preorder_iter(TraverseFunc func) const;
+    void postorder_iter(TraverseFunc func) const;
+    void levelorder(Node<T> *node, TraverseFunc func) const;
     size_t height_recu(Node<T> *node) const;
     size_t height_iter(Node<T> *node) const;
     void clear_recu(Node<T> *node);
@@ -274,36 +278,36 @@ inline void IBinaryTree<T>::traverse(TraverseOrder order, TraverseFunc func) con
     switch (order)
     {
     case TraverseOrder::In:
-        inorder_traverse(_root, func);
+        inorder_recu(_root, func);
         break;
     case TraverseOrder::Pre:
-        preorder_traverse(_root, func);
+        preorder_recu(_root, func);
         break;
     case TraverseOrder::Post:
-        postorder_traverse(_root, func);
+        postorder_recu(_root, func);
         break;
     case TraverseOrder::Level:
-        levelorder_traverse(_root, func);
+        levelorder(_root, func);
         break;
     }
 }
 
 template <typename T>
-inline void IBinaryTree<T>::inorder_traverse(Node<T> *node, TraverseFunc func) const
+inline void IBinaryTree<T>::inorder_recu(Node<T> *node, TraverseFunc func) const
 {
     if (node != nullptr)
     {
-        inorder_traverse(node->_left, func);
+        inorder_recu(node->_left, func);
         if (func != nullptr)
             func(node->_data);
         else
             std::cout << *node->_data << "\n";
-        inorder_traverse(node->_right, func);
+        inorder_recu(node->_right, func);
     }
 }
 
 template <typename T>
-inline void IBinaryTree<T>::preorder_traverse(Node<T> *node, TraverseFunc func) const
+inline void IBinaryTree<T>::preorder_recu(Node<T> *node, TraverseFunc func) const
 {
     if (node != nullptr)
     {
@@ -311,18 +315,18 @@ inline void IBinaryTree<T>::preorder_traverse(Node<T> *node, TraverseFunc func) 
             func(node->_data);
         else
             std::cout << *node->_data << "\n";
-        preorder_traverse(node->_left, func);
-        preorder_traverse(node->_right, func);
+        preorder_recu(node->_left, func);
+        preorder_recu(node->_right, func);
     }
 }
 
 template <typename T>
-inline void IBinaryTree<T>::postorder_traverse(Node<T> *node, TraverseFunc func) const
+inline void IBinaryTree<T>::postorder_recu(Node<T> *node, TraverseFunc func) const
 {
     if (node != nullptr)
     {
-        postorder_traverse(node->_left, func);
-        postorder_traverse(node->_right, func);
+        postorder_recu(node->_left, func);
+        postorder_recu(node->_right, func);
         if (func != nullptr)
             func(node->_data);
         else
@@ -331,7 +335,90 @@ inline void IBinaryTree<T>::postorder_traverse(Node<T> *node, TraverseFunc func)
 }
 
 template <typename T>
-inline void IBinaryTree<T>::levelorder_traverse(Node<T> *node, TraverseFunc func) const
+inline void IBinaryTree<T>::inorder_iter(TraverseFunc func) const
+{
+    if (_root != nullptr)
+    {
+        Node<T> *node = _root;
+        std::stack<Node<T> *> s;
+        while (true)
+        {
+            if (node != nullptr)
+            {
+                s.push(node);
+                node = node->_left;
+            }
+            else if (!s.empty())
+            {
+                node = s.top();
+                s.pop();
+                if (func != nullptr)
+                    func(node->_data);
+                else
+                    std::cout << *node->_data << "\n";
+                node = node->_right;
+            }
+            else
+                return;
+        }
+    }
+}
+
+template <typename T>
+inline void IBinaryTree<T>::preorder_iter(TraverseFunc func) const
+{
+    if (_root != nullptr)
+    {
+        std::stack<Node<T> *> s;
+        s.push(_root);
+        while (!s.empty())
+        {
+            Node<T> *node = s.top();
+            s.pop();
+            if (func != nullptr)
+                func(node->_data);
+            else
+                std::cout << *node->_data << "\n";
+            if (node->_right != nullptr)
+                s.push(node->_right);
+            if (node->_left != nullptr)
+                s.push(node->_left);
+        }
+    }
+}
+
+template <typename T>
+inline void IBinaryTree<T>::postorder_iter(TraverseFunc func) const
+{
+    if(_root != nullptr)
+    {
+        Node<T> *prev = nullptr;
+        std::stack<Node<T> *> s;
+        s.push(_root);
+        while (!s.empty())
+        {
+            Node<T> *top = s.top();
+            if(top->is_leaf() || (prev != nullptr && prev->_parent == top))
+            {
+                prev = s.pop();
+                if (func != nullptr)
+                    func(prev->_data);
+                else
+                    std::cout << *prev->_data << "\n";
+            }
+            else
+            {
+                if(top->_right != nullptr)
+                    s.push(top->_right);
+                if(top->_left != nullptr)
+                    s.push(top->_left);
+            }
+        }
+    }
+}
+
+template <typename T>
+inline void IBinaryTree<T>::levelorder(Node<T> *node, TraverseFunc func) const
 {
     if (node != nullptr)
     {
