@@ -5,7 +5,7 @@
 /**
  * @brief 按元素添加顺序遍历的哈希集合
  * @date 2022-04-21
- * @tparam K 键必须继承IHashable
+ * @tparam K 
  */
 template <typename K>
 class LinkedHashSet : public ISet<K>

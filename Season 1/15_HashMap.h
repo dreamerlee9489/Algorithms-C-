@@ -5,8 +5,8 @@
 /**
  * @brief 哈希映射
  * @date 2022-04-20
- * @tparam K 键必须继承IHashable
- * @tparam V
+ * @tparam K 
+ * @tparam V 
  */
 template <typename K, typename V>
 class HashMap : public IMap<K, V>

@@ -5,7 +5,7 @@
 /**
  * @brief 哈希集合
  * @date 2022-04-21
- * @tparam K 键必须继承IHashable
+ * @tparam K 
  */
 template <typename K>
 class HashSet : public ISet<K>
