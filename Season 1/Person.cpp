@@ -10,9 +10,7 @@ int main(int argc, char const *argv[])
 
     if (typeid(*p1) == typeid(Person))
         cout << "==Person\n";
-    if (typeid(*p1) == typeid(IHashable))
-        cout << "==IHashable\n";
-
+        
     char ch = 'a';
     cout << hash<char>()(ch) << "\n";
 
