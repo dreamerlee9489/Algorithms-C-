@@ -50,7 +50,6 @@ int main()
     cout << "----------Test BST(BST<T> &&)----------\n";
     BST<Person> tree3 = BST<Person>(move(tree));
     cout << tree3;
-    std::getchar();
     return 0;
 }
 

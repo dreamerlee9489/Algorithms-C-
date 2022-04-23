@@ -22,7 +22,6 @@ int main(int argc, char const *argv[])
     for (size_t i = 0; i < size / 2; ++i)
         cout << *deque.pop_rear() << "\n";
     cout << "size=" << deque.size() << "\n";
-    std::getchar();
     return 0;
 }
 

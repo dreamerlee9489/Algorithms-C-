@@ -41,7 +41,7 @@ public:
 
 template <typename K, typename V>
 template <typename _K, typename _V>
-LinkedHashMap<K, V>::LinkedNode<_K, _V> &LinkedHashMap<K, V>::LinkedNode<_K, _V>::operator=(const LinkedNode<_K, _V> &node)
+inline LinkedHashMap<K, V>::LinkedNode<_K, _V> &LinkedHashMap<K, V>::LinkedNode<_K, _V>::operator=(const LinkedNode<_K, _V> &node)
 {
     this->_key = node._key;
     this->_value = node._value;
@@ -55,7 +55,7 @@ LinkedHashMap<K, V>::LinkedNode<_K, _V> &LinkedHashMap<K, V>::LinkedNode<_K, _V>
 
 template <typename K, typename V>
 template <typename _K, typename _V>
-LinkedHashMap<K, V>::LinkedNode<_K, _V> &LinkedHashMap<K, V>::LinkedNode<_K, _V>::operator=(LinkedNode<_K, _V> &&node)
+inline LinkedHashMap<K, V>::LinkedNode<_K, _V> &LinkedHashMap<K, V>::LinkedNode<_K, _V>::operator=(LinkedNode<_K, _V> &&node)
 {
     this->_key = nullptr;
     this->_value = nullptr;
@@ -122,7 +122,7 @@ inline void LinkedHashMap<K, V>::after_remove_derived(NODE *willnode, NODE *rmvn
 }
 
 template <typename K, typename V>
-LinkedHashMap<K, V> &LinkedHashMap<K, V>::operator=(const LinkedHashMap<K, V> &map)
+inline LinkedHashMap<K, V> &LinkedHashMap<K, V>::operator=(const LinkedHashMap<K, V> &map)
 {
     clear();
     delete[] this->_table;
@@ -145,7 +145,7 @@ LinkedHashMap<K, V> &LinkedHashMap<K, V>::operator=(const LinkedHashMap<K, V> &m
 }
 
 template <typename K, typename V>
-LinkedHashMap<K, V> &LinkedHashMap<K, V>::operator=(LinkedHashMap<K, V> &&map)
+inline LinkedHashMap<K, V> &LinkedHashMap<K, V>::operator=(LinkedHashMap<K, V> &&map)
 {
     clear();
     this->_size = map._size;

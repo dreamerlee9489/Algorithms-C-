@@ -41,7 +41,6 @@ int main(int argc, char const *argv[])
     HashMap<Person, int> map2 = HashMap<Person, int>(std::move(map));
     cout << "size=" << map2.size() << ", capacity=" << map2.capacity() << "\n";
     map2.traverse();
-    std::getchar();
     return 0;
 }
 

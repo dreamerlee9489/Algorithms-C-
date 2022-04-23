@@ -32,7 +32,6 @@ int main()
     cout << "----------Test RBTree(RBTree<T> &&)----------\n";
     RBTree<Person> tree3 = RBTree<Person>(move(tree));
     cout << tree3;
-    std::getchar();
     return 0;
 }
 

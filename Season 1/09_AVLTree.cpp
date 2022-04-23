@@ -32,7 +32,6 @@ int main()
     cout << "----------Test AVLTree(AVLTree<T> &&)----------\n";
     AVLTree<Person> tree3 = AVLTree<Person>(move(tree));
     cout << tree3;
-    std::getchar();
     return 0;
 }
 

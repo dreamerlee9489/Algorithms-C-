@@ -10,7 +10,7 @@ template <typename T>
 class BinaryHeap : public IHeap<T>
 {
     const size_t DEFAULT_CAPACITY = 8;
-    size_t _capacity = DEFAULT_CAPACITY;
+    size_t _capacity = 0;
     std::shared_ptr<T> *_array = nullptr;
     void heap_empty_check() const;
     void not_null_check(std::shared_ptr<T> data) const;
@@ -20,7 +20,11 @@ class BinaryHeap : public IHeap<T>
     void heapify();
 
 public:
+    BinaryHeap<T> &operator=(const BinaryHeap<T> &heap);
+    BinaryHeap<T> &operator=(BinaryHeap<T> &&heap);
     BinaryHeap(typename IHeap<T>::Comparator comparator = nullptr, std::shared_ptr<T> *array = nullptr, size_t size = 0);
+    BinaryHeap(const BinaryHeap<T> &heap) { *this = heap; }
+    BinaryHeap(BinaryHeap<T> &&heap) { *this = std::move(heap); }
     ~BinaryHeap() { delete[] _array; }
     size_t capacity() const { return _capacity; }
     void add(std::shared_ptr<T> data) override;
@@ -32,10 +36,39 @@ public:
 };
 
 template <typename T>
+inline BinaryHeap<T> &BinaryHeap<T>::operator=(const BinaryHeap<T> &heap)
+{
+    delete[] _array;
+    _array = new std::shared_ptr<T>[heap._capacity];
+    _capacity = heap._capacity;
+    this->_size = heap._size;
+    this->_comparator = heap._comparator;
+    for (size_t i = 0; i < heap._size; ++i)
+        _array[i] = heap._array[i];
+    return *this;
+}
+
+template <typename T>
+inline BinaryHeap<T> &BinaryHeap<T>::operator=(BinaryHeap<T> &&heap)
+{
+    delete[] _array;
+    _array = heap._array;
+    _capacity = heap._capacity;
+    this->_size = heap._size;
+    this->_comparator = heap._comparator;
+    heap._array = nullptr;
+    heap._size = 0;
+    return *this;
+}
+
+template <typename T>
 inline BinaryHeap<T>::BinaryHeap(typename IHeap<T>::Comparator comparator, std::shared_ptr<T> *array, size_t size) : IHeap<T>(comparator)
 {
     if (array == nullptr || size == 0)
+    {
         _array = new std::shared_ptr<T>[DEFAULT_CAPACITY];
+        _capacity = DEFAULT_CAPACITY;
+    }
     else
     {
         this->_size = size;

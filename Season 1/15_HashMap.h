@@ -124,7 +124,7 @@ inline HashMap<K, V>::Node<_K, _V> *HashMap<K, V>::Node<_K, _V>::get_sibling() c
 }
 
 template <typename K, typename V>
-HashMap<K, V> &HashMap<K, V>::operator=(const HashMap<K, V> &map)
+inline HashMap<K, V> &HashMap<K, V>::operator=(const HashMap<K, V> &map)
 {
     clear();
     delete[] _table;
@@ -158,7 +158,7 @@ HashMap<K, V> &HashMap<K, V>::operator=(const HashMap<K, V> &map)
 }
 
 template <typename K, typename V>
-HashMap<K, V> &HashMap<K, V>::operator=(HashMap<K, V> &&map)
+inline HashMap<K, V> &HashMap<K, V>::operator=(HashMap<K, V> &&map)
 {
     clear();
     _size = map._size;

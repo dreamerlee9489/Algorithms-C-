@@ -17,7 +17,6 @@ int main(int argc, char const *argv[])
         cout << "lamdba: " << *data << "\t";
         return false; 
     });
-    std::getchar();
     return 0;
 }
 
