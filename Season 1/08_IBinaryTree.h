@@ -42,10 +42,14 @@ protected:
     size_t _size = 0;
     Node<T> *_root = nullptr;
     Comparator _comparator = nullptr;
+    void not_null_check(std::shared_ptr<T> data) const
+    {
+        if (data == nullptr)
+            throw std::invalid_argument("data must be not null.");
+    }
     static std::ostream &draw_tree(std::ostream &os, const IBinaryTree<T> &tree);
     virtual Node<T> *get_node(std::shared_ptr<T> data) const = 0;
     virtual Node<T> *create_node(std::shared_ptr<T> data, Node<T> *parent) { return new Node<T>(data, parent); }
-    void not_null_check(std::shared_ptr<T> data) const;
     Node<T> *get_predecessor(Node<T> *node) const;
     Node<T> *get_successor(Node<T> *node) const;
     void inorder_recu(Node<T> *node, TraverseFunc func) const;
@@ -55,7 +59,12 @@ protected:
     void preorder_iter(TraverseFunc func) const;
     void postorder_iter(TraverseFunc func) const;
     void levelorder(Node<T> *node, TraverseFunc func) const;
-    size_t height_recu(Node<T> *node) const;
+    size_t height_recu(Node<T> *node) const
+    {
+        if (node != nullptr)
+            return 1 + std::max(height_recu(node->_left), height_recu(node->_right));
+        return 0;
+    }
     size_t height_iter(Node<T> *node) const;
     void clear_recu(Node<T> *node);
 
@@ -77,7 +86,12 @@ public:
     bool is_complete() const;
     bool contains(std::shared_ptr<T> data) const { return get_node(data) != nullptr; }
     void traverse(TraverseOrder order = TraverseOrder::In, TraverseFunc func = nullptr) const;
-    void clear();
+    void clear()
+    {
+        clear_recu(_root);
+        _root = nullptr;
+        _size = 0;
+    }
 };
 
 template <typename T>
@@ -140,13 +154,6 @@ inline std::ostream &IBinaryTree<T>::draw_tree(std::ostream &os, const IBinaryTr
         }
     }
     return os;
-}
-
-template <typename T>
-inline void IBinaryTree<T>::not_null_check(std::shared_ptr<T> data) const
-{
-    if (data == nullptr)
-        throw std::invalid_argument("data must be not null.");
 }
 
 template <typename T>
@@ -229,14 +236,6 @@ inline void IBinaryTree<T>::clear_recu(Node<T> *node)
 }
 
 template <typename T>
-inline size_t IBinaryTree<T>::height_recu(Node<T> *node) const
-{
-    if (node != nullptr)
-        return 1 + std::max(height_recu(node->_left), height_recu(node->_right));
-    return 0;
-}
-
-template <typename T>
 inline size_t IBinaryTree<T>::height_iter(Node<T> *node) const
 {
     if (node != nullptr)
@@ -262,14 +261,6 @@ inline size_t IBinaryTree<T>::height_iter(Node<T> *node) const
         return height;
     }
     return 0;
-}
-
-template <typename T>
-inline void IBinaryTree<T>::clear()
-{
-    clear_recu(_root);
-    _root = nullptr;
-    _size = 0;
 }
 
 template <typename T>

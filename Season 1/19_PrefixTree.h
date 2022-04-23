@@ -56,7 +56,11 @@ public:
     }
     std::shared_ptr<V> add(std::string key, std::shared_ptr<V> value);
     std::shared_ptr<V> remove(std::string key);
-    void clear();
+    void clear()
+    {
+        _size = 0;
+        _root = nullptr;
+    }
 };
 
 template <typename V>
@@ -113,13 +117,6 @@ std::shared_ptr<V> PrefixTree<V>::remove(std::string key)
         node = parent;
     }
     return old;
-}
-
-template <typename V>
-void PrefixTree<V>::clear()
-{
-    _size = 0;
-    _root = nullptr;
 }
 
 template <typename V>

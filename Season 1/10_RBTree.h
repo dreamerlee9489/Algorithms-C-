@@ -22,7 +22,11 @@ class RBTree : public BBST<T>
         RBNode(const RBNode<U> &node) { *this = node; }
         RBNode(RBNode<U> &&node) noexcept { *this = std::move(node); }
         ~RBNode() = default;
-        std::string to_string() const override;
+        std::string to_string() const override
+        {
+            std::string str = ((IString &)*this->_data).to_string();
+            return str += _color == RED ? " R E D" : " BLACK";
+        }
     };
     RBNode<T> *get_node(std::shared_ptr<T> data) const override { return (RBNode<T> *)BBST<T>::get_node(data); }
     NODE *create_node(std::shared_ptr<T> data, NODE *parent) override { return new RBNode<T>(data, parent); }
@@ -61,14 +65,6 @@ inline RBTree<T>::RBNode<U> &RBTree<T>::RBNode<U>::operator=(RBNode<U> &&node) n
     this->_data = nullptr;
     this = &node;
     return *this;
-}
-
-template <typename T>
-template <typename U>
-inline std::string RBTree<T>::RBNode<U>::to_string() const
-{
-    std::string str = ((IString &)*this->_data).to_string();
-    return str += _color == RED ? " R E D" : " BLACK";
 }
 
 template <typename T>

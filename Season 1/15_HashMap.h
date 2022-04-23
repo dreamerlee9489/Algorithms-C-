@@ -30,7 +30,11 @@ protected:
             : _key(key), _value(value), _parent(parent), _left(left), _right(right) { _hash = _key == nullptr ? 0 : std::hash<K>()(*key); }
         Node(const Node<_K, _V> &node) { *this = node; }
         Node(Node<_K, _V> &&node) noexcept { *this = std::move(node); }
-        virtual ~Node();
+        virtual ~Node()
+        {
+            _key = nullptr;
+            _value = nullptr;
+        }
         bool is_leaf() const { return _left == nullptr && _right == nullptr; }
         bool is_binary() const { return _left != nullptr && _right != nullptr; }
         bool is_left() const { return _parent != nullptr && this == _parent->_left; }
@@ -40,12 +44,21 @@ protected:
     size_t _size = 0, _capacity = DEFAULT_CAPACITY;
     Node<K, V> **_table = nullptr;
     typename IMap<K, V>::Comparator _comparator = nullptr;
-    Node<K, V> *get_node(std::shared_ptr<K> key) const;
+    Node<K, V> *get_node(std::shared_ptr<K> key) const
+    {
+        Node<K, V> *root = _table[get_index(key)];
+        return root == nullptr ? nullptr : get_node(root, key);
+    }
     Node<K, V> *get_node(Node<K, V> *node, std::shared_ptr<K> key1) const;
     Node<K, V> *get_successor(Node<K, V> *node) const;
     int get_index(Node<K, V> *node) const { return node->_hash & (_capacity - 1); }
     int get_index(std::shared_ptr<K> key) const { return get_hash(key) & (_capacity - 1); }
-    int get_hash(std::shared_ptr<K> key) const;
+    int get_hash(std::shared_ptr<K> key) const
+    {
+        if (key != nullptr)
+            return std::hash<K>()(*key);
+        return 0;
+    }
     void ensure_capacity();
     void move_node(Node<K, V> *newnode);
     void after_add(Node<K, V> *node);
@@ -64,8 +77,18 @@ protected:
 public:
     HashMap<K, V> &operator=(const HashMap<K, V> &map);
     HashMap<K, V> &operator=(HashMap<K, V> &&map);
-    HashMap(typename IMap<K, V>::Comparator comparator = nullptr);
-    virtual ~HashMap();
+    HashMap(typename IMap<K, V>::Comparator comparator = nullptr)
+    {
+        _comparator = comparator;
+        _table = new Node<K, V> *[DEFAULT_CAPACITY];
+        for (size_t i = 0; i < _capacity; ++i)
+            _table[i] = nullptr;
+    }
+    virtual ~HashMap()
+    {
+        clear();
+        delete[] _table;
+    }
     HashMap(const HashMap<K, V> &map) { *this = map; }
     HashMap(HashMap<K, V> &&map) { *this = std::move(map); }
     size_t size() const override { return _size; }
@@ -73,11 +96,23 @@ public:
     bool is_empty() const override { return _size == 0; }
     bool contains_key(std::shared_ptr<K> key) const override { return get_node(key) != nullptr; }
     bool contains_value(std::shared_ptr<V> value) const override;
-    std::shared_ptr<V> get_value(std::shared_ptr<K> key) const override;
+    std::shared_ptr<V> get_value(std::shared_ptr<K> key) const override
+    {
+        Node<K, V> *node = get_node(key);
+        return node != nullptr ? node->_value : nullptr;
+    }
     std::shared_ptr<V> add(std::shared_ptr<K> key, std::shared_ptr<V> value) override;
     std::shared_ptr<V> remove(std::shared_ptr<K> key) override;
     virtual void traverse(typename IMap<K, V>::TraverseFunc func = nullptr) const;
-    void clear() override;
+    void clear() override
+    {
+        if (_size > 0)
+        {
+            _size = 0;
+            for (size_t i = 0; i < _capacity; ++i)
+                clear_recu(_table[i]);
+        }
+    }
 };
 
 template <typename K, typename V>
@@ -102,14 +137,6 @@ inline HashMap<K, V>::Node<_K, _V> &HashMap<K, V>::Node<_K, _V>::operator=(Node<
     _value = nullptr;
     this = &node;
     return *this;
-}
-
-template <typename K, typename V>
-template <typename _K, typename _V>
-inline HashMap<K, V>::Node<_K, _V>::~Node()
-{
-    _key = nullptr;
-    _value = nullptr;
 }
 
 template <typename K, typename V>
@@ -172,22 +199,6 @@ inline HashMap<K, V> &HashMap<K, V>::operator=(HashMap<K, V> &&map)
 }
 
 template <typename K, typename V>
-inline HashMap<K, V>::HashMap(typename IMap<K, V>::Comparator comparator)
-{
-    _comparator = comparator;
-    _table = new Node<K, V> *[DEFAULT_CAPACITY];
-    for (size_t i = 0; i < _capacity; ++i)
-        _table[i] = nullptr;
-}
-
-template <typename K, typename V>
-inline HashMap<K, V>::~HashMap()
-{
-    clear();
-    delete[] _table;
-}
-
-template <typename K, typename V>
 inline bool HashMap<K, V>::contains_value(std::shared_ptr<V> value) const
 {
     if (_size != 0)
@@ -213,13 +224,6 @@ inline bool HashMap<K, V>::contains_value(std::shared_ptr<V> value) const
         }
     }
     return false;
-}
-
-template <typename K, typename V>
-inline std::shared_ptr<V> HashMap<K, V>::get_value(std::shared_ptr<K> key) const
-{
-    Node<K, V> *node = get_node(key);
-    return node != nullptr ? node->_value : nullptr;
 }
 
 template <typename K, typename V>
@@ -380,24 +384,6 @@ inline void HashMap<K, V>::traverse(typename IMap<K, V>::TraverseFunc func) cons
 }
 
 template <typename K, typename V>
-inline void HashMap<K, V>::clear()
-{
-    if (_size > 0)
-    {
-        _size = 0;
-        for (size_t i = 0; i < _capacity; ++i)
-            clear_recu(_table[i]);
-    }
-}
-
-template <typename K, typename V>
-inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::get_node(std::shared_ptr<K> key) const
-{
-    Node<K, V> *root = _table[get_index(key)];
-    return root == nullptr ? nullptr : get_node(root, key);
-}
-
-template <typename K, typename V>
 inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::get_node(Node<K, V> *node, std::shared_ptr<K> key1) const
 {
     int hash1 = get_hash(key1);
@@ -440,14 +426,6 @@ inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::get_successor(Node<K, V> *node)
         return node->_parent;
     }
     return nullptr;
-}
-
-template <typename K, typename V>
-inline int HashMap<K, V>::get_hash(std::shared_ptr<K> key) const
-{
-    if (key != nullptr)
-        return std::hash<K>()(*key);
-    return 0;
 }
 
 template <typename K, typename V>

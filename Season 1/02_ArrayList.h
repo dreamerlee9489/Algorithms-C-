@@ -27,9 +27,22 @@ public:
 	int index_of(std::shared_ptr<T> data) const override;
 	void insert(int index, std::shared_ptr<T> data) override;
 	std::shared_ptr<T> remove(int index) override;
-	std::shared_ptr<T> get(int index) const override;
-	void set(int index, std::shared_ptr<T> data) override;
-	void clear() override;
+	std::shared_ptr<T> get(int index) const override
+	{
+		this->check_range(index);
+		return _array[index];
+	}
+	void set(int index, std::shared_ptr<T> data) override
+	{
+		this->check_range(index);
+		_array[index] = data;
+	}
+	void clear() override
+	{
+		for (size_t i = 0; i < this->_size; ++i)
+			_array[i] = nullptr;
+		this->_size = 0;
+	}
 };
 
 template <typename U>
@@ -99,28 +112,6 @@ inline std::shared_ptr<T> ArrayList<T>::remove(int index)
 		_array[i - 1] = _array[i];
 	_array[--this->_size] = nullptr;
 	return old;
-}
-
-template <typename T>
-inline std::shared_ptr<T> ArrayList<T>::get(int index) const
-{
-	this->check_range(index);
-	return _array[index];
-}
-
-template <typename T>
-inline void ArrayList<T>::set(int index, std::shared_ptr<T> data)
-{
-	this->check_range(index);
-	_array[index] = data;
-}
-
-template <typename T>
-inline void ArrayList<T>::clear()
-{
-	for (size_t i = 0; i < this->_size; ++i)
-		_array[i] = nullptr;
-	this->_size = 0;
 }
 
 template <typename T>

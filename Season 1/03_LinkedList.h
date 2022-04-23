@@ -30,10 +30,18 @@ public:
     Node<T> *_head = nullptr;
     LinkedList<T> &operator=(const LinkedList<T> &list);
     LinkedList<T> &operator=(LinkedList<T> &&list) noexcept;
-    LinkedList();
+    LinkedList()
+    {
+        _head = new Node<T>(nullptr);
+        _head->_prev = _head->_next = _head;
+    }
     LinkedList(const LinkedList<T> &list) { *this = list; }
     LinkedList(LinkedList<T> &&list) noexcept { *this = std::move(list); }
-    ~LinkedList();
+    ~LinkedList()
+    {
+        clear();
+        delete _head;
+    }
     int index_of(std::shared_ptr<T> data) const override;
     void insert(int index, std::shared_ptr<T> data) override;
     std::shared_ptr<T> remove(int index) override;
@@ -122,20 +130,6 @@ inline LinkedList<T> &LinkedList<T>::operator=(LinkedList<T> &&list) noexcept
         list._head = nullptr;
     }
     return *this;
-}
-
-template <typename T>
-inline LinkedList<T>::LinkedList()
-{
-    _head = new Node<T>(nullptr);
-    _head->_prev = _head->_next = _head;
-}
-
-template <typename T>
-inline LinkedList<T>::~LinkedList()
-{
-    clear();
-    delete _head;
 }
 
 template <typename T>

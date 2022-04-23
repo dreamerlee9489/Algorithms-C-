@@ -25,7 +25,11 @@ class TreeMap : public IMap<K, V>
             : _key(key), _value(value), _parent(parent), _left(left), _right(right) {}
         Node(const Node<_K, _V> &node) { *this = node; }
         Node(Node<_K, _V> &&node) noexcept { *this = std::move(node); }
-        virtual ~Node();
+        virtual ~Node()
+        {
+            _key = nullptr;
+            _value = nullptr;
+        }
         bool is_leaf() const { return _left == nullptr && _right == nullptr; }
         bool is_binary() const { return _left != nullptr && _right != nullptr; }
         bool is_left() const { return _parent != nullptr && this == _parent->_left; }
@@ -35,7 +39,11 @@ class TreeMap : public IMap<K, V>
     size_t _size = 0;
     Node<K, V> *_root = nullptr;
     typename IMap<K, V>::Comparator _comparator = nullptr;
-    void not_null_check(std::shared_ptr<K> key) const;
+    void not_null_check(std::shared_ptr<K> key) const
+    {
+        if (key == nullptr)
+            throw std::invalid_argument("key must be not null.");
+    }
     Node<K, V> *get_node(std::shared_ptr<K> key) const;
     Node<K, V> *get_predecessor(Node<K, V> *node) const;
     Node<K, V> *get_successor(Node<K, V> *node) const;
@@ -62,11 +70,20 @@ public:
     bool is_empty() const override { return _size == 0; }
     bool contains_key(std::shared_ptr<K> key) const override { return get_node(key) != nullptr; }
     bool contains_value(std::shared_ptr<V> value) const override;
-    std::shared_ptr<V> get_value(std::shared_ptr<K> key) const override;
+    std::shared_ptr<V> get_value(std::shared_ptr<K> key) const override
+    {
+        Node<K, V> *node = get_node(key);
+        return node != nullptr ? node->_value : nullptr;
+    }
     std::shared_ptr<V> add(std::shared_ptr<K> key, std::shared_ptr<V> value) override;
     std::shared_ptr<V> remove(std::shared_ptr<K> key) override;
     void traverse(typename IMap<K, V>::TraverseFunc func = nullptr) const { inorder_traverse(_root, func); }
-    void clear() override;
+    void clear() override
+    {
+        clear_recu(_root);
+        _root = nullptr;
+        _size = 0;
+    }
 };
 
 template <typename K, typename V>
@@ -90,14 +107,6 @@ inline TreeMap<K, V>::Node<_K, _V> &TreeMap<K, V>::Node<_K, _V>::operator=(Node<
     _value = nullptr;
     this = &node;
     return *this;
-}
-
-template <typename K, typename V>
-template <typename _K, typename _V>
-inline TreeMap<K, V>::Node<_K, _V>::~Node()
-{
-    _key = nullptr;
-    _value = nullptr;
 }
 
 template <typename K, typename V>
@@ -145,13 +154,6 @@ inline TreeMap<K, V> &TreeMap<K, V>::operator=(TreeMap<K, V> &&map)
     map._root = nullptr;
     map._comparator = nullptr;
     return *this;
-}
-
-template <typename K, typename V>
-inline void TreeMap<K, V>::not_null_check(std::shared_ptr<K> key) const
-{
-    if (key == nullptr)
-        throw std::invalid_argument("key must be not null.");
 }
 
 template <typename K, typename V>
@@ -418,13 +420,6 @@ inline bool TreeMap<K, V>::contains_value(std::shared_ptr<V> value) const
 }
 
 template <typename K, typename V>
-inline std::shared_ptr<V> TreeMap<K, V>::get_value(std::shared_ptr<K> key) const
-{
-    Node<K, V> *node = get_node(key);
-    return node != nullptr ? node->_value : nullptr;
-}
-
-template <typename K, typename V>
 inline std::shared_ptr<V> TreeMap<K, V>::add(std::shared_ptr<K> key, std::shared_ptr<V> value)
 {
     not_null_check(key);
@@ -545,14 +540,6 @@ inline void TreeMap<K, V>::inorder_traverse(Node<K, V> *node, typename IMap<K, V
             std::cout << *node << "\n";
         inorder_traverse(node->_right, func);
     }
-}
-
-template <typename K, typename V>
-inline void TreeMap<K, V>::clear()
-{
-    clear_recu(_root);
-    _root = nullptr;
-    _size = 0;
 }
 
 #endif /* TREE_MAP_H */
