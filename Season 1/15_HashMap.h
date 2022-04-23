@@ -14,7 +14,7 @@ class HashMap : public IMap<K, V>
 protected:
     static const bool BLACK = false, RED = true;
     static const size_t DEFAULT_CAPACITY = 16;
-    static constexpr float LOAD_FACTOR = 0.75f;
+    static constexpr double LOAD_FACTOR = 0.75;
     template <typename _K, typename _V>
     struct Node
     {
@@ -27,7 +27,7 @@ protected:
         Node<_K, _V> &operator=(const Node<_K, _V> &node);
         Node<_K, _V> &operator=(Node<_K, _V> &&node) noexcept;
         Node(std::shared_ptr<_K> key, std::shared_ptr<_V> value, Node<_K, _V> *parent = nullptr, Node<_K, _V> *left = nullptr, Node<_K, _V> *right = nullptr)
-            : _key(key), _value(value), _parent(parent), _left(left), _right(right) { _hash = _key == nullptr ? 0 : std::hash<K>()(*key); }
+            : _key(key), _value(value), _parent(parent), _left(left), _right(right) { _hash = _key == nullptr ? 0 : std::hash<_K>()(*key); }
         Node(const Node<_K, _V> &node) { *this = node; }
         Node(Node<_K, _V> &&node) noexcept { *this = std::move(node); }
         virtual ~Node()
@@ -53,7 +53,7 @@ protected:
     Node<K, V> *get_successor(Node<K, V> *node) const;
     int get_index(Node<K, V> *node) const { return node->_hash & (_capacity - 1); }
     int get_index(std::shared_ptr<K> key) const { return get_hash(key) & (_capacity - 1); }
-    int get_hash(std::shared_ptr<K> key) const
+    size_t get_hash(std::shared_ptr<K> key) const
     {
         if (key != nullptr)
             return std::hash<K>()(*key);
@@ -243,14 +243,14 @@ inline std::shared_ptr<V> HashMap<K, V>::add(std::shared_ptr<K> key, std::shared
     Node<K, V> *parent = root, *node = root;
     int cmp = 0;
     std::shared_ptr<K> key1 = key;
-    int hash1 = get_hash(key1);
+    size_t hash1 = get_hash(key1);
     Node<K, V> *result = nullptr;
     bool scanned = false;
     while (node != nullptr)
     {
         parent = node;
         std::shared_ptr<K> key2 = node->_key;
-        int hash2 = node->_hash;
+        size_t hash2 = node->_hash;
         if (hash1 > hash2)
             cmp = 1;
         else if (hash1 < hash2)
@@ -431,7 +431,7 @@ inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::get_successor(Node<K, V> *node)
 template <typename K, typename V>
 inline void HashMap<K, V>::ensure_capacity()
 {
-    if (_size * 1.0f / _capacity * 1.0f > LOAD_FACTOR)
+    if (_size * 1.0 / _capacity * 1.0 > LOAD_FACTOR)
     {
         Node<K, V> **old = _table;
         _table = new Node<K, V> *[_capacity << 1];

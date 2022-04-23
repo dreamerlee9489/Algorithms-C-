@@ -1,4 +1,3 @@
-#include <iostream>
 #include "./04_Stack.h"
 #include "./Person.h"
 using namespace std;
