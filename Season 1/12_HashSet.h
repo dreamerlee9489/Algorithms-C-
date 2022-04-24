@@ -17,9 +17,9 @@ public:
     ~HashSet() { delete map; }
     size_t size() override { return map->size(); }
     bool is_empty() override { return map->is_empty(); }
-    bool contains(std::shared_ptr<K> data) override { return map->contains_key(data); }
-    void add(std::shared_ptr<K> data) override { map->add(data, std::make_shared<bool>(true)); }
-    void remove(std::shared_ptr<K> data) override { map->remove(data); }
+    bool contains(STD_ shared_ptr<K> data) override { return map->contains_key(data); }
+    void add(STD_ shared_ptr<K> data) override { map->add(data, STD_ make_shared<bool>(true)); }
+    void remove(STD_ shared_ptr<K> data) override { map->remove(data); }
     void traverse(typename ISet<K>::TraverseFunc func = nullptr) { map->traverse(func); }
     void clear() override { map->clear(); }
 };

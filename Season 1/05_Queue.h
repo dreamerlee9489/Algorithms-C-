@@ -9,7 +9,7 @@
 template <typename T>
 class Queue
 {
-    friend std::ostream &operator<<(std::ostream &os, const Queue<T> &queue) { return os << *queue._list; }
+    friend STD_ ostream &operator<<(STD_ ostream &os, const Queue<T> &queue) { return os << *queue._list; }
     LinkedList<T> *_list = nullptr;
 
 public:
@@ -17,13 +17,13 @@ public:
     Queue<T> operator=(Queue<T> &&queue) noexcept;
     Queue() { _list = new LinkedList<T>(); }
     Queue(const Queue<T> &queue) { *this = queue; }
-    Queue(Queue<T> &&queue) noexcept { *this = std::move(queue); }
+    Queue(Queue<T> &&queue) noexcept { *this = STD_ move(queue); }
     ~Queue() { delete _list; }
     size_t size() const { return _list->size(); }
     bool is_empty() const { return _list->is_empty(); }
-    void push(std::shared_ptr<T> data) { _list->add(data); }
-    std::shared_ptr<T> pop() { return _list->remove(0); }
-    std::shared_ptr<T> const front() { return _list->get(0); }
+    void push(STD_ shared_ptr<T> data) { _list->add(data); }
+    STD_ shared_ptr<T> pop() { return _list->remove(0); }
+    STD_ shared_ptr<T> const front() { return _list->get(0); }
     void clear() { _list->clear(); }
 };
 
@@ -43,7 +43,7 @@ inline Queue<T> Queue<T>::operator=(Queue<T> &&queue) noexcept
     clear();
     delete _list;
     _list = new LinkedList<T>();
-    *_list = std::move(*queue._list);
+    *_list = STD_ move(*queue._list);
     return *this;
 }
 

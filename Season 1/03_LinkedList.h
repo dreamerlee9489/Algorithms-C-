@@ -10,19 +10,19 @@ template <typename T>
 class LinkedList : public IList<T>
 {
     template <typename U>
-    friend std::ostream &operator<<(std::ostream &os, const LinkedList<U> &list);
+    friend STD_ ostream &operator<<(STD_ ostream &os, const LinkedList<U> &list);
     template <typename U>
     struct Node
     {
-        std::shared_ptr<T> _data = nullptr;
+        STD_ shared_ptr<T> _data = nullptr;
         Node<U> *_prev = nullptr, *_next = nullptr;
         Node<U> &operator=(const Node<U> &node);
         Node<U> &operator=(Node<U> &&node) noexcept;
-        Node(std::shared_ptr<T> data, Node<U> *prev = nullptr, Node<U> *next = nullptr);
+        Node(STD_ shared_ptr<T> data, Node<U> *prev = nullptr, Node<U> *next = nullptr);
         Node(const Node<U> &node) { *this = node; }
-        Node(Node<U> &&node) noexcept { *this = std::move(node); }
+        Node(Node<U> &&node) noexcept { *this = STD_ move(node); }
         ~Node() { _data = nullptr; }
-        std::shared_ptr<T> disconnect();
+        STD_ shared_ptr<T> disconnect();
     };
     Node<T> *get_node(int index) const;
 
@@ -36,23 +36,23 @@ public:
         _head->_prev = _head->_next = _head;
     }
     LinkedList(const LinkedList<T> &list) { *this = list; }
-    LinkedList(LinkedList<T> &&list) noexcept { *this = std::move(list); }
+    LinkedList(LinkedList<T> &&list) noexcept { *this = STD_ move(list); }
     ~LinkedList()
     {
         clear();
         delete _head;
     }
-    int index_of(std::shared_ptr<T> data) const override;
-    void insert(int index, std::shared_ptr<T> data) override;
-    std::shared_ptr<T> remove(int index) override;
-    std::shared_ptr<T> get(int index) const override;
-    void set(int index, std::shared_ptr<T> data) override;
+    int index_of(STD_ shared_ptr<T> data) const override;
+    void insert(int index, STD_ shared_ptr<T> data) override;
+    STD_ shared_ptr<T> remove(int index) override;
+    STD_ shared_ptr<T> get(int index) const override;
+    void set(int index, STD_ shared_ptr<T> data) override;
     void clear() override;
 };
 
 template <typename T>
 template <typename U>
-inline LinkedList<T>::Node<U>::Node(std::shared_ptr<T> data, Node<U> *prev, Node<U> *next)
+inline LinkedList<T>::Node<U>::Node(STD_ shared_ptr<T> data, Node<U> *prev, Node<U> *next)
 {
     _data = data;
     _prev = prev;
@@ -80,7 +80,7 @@ inline LinkedList<T>::Node<U> &LinkedList<T>::Node<U>::operator=(Node<U> &&node)
 
 template <typename T>
 template <typename U>
-inline std::shared_ptr<T> LinkedList<T>::Node<U>::disconnect()
+inline STD_ shared_ptr<T> LinkedList<T>::Node<U>::disconnect()
 {
     auto old = _data;
     _data = nullptr;
@@ -89,7 +89,7 @@ inline std::shared_ptr<T> LinkedList<T>::Node<U>::disconnect()
 }
 
 template <typename U>
-inline std::ostream &operator<<(std::ostream &os, const LinkedList<U> &list)
+inline STD_ ostream &operator<<(STD_ ostream &os, const LinkedList<U> &list)
 {
     for (size_t i = 0; i < list._size; ++i)
         if (list.get(i) != nullptr)
@@ -133,7 +133,7 @@ inline LinkedList<T> &LinkedList<T>::operator=(LinkedList<T> &&list) noexcept
 }
 
 template <typename T>
-inline int LinkedList<T>::index_of(std::shared_ptr<T> data) const
+inline int LinkedList<T>::index_of(STD_ shared_ptr<T> data) const
 {
     Node<T> *p = _head;
     for (size_t i = 0; i < this->_size; ++i)
@@ -146,7 +146,7 @@ inline int LinkedList<T>::index_of(std::shared_ptr<T> data) const
 }
 
 template <typename T>
-inline void LinkedList<T>::insert(int index, std::shared_ptr<T> data)
+inline void LinkedList<T>::insert(int index, STD_ shared_ptr<T> data)
 {
     this->check_range(index, true);
     Node<T> *prev = get_node(index - 1);
@@ -167,7 +167,7 @@ inline void LinkedList<T>::insert(int index, std::shared_ptr<T> data)
 }
 
 template <typename T>
-inline std::shared_ptr<T> LinkedList<T>::remove(int index)
+inline STD_ shared_ptr<T> LinkedList<T>::remove(int index)
 {
     this->check_range(index);
     Node<T> *old = _head->_next;
@@ -193,7 +193,7 @@ inline std::shared_ptr<T> LinkedList<T>::remove(int index)
 }
 
 template <typename T>
-inline std::shared_ptr<T> LinkedList<T>::get(int index) const
+inline STD_ shared_ptr<T> LinkedList<T>::get(int index) const
 {
     this->check_range(index);
     Node<T> *p = _head->_next;
@@ -203,7 +203,7 @@ inline std::shared_ptr<T> LinkedList<T>::get(int index) const
 }
 
 template <typename T>
-inline void LinkedList<T>::set(int index, std::shared_ptr<T> data)
+inline void LinkedList<T>::set(int index, STD_ shared_ptr<T> data)
 {
     this->check_range(index);
     Node<T> *p = _head->_next;

@@ -16,23 +16,23 @@ class AVLTree : public BBST<T>
         size_t _height = 1;
         AVLNode<U> &operator=(const AVLNode<U> &node);
         AVLNode<U> &operator=(AVLNode<U> &&node) noexcept;
-        AVLNode(std::shared_ptr<U> data, NODE *parent = nullptr, NODE *left = nullptr, NODE *right = nullptr)
+        AVLNode(STD_ shared_ptr<U> data, NODE *parent = nullptr, NODE *left = nullptr, NODE *right = nullptr)
             : NODE(data, parent, left, right) {}
         AVLNode(const AVLNode<U> &node) { *this = node; }
-        AVLNode(AVLNode<U> &&node) noexcept { *this = std::move(node); }
+        AVLNode(AVLNode<U> &&node) noexcept { *this = STD_ move(node); }
         ~AVLNode() = default;
         int balance_factor();
         void update_height();
         NODE *taller_child();
-        std::string to_string() const override { return ((IString &)*this->_data).to_string() + " h=" + std::to_string(_height); }
+        STD_ string to_string() const override { return ((IString &)*this->_data).to_string() + " h=" + STD_ to_string(_height); }
     };
-    AVLNode<T> *get_node(std::shared_ptr<T> data) const override { return (AVLNode<T> *)BBST<T>::get_node(data); }
-    NODE *create_node(std::shared_ptr<T> data, NODE *parent) override { return new AVLNode<T>(data, parent); }
+    AVLNode<T> *get_node(STD_ shared_ptr<T> data) const override { return (AVLNode<T> *)BBST<T>::get_node(data); }
+    NODE *create_node(STD_ shared_ptr<T> data, NODE *parent) override { return new AVLNode<T>(data, parent); }
     void rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f) override;
     void after_rotate(NODE *grand, NODE *parent, NODE *child) override;
     void after_add(NODE *node) override;
     void after_remove(NODE *node) override;
-    bool is_balanced(NODE *node) { return std::abs(((AVLNode<T> *)node)->balance_factor()) <= 1; }
+    bool is_balanced(NODE *node) { return STD_ abs(((AVLNode<T> *)node)->balance_factor()) <= 1; }
     void update_height(NODE *node) { ((AVLNode<T> *)node)->update_height(); }
     void rebalance(NODE *grand);
 
@@ -41,7 +41,7 @@ public:
     AVLTree<T> &operator=(AVLTree<T> &&tree) noexcept;
     AVLTree(typename IBinaryTree<T>::Comparator comparator = nullptr) : BBST<T>(comparator) {}
     AVLTree(const AVLTree<T> &tree) { *this = tree; }
-    AVLTree(AVLTree &&tree) noexcept { *this = std::move(tree); }
+    AVLTree(AVLTree &&tree) noexcept { *this = STD_ move(tree); }
     ~AVLTree() = default;
 };
 
@@ -81,7 +81,7 @@ inline void AVLTree<T>::AVLNode<U>::update_height()
 {
     size_t leftH = (this->_left == nullptr) ? 0 : ((AVLNode<U> *)this->_left)->_height;
     size_t rightH = (this->_right == nullptr) ? 0 : ((AVLNode<U> *)this->_right)->_height;
-    _height = 1 + std::max(leftH, rightH);
+    _height = 1 + STD_ max(leftH, rightH);
 }
 
 template <typename T>
@@ -104,7 +104,7 @@ inline AVLTree<T> &AVLTree<T>::operator=(const AVLTree<T> &tree)
     if (tree._size > 0)
     {
         this->_comparator = tree._comparator;
-        std::queue<NODE *> q;
+        STD_ queue<NODE *> q;
         q.push(tree._root);
         while (!q.empty())
         {

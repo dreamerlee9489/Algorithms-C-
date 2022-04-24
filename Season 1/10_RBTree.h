@@ -17,19 +17,19 @@ class RBTree : public BBST<T>
         bool _color = RED;
         RBNode<U> &operator=(const RBNode<U> &node);
         RBNode<U> &operator=(RBNode<U> &&node) noexcept;
-        RBNode(std::shared_ptr<U> data, NODE *parent = nullptr, NODE *left = nullptr, NODE *right = nullptr)
+        RBNode(STD_ shared_ptr<U> data, NODE *parent = nullptr, NODE *left = nullptr, NODE *right = nullptr)
             : NODE(data, parent, left, right) {}
         RBNode(const RBNode<U> &node) { *this = node; }
-        RBNode(RBNode<U> &&node) noexcept { *this = std::move(node); }
+        RBNode(RBNode<U> &&node) noexcept { *this = STD_ move(node); }
         ~RBNode() = default;
-        std::string to_string() const override
+        STD_ string to_string() const override
         {
-            std::string str = ((IString &)*this->_data).to_string();
+            STD_ string str = ((IString &)*this->_data).to_string();
             return str += _color == RED ? " R E D" : " BLACK";
         }
     };
-    RBNode<T> *get_node(std::shared_ptr<T> data) const override { return (RBNode<T> *)BBST<T>::get_node(data); }
-    NODE *create_node(std::shared_ptr<T> data, NODE *parent) override { return new RBNode<T>(data, parent); }
+    RBNode<T> *get_node(STD_ shared_ptr<T> data) const override { return (RBNode<T> *)BBST<T>::get_node(data); }
+    NODE *create_node(STD_ shared_ptr<T> data, NODE *parent) override { return new RBNode<T>(data, parent); }
     void after_add(NODE *node) override;
     void after_remove(NODE *node) override;
     NODE *set_color(NODE *node, bool color);
@@ -42,7 +42,7 @@ public:
     RBTree<T> &operator=(RBTree<T> &&tree) noexcept;
     RBTree(typename IBinaryTree<T>::Comparator comparator = nullptr) : BBST<T>(comparator) {}
     RBTree(const RBTree<T> &tree) { *this = tree; }
-    RBTree(RBTree<T> &&tree) noexcept { *this = std::move(tree); }
+    RBTree(RBTree<T> &&tree) noexcept { *this = STD_ move(tree); }
     ~RBTree() = default;
 };
 
@@ -74,7 +74,7 @@ inline RBTree<T> &RBTree<T>::operator=(const RBTree<T> &tree)
     if (tree._size > 0)
     {
         this->_comparator = tree._comparator;
-        std::queue<NODE *> q;
+        STD_ queue<NODE *> q;
         q.push(tree._root);
         while (!q.empty())
         {

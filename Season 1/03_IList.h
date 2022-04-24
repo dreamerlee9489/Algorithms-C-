@@ -1,5 +1,6 @@
 #ifndef ILIST_H
 #define ILIST_H
+#define STD_ std::
 #include <iostream>
 #include <string>
 #include <memory>
@@ -18,25 +19,25 @@ protected:
 public:
     IList() = default;
     virtual ~IList() = default;
-    virtual int index_of(std::shared_ptr<T> data) const = 0;
-    virtual void insert(int index, std::shared_ptr<T> data) = 0;
-    virtual std::shared_ptr<T> remove(int index) = 0;
-    virtual std::shared_ptr<T> get(int index) const = 0;
-    virtual void set(int index, std::shared_ptr<T> data) = 0;
+    virtual int index_of(STD_ shared_ptr<T> data) const = 0;
+    virtual void insert(int index, STD_ shared_ptr<T> data) = 0;
+    virtual STD_ shared_ptr<T> remove(int index) = 0;
+    virtual STD_ shared_ptr<T> get(int index) const = 0;
+    virtual void set(int index, STD_ shared_ptr<T> data) = 0;
     virtual void clear() = 0;
     size_t size() const { return _size; }
     bool is_empty() const { return _size == 0; }
-    bool contains(std::shared_ptr<T> data) const { return index_of(data) >= 0 ? true : false; }
-    void add(std::shared_ptr<T> data) { return insert(_size, data); }
+    bool contains(STD_ shared_ptr<T> data) const { return index_of(data) >= 0 ? true : false; }
+    void add(STD_ shared_ptr<T> data) { return insert(_size, data); }
 };
 
 template <typename T>
 inline void IList<T>::check_range(int index, bool isAdd) const
 {
     if (!isAdd && (index >= _size || index < 0))
-        throw std::out_of_range("index = " + std::to_string(index) + " out of range: [0, " + std::to_string(_size - 1) + "].");
+        throw STD_ out_of_range("index = " + STD_ to_string(index) + " out of range: [0, " + STD_ to_string(_size - 1) + "].");
     if (index > _size || index < 0)
-        throw std::out_of_range("index = " + std::to_string(index) + " out of range for add: [0, " + std::to_string(_size) + "].");
+        throw STD_ out_of_range("index = " + STD_ to_string(index) + " out of range for add: [0, " + STD_ to_string(_size) + "].");
 }
 
 #endif /* ILIST_H */

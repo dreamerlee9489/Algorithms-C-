@@ -6,8 +6,8 @@
 // 测试类
 class Person : public IString
 {
-    friend std::istream &operator>>(std::istream &in, Person &p) { return in >> p._age >> p._name; }
-    friend std::ostream &operator<<(std::ostream &out, const Person &p) { return out << p.to_string(); }
+    friend STD_ istream &operator>>(STD_ istream &in, Person &p) { return in >> p._age >> p._name; }
+    friend STD_ ostream &operator<<(STD_ ostream &out, const Person &p) { return out << p.to_string(); }
     friend bool operator==(const Person &lhs, const Person &rhs) { return lhs._age == rhs._age && lhs._name == rhs._name; }
     friend bool operator!=(const Person &lhs, const Person &rhs) { return !(lhs == rhs); }
     friend bool operator<(const Person &lhs, const Person &rhs) { return lhs._age < rhs._age; }
@@ -15,7 +15,7 @@ class Person : public IString
 
 public:
     int _age = 0;
-    std::string _name = "name";
+    STD_ string _name = "name";
     Person &operator=(const Person &rhs)
     {
         _age = rhs._age;
@@ -24,20 +24,20 @@ public:
     }
     Person &operator=(Person &&rhs) noexcept
     {
-        _age = std::move(rhs._age);
-        _name = std::move((std::string)rhs._name);
+        _age = STD_ move(rhs._age);
+        _name = STD_ move((STD_ string)rhs._name);
         return *this;
     }
     Person() = default;
-    Person(int age, std::string name = "unnamed") : _age(age), _name(name) {}
+    Person(int age, STD_ string name = "unnamed") : _age(age), _name(name) {}
     Person(const Person &p) { *this = p; }
-    Person(Person &&p) noexcept { *this = std::move(p); }
-    ~Person() { std::cout << "delete " << this << to_string() << "\n"; }
-    std::string to_string() const override { return "[" + std::to_string(_age) + ", " + _name + "]"; }
+    Person(Person &&p) noexcept { *this = STD_ move(p); }
+    ~Person() { STD_ cout << "delete " << this << to_string() << "\n"; }
+    STD_ string to_string() const override { return "[" + STD_ to_string(_age) + ", " + _name + "]"; }
 };
 
 template <>
-struct std::hash<Person>
+struct STD_ hash<Person>
 {
     size_t operator()(const Person &p) const { return hash<string>()(p._name) ^ hash<int>()(p._age); }
 };

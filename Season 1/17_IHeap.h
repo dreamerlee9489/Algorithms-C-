@@ -1,5 +1,6 @@
 #ifndef IHEAP_H
 #define IHEAP_H
+#define STD_ std::
 #include <cmath>
 #include <queue>
 #include <memory>
@@ -13,27 +14,27 @@ template <typename T>
 class IHeap
 {
 protected:
-    using Comparator = int (*)(std::shared_ptr<T> a, std::shared_ptr<T> b);
-    using TraverseFunc = bool (*)(std::shared_ptr<T> data);
+    using Comparator = int (*)(STD_ shared_ptr<T> a, STD_ shared_ptr<T> b);
+    using TraverseFunc = bool (*)(STD_ shared_ptr<T> data);
     size_t _size = 0;
     Comparator _comparator = nullptr;
-    int compare(std::shared_ptr<T> a, std::shared_ptr<T> b);
+    int compare(STD_ shared_ptr<T> a, STD_ shared_ptr<T> b);
 
 public:
     IHeap(Comparator comparator = nullptr) { _comparator = comparator; }
     virtual ~IHeap() = default;
     size_t size() const { return _size; }
     bool is_empty() const { return _size == 0; }
-    virtual void add(std::shared_ptr<T> data) = 0;
-    virtual std::shared_ptr<T> get() const = 0;
-    virtual std::shared_ptr<T> remove() = 0;
-    virtual std::shared_ptr<T> replace(std::shared_ptr<T> data) = 0;
+    virtual void add(STD_ shared_ptr<T> data) = 0;
+    virtual STD_ shared_ptr<T> get() const = 0;
+    virtual STD_ shared_ptr<T> remove() = 0;
+    virtual STD_ shared_ptr<T> replace(STD_ shared_ptr<T> data) = 0;
     virtual void clear() = 0;
     virtual void traverse(TraverseFunc func = nullptr) const = 0;
 };
 
 template <typename T>
-inline int IHeap<T>::compare(std::shared_ptr<T> a, std::shared_ptr<T> b)
+inline int IHeap<T>::compare(STD_ shared_ptr<T> a, STD_ shared_ptr<T> b)
 {
     if (_comparator != nullptr)
         return _comparator(a, b);

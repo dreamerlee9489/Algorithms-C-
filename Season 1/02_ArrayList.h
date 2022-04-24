@@ -10,10 +10,10 @@ template <typename T>
 class ArrayList : public IList<T>
 {
 	template <typename U>
-	friend std::ostream &operator<<(std::ostream &os, const ArrayList<U> &list);
+	friend STD_ ostream &operator<<(STD_ ostream &os, const ArrayList<U> &list);
 	const size_t DEFAULT_CAPACITY = 8;
 	size_t _capacity = 0;
-	std::shared_ptr<T> *_array = nullptr;
+	STD_ shared_ptr<T> *_array = nullptr;
 	void ensure_capacity();
 
 public:
@@ -21,18 +21,18 @@ public:
 	ArrayList<T> &operator=(ArrayList<T> &&list) noexcept;
 	ArrayList();
 	ArrayList(const ArrayList<T> &list) { *this = list; }
-	ArrayList(ArrayList<T> &&list) noexcept { *this = std::move(list); }
+	ArrayList(ArrayList<T> &&list) noexcept { *this = STD_ move(list); }
 	~ArrayList() { delete[] _array; }
 	size_t capacity() const { return _capacity; }
-	int index_of(std::shared_ptr<T> data) const override;
-	void insert(int index, std::shared_ptr<T> data) override;
-	std::shared_ptr<T> remove(int index) override;
-	std::shared_ptr<T> get(int index) const override
+	int index_of(STD_ shared_ptr<T> data) const override;
+	void insert(int index, STD_ shared_ptr<T> data) override;
+	STD_ shared_ptr<T> remove(int index) override;
+	STD_ shared_ptr<T> get(int index) const override
 	{
 		this->check_range(index);
 		return _array[index];
 	}
-	void set(int index, std::shared_ptr<T> data) override
+	void set(int index, STD_ shared_ptr<T> data) override
 	{
 		this->check_range(index);
 		_array[index] = data;
@@ -46,7 +46,7 @@ public:
 };
 
 template <typename U>
-inline std::ostream &operator<<(std::ostream &os, const ArrayList<U> &list)
+inline STD_ ostream &operator<<(STD_ ostream &os, const ArrayList<U> &list)
 {
 	for (size_t i = 0; i < list._size; ++i)
 		if (list.get(i) != nullptr)
@@ -80,11 +80,11 @@ inline ArrayList<T>::ArrayList()
 {
 	this->_size = 0;
 	_capacity = DEFAULT_CAPACITY;
-	_array = new std::shared_ptr<T>[_capacity];
+	_array = new STD_ shared_ptr<T>[_capacity];
 }
 
 template <typename T>
-inline int ArrayList<T>::index_of(std::shared_ptr<T> data) const
+inline int ArrayList<T>::index_of(STD_ shared_ptr<T> data) const
 {
 	for (size_t i = 0; i < this->_size; ++i)
 		if (*_array[i] == *data)
@@ -93,7 +93,7 @@ inline int ArrayList<T>::index_of(std::shared_ptr<T> data) const
 }
 
 template <typename T>
-inline void ArrayList<T>::insert(int index, std::shared_ptr<T> data)
+inline void ArrayList<T>::insert(int index, STD_ shared_ptr<T> data)
 {
 	this->check_range(index, true);
 	ensure_capacity();
@@ -104,7 +104,7 @@ inline void ArrayList<T>::insert(int index, std::shared_ptr<T> data)
 }
 
 template <typename T>
-inline std::shared_ptr<T> ArrayList<T>::remove(int index)
+inline STD_ shared_ptr<T> ArrayList<T>::remove(int index)
 {
 	this->check_range(index);
 	auto old = _array[index];
@@ -119,9 +119,9 @@ inline void ArrayList<T>::ensure_capacity()
 {
 	if (this->_size >= _capacity)
 	{
-		std::shared_ptr<T> *old = _array;
+		STD_ shared_ptr<T> *old = _array;
 		_capacity <<= 1;
-		_array = new std::shared_ptr<T>[_capacity];
+		_array = new STD_ shared_ptr<T>[_capacity];
 		for (size_t i = 0; i < this->_size; ++i)
 			_array[i] = old[i];
 		delete[] old;

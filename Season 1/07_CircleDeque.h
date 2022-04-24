@@ -1,5 +1,6 @@
 #ifndef CIRCLE_DEQUE_H
 #define CIRCLE_DEQUE_H
+#define STD_ std::
 #include <iostream>
 #include <memory>
 /**
@@ -11,10 +12,10 @@ template <typename T>
 class CircleDeque
 {
     template <typename U>
-    friend std::ostream &operator<<(std::ostream &os, const CircleDeque<U> &deque);
+    friend STD_ ostream &operator<<(STD_ ostream &os, const CircleDeque<U> &deque);
     const size_t DEFAULT_CAPACITY = 8;
     size_t _capacity = 0, _size = 0, _front = 0;
-    std::shared_ptr<T> *_array = nullptr;
+    STD_ shared_ptr<T> *_array = nullptr;
     int true_index(int index) const;
     void ensure_capacity();
 
@@ -23,22 +24,22 @@ public:
     CircleDeque<T> &operator=(CircleDeque<T> &&deque) noexcept;
     CircleDeque();
     CircleDeque(const CircleDeque<T> &deque) { *this = deque; }
-    CircleDeque(CircleDeque<T> &&deque) noexcept { *this = std::move(deque); }
+    CircleDeque(CircleDeque<T> &&deque) noexcept { *this = STD_ move(deque); }
     ~CircleDeque();
     size_t size() const { return _size; }
     size_t capacity() const { return _capacity; }
     bool is_empty() const { return _size == 0; }
-    void push(std::shared_ptr<T> data);
-    std::shared_ptr<T> pop();
-    void push_front(std::shared_ptr<T> data);
-    std::shared_ptr<T> pop_rear();
-    std::shared_ptr<T> front() const { return _array[_front]; }
-    std::shared_ptr<T> rear() const { return _array[true_index(_size - 1)]; }
+    void push(STD_ shared_ptr<T> data);
+    STD_ shared_ptr<T> pop();
+    void push_front(STD_ shared_ptr<T> data);
+    STD_ shared_ptr<T> pop_rear();
+    STD_ shared_ptr<T> front() const { return _array[_front]; }
+    STD_ shared_ptr<T> rear() const { return _array[true_index(_size - 1)]; }
     void clear();
 };
 
 template <typename U>
-inline std::ostream &operator<<(std::ostream &os, const CircleDeque<U> &deque)
+inline STD_ ostream &operator<<(STD_ ostream &os, const CircleDeque<U> &deque)
 {
     for (size_t i = 0; i < deque._capacity; ++i)
     {
@@ -54,7 +55,7 @@ template <typename T>
 inline CircleDeque<T> &CircleDeque<T>::operator=(const CircleDeque<T> &deque)
 {
     delete[] _array;
-    _array = new std::shared_ptr<T>[deque._capacity];
+    _array = new STD_ shared_ptr<T>[deque._capacity];
     _capacity = deque._capacity;
     _size = deque._size;
     _front = deque._front;
@@ -81,7 +82,7 @@ inline CircleDeque<T>::CircleDeque()
     _size = 0;
     _front = 0;
     _capacity = DEFAULT_CAPACITY;
-    _array = new std::shared_ptr<T>[_capacity];
+    _array = new STD_ shared_ptr<T>[_capacity];
 }
 
 template <typename T>
@@ -92,7 +93,7 @@ inline CircleDeque<T>::~CircleDeque()
 }
 
 template <typename T>
-inline void CircleDeque<T>::push(std::shared_ptr<T> data)
+inline void CircleDeque<T>::push(STD_ shared_ptr<T> data)
 {
     ensure_capacity();
     _array[true_index(_size)] = data;
@@ -100,9 +101,9 @@ inline void CircleDeque<T>::push(std::shared_ptr<T> data)
 }
 
 template <typename T>
-inline std::shared_ptr<T> CircleDeque<T>::pop()
+inline STD_ shared_ptr<T> CircleDeque<T>::pop()
 {
-    std::shared_ptr<T> old = _array[_front];
+    STD_ shared_ptr<T> old = _array[_front];
     _array[_front] = nullptr;
     _front = true_index(1);
     _size--;
@@ -110,7 +111,7 @@ inline std::shared_ptr<T> CircleDeque<T>::pop()
 }
 
 template <typename T>
-inline void CircleDeque<T>::push_front(std::shared_ptr<T> data)
+inline void CircleDeque<T>::push_front(STD_ shared_ptr<T> data)
 {
     ensure_capacity();
     _front = true_index(-1);
@@ -119,10 +120,10 @@ inline void CircleDeque<T>::push_front(std::shared_ptr<T> data)
 }
 
 template <typename T>
-inline std::shared_ptr<T> CircleDeque<T>::pop_rear()
+inline STD_ shared_ptr<T> CircleDeque<T>::pop_rear()
 {
     int rear = true_index(_size - 1);
-    std::shared_ptr<T> old = _array[rear];
+    STD_ shared_ptr<T> old = _array[rear];
     _array[rear] = nullptr;
     _size--;
     return old;
@@ -151,9 +152,9 @@ inline void CircleDeque<T>::ensure_capacity()
 {
     if (_size >= _capacity)
     {
-        std::shared_ptr<T> *old = _array;
+        STD_ shared_ptr<T> *old = _array;
         size_t new_cap = _capacity << 1;
-        _array = new std::shared_ptr<T>[new_cap];
+        _array = new STD_ shared_ptr<T>[new_cap];
         for (size_t i = 0; i < _size; ++i)
             _array[i] = old[true_index(i)];
         _front = 0;

@@ -1,5 +1,6 @@
 #ifndef BINARY_TREE_H
 #define BINARY_TREE_H
+#define STD_ std::
 #include <iostream>
 #include <memory>
 #include <queue>
@@ -14,42 +15,42 @@
 template <typename T>
 class IBinaryTree
 {
-    friend std::ostream &operator<<(std::ostream &os, const IBinaryTree<T> &tree) { return draw_tree(os, tree); }
+    friend STD_ ostream &operator<<(STD_ ostream &os, const IBinaryTree<T> &tree) { return draw_tree(os, tree); }
 
 protected:
-    using TraverseFunc = bool (*)(std::shared_ptr<T> data);
-    using Comparator = int (*)(std::shared_ptr<T> a, std::shared_ptr<T> b);
+    using TraverseFunc = bool (*)(STD_ shared_ptr<T> data);
+    using Comparator = int (*)(STD_ shared_ptr<T> a, STD_ shared_ptr<T> b);
     template <typename U>
     struct Node : public IString
     {
-        friend std::ostream &operator<<(std::ostream &os, const Node<U> &node) { return os << node.to_string(); }
-        std::shared_ptr<U> _data = nullptr;
+        friend STD_ ostream &operator<<(STD_ ostream &os, const Node<U> &node) { return os << node.to_string(); }
+        STD_ shared_ptr<U> _data = nullptr;
         Node<U> *_parent = nullptr, *_left = nullptr, *_right = nullptr;
         Node<U> &operator=(const Node<U> &node);
         Node<U> &operator=(Node<U> &&node) noexcept;
-        Node(std::shared_ptr<U> data, Node<U> *parent = nullptr, Node<U> *left = nullptr, Node<U> *right = nullptr)
+        Node(STD_ shared_ptr<U> data, Node<U> *parent = nullptr, Node<U> *left = nullptr, Node<U> *right = nullptr)
             : _data(data), _parent(parent), _left(left), _right(right) {}
         Node(const Node<U> &node) { *this = node; }
-        Node(Node<U> &&node) noexcept { *this = std::move(node); }
+        Node(Node<U> &&node) noexcept { *this = STD_ move(node); }
         virtual ~Node() { _data = nullptr; }
         bool is_leaf() const { return _left == nullptr && _right == nullptr; }
         bool is_binary() const { return _left != nullptr && _right != nullptr; }
         bool is_left() const { return _parent != nullptr && this == _parent->_left; }
         bool is_right() const { return _parent != nullptr && this == _parent->_right; }
         Node<U> *get_sibling() const;
-        std::string to_string() const override { return ((IString &)*_data).to_string(); }
+        STD_ string to_string() const override { return ((IString &)*_data).to_string(); }
     };
     size_t _size = 0;
     Node<T> *_root = nullptr;
     Comparator _comparator = nullptr;
-    void not_null_check(std::shared_ptr<T> data) const
+    void not_null_check(STD_ shared_ptr<T> data) const
     {
         if (data == nullptr)
-            throw std::invalid_argument("data must be not null.");
+            throw STD_ invalid_argument("data must be not null.");
     }
-    static std::ostream &draw_tree(std::ostream &os, const IBinaryTree<T> &tree);
-    virtual Node<T> *get_node(std::shared_ptr<T> data) const = 0;
-    virtual Node<T> *create_node(std::shared_ptr<T> data, Node<T> *parent) { return new Node<T>(data, parent); }
+    static STD_ ostream &draw_tree(STD_ ostream &os, const IBinaryTree<T> &tree);
+    virtual Node<T> *get_node(STD_ shared_ptr<T> data) const = 0;
+    virtual Node<T> *create_node(STD_ shared_ptr<T> data, Node<T> *parent) { return new Node<T>(data, parent); }
     Node<T> *get_predecessor(Node<T> *node) const;
     Node<T> *get_successor(Node<T> *node) const;
     void inorder_recu(Node<T> *node, TraverseFunc func) const;
@@ -62,7 +63,7 @@ protected:
     size_t height_recu(Node<T> *node) const
     {
         if (node != nullptr)
-            return 1 + std::max(height_recu(node->_left), height_recu(node->_right));
+            return 1 + STD_ max(height_recu(node->_left), height_recu(node->_right));
         return 0;
     }
     size_t height_iter(Node<T> *node) const;
@@ -78,13 +79,13 @@ public:
     };
     IBinaryTree(Comparator comparator = nullptr) { _comparator = comparator; }
     virtual ~IBinaryTree() { clear_recu(_root); }
-    virtual void add(std::shared_ptr<T> data) = 0;
-    virtual void remove(std::shared_ptr<T> data) = 0;
+    virtual void add(STD_ shared_ptr<T> data) = 0;
+    virtual void remove(STD_ shared_ptr<T> data) = 0;
     size_t size() const { return _size; }
     size_t height() const { return height_iter(_root); }
     bool is_empty() const { return _size == 0; }
     bool is_complete() const;
-    bool contains(std::shared_ptr<T> data) const { return get_node(data) != nullptr; }
+    bool contains(STD_ shared_ptr<T> data) const { return get_node(data) != nullptr; }
     void traverse(TraverseOrder order = TraverseOrder::In, TraverseFunc func = nullptr) const;
     void clear()
     {
@@ -126,13 +127,13 @@ inline IBinaryTree<T>::Node<U> *IBinaryTree<T>::Node<U>::get_sibling() const
 }
 
 template <typename T>
-inline std::ostream &IBinaryTree<T>::draw_tree(std::ostream &os, const IBinaryTree<T> &tree)
+inline STD_ ostream &IBinaryTree<T>::draw_tree(STD_ ostream &os, const IBinaryTree<T> &tree)
 {
     if (tree._root != nullptr)
     {
         size_t height = 0;
         size_t level_count = 1;
-        std::queue<Node<T> *> q;
+        STD_ queue<Node<T> *> q;
         q.push(tree._root);
         while (!q.empty())
         {
@@ -199,7 +200,7 @@ inline bool IBinaryTree<T>::is_complete() const
 {
     if (_root != nullptr)
     {
-        std::queue<Node<T> *> q;
+        STD_ queue<Node<T> *> q;
         q.push(_root);
         bool leaf = false;
         while (!q.empty())
@@ -241,7 +242,7 @@ inline size_t IBinaryTree<T>::height_iter(Node<T> *node) const
     if (node != nullptr)
     {
         size_t height = 0, level_count = 1;
-        std::queue<Node<T> *> q;
+        STD_ queue<Node<T> *> q;
         q.push(node);
         while (!q.empty())
         {
@@ -292,7 +293,7 @@ inline void IBinaryTree<T>::inorder_recu(Node<T> *node, TraverseFunc func) const
         if (func != nullptr)
             func(node->_data);
         else
-            std::cout << *node->_data << "\n";
+            STD_ cout << *node->_data << "\n";
         inorder_recu(node->_right, func);
     }
 }
@@ -305,7 +306,7 @@ inline void IBinaryTree<T>::preorder_recu(Node<T> *node, TraverseFunc func) cons
         if (func != nullptr)
             func(node->_data);
         else
-            std::cout << *node->_data << "\n";
+            STD_ cout << *node->_data << "\n";
         preorder_recu(node->_left, func);
         preorder_recu(node->_right, func);
     }
@@ -321,7 +322,7 @@ inline void IBinaryTree<T>::postorder_recu(Node<T> *node, TraverseFunc func) con
         if (func != nullptr)
             func(node->_data);
         else
-            std::cout << *node->_data << "\n";
+            STD_ cout << *node->_data << "\n";
     }
 }
 
@@ -331,7 +332,7 @@ inline void IBinaryTree<T>::inorder_iter(TraverseFunc func) const
     if (_root != nullptr)
     {
         Node<T> *node = _root;
-        std::stack<Node<T> *> s;
+        STD_ stack<Node<T> *> s;
         while (true)
         {
             if (node != nullptr)
@@ -346,7 +347,7 @@ inline void IBinaryTree<T>::inorder_iter(TraverseFunc func) const
                 if (func != nullptr)
                     func(node->_data);
                 else
-                    std::cout << *node->_data << "\n";
+                    STD_ cout << *node->_data << "\n";
                 node = node->_right;
             }
             else
@@ -360,7 +361,7 @@ inline void IBinaryTree<T>::preorder_iter(TraverseFunc func) const
 {
     if (_root != nullptr)
     {
-        std::stack<Node<T> *> s;
+        STD_ stack<Node<T> *> s;
         s.push(_root);
         while (!s.empty())
         {
@@ -369,7 +370,7 @@ inline void IBinaryTree<T>::preorder_iter(TraverseFunc func) const
             if (func != nullptr)
                 func(node->_data);
             else
-                std::cout << *node->_data << "\n";
+                STD_ cout << *node->_data << "\n";
             if (node->_right != nullptr)
                 s.push(node->_right);
             if (node->_left != nullptr)
@@ -384,7 +385,7 @@ inline void IBinaryTree<T>::postorder_iter(TraverseFunc func) const
     if(_root != nullptr)
     {
         Node<T> *prev = nullptr;
-        std::stack<Node<T> *> s;
+        STD_ stack<Node<T> *> s;
         s.push(_root);
         while (!s.empty())
         {
@@ -395,7 +396,7 @@ inline void IBinaryTree<T>::postorder_iter(TraverseFunc func) const
                 if (func != nullptr)
                     func(prev->_data);
                 else
-                    std::cout << *prev->_data << "\n";
+                    STD_ cout << *prev->_data << "\n";
             }
             else
             {
@@ -413,7 +414,7 @@ inline void IBinaryTree<T>::levelorder(Node<T> *node, TraverseFunc func) const
 {
     if (node != nullptr)
     {
-        std::queue<Node<T> *> q;
+        STD_ queue<Node<T> *> q;
         q.push(node);
         while (!q.empty())
         {
@@ -426,7 +427,7 @@ inline void IBinaryTree<T>::levelorder(Node<T> *node, TraverseFunc func) const
             if (func != nullptr)
                 func(elem->_data);
             else
-                std::cout << *elem->_data << "\n";
+                STD_ cout << *elem->_data << "\n";
         }
     }
 }

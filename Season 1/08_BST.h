@@ -14,17 +14,17 @@ class BST : public IBinaryTree<T>
 protected:
     virtual void after_add(NODE *node) {}
     virtual void after_remove(NODE *node) {}
-    NODE *get_node(std::shared_ptr<T> data) const override;
+    NODE *get_node(STD_ shared_ptr<T> data) const override;
 
 public:
     BST<T> &operator=(const BST<T> &tree);
     BST<T> &operator=(BST<T> &&tree) noexcept;
     BST(typename IBinaryTree<T>::Comparator comparator = nullptr) : IBinaryTree<T>(comparator) {}
     BST(const BST<T> &tree) { *this = tree; }
-    BST(BST<T> &&tree) noexcept { *this = std::move(tree); }
+    BST(BST<T> &&tree) noexcept { *this = STD_ move(tree); }
     virtual ~BST() = default;
-    void add(std::shared_ptr<T> data) override;
-    void remove(std::shared_ptr<T> data) override;
+    void add(STD_ shared_ptr<T> data) override;
+    void remove(STD_ shared_ptr<T> data) override;
 };
 
 template <typename T>
@@ -34,7 +34,7 @@ inline BST<T> &BST<T>::operator=(const BST<T> &tree)
     if (tree._size > 0)
     {
         this->_comparator = tree._comparator;
-        std::queue<NODE *> q;
+        STD_ queue<NODE *> q;
         q.push(tree._root);
         while (!q.empty())
         {
@@ -64,7 +64,7 @@ inline BST<T> &BST<T>::operator=(BST<T> &&tree) noexcept
 }
 
 template <typename T>
-inline void BST<T>::add(std::shared_ptr<T> data)
+inline void BST<T>::add(STD_ shared_ptr<T> data)
 {
     this->not_null_check(data);
     if (this->_root == nullptr)
@@ -123,7 +123,7 @@ inline void BST<T>::add(std::shared_ptr<T> data)
 }
 
 template <typename T>
-inline void BST<T>::remove(std::shared_ptr<T> data)
+inline void BST<T>::remove(STD_ shared_ptr<T> data)
 {
     NODE *node = get_node(data);
     if (node != nullptr)
@@ -165,7 +165,7 @@ inline void BST<T>::remove(std::shared_ptr<T> data)
 }
 
 template <typename T>
-inline typename BST<T>::NODE *BST<T>::get_node(std::shared_ptr<T> data) const
+inline typename BST<T>::NODE *BST<T>::get_node(STD_ shared_ptr<T> data) const
 {
     NODE *node = this->_root;
     while (node != nullptr)

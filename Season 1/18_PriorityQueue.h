@@ -9,7 +9,7 @@
 template <typename T>
 class PriorityQueue
 {
-    using Comparator = int (*)(std::shared_ptr<T> a, std::shared_ptr<T> b);
+    using Comparator = int (*)(STD_ shared_ptr<T> a, STD_ shared_ptr<T> b);
     BinaryHeap<T> *heap = nullptr;
 
 public:
@@ -18,9 +18,9 @@ public:
     size_t size() const { return heap->size(); }
     bool is_empty() const { return heap->is_empty(); }
     void clear() { heap->clear(); }
-    void push(std::shared_ptr<T> data) { heap->add(data); }
-    std::shared_ptr<T> pop() { return heap->remove(); }
-    std::shared_ptr<T> front() const { return heap->get(); }
+    void push(STD_ shared_ptr<T> data) { heap->add(data); }
+    STD_ shared_ptr<T> pop() { return heap->remove(); }
+    STD_ shared_ptr<T> front() const { return heap->get(); }
 };
 
 #endif /* PRIORITY_QUEUE_H */

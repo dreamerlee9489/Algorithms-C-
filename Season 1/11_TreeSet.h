@@ -10,7 +10,7 @@
 template <typename K>
 class TreeSet : public ISet<K>
 {
-    using TraverseFunc = bool (*)(std::shared_ptr<K> data);
+    using TraverseFunc = bool (*)(STD_ shared_ptr<K> data);
     RBTree<K> *tree = nullptr;
 
 public:
@@ -18,9 +18,9 @@ public:
     ~TreeSet() { delete tree; }
     size_t size() override { return tree->size(); }
     bool is_empty() override { return tree->is_empty(); }
-    bool contains(std::shared_ptr<K> data) override { return tree->contains(data); }
-    void add(std::shared_ptr<K> data) override { tree->add(data); }
-    void remove(std::shared_ptr<K> data) override { tree->remove(data); }
+    bool contains(STD_ shared_ptr<K> data) override { return tree->contains(data); }
+    void add(STD_ shared_ptr<K> data) override { tree->add(data); }
+    void remove(STD_ shared_ptr<K> data) override { tree->remove(data); }
     void traverse(TraverseFunc func = nullptr) { tree->traverse(RBTree<K>::TraverseOrder::In, func); }
     void clear() override { tree->clear(); }
 };

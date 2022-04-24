@@ -11,7 +11,7 @@ class BinaryHeap : public IHeap<T>
 {
     const size_t DEFAULT_CAPACITY = 8;
     size_t _capacity = 0;
-    std::shared_ptr<T> *_array = nullptr;
+    STD_ shared_ptr<T> *_array = nullptr;
     void ensure_capacity();
     void sift_up(int index);
     void sift_down(int index);
@@ -23,26 +23,26 @@ class BinaryHeap : public IHeap<T>
     void heap_empty_check() const
     {
         if (this->_size == 0)
-            throw std::out_of_range("heap is empty.");
+            throw STD_ out_of_range("heap is empty.");
     }
-    void not_null_check(std::shared_ptr<T> data) const
+    void not_null_check(STD_ shared_ptr<T> data) const
     {
         if (data == nullptr)
-            throw std::invalid_argument("data must be not null.");
+            throw STD_ invalid_argument("data must be not null.");
     }
 
 public:
     BinaryHeap<T> &operator=(const BinaryHeap<T> &heap);
     BinaryHeap<T> &operator=(BinaryHeap<T> &&heap) noexcept;
-    BinaryHeap(typename IHeap<T>::Comparator comparator = nullptr, std::shared_ptr<T> *array = nullptr, size_t size = 0);
+    BinaryHeap(typename IHeap<T>::Comparator comparator = nullptr, STD_ shared_ptr<T> *array = nullptr, size_t size = 0);
     BinaryHeap(const BinaryHeap<T> &heap) { *this = heap; }
-    BinaryHeap(BinaryHeap<T> &&heap) noexcept { *this = std::move(heap); }
+    BinaryHeap(BinaryHeap<T> &&heap) noexcept { *this = STD_ move(heap); }
     ~BinaryHeap() { delete[] _array; }
     size_t capacity() const { return _capacity; }
-    void add(std::shared_ptr<T> data) override;
-    std::shared_ptr<T> remove() override;
-    std::shared_ptr<T> replace(std::shared_ptr<T> data) override;
-    std::shared_ptr<T> get() const override
+    void add(STD_ shared_ptr<T> data) override;
+    STD_ shared_ptr<T> remove() override;
+    STD_ shared_ptr<T> replace(STD_ shared_ptr<T> data) override;
+    STD_ shared_ptr<T> get() const override
     {
         heap_empty_check();
         return _array[0];
@@ -60,7 +60,7 @@ template <typename T>
 inline BinaryHeap<T> &BinaryHeap<T>::operator=(const BinaryHeap<T> &heap)
 {
     delete[] _array;
-    _array = new std::shared_ptr<T>[heap._capacity];
+    _array = new STD_ shared_ptr<T>[heap._capacity];
     _capacity = heap._capacity;
     this->_size = heap._size;
     this->_comparator = heap._comparator;
@@ -83,18 +83,18 @@ inline BinaryHeap<T> &BinaryHeap<T>::operator=(BinaryHeap<T> &&heap) noexcept
 }
 
 template <typename T>
-inline BinaryHeap<T>::BinaryHeap(typename IHeap<T>::Comparator comparator, std::shared_ptr<T> *array, size_t size) : IHeap<T>(comparator)
+inline BinaryHeap<T>::BinaryHeap(typename IHeap<T>::Comparator comparator, STD_ shared_ptr<T> *array, size_t size) : IHeap<T>(comparator)
 {
     if (array == nullptr || size == 0)
     {
-        _array = new std::shared_ptr<T>[DEFAULT_CAPACITY];
+        _array = new STD_ shared_ptr<T>[DEFAULT_CAPACITY];
         _capacity = DEFAULT_CAPACITY;
     }
     else
     {
         this->_size = size;
-        _capacity = std::max(size, DEFAULT_CAPACITY);
-        _array = new std::shared_ptr<T>[_capacity];
+        _capacity = STD_ max(size, DEFAULT_CAPACITY);
+        _array = new STD_ shared_ptr<T>[_capacity];
         for (size_t i = 0; i < size; ++i)
             _array[i] = array[i];
         heapify();
@@ -102,7 +102,7 @@ inline BinaryHeap<T>::BinaryHeap(typename IHeap<T>::Comparator comparator, std::
 }
 
 template <typename T>
-inline void BinaryHeap<T>::add(std::shared_ptr<T> data)
+inline void BinaryHeap<T>::add(STD_ shared_ptr<T> data)
 {
     not_null_check(data);
     ensure_capacity();
@@ -111,11 +111,11 @@ inline void BinaryHeap<T>::add(std::shared_ptr<T> data)
 }
 
 template <typename T>
-inline std::shared_ptr<T> BinaryHeap<T>::remove()
+inline STD_ shared_ptr<T> BinaryHeap<T>::remove()
 {
     heap_empty_check();
     size_t last = --this->_size;
-    std::shared_ptr<T> root = _array[0];
+    STD_ shared_ptr<T> root = _array[0];
     _array[0] = _array[last];
     _array[last] = nullptr;
     sift_down(0);
@@ -123,10 +123,10 @@ inline std::shared_ptr<T> BinaryHeap<T>::remove()
 }
 
 template <typename T>
-inline std::shared_ptr<T> BinaryHeap<T>::replace(std::shared_ptr<T> data)
+inline STD_ shared_ptr<T> BinaryHeap<T>::replace(STD_ shared_ptr<T> data)
 {
     not_null_check(data);
-    std::shared_ptr<T> root = nullptr;
+    STD_ shared_ptr<T> root = nullptr;
     if (this->_size == 0)
     {
         _array[0] = data;
@@ -147,14 +147,14 @@ inline void BinaryHeap<T>::traverse(typename IHeap<T>::TraverseFunc func) const
     if (this->_size > 0)
     {
         int index = 0, lv_cnt = 1;
-        std::queue<std::shared_ptr<T>> q;
+        STD_ queue<STD_ shared_ptr<T>> q;
         q.push(_array[index]);
         while (!q.empty())
         {
             size_t left = (index << 1) + 1, right = left + 1;
             lv_cnt--;
             index++;
-            std::shared_ptr<T> data = q.front();
+            STD_ shared_ptr<T> data = q.front();
             q.pop();
             if (left < this->_size)
                 q.push(_array[left]);
@@ -163,11 +163,11 @@ inline void BinaryHeap<T>::traverse(typename IHeap<T>::TraverseFunc func) const
             if (func != nullptr)
                 func(data);
             else
-                std::cout << *data << "\t";
+                STD_ cout << *data << "\t";
             if (lv_cnt == 0)
             {
                 lv_cnt = q.size();
-                std::cout << "\n";
+                STD_ cout << "\n";
             }
         }
     }
@@ -178,9 +178,9 @@ inline void BinaryHeap<T>::ensure_capacity()
 {
     if (this->_size >= _capacity)
     {
-        std::shared_ptr<T> *old = _array;
+        STD_ shared_ptr<T> *old = _array;
         _capacity <<= 1;
-        _array = new std::shared_ptr<T>[_capacity];
+        _array = new STD_ shared_ptr<T>[_capacity];
         for (size_t i = 0; i < this->_size; ++i)
             _array[i] = old[i];
         delete[] old;
@@ -190,11 +190,11 @@ inline void BinaryHeap<T>::ensure_capacity()
 template <typename T>
 inline void BinaryHeap<T>::sift_up(int index)
 {
-    std::shared_ptr<T> child = _array[index];
+    STD_ shared_ptr<T> child = _array[index];
     while (index > 0)
     {
         int parent_index = (index - 1) >> 1;
-        std::shared_ptr<T> parent = _array[parent_index];
+        STD_ shared_ptr<T> parent = _array[parent_index];
         if (this->compare(child, parent) <= 0)
             break;
         _array[index] = parent;
@@ -206,12 +206,12 @@ inline void BinaryHeap<T>::sift_up(int index)
 template <typename T>
 inline void BinaryHeap<T>::sift_down(int index)
 {
-    std::shared_ptr<T> parent = _array[index];
+    STD_ shared_ptr<T> parent = _array[index];
     int half = this->_size >> 1;
     while (index < half)
     {
         int child_index = (index << 1) + 1, right_index = child_index + 1;
-        std::shared_ptr<T> child = _array[child_index];
+        STD_ shared_ptr<T> child = _array[child_index];
         if (right_index < this->_size && this->compare(_array[child_index], _array[right_index]) < 0)
             child = _array[child_index = right_index];
         if (this->compare(parent, child) >= 0)

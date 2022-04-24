@@ -18,18 +18,18 @@ protected:
     template <typename _K, typename _V>
     struct Node
     {
-        friend std::ostream &operator<<(std::ostream &os, const Node &node) { return os << "<" << *node._key << "-" << *node._value << ">"; }
+        friend STD_ ostream &operator<<(STD_ ostream &os, const Node &node) { return os << "<" << *node._key << "-" << *node._value << ">"; }
         size_t _hash = 0;
         bool _color = RED;
-        std::shared_ptr<_K> _key = nullptr;
-        std::shared_ptr<_V> _value = nullptr;
+        STD_ shared_ptr<_K> _key = nullptr;
+        STD_ shared_ptr<_V> _value = nullptr;
         Node<_K, _V> *_parent = nullptr, *_left = nullptr, *_right = nullptr;
         Node<_K, _V> &operator=(const Node<_K, _V> &node);
         Node<_K, _V> &operator=(Node<_K, _V> &&node) noexcept;
-        Node(std::shared_ptr<_K> key, std::shared_ptr<_V> value, Node<_K, _V> *parent = nullptr, Node<_K, _V> *left = nullptr, Node<_K, _V> *right = nullptr)
-            : _key(key), _value(value), _parent(parent), _left(left), _right(right) { _hash = _key == nullptr ? 0 : std::hash<_K>()(*key); }
+        Node(STD_ shared_ptr<_K> key, STD_ shared_ptr<_V> value, Node<_K, _V> *parent = nullptr, Node<_K, _V> *left = nullptr, Node<_K, _V> *right = nullptr)
+            : _key(key), _value(value), _parent(parent), _left(left), _right(right) { _hash = _key == nullptr ? 0 : STD_ hash<_K>()(*key); }
         Node(const Node<_K, _V> &node) { *this = node; }
-        Node(Node<_K, _V> &&node) noexcept { *this = std::move(node); }
+        Node(Node<_K, _V> &&node) noexcept { *this = STD_ move(node); }
         virtual ~Node()
         {
             _key = nullptr;
@@ -44,19 +44,19 @@ protected:
     size_t _size = 0, _capacity = DEFAULT_CAPACITY;
     Node<K, V> **_table = nullptr;
     typename IMap<K, V>::Comparator _comparator = nullptr;
-    Node<K, V> *get_node(std::shared_ptr<K> key) const
+    Node<K, V> *get_node(STD_ shared_ptr<K> key) const
     {
         Node<K, V> *root = _table[get_index(key)];
         return root == nullptr ? nullptr : get_node(root, key);
     }
-    Node<K, V> *get_node(Node<K, V> *node, std::shared_ptr<K> key1) const;
+    Node<K, V> *get_node(Node<K, V> *node, STD_ shared_ptr<K> key1) const;
     Node<K, V> *get_successor(Node<K, V> *node) const;
     int get_index(Node<K, V> *node) const { return node->_hash & (_capacity - 1); }
-    int get_index(std::shared_ptr<K> key) const { return get_hash(key) & (_capacity - 1); }
-    size_t get_hash(std::shared_ptr<K> key) const
+    int get_index(STD_ shared_ptr<K> key) const { return get_hash(key) & (_capacity - 1); }
+    size_t get_hash(STD_ shared_ptr<K> key) const
     {
         if (key != nullptr)
-            return std::hash<K>()(*key);
+            return STD_ hash<K>()(*key);
         return 0;
     }
     void ensure_capacity();
@@ -71,7 +71,7 @@ protected:
     bool is_black(Node<K, V> *node) const { return color_of(node) == BLACK; }
     bool is_red(Node<K, V> *node) const { return color_of(node) == RED; }
     void clear_recu(Node<K, V> *root);
-    virtual Node<K, V> *create_node(std::shared_ptr<K> key, std::shared_ptr<V> value, Node<K, V> *parent) { return new Node<K, V>(key, value, parent); }
+    virtual Node<K, V> *create_node(STD_ shared_ptr<K> key, STD_ shared_ptr<V> value, Node<K, V> *parent) { return new Node<K, V>(key, value, parent); }
     virtual void after_remove_derived(Node<K, V> *willnode, Node<K, V> *rmvnode) { delete rmvnode; }
 
 public:
@@ -90,19 +90,19 @@ public:
         delete[] _table;
     }
     HashMap(const HashMap<K, V> &map) { *this = map; }
-    HashMap(HashMap<K, V> &&map) noexcept { *this = std::move(map); }
+    HashMap(HashMap<K, V> &&map) noexcept { *this = STD_ move(map); }
     size_t size() const override { return _size; }
     size_t capacity() const { return _capacity; }
     bool is_empty() const override { return _size == 0; }
-    bool contains_key(std::shared_ptr<K> key) const override { return get_node(key) != nullptr; }
-    bool contains_value(std::shared_ptr<V> value) const override;
-    std::shared_ptr<V> get_value(std::shared_ptr<K> key) const override
+    bool contains_key(STD_ shared_ptr<K> key) const override { return get_node(key) != nullptr; }
+    bool contains_value(STD_ shared_ptr<V> value) const override;
+    STD_ shared_ptr<V> get_value(STD_ shared_ptr<K> key) const override
     {
         Node<K, V> *node = get_node(key);
         return node != nullptr ? node->_value : nullptr;
     }
-    std::shared_ptr<V> add(std::shared_ptr<K> key, std::shared_ptr<V> value) override;
-    std::shared_ptr<V> remove(std::shared_ptr<K> key) override;
+    STD_ shared_ptr<V> add(STD_ shared_ptr<K> key, STD_ shared_ptr<V> value) override;
+    STD_ shared_ptr<V> remove(STD_ shared_ptr<K> key) override;
     virtual void traverse(typename IMap<K, V>::TraverseFunc func = nullptr) const;
     void clear() override
     {
@@ -162,7 +162,7 @@ inline HashMap<K, V> &HashMap<K, V>::operator=(const HashMap<K, V> &map)
         _table[i] = nullptr;
     if (map._size > 0)
     {
-        std::queue<Node<K, V> *> q;
+        STD_ queue<Node<K, V> *> q;
         for (size_t i = 0; i < map._capacity; ++i)
         {
             if (map._table[i] != nullptr)
@@ -199,11 +199,11 @@ inline HashMap<K, V> &HashMap<K, V>::operator=(HashMap<K, V> &&map) noexcept
 }
 
 template <typename K, typename V>
-inline bool HashMap<K, V>::contains_value(std::shared_ptr<V> value) const
+inline bool HashMap<K, V>::contains_value(STD_ shared_ptr<V> value) const
 {
     if (_size != 0)
     {
-        std::queue<Node<K, V> *> q;
+        STD_ queue<Node<K, V> *> q;
         for (size_t i = 0; i < _capacity; ++i)
         {
             if (_table[i] != nullptr)
@@ -227,7 +227,7 @@ inline bool HashMap<K, V>::contains_value(std::shared_ptr<V> value) const
 }
 
 template <typename K, typename V>
-inline std::shared_ptr<V> HashMap<K, V>::add(std::shared_ptr<K> key, std::shared_ptr<V> value)
+inline STD_ shared_ptr<V> HashMap<K, V>::add(STD_ shared_ptr<K> key, STD_ shared_ptr<V> value)
 {
     ensure_capacity();
     int index = get_index(key);
@@ -242,14 +242,14 @@ inline std::shared_ptr<V> HashMap<K, V>::add(std::shared_ptr<K> key, std::shared
     }
     Node<K, V> *parent = root, *node = root;
     int cmp = 0;
-    std::shared_ptr<K> key1 = key;
+    STD_ shared_ptr<K> key1 = key;
     size_t hash1 = get_hash(key1);
     Node<K, V> *result = nullptr;
     bool scanned = false;
     while (node != nullptr)
     {
         parent = node;
-        std::shared_ptr<K> key2 = node->_key;
+        STD_ shared_ptr<K> key2 = node->_key;
         size_t hash2 = node->_hash;
         if (hash1 > hash2)
             cmp = 1;
@@ -281,7 +281,7 @@ inline std::shared_ptr<V> HashMap<K, V>::add(std::shared_ptr<K> key, std::shared
             node = node->_left;
         else
         {
-            std::shared_ptr<V> old = node->_value;
+            STD_ shared_ptr<V> old = node->_value;
             node->_key = key;
             node->_value = value;
             node->_hash = hash1;
@@ -299,14 +299,14 @@ inline std::shared_ptr<V> HashMap<K, V>::add(std::shared_ptr<K> key, std::shared
 }
 
 template <typename K, typename V>
-inline std::shared_ptr<V> HashMap<K, V>::remove(std::shared_ptr<K> key)
+inline STD_ shared_ptr<V> HashMap<K, V>::remove(STD_ shared_ptr<K> key)
 {
     Node<K, V> *node = get_node(key);
     if (node != nullptr)
     {
         _size--;
         Node<K, V> *willnode = node;
-        std::shared_ptr<V> old = node->_value;
+        STD_ shared_ptr<V> old = node->_value;
         if (node->is_binary())
         {
             Node<K, V> *s = get_successor(node);
@@ -351,12 +351,12 @@ inline void HashMap<K, V>::traverse(typename IMap<K, V>::TraverseFunc func) cons
 {
     if (_size > 0)
     {
-        std::queue<Node<K, V> *> q;
+        STD_ queue<Node<K, V> *> q;
         for (size_t i = 0; i < _capacity; ++i)
         {
             if (_table[i] != nullptr)
             {
-                std::cout << "---------- " << i << " ----------\n";
+                STD_ cout << "---------- " << i << " ----------\n";
                 q.push(_table[i]);
                 size_t lv_cnt = 1;
                 while (!q.empty())
@@ -371,11 +371,11 @@ inline void HashMap<K, V>::traverse(typename IMap<K, V>::TraverseFunc func) cons
                     if (func != nullptr)
                         func(node->_key, node->_value);
                     else
-                        std::cout << *node << "\t";
+                        STD_ cout << *node << "\t";
                     if (lv_cnt == 0)
                     {
                         lv_cnt = q.size();
-                        std::cout << "\n";
+                        STD_ cout << "\n";
                     }
                 }
             }
@@ -384,14 +384,14 @@ inline void HashMap<K, V>::traverse(typename IMap<K, V>::TraverseFunc func) cons
 }
 
 template <typename K, typename V>
-inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::get_node(Node<K, V> *node, std::shared_ptr<K> key1) const
+inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::get_node(Node<K, V> *node, STD_ shared_ptr<K> key1) const
 {
     int hash1 = get_hash(key1);
     Node<K, V> *result = nullptr;
     int cmp = 0;
     while (node != nullptr)
     {
-        std::shared_ptr<K> key2 = node->_key;
+        STD_ shared_ptr<K> key2 = node->_key;
         int hash2 = node->_hash;
         if (hash1 > hash2)
             node = node->_right;
@@ -437,7 +437,7 @@ inline void HashMap<K, V>::ensure_capacity()
         _table = new Node<K, V> *[_capacity << 1];
         for (size_t i = 0; i < _capacity << 1; ++i)
             _table[i] = nullptr;
-        std::queue<Node<K, V> *> q;
+        STD_ queue<Node<K, V> *> q;
         for (size_t i = 0; i < _capacity; ++i)
         {
             if (old[i] != nullptr)
@@ -478,12 +478,12 @@ inline void HashMap<K, V>::move_node(Node<K, V> *newnode)
     }
     Node<K, V> *parent = root, *node = root;
     int cmp = 0;
-    std::shared_ptr<K> key1 = newnode->_key;
+    STD_ shared_ptr<K> key1 = newnode->_key;
     int hash1 = newnode->_hash;
     while (node != nullptr)
     {
         parent = node;
-        std::shared_ptr<K> key2 = node->_key;
+        STD_ shared_ptr<K> key2 = node->_key;
         int hash2 = node->_hash;
         if (hash1 > hash2)
             cmp = 1;

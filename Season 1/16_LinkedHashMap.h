@@ -17,14 +17,14 @@ class LinkedHashMap : public HashMap<K, V>
         LinkedNode<_K, _V> *_prev = nullptr, *_next = nullptr;
         LinkedNode &operator=(const LinkedNode<_K, _V> &node);
         LinkedNode &operator=(LinkedNode<_K, _V> &&node) noexcept;
-        LinkedNode(std::shared_ptr<_K> key, std::shared_ptr<_V> value, NODE *parent = nullptr)
+        LinkedNode(STD_ shared_ptr<_K> key, STD_ shared_ptr<_V> value, NODE *parent = nullptr)
             : NODE(key, value, parent, nullptr, nullptr) {}
         LinkedNode(const LinkedNode<_K, _V> &node) { *this = node; }
-        LinkedNode(LinkedNode<_K, _V> &&node) noexcept { *this = std::move(node); }
+        LinkedNode(LinkedNode<_K, _V> &&node) noexcept { *this = STD_ move(node); }
         ~LinkedNode() = default;
     };
     LinkedNode<K, V> *_head = nullptr, *_tail = nullptr;
-    LinkedNode<K, V> *create_node(std::shared_ptr<K> key, std::shared_ptr<V> value, NODE *parent) override;
+    LinkedNode<K, V> *create_node(STD_ shared_ptr<K> key, STD_ shared_ptr<V> value, NODE *parent) override;
     void after_remove_derived(NODE *willnode, NODE *rmvnode) override;
 
 public:
@@ -32,9 +32,9 @@ public:
     LinkedHashMap<K, V> &operator=(LinkedHashMap<K, V> &&map) noexcept;
     LinkedHashMap(typename HashMap<K, V>::Comparator comparator = nullptr) : HashMap<K, V>(comparator) {}
     LinkedHashMap(const LinkedHashMap<K, V> &map) { *this = map; }
-    LinkedHashMap(LinkedHashMap<K, V> &&map) noexcept { *this = std::move(map); }
+    LinkedHashMap(LinkedHashMap<K, V> &&map) noexcept { *this = STD_ move(map); }
     ~LinkedHashMap() = default;
-    bool contains_value(std::shared_ptr<V> value) const override;
+    bool contains_value(STD_ shared_ptr<V> value) const override;
     void traverse(typename HashMap<K, V>::TraverseFunc func = nullptr) const override;
     void clear() override
     {
@@ -69,7 +69,7 @@ inline LinkedHashMap<K, V>::LinkedNode<_K, _V> &LinkedHashMap<K, V>::LinkedNode<
 }
 
 template <typename K, typename V>
-inline LinkedHashMap<K, V>::LinkedNode<K, V> *LinkedHashMap<K, V>::create_node(std::shared_ptr<K> key, std::shared_ptr<V> value, NODE *parent)
+inline LinkedHashMap<K, V>::LinkedNode<K, V> *LinkedHashMap<K, V>::create_node(STD_ shared_ptr<K> key, STD_ shared_ptr<V> value, NODE *parent)
 {
     LinkedNode<K, V> *node = new LinkedNode<K, V>(key, value, parent);
     if (_head == nullptr)
@@ -167,7 +167,7 @@ inline LinkedHashMap<K, V> &LinkedHashMap<K, V>::operator=(LinkedHashMap<K, V> &
 }
 
 template <typename K, typename V>
-inline bool LinkedHashMap<K, V>::contains_value(std::shared_ptr<V> value) const
+inline bool LinkedHashMap<K, V>::contains_value(STD_ shared_ptr<V> value) const
 {
     LinkedNode<K, V> *node = _head;
     while (node != nullptr)
@@ -188,7 +188,7 @@ inline void LinkedHashMap<K, V>::traverse(typename HashMap<K, V>::TraverseFunc f
         if (func != nullptr)
             func(node->_key, node->_value);
         else
-            std::cout << *node << "\n";
+            STD_ cout << *node << "\n";
         node = node->_next;
     }
 }
