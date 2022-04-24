@@ -386,13 +386,13 @@ inline void HashMap<K, V>::traverse(typename IMap<K, V>::TraverseFunc func) cons
 template <typename K, typename V>
 inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::get_node(Node<K, V> *node, STD_ shared_ptr<K> key1) const
 {
-    int hash1 = get_hash(key1);
+    size_t hash1 = get_hash(key1);
     Node<K, V> *result = nullptr;
     int cmp = 0;
     while (node != nullptr)
     {
         STD_ shared_ptr<K> key2 = node->_key;
-        int hash2 = node->_hash;
+        size_t hash2 = node->_hash;
         if (hash1 > hash2)
             node = node->_right;
         else if (hash1 < hash2)
@@ -479,12 +479,12 @@ inline void HashMap<K, V>::move_node(Node<K, V> *newnode)
     Node<K, V> *parent = root, *node = root;
     int cmp = 0;
     STD_ shared_ptr<K> key1 = newnode->_key;
-    int hash1 = newnode->_hash;
+    size_t hash1 = newnode->_hash;
     while (node != nullptr)
     {
         parent = node;
         STD_ shared_ptr<K> key2 = node->_key;
-        int hash2 = node->_hash;
+        size_t hash2 = node->_hash;
         if (hash1 > hash2)
             cmp = 1;
         else if (hash1 < hash2)
