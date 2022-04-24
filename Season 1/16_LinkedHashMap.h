@@ -16,11 +16,11 @@ class LinkedHashMap : public HashMap<K, V>
     {
         LinkedNode<_K, _V> *_prev = nullptr, *_next = nullptr;
         LinkedNode &operator=(const LinkedNode<_K, _V> &node);
-        LinkedNode &operator=(LinkedNode<_K, _V> &&node);
+        LinkedNode &operator=(LinkedNode<_K, _V> &&node) noexcept;
         LinkedNode(std::shared_ptr<_K> key, std::shared_ptr<_V> value, NODE *parent = nullptr)
             : NODE(key, value, parent, nullptr, nullptr) {}
         LinkedNode(const LinkedNode<_K, _V> &node) { *this = node; }
-        LinkedNode(LinkedNode<_K, _V> &&node) { *this = std::move(node); }
+        LinkedNode(LinkedNode<_K, _V> &&node) noexcept { *this = std::move(node); }
         ~LinkedNode() = default;
     };
     LinkedNode<K, V> *_head = nullptr, *_tail = nullptr;
@@ -29,10 +29,10 @@ class LinkedHashMap : public HashMap<K, V>
 
 public:
     LinkedHashMap<K, V> &operator=(const LinkedHashMap<K, V> &map);
-    LinkedHashMap<K, V> &operator=(LinkedHashMap<K, V> &&map);
+    LinkedHashMap<K, V> &operator=(LinkedHashMap<K, V> &&map) noexcept;
     LinkedHashMap(typename HashMap<K, V>::Comparator comparator = nullptr) : HashMap<K, V>(comparator) {}
     LinkedHashMap(const LinkedHashMap<K, V> &map) { *this = map; }
-    LinkedHashMap(LinkedHashMap<K, V> &&map) { *this = std::move(map); }
+    LinkedHashMap(LinkedHashMap<K, V> &&map) noexcept { *this = std::move(map); }
     ~LinkedHashMap() = default;
     bool contains_value(std::shared_ptr<V> value) const override;
     void traverse(typename HashMap<K, V>::TraverseFunc func = nullptr) const override;
@@ -60,7 +60,7 @@ inline LinkedHashMap<K, V>::LinkedNode<_K, _V> &LinkedHashMap<K, V>::LinkedNode<
 
 template <typename K, typename V>
 template <typename _K, typename _V>
-inline LinkedHashMap<K, V>::LinkedNode<_K, _V> &LinkedHashMap<K, V>::LinkedNode<_K, _V>::operator=(LinkedNode<_K, _V> &&node)
+inline LinkedHashMap<K, V>::LinkedNode<_K, _V> &LinkedHashMap<K, V>::LinkedNode<_K, _V>::operator=(LinkedNode<_K, _V> &&node) noexcept
 {
     this->_key = nullptr;
     this->_value = nullptr;
@@ -150,7 +150,7 @@ inline LinkedHashMap<K, V> &LinkedHashMap<K, V>::operator=(const LinkedHashMap<K
 }
 
 template <typename K, typename V>
-inline LinkedHashMap<K, V> &LinkedHashMap<K, V>::operator=(LinkedHashMap<K, V> &&map)
+inline LinkedHashMap<K, V> &LinkedHashMap<K, V>::operator=(LinkedHashMap<K, V> &&map) noexcept
 {
     clear();
     this->_size = map._size;

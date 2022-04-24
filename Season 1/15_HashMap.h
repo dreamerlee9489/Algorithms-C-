@@ -76,7 +76,7 @@ protected:
 
 public:
     HashMap<K, V> &operator=(const HashMap<K, V> &map);
-    HashMap<K, V> &operator=(HashMap<K, V> &&map);
+    HashMap<K, V> &operator=(HashMap<K, V> &&map) noexcept;
     HashMap(typename IMap<K, V>::Comparator comparator = nullptr)
     {
         _comparator = comparator;
@@ -90,7 +90,7 @@ public:
         delete[] _table;
     }
     HashMap(const HashMap<K, V> &map) { *this = map; }
-    HashMap(HashMap<K, V> &&map) { *this = std::move(map); }
+    HashMap(HashMap<K, V> &&map) noexcept { *this = std::move(map); }
     size_t size() const override { return _size; }
     size_t capacity() const { return _capacity; }
     bool is_empty() const override { return _size == 0; }
@@ -185,7 +185,7 @@ inline HashMap<K, V> &HashMap<K, V>::operator=(const HashMap<K, V> &map)
 }
 
 template <typename K, typename V>
-inline HashMap<K, V> &HashMap<K, V>::operator=(HashMap<K, V> &&map)
+inline HashMap<K, V> &HashMap<K, V>::operator=(HashMap<K, V> &&map) noexcept
 {
     clear();
     _size = map._size;

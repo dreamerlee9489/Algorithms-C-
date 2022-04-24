@@ -33,10 +33,10 @@ class BinaryHeap : public IHeap<T>
 
 public:
     BinaryHeap<T> &operator=(const BinaryHeap<T> &heap);
-    BinaryHeap<T> &operator=(BinaryHeap<T> &&heap);
+    BinaryHeap<T> &operator=(BinaryHeap<T> &&heap) noexcept;
     BinaryHeap(typename IHeap<T>::Comparator comparator = nullptr, std::shared_ptr<T> *array = nullptr, size_t size = 0);
     BinaryHeap(const BinaryHeap<T> &heap) { *this = heap; }
-    BinaryHeap(BinaryHeap<T> &&heap) { *this = std::move(heap); }
+    BinaryHeap(BinaryHeap<T> &&heap) noexcept { *this = std::move(heap); }
     ~BinaryHeap() { delete[] _array; }
     size_t capacity() const { return _capacity; }
     void add(std::shared_ptr<T> data) override;
@@ -70,7 +70,7 @@ inline BinaryHeap<T> &BinaryHeap<T>::operator=(const BinaryHeap<T> &heap)
 }
 
 template <typename T>
-inline BinaryHeap<T> &BinaryHeap<T>::operator=(BinaryHeap<T> &&heap)
+inline BinaryHeap<T> &BinaryHeap<T>::operator=(BinaryHeap<T> &&heap) noexcept
 {
     delete[] _array;
     _array = heap._array;

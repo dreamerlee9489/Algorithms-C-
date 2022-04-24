@@ -61,10 +61,10 @@ class TreeMap : public IMap<K, V>
 
 public:
     TreeMap<K, V> &operator=(const TreeMap<K, V> &map);
-    TreeMap<K, V> &operator=(TreeMap<K, V> &&map);
+    TreeMap<K, V> &operator=(TreeMap<K, V> &&map) noexcept;
     TreeMap(typename IMap<K, V>::Comparator comparator = nullptr) { _comparator = comparator; }
     TreeMap(const TreeMap<K, V> &map) { *this = map; }
-    TreeMap(TreeMap<K, V> &&map) { *this = std::move(map); }
+    TreeMap(TreeMap<K, V> &&map) noexcept { *this = std::move(map); }
     ~TreeMap() { clear_recu(_root); }
     size_t size() const override { return _size; }
     bool is_empty() const override { return _size == 0; }
@@ -144,7 +144,7 @@ inline TreeMap<K, V> &TreeMap<K, V>::operator=(const TreeMap<K, V> &map)
 }
 
 template <typename K, typename V>
-inline TreeMap<K, V> &TreeMap<K, V>::operator=(TreeMap<K, V> &&map)
+inline TreeMap<K, V> &TreeMap<K, V>::operator=(TreeMap<K, V> &&map) noexcept
 {
     clear();
     _size = map._size;
