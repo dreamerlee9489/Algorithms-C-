@@ -36,3 +36,12 @@ int main(int argc, char const *argv[])
     
     return 0;
 }
+
+/*
+10BubbleSortIiE:        3       4       5       5       6       7       7       8
+10SelectSortIiE:        3       4       5       5       6       7       7       8
+10InsertSortIiE:        3       4       5       5       6       7       7       8
+8HeapSortIiE:   3       4       5       5       6       7       7       8
+9MergeSortIiE:  3       4       5       5       6       7       7       8
+9QuickSortIiE:  3       4       5       5       6       7       7       8
+*/

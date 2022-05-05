@@ -11,7 +11,7 @@
  * @warning 内存泄漏未解决
  */
 template <typename V>
-class PrefixTree 
+class Trie
 {
     template <typename _V>
     struct Node
@@ -40,8 +40,8 @@ class PrefixTree
     }
 
 public:
-    PrefixTree() = default;
-    ~PrefixTree() { _root = nullptr; }
+    Trie() = default;
+    ~Trie() { _root = nullptr; }
     size_t size() const { return _size; }
     bool is_empty() const { return _size == 0; }
     bool start_with(STD_ string prefix) const { return get_node(prefix) != nullptr; }
@@ -65,7 +65,7 @@ public:
 };
 
 template <typename V>
-STD_ shared_ptr<V> PrefixTree<V>::add(STD_ string key, STD_ shared_ptr<V> value)
+STD_ shared_ptr<V> Trie<V>::add(STD_ string key, STD_ shared_ptr<V> value)
 {
     key_null_check(key);
     if(_root == nullptr)
@@ -96,7 +96,7 @@ STD_ shared_ptr<V> PrefixTree<V>::add(STD_ string key, STD_ shared_ptr<V> value)
 }
 
 template <typename V>
-STD_ shared_ptr<V> PrefixTree<V>::remove(STD_ string key)
+STD_ shared_ptr<V> Trie<V>::remove(STD_ string key)
 {
     STD_ shared_ptr<Node<V>> node = get_node(key);
     if(node == nullptr || !node->_word)
@@ -121,7 +121,7 @@ STD_ shared_ptr<V> PrefixTree<V>::remove(STD_ string key)
 }
 
 template <typename V>
-STD_ shared_ptr<typename PrefixTree<V>::template Node<V>> PrefixTree<V>::get_node(STD_ string key) const 
+STD_ shared_ptr<typename Trie<V>::template Node<V>> Trie<V>::get_node(STD_ string key) const 
 {
     key_null_check(key);
     STD_ shared_ptr<Node<V>> node = _root;

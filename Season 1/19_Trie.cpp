@@ -1,10 +1,10 @@
-#include "./19_PrefixTree.h"
+#include "./19_Trie.h"
 #include "./Person.h"
 using namespace std;
 
 int main(int argc, char const *argv[])
 {
-    PrefixTree<Person> tree;
+    Trie<Person> tree;
     tree.add("cat", make_shared<Person>(1));
     tree.add("dog", make_shared<Person>(2));
     tree.add("catalog", make_shared<Person>(3));

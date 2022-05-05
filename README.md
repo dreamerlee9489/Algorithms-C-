@@ -16,7 +16,7 @@
 >有序哈希映射(LinkedHashMap)  
 >二叉堆(BinaryHeap)  
 >优先级队列(PriorityQueue)  
->前缀树(PrefixTree)  
+>前缀树(Trie)  
 >并查集(DisjointSet)  
 # 算法  
 >排序算法  
