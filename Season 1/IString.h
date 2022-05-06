@@ -1,12 +1,15 @@
 #ifndef ISTRING_H
 #define ISTRING_H
-#define STD_ std::
 #include <string>
 
-class IString
+namespace app
 {
-public:
-    virtual STD_ string to_string() const = 0;
-};
+    class IString
+    {
+    public:
+        virtual std::string to_string() const = 0;
+    };
+} // namespace app
+
 
 #endif /* ISTRING_H */

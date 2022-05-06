@@ -1,6 +1,6 @@
 #include "./08_BST.h"
 #include "./Person.h"
-using namespace std;
+using namespace app;
 
 int main()
 {

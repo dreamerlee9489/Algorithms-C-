@@ -1,6 +1,6 @@
 #include "./17_BinaryHeap.h"
 #include "./Person.h"
-using namespace std;
+using namespace app;
 
 void test1();
 void test2();

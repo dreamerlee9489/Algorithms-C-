@@ -1,6 +1,6 @@
 #include <memory>
 #include "./Person.h"
-using namespace std;
+using namespace app;
 
 int main(int argc, char const *argv[])
 {
@@ -10,9 +10,7 @@ int main(int argc, char const *argv[])
 
     if (typeid(*p1) == typeid(Person))
         cout << "==Person\n";
-        
-    char ch = 'a';
-    cout << hash<char>()(ch) << "\n";
+    cout << hash<Person>()(*p1) << "\n";
 
     return 0;
 }

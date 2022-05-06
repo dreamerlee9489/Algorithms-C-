@@ -1,6 +1,6 @@
 #include "./05_Queue.h"
 #include "./Person.h"
-using namespace std;
+using namespace app;
 
 int main()
 {

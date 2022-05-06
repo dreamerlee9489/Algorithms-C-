@@ -1,6 +1,6 @@
 #include "./19_Trie.h"
 #include "./Person.h"
-using namespace std;
+using namespace app;
 
 int main(int argc, char const *argv[])
 {

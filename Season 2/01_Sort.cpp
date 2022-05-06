@@ -5,6 +5,8 @@
 #include "./05_HeapSort.h"
 #include "./06_MergeSort.h"
 #include "./07_QuickSort.h"
+using namespace std;
+using namespace app;
 
 void test_sort(int *array, size_t size, initializer_list<ISort<int> *> list)
 {
@@ -14,10 +16,10 @@ void test_sort(int *array, size_t size, initializer_list<ISort<int> *> list)
         for(size_t i = 0; i < size; ++i)
             copy[i] = array[i];
         (*beg)->sort(copy, 8);
-        std::cout << typeid(**beg).name() << ": ";
+        cout << typeid(**beg).name() << ": ";
         for (size_t i = 0; i < 8; ++i)
-            std::cout << copy[i] << " ";
-        std::cout << "\n";
+            cout << copy[i] << " ";
+        cout << "\n";
     }
 }
 

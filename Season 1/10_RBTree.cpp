@@ -1,6 +1,6 @@
 #include "./10_RBTree.h"
 #include "./Person.h"
-using namespace std;
+using namespace app;
 
 int main()
 {

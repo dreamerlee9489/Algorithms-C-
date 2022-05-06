@@ -1,7 +1,7 @@
 #include <string>
 #include "./07_CircleDeque.h"
 #include "./Person.h"
-using namespace std;
+using namespace app;
 
 int main()
 {
