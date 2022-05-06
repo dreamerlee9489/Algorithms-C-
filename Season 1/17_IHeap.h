@@ -52,5 +52,4 @@ namespace app
     }
 } // namespace app
 
-
 #endif /* IHEAP_H */

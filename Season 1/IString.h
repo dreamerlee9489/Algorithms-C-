@@ -11,5 +11,4 @@ namespace app
     };
 } // namespace app
 
-
 #endif /* ISTRING_H */

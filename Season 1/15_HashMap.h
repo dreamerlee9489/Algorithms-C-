@@ -686,5 +686,4 @@ namespace app
     }
 } // namespace app
 
-
 #endif /* HASH_MAP_H */

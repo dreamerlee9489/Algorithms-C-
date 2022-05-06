@@ -226,5 +226,4 @@ namespace app
     }
 } // namespace app
 
-
 #endif /* BINARY_HEAP_H */
