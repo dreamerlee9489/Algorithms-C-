@@ -11,6 +11,5 @@ int main(int argc, char const *argv[])
     if (typeid(*p1) == typeid(Person))
         cout << "==Person\n";
     cout << hash<Person>()(*p1) << "\n";
-
     return 0;
 }

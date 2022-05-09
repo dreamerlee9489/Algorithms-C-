@@ -18,6 +18,8 @@
 >优先级队列(PriorityQueue)  
 >前缀树(Trie)  
 >并查集(DisjointSet)  
+>图(Graph)  
+>最小堆(MinHeap)  
 # 算法  
 >排序算法  
 >>冒泡排序(BubbleSort)  
@@ -26,3 +28,9 @@
 >>堆排序(HeapSort)  
 >>归并排序(MergeSort)  
 >>快速排序(QuickSort)  
+>图论算法  
+>>广度优先搜索(Graph.bfs)  
+>>宽度优先搜索(Graph.dfs)  
+>>拓扑排序(Graph.tupo_sort)  
+>>克鲁斯卡尔算法(Graph.kruskal)    
+>>迪杰斯特拉算法(Graph.dijkstra)  
