@@ -85,4 +85,4 @@ struct std::hash<app::EdgeInfo<V>>
 	size_t operator()(const app::EdgeInfo<V>& edge) const { return hash<V>()(*edge._from) ^ hash<V>()(*edge._to) ^ hash<double>()(edge._weight); }
 };
 
-#endif // IGRAPH_H
+#endif /* IGRAPH_H */

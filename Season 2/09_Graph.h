@@ -321,4 +321,4 @@ struct std::hash<app::Edge<V>>
 	size_t operator()(const app::Edge<V>& edge) const { return std::hash<app::Vertex<V>>()(*edge._from) ^ std::hash<app::Vertex<V>>()(*edge._to); }
 };
 
-#endif // GRAPH_H
+#endif /* GRAPH_H */
