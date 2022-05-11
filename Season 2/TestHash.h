@@ -1,5 +1,5 @@
-#ifndef TEST_H
-#define TEST_H
+#ifndef TEST_HASH_H
+#define TEST_HASH_H
 #include <string>
 #include <iostream>
 using namespace std;
@@ -84,4 +84,4 @@ inline size_t app::Test3::get_hash()
     return std::hash<Test3::Test4>()(t4); 
 }
 
-#endif /* TEST_H */
+#endif /* TEST_HASH_H */
