@@ -1,5 +1,5 @@
-#include "./10_MinHeap.h"
-#include "./Person.h"
+#include "./10_MinHeap.hpp"
+#include "./Person.hpp"
 using namespace app;
 
 int main(int argc, char const *argv[])

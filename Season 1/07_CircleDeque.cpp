@@ -1,6 +1,6 @@
 #include <string>
-#include "./07_CircleDeque.h"
-#include "./Person.h"
+#include "./07_CircleDeque.hpp"
+#include "./Person.hpp"
 using namespace app;
 
 int main()

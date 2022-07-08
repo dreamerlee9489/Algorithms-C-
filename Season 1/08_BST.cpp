@@ -1,5 +1,5 @@
-#include "./08_BST.h"
-#include "./Person.h"
+#include "./08_BST.hpp"
+#include "./Person.hpp"
 using namespace app;
 
 int main()

@@ -1,5 +1,5 @@
-#include "./18_PriorityQueue.h"
-#include "./Person.h"
+#include "./18_PriorityQueue.hpp"
+#include "./Person.hpp"
 using namespace app;
 
 int main(int argc, char const *argv[])

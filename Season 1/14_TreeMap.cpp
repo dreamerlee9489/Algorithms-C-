@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
-#include "./14_TreeMap.h"
-#include "./Person.h"
+#include "./14_TreeMap.hpp"
+#include "./Person.hpp"
 using namespace app;
 
 int main(int argc, char const *argv[])

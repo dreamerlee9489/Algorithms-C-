@@ -1,5 +1,5 @@
 #include <memory>
-#include "./Person.h"
+#include "./Person.hpp"
 using namespace app;
 
 int main(int argc, char const *argv[])

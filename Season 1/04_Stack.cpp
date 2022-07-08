@@ -1,5 +1,5 @@
-#include "./04_Stack.h"
-#include "./Person.h"
+#include "./04_Stack.hpp"
+#include "./Person.hpp"
 using namespace app;
 
 int main()

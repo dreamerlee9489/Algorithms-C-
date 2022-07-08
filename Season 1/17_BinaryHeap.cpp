@@ -1,5 +1,5 @@
-#include "./17_BinaryHeap.h"
-#include "./Person.h"
+#include "./17_BinaryHeap.hpp"
+#include "./Person.hpp"
 using namespace app;
 
 void test1();

@@ -1,5 +1,5 @@
-#include "./05_Queue.h"
-#include "./Person.h"
+#include "./05_Queue.hpp"
+#include "./Person.hpp"
 using namespace app;
 
 int main()

@@ -1,5 +1,5 @@
-#include "./11_TreeSet.h"
-#include "./Person.h"
+#include "./11_TreeSet.hpp"
+#include "./Person.hpp"
 using namespace app;
 
 int main(int argc, char const *argv[])

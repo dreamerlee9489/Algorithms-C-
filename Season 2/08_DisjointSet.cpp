@@ -1,5 +1,5 @@
-#include "./08_DisjointSet.h"
-#include "./Person.h"
+#include "./08_DisjointSet.hpp"
+#include "./Person.hpp"
 using namespace std;
 using namespace app;
 

@@ -1,10 +1,10 @@
 #include <initializer_list>
-#include "./02_BubbleSort.h"
-#include "./03_SelectSort.h"
-#include "./04_InsertSort.h"
-#include "./05_HeapSort.h"
-#include "./06_MergeSort.h"
-#include "./07_QuickSort.h"
+#include "./02_BubbleSort.hpp"
+#include "./03_SelectSort.hpp"
+#include "./04_InsertSort.hpp"
+#include "./05_HeapSort.hpp"
+#include "./06_MergeSort.hpp"
+#include "./07_QuickSort.hpp"
 using namespace std;
 using namespace app;
 

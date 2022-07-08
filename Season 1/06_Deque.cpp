@@ -1,5 +1,5 @@
-#include "./06_Deque.h"
-#include "./Person.h"
+#include "./06_Deque.hpp"
+#include "./Person.hpp"
 using namespace app;
 
 int main(int argc, char const *argv[])

@@ -1,5 +1,5 @@
-#include "./12_HashSet.h"
-#include "./Person.h"
+#include "./12_HashSet.hpp"
+#include "./Person.hpp"
 using namespace app;
 
 int main(int argc, char const *argv[])

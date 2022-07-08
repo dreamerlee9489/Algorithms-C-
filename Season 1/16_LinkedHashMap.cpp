@@ -1,5 +1,5 @@
-#include "./16_LinkedHashMap.h"
-#include "./Person.h"
+#include "./16_LinkedHashMap.hpp"
+#include "./Person.hpp"
 using namespace app;
 
 int main(int argc, char const *argv[])

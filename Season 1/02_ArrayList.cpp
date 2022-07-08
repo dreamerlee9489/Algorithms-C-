@@ -1,5 +1,5 @@
-#include "./02_ArrayList.h"
-#include "./Person.h"
+#include "./02_ArrayList.hpp"
+#include "./Person.hpp"
 using namespace app;
 
 int main()
