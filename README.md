@@ -21,6 +21,8 @@
 - 并查集(DisjointSet)  
 - 图(Graph)  
 - 最小堆(MinHeap)  
+- 布隆过滤器(BloomFilter)  
+- 跳表(SkipList)  
 ## 算法  
 > 排序  
 - 冒泡排序(BubbleSort)  

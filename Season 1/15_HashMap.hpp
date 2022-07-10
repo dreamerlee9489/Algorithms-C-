@@ -21,7 +21,7 @@ namespace app
         struct Node
         {
             friend ostream &operator<<(ostream &os, const Node &node) { return os << "<" << *node._key << "-" << *node._value << ">"; }
-            size_t _Hash = 0;
+            size_t _hash = 0;
             bool _color = RED;
             shared_ptr<_K> _key = nullptr;
             shared_ptr<_V> _value = nullptr;
@@ -29,7 +29,7 @@ namespace app
             Node<_K, _V> &operator=(const Node<_K, _V> &node);
             Node<_K, _V> &operator=(Node<_K, _V> &&node) noexcept;
             Node(shared_ptr<_K> key, shared_ptr<_V> value, Node<_K, _V> *parent = nullptr, Node<_K, _V> *left = nullptr, Node<_K, _V> *right = nullptr)
-                : _key(key), _value(value), _parent(parent), _left(left), _right(right) { _Hash = _key == nullptr ? 0 : hash<_K>()(*key); }
+                : _key(key), _value(value), _parent(parent), _left(left), _right(right) { _hash = _key == nullptr ? 0 : hash<_K>()(*key); }
             Node(const Node<_K, _V> &node) { *this = node; }
             Node(Node<_K, _V> &&node) noexcept { *this = move(node); }
             virtual ~Node()
@@ -53,9 +53,9 @@ namespace app
         }
         Node<K, V> *get_node(Node<K, V> *node, shared_ptr<K> key1) const;
         Node<K, V> *get_successor(Node<K, V> *node) const;
-        int get_index(Node<K, V> *node) const { return node->_Hash & (_capacity - 1); }
-        int get_index(shared_ptr<K> key) const { return get_Hash(key) & (_capacity - 1); }
-        size_t get_Hash(shared_ptr<K> key) const
+        int get_index(Node<K, V> *node) const { return node->_hash & (_capacity - 1); }
+        int get_index(shared_ptr<K> key) const { return get_hash(key) & (_capacity - 1); } // 哈希值位与容量映射到哈希数组
+        size_t get_hash(shared_ptr<K> key) const
         {
             if (key != nullptr)
                 return hash<K>()(*key);
@@ -127,7 +127,7 @@ namespace app
         _left = node._left;
         _right = node._right;
         _color = node._color;
-        _Hash = node._Hash;
+        _hash = node._hash;
         return *this;
     }
 
@@ -245,14 +245,14 @@ namespace app
         Node<K, V> *parent = root, *node = root;
         int cmp = 0;
         shared_ptr<K> key1 = key;
-        size_t hash1 = get_Hash(key1);
+        size_t hash1 = get_hash(key1);
         Node<K, V> *result = nullptr;
         bool scanned = false;
         while (node != nullptr)
         {
             parent = node;
             shared_ptr<K> key2 = node->_key;
-            size_t hash2 = node->_Hash;
+            size_t hash2 = node->_hash;
             if (hash1 > hash2)
                 cmp = 1;
             else if (hash1 < hash2)
@@ -286,7 +286,7 @@ namespace app
                 shared_ptr<V> old = node->_value;
                 node->_key = key;
                 node->_value = value;
-                node->_Hash = hash1;
+                node->_hash = hash1;
                 return old;
             }
         }
@@ -314,7 +314,7 @@ namespace app
                 Node<K, V> *s = get_successor(node);
                 node->_key = s->_key;
                 node->_value = s->_value;
-                node->_Hash = s->_Hash;
+                node->_hash = s->_hash;
                 node = s;
             }
             Node<K, V> *replace = node->_left != nullptr ? node->_left : node->_right;
@@ -388,13 +388,13 @@ namespace app
     template <typename K, typename V>
     inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::get_node(Node<K, V> *node, shared_ptr<K> key1) const
     {
-        size_t hash1 = get_Hash(key1);
+        size_t hash1 = get_hash(key1);
         Node<K, V> *result = nullptr;
         int cmp = 0;
         while (node != nullptr)
         {
             shared_ptr<K> key2 = node->_key;
-            size_t hash2 = node->_Hash;
+            size_t hash2 = node->_hash;
             if (hash1 > hash2)
                 node = node->_right;
             else if (hash1 < hash2)
@@ -481,12 +481,12 @@ namespace app
         Node<K, V> *parent = root, *node = root;
         int cmp = 0;
         shared_ptr<K> key1 = newnode->_key;
-        size_t hash1 = newnode->_Hash;
+        size_t hash1 = newnode->_hash;
         while (node != nullptr)
         {
             parent = node;
             shared_ptr<K> key2 = node->_key;
-            size_t hash2 = node->_Hash;
+            size_t hash2 = node->_hash;
             if (hash1 > hash2)
                 cmp = 1;
             else if (hash1 < hash2)
