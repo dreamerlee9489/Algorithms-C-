@@ -1,5 +1,5 @@
-#ifndef LINKED_Hash_MAP_HPP
-#define LINKED_Hash_MAP_HPP
+#ifndef LINKED_HASH_MAP_HPP
+#define LINKED_HASH_MAP_HPP
 #include "./15_HashMap.hpp"
 
 namespace app
@@ -26,7 +26,7 @@ namespace app
             LinkedNode(LinkedNode<_K, _V> &&node) noexcept { *this = move(node); }
             ~LinkedNode() = default;
         };
-        LinkedNode<K, V> *_HPPead = nullptr, *_tail = nullptr;
+        LinkedNode<K, V> *_head = nullptr, *_tail = nullptr;
         LinkedNode<K, V> *create_node(shared_ptr<K> key, shared_ptr<V> value, NODE *parent) override;
         void after_remove_derived(NODE *willnode, NODE *rmvnode) override;
 
@@ -42,7 +42,7 @@ namespace app
         void clear() override
         {
             HashMap<K, V>::clear();
-            _HPPead = nullptr;
+            _head = nullptr;
             _tail = nullptr;
         }
     };
@@ -75,8 +75,8 @@ namespace app
     inline LinkedHashMap<K, V>::LinkedNode<K, V> *LinkedHashMap<K, V>::create_node(shared_ptr<K> key, shared_ptr<V> value, NODE *parent)
     {
         LinkedNode<K, V> *node = new LinkedNode<K, V>(key, value, parent);
-        if (_HPPead == nullptr)
-            _HPPead = _tail = node;
+        if (_head == nullptr)
+            _head = _tail = node;
         else
         {
             _tail->_next = node;
@@ -97,11 +97,11 @@ namespace app
             node1->_prev = node2->_prev;
             node2->_prev = temp;
             if (node1->_prev == nullptr)
-                _HPPead = node1;
+                _head = node1;
             else
                 node1->_prev->_next = node1;
             if (node2->_prev == nullptr)
-                _HPPead = node2;
+                _head = node2;
             else
                 node2->_prev->_next = node2;
             temp = node1->_next;
@@ -119,7 +119,7 @@ namespace app
         LinkedNode<K, V> *prev = node2->_prev;
         LinkedNode<K, V> *next = node2->_next;
         if (prev == nullptr)
-            _HPPead = next;
+            _head = next;
         else
             prev->_next = next;
         if (next == nullptr)
@@ -142,7 +142,7 @@ namespace app
             this->_comparator = map._comparator;
             for (size_t i = 0; i < this->_capacity; ++i)
                 this->_table[i] = nullptr;
-            LinkedNode<K, V> *node = map._HPPead;
+            LinkedNode<K, V> *node = map._head;
             while (node != nullptr)
             {
                 this->add(node->_key, node->_value);
@@ -160,19 +160,19 @@ namespace app
         this->_capacity = map._capacity;
         this->_comparator = map._comparator;
         this->_table = map._table;
-        _HPPead = map._HPPead;
+        _head = map._head;
         _tail = map._tail;
         map._size = 0;
         map._comparator = nullptr;
         map._table = nullptr;
-        map._HPPead = map._tail = nullptr;
+        map._head = map._tail = nullptr;
         return *this;
     }
 
     template <typename K, typename V>
     inline bool LinkedHashMap<K, V>::contains_value(shared_ptr<V> value) const
     {
-        LinkedNode<K, V> *node = _HPPead;
+        LinkedNode<K, V> *node = _head;
         while (node != nullptr)
         {
             if (*value == *node->_value)
@@ -185,7 +185,7 @@ namespace app
     template <typename K, typename V>
     inline void LinkedHashMap<K, V>::traverse(typename HashMap<K, V>::TraverseFunc func) const
     {
-        LinkedNode<K, V> *node = _HPPead;
+        LinkedNode<K, V> *node = _head;
         while (node != nullptr)
         {
             if (func != nullptr)
@@ -197,4 +197,4 @@ namespace app
     }
 } // namespace app
 
-#endif /* LINKED_Hash_MAP_HPP */
+#endif /* LINKED_HASH_MAP_HPP */

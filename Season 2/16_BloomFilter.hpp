@@ -18,7 +18,6 @@ namespace app
         size_t _bitSize = 0;   //二进制向量的长度
         size_t _hashSize = 0;  //哈希函数个数
         long *_bits = nullptr; //二进制向量
-
         bool set(size_t index)
         {
             long value = _bits[index / sizeof(long)];
@@ -26,13 +25,11 @@ namespace app
             _bits[index / sizeof(long)] = value | bitValue;
             return (value & bitValue) == 0;
         }
-
         bool get(int index)
         {
             long value = _bits[index / sizeof(long)];
             return (value & (1 << (index % sizeof(long)))) != 0;
         }
-
         void checkNull(shared_ptr<T> value)
         {
             if (value == nullptr)
@@ -54,9 +51,7 @@ namespace app
             _hashSize = (int)(_bitSize * ln2 / n);
             _bits = new long[(_bitSize + sizeof(long) - 1) / sizeof(long)]{};
         }
-
         ~BloomFilter() { delete _bits; }
-
         bool add(shared_ptr<T> value)
         {
             checkNull(value);
@@ -70,7 +65,6 @@ namespace app
             }
             return result;
         }
-
         bool contains(shared_ptr<T> value)
         {
             checkNull(value);

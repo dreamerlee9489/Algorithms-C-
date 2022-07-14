@@ -125,7 +125,7 @@ namespace app
             }
             _size++;
             _level = max(_level, newLevel);
-            delete prevs, newNode;
+            delete []prevs, newNode;
             return nullptr;
         }
         V *remove(K *key)
@@ -152,7 +152,7 @@ namespace app
             while (--newLevel >= 0 && _first->_nexts[newLevel] == nullptr)
                 _level = newLevel;
             _size--;
-            delete prevs;
+            delete []prevs;
             return rmvNode->_value;
         }
         V *get(K *key)

@@ -1,5 +1,5 @@
-#ifndef MIN_HPPEAP_HPP
-#define MIN_HPPEAP_HPP
+#ifndef MIN_HEAP_HPP
+#define MIN_HEAP_HPP
 #include <cmath>
 #include <queue>
 #include <memory>
@@ -250,4 +250,4 @@ namespace app
     }
 } // namespace app
 
-#endif /* MIN_HPPEAP_HPP */
+#endif /* MIN_HEAP_HPP */
