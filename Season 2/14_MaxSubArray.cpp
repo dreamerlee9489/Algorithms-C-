@@ -6,6 +6,7 @@ using namespace std;
 /**
  * @brief 最大连续子序列和
  * @remark 分治
+ * @date 2022-07-08 
  * @param nums
  * @return int
  */

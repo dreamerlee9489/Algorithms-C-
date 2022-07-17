@@ -56,3 +56,6 @@
 - 最长公共子序列(LCS.cpp)  
 - 最长公共子串长度(LCSS.cpp)  
 - 0-1背包(Knapsack.cpp)  
+> 字符串匹配
+- 暴力求解(BruteForce.cpp)  
+- KMP算法(KMP.cpp)  

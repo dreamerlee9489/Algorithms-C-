@@ -6,6 +6,7 @@ using namespace std;
 /**
  * @brief 最长公共子串长度
  * @remark 动态规划
+ * @date 2022-07-08 
  * @return int
  */
 int lcss(string str1, string str2)

@@ -1,6 +1,10 @@
 #include <iostream>
 using namespace std;
 
+/**
+ * @brief N皇后问题
+ * @date 2022-06-06
+ */
 class NQueens
 {
     int _n = 0;
