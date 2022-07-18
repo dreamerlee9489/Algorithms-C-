@@ -1,10 +1,14 @@
-// https://leetcode-cn.com/problems/reverse-linked-list/
-struct ListNode
-{
-    int val;
-    ListNode *next;
-    ListNode(int x) : val(x), next(nullptr) {}
-};
+/**
+ * @file reverse-linked-list.cpp
+ * @author 354149166@qq.com
+ * @brief 206. 反转链表
+ * @version 0.1
+ * @date 2022-04-05
+ * @note https://leetcode-cn.com/problems/reverse-linked-list/
+ * @copyright Copyright (c) 2022
+ * 
+ */
+#include "./ListNode.hpp"
 
 class Solution
 {

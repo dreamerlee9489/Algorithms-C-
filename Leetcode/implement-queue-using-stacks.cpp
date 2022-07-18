@@ -1,4 +1,13 @@
-// https://leetcode-cn.com/problems/implement-queue-using-stacks/
+/**
+ * @file implement-queue-using-stacks.cpp
+ * @author 354149166@qq.com
+ * @brief 232. 用栈实现队列
+ * @version 0.1
+ * @date 2022-04-05
+ * @note https://leetcode-cn.com/problems/implement-queue-using-stacks/
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include <stack>
 using namespace std;
 
