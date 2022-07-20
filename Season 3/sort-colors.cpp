@@ -1,10 +1,10 @@
 /**
  * @file sort-colors.cpp
- * @author 354149166@qq.com
+ * @author dreamerlee9489@outlook.com
  * @brief 75. 颜色分类
  * @version 0.1
  * @date 2022-07-18
- * @note https://leetcode.cn/problems/sort-colors/
+ * @remark https://leetcode.cn/problems/sort-colors/
  * @copyright Copyright (c) 2022
  *
  */

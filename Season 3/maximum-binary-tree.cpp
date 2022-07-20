@@ -1,10 +1,10 @@
 /**
  * @file maximum-binary-tree.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 654. 最大二叉树
  * @version 0.1
  * @date 2022-07-19
- * @note https://leetcode.cn/problems/maximum-binary-tree/
+ * @remark https://leetcode.cn/problems/maximum-binary-tree/
  * @copyright Copyright (c) 2022
  *
  */
@@ -42,17 +42,17 @@ public:
         vector<int> lis = vector<int>(nums.size(), -1);
         vector<int> ris = vector<int>(nums.size(), -1);
         vector<int> pis = vector<int>(nums.size());
-        stack<int> st = stack<int>();
+        stack<int> stk = stack<int>();
         for (size_t i = 0; i < nums.size(); i++)
         {
-            while (!st.empty() && nums[i] > nums[st.top()])
+            while (!stk.empty() && nums[i] > nums[stk.top()])
             {
-                ris[st.top()] = i;
-                st.pop();
+                ris[stk.top()] = i;
+                stk.pop();
             }
-            if (!st.empty())
-                lis[i] = st.top();
-            st.push(i);
+            if (!stk.empty())
+                lis[i] = stk.top();
+            stk.push(i);
         }
         for (size_t i = 0; i < pis.size(); i++)
         {

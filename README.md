@@ -75,3 +75,11 @@
 - 滑动窗口最大值(sliding-window-maximum.cpp)  
 - 最大二叉树(maximum-binary-tree.cpp)  
 - 每日温度(daily-temperatures.cpp)  
+> 字符串  
+- 字符串轮转(string-rotation-lcci.cpp)  
+- 另一棵树的子树(subtree-of-another-tree.cpp)  
+- 有效的字母异位词(valid-anagram.cpp)  
+- 颠倒字符串中的单词(reverse-words-in-a-string.cpp)  
+- 无重复字符的最长子串(longest-substring-without-repeating-characters.cpp)  
+> 动态规划  
+- 礼物的最大价值(li-wu-de-zui-da-jie-zhi-lcof.cpp)  

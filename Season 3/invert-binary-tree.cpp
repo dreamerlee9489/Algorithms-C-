@@ -1,10 +1,10 @@
 /**
  * @file invert-binary-tree.cpp
- * @author 354149166@qq.com
+ * @author dreamerlee9489@outlook.com
  * @brief 226. 翻转二叉树
  * @version 0.1
  * @date 2022-04-05
- * @note https://leetcode-cn.com/problems/invert-binary-tree/
+ * @remark https://leetcode-cn.com/problems/invert-binary-tree/
  * @copyright Copyright (c) 2022
  * 
  */

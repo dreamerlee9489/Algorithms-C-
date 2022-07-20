@@ -1,10 +1,10 @@
 /**
  * @file add-two-numbers.cpp
- * @author 354149166@qq.com
+ * @author dreamerlee9489@outlook.com
  * @brief 2. 两数相加
  * @version 0.1
  * @date 2022-07-18
- * @note https://leetcode.cn/problems/add-two-numbers/
+ * @remark https://leetcode.cn/problems/add-two-numbers/
  * @copyright Copyright (c) 2022
  *
  */

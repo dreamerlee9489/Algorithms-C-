@@ -1,10 +1,10 @@
 /**
  * @file sub-sort-lcci.cpp
- * @author 354149166@qq.com
+ * @author dreamerlee9489@outlook.com
  * @brief 面试题 16.16. 部分排序
  * @version 0.1
  * @date 2022-07-18
- * @note https://leetcode.cn/problems/sub-sort-lcci/
+ * @remark https://leetcode.cn/problems/sub-sort-lcci/
  * @copyright Copyright (c) 2022
  *
  */

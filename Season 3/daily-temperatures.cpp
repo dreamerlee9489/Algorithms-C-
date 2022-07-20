@@ -1,10 +1,10 @@
 /**
  * @file daily-temperatures.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 739. 每日温度
  * @version 0.1
  * @date 2022-07-19
- * @note https://leetcode.cn/problems/daily-temperatures/
+ * @remark https://leetcode.cn/problems/daily-temperatures/
  * @copyright Copyright (c) 2022
  *
  */
@@ -19,17 +19,43 @@ public:
     {
         if (temperatures.empty())
             return vector<int>();
-        vector<int> result_ = vector<int>(temperatures.size());
-        stack<int> stack_ = stack<int>();
+        vector<int> vals = vector<int>(temperatures.size());
+        for(int i = vals.size() - 2; i >= 0; i--)
+        {
+            int j = i + 1;
+            while (true)
+            {
+                if(temperatures[i] < temperatures[j])
+                {
+                    vals[i] = j - i;
+                    break;
+                }
+                else if(vals[j] == 0)
+                {
+                    vals[i] = 0;
+                    break;
+                }
+                j += vals[j];
+            }
+        }
+        return vals;
+    }
+
+    vector<int> dailyTemperatures1(vector<int> &temperatures)
+    {
+        if (temperatures.empty())
+            return vector<int>();
+        vector<int> vals = vector<int>(temperatures.size());
+        stack<int> stk = stack<int>();
         for (size_t i = 0; i < temperatures.size(); i++)
         {
-            while (!stack_.empty() && temperatures[i] > temperatures[stack_.top()])
+            while (!stk.empty() && temperatures[i] > temperatures[stk.top()])
             {
-                result_[stack_.top()] = i - stack_.top();
-                stack_.pop();
+                vals[stk.top()] = i - stk.top();
+                stk.pop();
             }
-            stack_.push(i);
+            stk.push(i);
         }
-        return result_;
+        return vals;
     }
 };

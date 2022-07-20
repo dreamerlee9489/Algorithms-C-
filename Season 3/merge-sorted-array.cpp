@@ -1,10 +1,10 @@
 /**
  * @file merge-sorted-array.cpp
- * @author 354149166@qq.com
+ * @author dreamerlee9489@outlook.com
  * @brief 合并两个有序数组
  * @version 0.1
  * @date 2022-07-18
- * @note https://leetcode.cn/problems/merge-sorted-array/
+ * @remark https://leetcode.cn/problems/merge-sorted-array/
  * @copyright Copyright (c) 2022
  *
  */

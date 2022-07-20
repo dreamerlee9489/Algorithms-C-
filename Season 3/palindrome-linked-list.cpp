@@ -1,10 +1,10 @@
 /**
  * @file palindrome-linked-list.cpp
- * @author 354149166@qq.com
+ * @author dreamerlee9489@outlook.com
  * @brief 234. 回文链表
  * @version 0.1
  * @date 2022-07-18
- * @note https://leetcode.cn/problems/palindrome-linked-list/
+ * @remark https://leetcode.cn/problems/palindrome-linked-list/
  * @copyright Copyright (c) 2022
  *
  */

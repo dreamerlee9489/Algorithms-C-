@@ -1,10 +1,10 @@
 /**
  * @file min-stack.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 155. 最小栈
  * @version 0.1
  * @date 2022-07-19
- * @note https://leetcode.cn/problems/min-stack/
+ * @remark https://leetcode.cn/problems/min-stack/
  * @copyright Copyright (c) 2022
  *
  */

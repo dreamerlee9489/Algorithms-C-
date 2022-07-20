@@ -1,10 +1,10 @@
 /**
  * @file remove-linked-list-elements.cpp
- * @author 354149166@qq.com
+ * @author dreamerlee9489@outlook.com
  * @brief 203. 移除链表元素
  * @version 0.1
  * @date 2022-07-18
- * @note https://leetcode.cn/problems/remove-linked-list-elements/
+ * @remark https://leetcode.cn/problems/remove-linked-list-elements/
  * @copyright Copyright (c) 2022
  *
  */

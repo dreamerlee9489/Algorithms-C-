@@ -1,10 +1,10 @@
 /**
  * @file valid-parentheses.cpp
- * @author 354149166@qq.com
+ * @author dreamerlee9489@outlook.com
  * @brief 20. 有效的括号
  * @version 0.1
  * @date 2022-04-05
- * @note https://leetcode-cn.com/problems/valid-parentheses/
+ * @remark https://leetcode-cn.com/problems/valid-parentheses/
  * @copyright Copyright (c) 2022
  * 
  */
