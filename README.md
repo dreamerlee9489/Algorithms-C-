@@ -83,3 +83,6 @@
 - 无重复字符的最长子串(longest-substring-without-repeating-characters.cpp)  
 > 动态规划  
 - 礼物的最大价值(li-wu-de-zui-da-jie-zhi-lcof.cpp)  
+- 买卖股票的最佳时机(best-time-to-buy-and-sell-stock.cpp)  
+- 编辑距离(edit-distance.cpp)  
+- 最长回文子串(longest-palindromic-substring.cpp)  
