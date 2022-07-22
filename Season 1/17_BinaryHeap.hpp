@@ -1,5 +1,5 @@
-#ifndef BINARY_HPPEAP_HPP
-#define BINARY_HPPEAP_HPP
+#ifndef BINARY_HEAP_HPP
+#define BINARY_HEAP_HPP
 #include "./17_IHeap.hpp"
 
 namespace app
@@ -226,4 +226,4 @@ namespace app
     }
 } // namespace app
 
-#endif /* BINARY_HPPEAP_HPP */
+#endif /* BINARY_HEAP_HPP */

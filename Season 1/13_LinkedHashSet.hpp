@@ -1,5 +1,5 @@
-#ifndef LINKED_Hash_SET_HPP
-#define LINKED_Hash_SET_HPP
+#ifndef LINKED_HASH_SET_HPP
+#define LINKED_HASH_SET_HPP
 #include "./11_ISet.hpp"
 #include "./16_LinkedHashMap.hpp"
 
@@ -28,4 +28,4 @@ namespace app
     };
 } // namespace app
 
-#endif /* LINKED_Hash_SET_HPP */
+#endif /* LINKED_HASH_SET_HPP */

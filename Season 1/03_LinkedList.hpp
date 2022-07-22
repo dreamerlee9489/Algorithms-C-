@@ -30,20 +30,20 @@ namespace app
         Node<T> *get_node(int index) const;
 
     public:
-        Node<T> *_HPPead = nullptr;
+        Node<T> *_head = nullptr;
         LinkedList<T> &operator=(const LinkedList<T> &list);
         LinkedList<T> &operator=(LinkedList<T> &&list) noexcept;
         LinkedList()
         {
-            _HPPead = new Node<T>(nullptr);
-            _HPPead->_prev = _HPPead->_next = _HPPead;
+            _head = new Node<T>(nullptr);
+            _head->_prev = _head->_next = _head;
         }
         LinkedList(const LinkedList<T> &list) { *this = list; }
         LinkedList(LinkedList<T> &&list) noexcept { *this = move(list); }
         ~LinkedList()
         {
             clear();
-            delete _HPPead;
+            delete _head;
         }
         int index_of(shared_ptr<T> data) const override;
         void insert(int index, shared_ptr<T> data) override;
@@ -104,10 +104,10 @@ namespace app
     inline LinkedList<T> &LinkedList<T>::operator=(const LinkedList<T> &list)
     {
         clear();
-        if (_HPPead == nullptr)
+        if (_head == nullptr)
         {
-            _HPPead = new Node<T>(nullptr);
-            _HPPead->_prev = _HPPead->_next = _HPPead;
+            _head = new Node<T>(nullptr);
+            _head->_prev = _head->_next = _head;
         }
         for (size_t i = 0; i < list._size; ++i)
             insert(i, list.get(i));
@@ -118,19 +118,19 @@ namespace app
     inline LinkedList<T> &LinkedList<T>::operator=(LinkedList<T> &&list) noexcept
     {
         clear();
-        if (_HPPead == nullptr)
+        if (_head == nullptr)
         {
-            _HPPead = new Node<T>(nullptr);
-            _HPPead->_prev = _HPPead->_next = _HPPead;
+            _head = new Node<T>(nullptr);
+            _head->_prev = _head->_next = _head;
         }
         if (list._size > 0)
         {
             this->_size = list._size;
-            _HPPead->_next = list._HPPead->_next;
-            _HPPead->_prev = list._HPPead->_prev;
-            list._HPPead->_next->_prev = _HPPead;
+            _head->_next = list._head->_next;
+            _head->_prev = list._head->_prev;
+            list._head->_next->_prev = _head;
             list._size = 0;
-            list._HPPead = nullptr;
+            list._head = nullptr;
         }
         return *this;
     }
@@ -138,7 +138,7 @@ namespace app
     template <typename T>
     inline int LinkedList<T>::index_of(shared_ptr<T> data) const
     {
-        Node<T> *p = _HPPead;
+        Node<T> *p = _head;
         for (size_t i = 0; i < this->_size; ++i)
         {
             p = p->_next;
@@ -155,7 +155,7 @@ namespace app
         Node<T> *prev = get_node(index - 1);
         Node<T> *next = prev->_next;
         Node<T> *temp = new Node<T>(data, prev, next);
-        if (next != _HPPead)
+        if (next != _head)
         {
             prev->_next = temp;
             next->_prev = temp;
@@ -163,8 +163,8 @@ namespace app
         else
         {
             prev->_next = temp;
-            temp->_next = _HPPead;
-            _HPPead->_prev = temp;
+            temp->_next = _head;
+            _head->_prev = temp;
         }
         this->_size++;
     }
@@ -173,18 +173,18 @@ namespace app
     inline shared_ptr<T> LinkedList<T>::remove(int index)
     {
         this->check_range(index);
-        Node<T> *old = _HPPead->_next;
+        Node<T> *old = _head->_next;
         for (size_t i = 0; i < index; ++i)
             old = old->_next;
         if (index == 0)
         {
-            _HPPead->_next = _HPPead->_next->_next;
-            _HPPead->_next->_prev = _HPPead;
+            _head->_next = _head->_next->_next;
+            _head->_next->_prev = _head;
         }
         else if (index == this->_size - 1)
         {
-            _HPPead->_prev = _HPPead->_prev->_prev;
-            _HPPead->_prev->_next = _HPPead;
+            _head->_prev = _head->_prev->_prev;
+            _head->_prev->_next = _head;
         }
         else
         {
@@ -199,7 +199,7 @@ namespace app
     inline shared_ptr<T> LinkedList<T>::get(int index) const
     {
         this->check_range(index);
-        Node<T> *p = _HPPead->_next;
+        Node<T> *p = _head->_next;
         for (size_t i = 0; i < index; ++i)
             p = p->_next;
         return p->_data;
@@ -209,7 +209,7 @@ namespace app
     inline void LinkedList<T>::set(int index, shared_ptr<T> data)
     {
         this->check_range(index);
-        Node<T> *p = _HPPead->_next;
+        Node<T> *p = _head->_next;
         for (size_t i = 0; i < index; ++i)
             p = p->_next;
         p->_data = data;
@@ -220,14 +220,14 @@ namespace app
     {
         if (this->_size > 0)
         {
-            Node<T> *p = _HPPead->_prev;
-            while (p != _HPPead)
+            Node<T> *p = _head->_prev;
+            while (p != _head)
             {
                 p = p->_prev;
                 delete p->_next;
             }
-            _HPPead->_next = _HPPead;
-            _HPPead->_prev = _HPPead;
+            _head->_next = _head;
+            _head->_prev = _head;
             this->_size = 0;
         }
     }
@@ -236,10 +236,10 @@ namespace app
     inline LinkedList<T>::Node<T> *LinkedList<T>::get_node(int index) const
     {
         if (index == -1)
-            return _HPPead;
+            return _head;
         if (index == this->_size - 1)
-            return _HPPead->_prev;
-        Node<T> *p = _HPPead;
+            return _head->_prev;
+        Node<T> *p = _head;
         for (size_t i = 0; i < index; ++i)
             p = p->_next;
         return p->_next;
