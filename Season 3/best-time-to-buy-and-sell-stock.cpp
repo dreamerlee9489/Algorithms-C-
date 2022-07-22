@@ -1,6 +1,6 @@
 /**
  * @file best-time-to-buy-and-sell-stock.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 121. 买卖股票的最佳时机
  * @version 0.1
  * @date 2022-07-21

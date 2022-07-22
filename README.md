@@ -86,3 +86,6 @@
 - 买卖股票的最佳时机(best-time-to-buy-and-sell-stock.cpp)  
 - 编辑距离(edit-distance.cpp)  
 - 最长回文子串(longest-palindromic-substring.cpp)  
+> 二叉树  
+- 二叉树的最近公共祖先(lowest-common-ancestor-of-a-binary-tree.cpp)  
+- 恢复二叉搜索树(recover-binary-search-tree.cpp)  

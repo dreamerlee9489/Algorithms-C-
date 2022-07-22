@@ -62,6 +62,7 @@ namespace app
         void inorder_iter(TraverseFunc func) const;
         void preorder_iter(TraverseFunc func) const;
         void postorder_iter(TraverseFunc func) const;
+        void inorder_morris(TraverseFunc func) const;
         void levelorder(Node<T> *node, TraverseFunc func) const;
         size_t height_recu(Node<T> *node) const
         {
@@ -408,6 +409,43 @@ namespace app
                     if (top->_left != nullptr)
                         s.push(top->_left);
                 }
+            }
+        }
+    }
+
+    template <typename T>
+    inline void IBinaryTree<T>::inorder_morris(TraverseFunc func) const
+    {
+        Node<T> *node = _root;
+        while (node != nullptr)
+        {
+            if (node->_left != nullptr)
+            {
+                Node<T> *pred = node->_left;
+                while (pred->_right != nullptr && pred->_right != node)
+                    pred = pred->_right;
+                if (pred->_right == nullptr)
+                {
+                    pred->_right = node;
+                    node = node->_left;
+                }
+                else
+                {
+                    if (func != nullptr)
+                        func(node->_data);
+                    else
+                        cout << *node->_data << "\n";
+                    pred->_right = nullptr;
+                    node = node->_right;
+                }
+            }
+            else
+            {
+                if (func != nullptr)
+                    func(node->_data);
+                else
+                    cout << *node->_data << "\n";
+                node = node->_right;
             }
         }
     }
