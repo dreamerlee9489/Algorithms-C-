@@ -89,3 +89,8 @@
 > 二叉树  
 - 二叉树的最近公共祖先(lowest-common-ancestor-of-a-binary-tree.cpp)  
 - 恢复二叉搜索树(recover-binary-search-tree.cpp)  
+- 最大BST子树(largest-bst-subtree.cpp)  
+> DFS  
+- 电话号码的字母组合(letter-combinations-of-a-phone-number.cpp)  
+- 全排列(permutations.cpp)  
+- 括号生成(generate-parentheses.cpp)  
