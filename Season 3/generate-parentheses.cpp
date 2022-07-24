@@ -1,6 +1,6 @@
 /**
  * @file generate-parentheses.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 22. 括号生成
  * @version 0.1
  * @date 2022-07-23

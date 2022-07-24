@@ -1,6 +1,6 @@
 /**
  * @file largest-bst-subtree.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 333. 最大BST子树
  * @version 0.1
  * @date 2022-07-23

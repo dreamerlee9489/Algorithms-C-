@@ -1,6 +1,8 @@
 .vscode/
 .idea/
 Test/
+cmake-build-debug/
+cmake-build-release/
 
 # Prerequisites
 *.d

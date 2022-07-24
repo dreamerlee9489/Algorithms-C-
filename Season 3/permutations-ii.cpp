@@ -1,6 +1,6 @@
 /**
  * @file permutations-ii.CPP
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 47. 全排列 II
  * @version 0.1
  * @date 2022-07-23
