@@ -93,7 +93,9 @@
 > DFS  
 - 电话号码的字母组合(letter-combinations-of-a-phone-number.cpp)  
 - 全排列(permutations.cpp)  
+- 全排列 II(permutations-ii.cpp)  
 - 括号生成(generate-parentheses.cpp)  
+> 高频题  
 - 移动零(move-zeroes.cpp)  
 - 两数之和(two-sum.cpp)  
 - 三数之和(3sum.cpp)  
@@ -101,3 +103,8 @@
 - 圆圈中最后剩下的数字(yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof.cpp)  
 - 螺旋矩阵(spiral-matrix.cpp)  
 - LRU 缓存(lru-cache.cpp)  
+- 整数反转(reverse-integer.cpp)  
+- 会议室(meeting-rooms.cpp)  
+- 会议室 II(meeting-rooms-ii.cpp)  
+- 盛最多水的容器(container-with-most-water.cpp)  
+- 接雨水(trapping-rain-water.cpp)  
