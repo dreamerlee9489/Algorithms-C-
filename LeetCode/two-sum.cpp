@@ -14,7 +14,8 @@ using namespace std;
 
 class Solution
 {
-    unordered_map<int, int> _map;
+    // 哈希表增删改查的时间复杂度都是O(1)
+    unordered_map<int, int> _map;   
 
 public:
     vector<int> twoSum(vector<int> &nums, int target)
@@ -31,7 +32,6 @@ public:
 
     vector<int> twoSum_my(vector<int> &nums, int target)
     {
-        vector<int> res;
         for (int i = 0; i < nums.size(); i++)
             _map.emplace(pair(nums[i], i));
         for (int i = 0; i < nums.size(); i++)
@@ -40,6 +40,6 @@ public:
             if (iter != _map.end() && iter->second != i)
                 return vector<int>({i, iter->second});
         }
-        return res;
+        return vector<int>();
     }
 };

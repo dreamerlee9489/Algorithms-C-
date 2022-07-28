@@ -1,6 +1,6 @@
 # 数据结构与算法(C++版)
-该项目使用C++重写了小码哥MJ《恋上数据结构与算法》视频教程系列
-## 数据结构    
+该项目使用C++重写了小码哥《恋上数据结构与算法》视频教程系列
+## Season 1    
 - 动态数组(ArrayList)    
 - 双向循环链表(LinkedList)  
 - 栈(Stack)  
@@ -19,12 +19,14 @@
 - 二叉堆(BinaryHeap)  
 - 优先级队列(PriorityQueue)  
 - 前缀树(Trie)  
+## Season 2  
+### 数据结构  
 - 并查集(DisjointSet)  
 - 图(Graph)  
 - 最小堆(MinHeap)  
 - 布隆过滤器(BloomFilter)  
 - 跳表(SkipList)  
-## 算法  
+### 算法  
 > 排序  
 - 冒泡排序(BubbleSort)  
 - 选择排序(SelectSort)  
@@ -58,9 +60,9 @@
 - 最长公共子串长度(LCSS.cpp)  
 - 0-1背包(Knapsack.cpp)  
 > 字符串匹配
-- 暴力求解(BruteForce.cpp)  
+- 暴力匹配(BruteForce.cpp)  
 - KMP算法(KMP.cpp)  
-## LeetCode  
+## Season 3    
 > 数组 排序  
 - 合并两个有序数组(merge-sorted-array.cpp)  
 - 颜色分类(sort-colors.cpp)  
@@ -109,3 +111,10 @@
 - 会议室 II(meeting-rooms-ii.cpp)  
 - 盛最多水的容器(container-with-most-water.cpp)  
 - 接雨水(trapping-rain-water.cpp)  
+## LeetCode(个人刷题记录)   
+- 两数之和(two-sum.cpp)  
+- 最长回文子串(longest-palindromic-substring.cpp)  
+- 直线上最多的点数(max-points-on-a-line.cpp)  
+- LRU缓存机制(lru-cache.cpp)  
+- 反转链表(reverse-linked-list.cpp)  
+- 火星词典(alien-dictionary.cpp)  
