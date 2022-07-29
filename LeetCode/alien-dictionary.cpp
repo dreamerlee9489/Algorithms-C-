@@ -9,63 +9,203 @@
  *
  */
 #include <iostream>
+#include <algorithm>
 #include <vector>
 #include <string>
 #include <list>
 #include <unordered_set>
-#include <unordered_map>
-#include <algorithm>
 using namespace std;
 
 class Solution
 {
-    unordered_map<char, char> map;
+    vector<pair<char, char>> pairs;
     unordered_set<char> set;
+    list<char> chars;
 
 public:
     string alienOrder(vector<string> &words)
     {
-        for (size_t w = 0; w < words.size() - 1; w++)
+        if (words.size() == 1)
         {
-            size_t len = min(words[w].size(), words[w + 1].size()), i = 0;
-            while (i < len)
+            for (char c : words[0])
+                set.emplace(c);
+            for(char c : set)
+                chars.emplace_back(c);
+        }
+        else
+        {
+            for (size_t wd = 0; wd < words.size() - 1; wd++)
             {
-                set.emplace(words[w][i]);
-                set.emplace(words[w + 1][i]);
-                if (words[w][i] != words[w + 1][i])
+                string words0 = words[wd], words1 = words[wd + 1];
+                size_t minLen = min(words0.size(), words1.size()), i = 0;
+                while (i < minLen)
                 {
-                    if(map.find(words[w + 1][i]) != map.end() && map[words[w + 1][i]] == words[w][i])
-                        return "";
-                    map.emplace(make_pair(words[w][i], words[w + 1][i]));
-                    break;
+                    set.emplace(words0[i]);
+                    set.emplace(words1[i]);
+                    if (words0[i] != words1[i])
+                    {
+                        bool had = false;
+                        for (auto p : pairs)
+                        {
+                            if (p.first == words0[i] && p.second == words1[i])
+                            {
+                                had = true;
+                                break;
+                            }
+                        }
+                        if (had)
+                            i++;
+                        else
+                            pairs.emplace_back(words0[i], words1[i]);
+                        break;
+                    }
+                    else
+                    {
+                        if (++i == minLen)
+                        {
+                            if (i < words0.size())
+                                return "";
+                        }
+                    }
                 }
-                else
+                for (size_t j = i; j < words0.size(); j++)
+                    set.emplace(words0[j]);
+                for (size_t k = i; k < words1.size(); k++)
+                    set.emplace(words1[k]);
+            }
+            cout << "----------------------------\nset size=" << set.size() << "\n";
+            for (auto p : pairs)
+                cout << p.first << " < " << p.second << "\n";
+            size_t strLen = set.size(), pairLen = pairs.size();
+            while (set.size() > 0)
+            {
+                if (pairLen == 0)
                 {
-                    if (++i >= len)
-                        map.emplace(make_pair(words[w].size() > words[w + 1].size() ? words[w][len] : words[w + 1][len], words[w][len - 1]));
+                    for (char c : set)
+                    {
+                        chars.emplace_back(c);
+                        set.erase(c);
+                        break;
+                    }
                 }
+                else if (chars.size() == 0)
+                {
+                    chars.emplace_back(pairs[0].first);
+                    chars.emplace_back(pairs[0].second);
+                    set.erase(pairs[0].first);
+                    set.erase(pairs[0].second);
+                    pairLen--;
+                }
+                char left = chars.front(), right = chars.back();
+                bool place = false;
+                for (size_t i = 1; i < pairs.size(); i++)
+                {
+                    if (pairs[i].first == right)
+                    {
+                        if (set.find(pairs[i].second) == set.end())
+                            return "";
+                        right = pairs[i].second;
+                        chars.emplace_back(right);
+                        set.erase(right);
+                        pairLen--;
+                        place = true;
+                    }
+                    else if (pairs[i].first == left && set.find(pairs[i].second) != set.end())
+                    {
+                        bool mid = false;
+                        for (size_t temp = 1; temp < pairs.size(); temp++)
+                        {
+                            if (temp != i && pairs[temp].second == right && pairs[temp].first == pairs[i].second)
+                            {
+                                mid = true;
+                                chars.emplace(++chars.begin(), pairs[i].second);
+                                set.erase(pairs[i].second);
+                                pairLen--;
+                                place = true;
+                            }
+                        }
+                        if (!mid)
+                        {
+                            chars.emplace(chars.begin(), pairs[i].second);
+                            set.erase(pairs[i].second);
+                            pairLen--;
+                            place = true;
+                        }
+                    }
+                    else if (set.find(pairs[i].first) != set.end() && set.find(pairs[i].second) == set.end())
+                    {
+                        auto leftIter = chars.begin(), rightIter = chars.begin();
+                        for (auto iter = chars.begin(); iter != chars.end(); iter++)
+                        {
+                            if (pairs[i].second == *iter)
+                            {
+                                if (iter == chars.begin())
+                                    left = pairs[i].first;
+                                chars.emplace(iter, pairs[i].first);
+                                set.erase(pairs[i].first);
+                                pairLen--;
+                                place = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (pairs[i].second == left)
+                    {
+                        if (set.find(pairs[i].first) == set.end())
+                            return "";
+                        left = pairs[i].first;
+                        chars.emplace_front(left);
+                        set.erase(left);
+                        pairLen--;
+                        place = true;
+                    }
+                    else if (pairs[i].second == right && set.find(pairs[i].first) != set.end())
+                    {
+                        bool mid = false;
+                        for (size_t temp = 1; temp < pairs.size(); temp++)
+                        {
+                            if (temp != i && pairs[temp].first == left && pairs[temp].second == pairs[i].first)
+                            {
+                                mid = true;
+                                chars.emplace(++chars.begin(), pairs[i].first);
+                                set.erase(pairs[i].first);
+                                pairLen--;
+                                place = true;
+                            }
+                        }
+                        if (!mid)
+                        {
+                            chars.emplace(chars.begin(), pairs[i].first);
+                            set.erase(pairs[i].first);
+                            pairLen--;
+                            place = true;
+                        }
+                    }
+                    else if (set.find(pairs[i].second) != set.end() && set.find(pairs[i].first) == set.end())
+                    {
+                        auto leftIter = chars.begin(), rightIter = chars.begin();
+                        for (auto iter = chars.begin(); iter != chars.end(); iter++)
+                        {
+                            if (pairs[i].first == *iter)
+                            {
+                                if (iter == prev(chars.end()))
+                                    right = pairs[i].second;
+                                chars.emplace(++iter, pairs[i].second);
+                                set.erase(pairs[i].second);
+                                pairLen--;
+                                place = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (!place)
+                    pairLen = 0;
             }
         }
-        list<char> chars;
-        string res = "";
-        while (chars.size() < set.size())
-        {
-            for(pair<char, char> p : map)
-            {
-                if(chars.size() == set.size())
-                    break;
-                if(chars.front() == p.second)
-                    chars.emplace_front(p.first);
-                else if(chars.back() == p.first)
-                    chars.emplace_back(p.second);
-                else
-                {
-                    chars.emplace_back(p.first);
-                    chars.emplace_back(p.second);
-                }
-            }
-        }
-        for(char c : chars)
+        string res;
+        for (char c : chars)
             res += c;
         return res;
     }
@@ -79,9 +219,37 @@ int main(int argc, char const *argv[])
     // cout << Solution().alienOrder(words2) << "\n";
     // vector<string> words3 = {"z", "x", "z"};
     // cout << Solution().alienOrder(words3) << "\n";
-    // vector<string> words4 = {"z", "z"};
+    // vector<string> words4 = {"z", "z"}; //"z"
     // cout << Solution().alienOrder(words4) << "\n";
-    vector<string> words5 = {"zy", "zx"};
-    cout << Solution().alienOrder(words5) << "\n";
+    // vector<string> words5 = {"zy", "zx"}; //"zyx"
+    // cout << Solution().alienOrder(words5) << "\n";
+    // vector<string> words6 = {"ab", "adc"}; //"cbda"
+    // cout << Solution().alienOrder(words6) << "\n";
+    // vector<string> words7 = {"ac", "ab", "b"};
+    // cout << Solution().alienOrder(words7) << "\n"; //"acb"
+    // vector<string> words8 = {"abc", "ab"};
+    // cout << Solution().alienOrder(words8) << "\n"; //""
+    // vector<string> words9 = {"aac", "aabb", "aaba"};
+    // cout << Solution().alienOrder(words9) << "\n"; //"cba"
+    // vector<string> words10 = {"z", "x", "a", "zb", "zx"};
+    // cout << Solution().alienOrder(words10) << "\n"; //""
+    // vector<string> words11 = {"c", "b", "ac", "aa"};
+    // cout << Solution().alienOrder(words11) << "\n"; //"cba"
+    // vector<string> words12 = {"a", "b", "ca", "cc"};
+    // cout << Solution().alienOrder(words12) << "\n"; //"abc"
+    // vector<string> words13 = {"ac", "ab", "zc", "zb"};
+    // cout << Solution().alienOrder(words13) << "\n"; //"cbaz"
+    // vector<string> words14 = {"qb", "qts", "qs", "qa", "s"};
+    // cout << Solution().alienOrder(words14) << "\n"; //"bqtsa"
+    // vector<string> words15 = {"vlxpwiqbsg", "cpwqwqcd"};
+    // cout << Solution().alienOrder(words15) << "\n"; //"bdgilpqsvcwx"
+    // vector<string> words16 = {"wrt", "wrf", "er", "ett", "rftt", "te"};
+    // cout << Solution().alienOrder(words16) << "\n"; //"bdgilpqsvcwx"
+    // vector<string> words17 = {"wnlb"};
+    // cout << Solution().alienOrder(words17) << "\n"; //"bdgilpqsvcwx"
+    vector<string> words18 = {"pp","pocccevp","vuavnz"};
+    cout << Solution().alienOrder(words18) << "\n"; //"acenpouvz"
+    vector<string> words19 = {"eebdjprtjb","exfjbwzamj","dzjlqzb","mfdj","k","blvtggjw","znpdnze","mf","lotbeuoyho","lplkxjdg"};
+    cout << Solution().alienOrder(words19) << "\n"; //""
     return 0;
 }
