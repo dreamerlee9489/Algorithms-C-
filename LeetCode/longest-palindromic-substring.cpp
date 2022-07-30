@@ -1,6 +1,6 @@
 /**
  * @file longest-palindromic-substring.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 5. 最长回文子串
  * @version 0.1
  * @date 2022-07-27

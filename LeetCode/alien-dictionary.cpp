@@ -1,6 +1,6 @@
 /**
  * @file alien-dictionary.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 269. 火星词典
  * @version 0.1
  * @date 2022-07-28

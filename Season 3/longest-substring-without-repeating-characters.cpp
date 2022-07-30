@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2022
  *
  */
+#include <iostream>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -34,3 +35,11 @@ public:
         return max;
     }
 };
+
+int main(int argc, char const *argv[])
+{
+    // cout << Solution().lengthOfLongestSubstring("abcabcbb") << "\n";
+    // cout << Solution().lengthOfLongestSubstring("bbbbb") << "\n";
+    cout << Solution().lengthOfLongestSubstring("pwwkew") << "\n";
+    return 0;
+}

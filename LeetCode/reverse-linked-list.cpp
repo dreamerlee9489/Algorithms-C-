@@ -1,6 +1,6 @@
 /**
  * @file reverse-linked-list.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 206. 反转链表
  * @version 0.1
  * @date 2022-07-28

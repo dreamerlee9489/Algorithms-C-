@@ -15,9 +15,9 @@ void test_sort(int *array, size_t size, initializer_list<ISort<int> *> list)
         int *copy = new int[size];
         for(size_t i = 0; i < size; ++i)
             copy[i] = array[i];
-        (*beg)->sort(copy, 8);
+        (*beg)->sort(copy, size);
         cout << typeid(**beg).name() << ": ";
-        for (size_t i = 0; i < 8; ++i)
+        for (size_t i = 0; i < size; ++i)
             cout << copy[i] << " ";
         cout << "\n";
     }
@@ -25,8 +25,8 @@ void test_sort(int *array, size_t size, initializer_list<ISort<int> *> list)
 
 int main(int argc, char const *argv[])
 {
-    int array[] = {7, 3, 5, 8, 6, 7, 4, 5};
-    test_sort(array, 8, 
+    int array[] = {7, 3, 5, 8, 6, 11, 4, 5, 3, 10, 2, 12, 4, 1, 9};
+    test_sort(array, 15, 
     {
         new BubbleSort<int>(),
         new SelectSort<int>(),

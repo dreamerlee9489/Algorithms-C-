@@ -1,6 +1,6 @@
 /**
  * @file max-points-on-a-line.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 149. 直线上最多的点数
  * @version 0.1
  * @date 2022-07-28

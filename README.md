@@ -118,3 +118,5 @@
 - LRU缓存机制(lru-cache.cpp)  
 - 反转链表(reverse-linked-list.cpp)  
 - 火星词典(alien-dictionary.cpp)  
+- 寻找两个正序数组的中位数(median-of-two-sorted-arrays.cpp)  
+- 无重复字符的最长子串(longest-substring-without-repeating-characters.cpp)  
