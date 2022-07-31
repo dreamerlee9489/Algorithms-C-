@@ -23,7 +23,7 @@ public:
             return 0;
         vector<int> indexes = vector<int>(128, -1);
         int maxLen = 1;    
-        int beginIndex = 0; // 以上一个字符为尾的最长不重复子串开始索引
+        int beginIndex = 0;                 // 上一个最长不重复子串开始索引
         for (int i = 0; i < s.size(); i++)
         {
             int lastIndex = indexes[s[i]];  // 当前字符上次出现的索引

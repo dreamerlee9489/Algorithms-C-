@@ -17,16 +17,6 @@ public:
     {
         if(head == nullptr || head->next == nullptr)
             return head;
-        ListNode *newHead = reverseList(head->next);
-        newHead->next = head;
-        head->next = nullptr;
-        return newHead;
-    }
-
-    ListNode *reverseList1(ListNode *head)
-    {
-        if(head == nullptr || head->next == nullptr)
-            return head;
         ListNode *newHead = head->next;
         head->next = nullptr;
         while (newHead != nullptr)

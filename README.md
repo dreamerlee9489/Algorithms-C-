@@ -120,3 +120,7 @@
 - 火星词典(alien-dictionary.cpp)  
 - 寻找两个正序数组的中位数(median-of-two-sorted-arrays.cpp)  
 - 无重复字符的最长子串(longest-substring-without-repeating-characters.cpp)  
+- 接雨水(trapping-rain-water.cpp)  
+- 两数相加(add-two-numbers.cpp)  
+- 最大子数组和(maximum-subarray.cpp)  
+- 三数之和(three-sum.cpp)  
