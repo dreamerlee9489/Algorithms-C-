@@ -124,3 +124,6 @@
 - 两数相加(add-two-numbers.cpp)  
 - 最大子数组和(maximum-subarray.cpp)  
 - 三数之和(three-sum.cpp)  
+- 最大数(largest-number.cpp)  
+- 合并K个升序链表(merge-k-sorted-lists.cpp)  
+- 合并两个有序链表(merge-two-sorted-lists.cpp)  

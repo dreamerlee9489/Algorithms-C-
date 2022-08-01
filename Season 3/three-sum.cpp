@@ -19,31 +19,27 @@ public:
     {
         if (nums.size() < 3)
             return vector<vector<int>>();
-        vector<vector<int>> result;
+        vector<vector<int>> res;
         sort(nums.begin(), nums.end());
-        for (int i = 0; i < nums.size() - 2; i++)
+        for (int i = 0; i < nums.size(); i++)
         {
-            if (i > 0 && nums[i] == nums[i - 1])
+            if(i > 0 && nums[i] == nums[i - 1])
                 continue;
             int l = i + 1, r = nums.size() - 1;
             while (l < r)
             {
-                if (nums[i] + nums[l] + nums[r] == 0)
-                {
-                    result.emplace_back(vector<int>({nums[i], nums[l], nums[r]}));
-                    while (l < r && nums[l] == nums[l + 1])
-                        l++;
-                    while (l < r && nums[r] == nums[r - 1])
-                        r--;
+                if(nums[i] + nums[l] + nums[r] < 0)    
                     l++;
+                else if(nums[i] + nums[l] + nums[r] > 0)
                     r--;
-                }
-                else if (nums[i] + nums[l] + nums[r] < 0)
-                    l++;
                 else
-                    r--;
+                {
+                    res.emplace_back(vector<int>({nums[i], nums[l], nums[r]}));
+                    while (l < r && nums[++l] == nums[l - 1]);
+                    while (l < r && nums[--r] == nums[r + 1]);
+                }
             }
         }
-        return result;
+        return res;
     }
 };

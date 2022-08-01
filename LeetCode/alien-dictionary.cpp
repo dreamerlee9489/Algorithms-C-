@@ -19,7 +19,7 @@ using namespace std;
 class Solution
 {
     vector<pair<char, char>> pairs;
-    unordered_set<char> map;
+    unordered_set<char> set;
     list<char> chars;
 
     list<char>::iterator findList(char val)
@@ -36,8 +36,8 @@ public:
         if (words.size() == 1)
         {
             for (char c : words[0])
-                map.emplace(c);
-            for (char c : map)
+                set.emplace(c);
+            for (char c : set)
                 chars.emplace_back(c);
         }
         else
@@ -48,8 +48,8 @@ public:
                 size_t minLen = min(words0.size(), words1.size()), i = 0;
                 while (i < minLen)
                 {
-                    map.emplace(words0[i]);
-                    map.emplace(words1[i]);
+                    set.emplace(words0[i]);
+                    set.emplace(words1[i]);
                     if (words0[i] != words1[i])
                     {
                         bool had = false;
@@ -75,19 +75,19 @@ public:
                     }
                 }
                 for (size_t j = i; j < words0.size(); j++)
-                    map.emplace(words0[j]);
+                    set.emplace(words0[j]);
                 for (size_t k = i; k < words1.size(); k++)
-                    map.emplace(words1[k]);
+                    set.emplace(words1[k]);
             }
-            size_t strLen = map.size(), pairLen = pairs.size();
-            while (map.size() > 0)
+            size_t strLen = set.size(), pairLen = pairs.size();
+            while (set.size() > 0)
             {
                 if (pairLen == 0)
                 {
-                    for (char c : map)
+                    for (char c : set)
                     {
                         chars.emplace_back(c);
-                        map.erase(c);
+                        set.erase(c);
                         break;
                     }
                 }
@@ -95,8 +95,8 @@ public:
                 {
                     chars.emplace_back(pairs[0].first);
                     chars.emplace_back(pairs[0].second);
-                    map.erase(pairs[0].first);
-                    map.erase(pairs[0].second);
+                    set.erase(pairs[0].first);
+                    set.erase(pairs[0].second);
                     pairLen--;
                 }
                 char left = chars.front(), right = chars.back();
@@ -105,15 +105,15 @@ public:
                 {
                     if (pairs[i].first == right)
                     {
-                        if (map.find(pairs[i].second) == map.end())
+                        if (set.find(pairs[i].second) == set.end())
                             return "";
                         right = pairs[i].second;
                         chars.emplace_back(right);
-                        map.erase(right);
+                        set.erase(right);
                         pairLen--;
                         place = true;
                     }
-                    else if (map.find(pairs[i].first) == map.end() && map.find(pairs[i].second) != map.end())
+                    else if (set.find(pairs[i].first) == set.end() && set.find(pairs[i].second) != set.end())
                     {
                         auto iter = next(findList(pairs[i].first));
                         while (iter != chars.end())
@@ -123,7 +123,7 @@ public:
                                 if (p.first == pairs[i].second && *iter == p.second)
                                 {
                                     chars.emplace(prev(iter), pairs[i].second);
-                                    map.erase(pairs[i].second);
+                                    set.erase(pairs[i].second);
                                     pairLen--;
                                     place = true;
                                     break;
@@ -135,7 +135,7 @@ public:
                         {
                             right = pairs[i].second;
                             chars.emplace_back(right);
-                            map.erase(right);
+                            set.erase(right);
                             pairLen--;
                             place = true;
                         }
@@ -143,15 +143,15 @@ public:
 
                     if (pairs[i].second == left)
                     {
-                        if (map.find(pairs[i].first) == map.end())
+                        if (set.find(pairs[i].first) == set.end())
                             return "";
                         left = pairs[i].first;
                         chars.emplace_front(left);
-                        map.erase(left);
+                        set.erase(left);
                         pairLen--;
                         place = true;
                     }
-                    else if (map.find(pairs[i].first) != map.end() && map.find(pairs[i].second) == map.end())
+                    else if (set.find(pairs[i].first) != set.end() && set.find(pairs[i].second) == set.end())
                     {
                         auto iter = prev(findList(pairs[i].second));
                         while (iter != prev(chars.begin()))
@@ -161,7 +161,7 @@ public:
                                 if (p.second == pairs[i].first && *iter == p.first)
                                 {
                                     chars.emplace(next(iter), pairs[i].first);
-                                    map.erase(pairs[i].first);
+                                    set.erase(pairs[i].first);
                                     pairLen--;
                                     place = true;
                                     break;
@@ -173,7 +173,7 @@ public:
                         {
                             left = pairs[i].first;
                             chars.emplace_front(left);
-                            map.erase(left);
+                            set.erase(left);
                             pairLen--;
                             place = true;
                         }
