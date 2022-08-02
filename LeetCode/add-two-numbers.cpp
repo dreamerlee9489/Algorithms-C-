@@ -1,6 +1,6 @@
 /**
  * @file add-two-numbers.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 2. 两数相加
  * @version 0.1
  * @date 2022-07-31

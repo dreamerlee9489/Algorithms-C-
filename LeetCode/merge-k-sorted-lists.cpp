@@ -1,6 +1,6 @@
 /**
  * @file merge-k-sorted-lists.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 23. 合并K个升序链表
  * @version 0.1
  * @date 2022-08-01

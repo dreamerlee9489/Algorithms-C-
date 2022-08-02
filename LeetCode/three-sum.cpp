@@ -1,6 +1,6 @@
 /**
  * @file three-sum.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 15. 三数之和
  * @version 0.1
  * @date 2022-07-31

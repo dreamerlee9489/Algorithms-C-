@@ -127,3 +127,7 @@
 - 最大数(largest-number.cpp)  
 - 合并K个升序链表(merge-k-sorted-lists.cpp)  
 - 合并两个有序链表(merge-two-sorted-lists.cpp)  
+- 全排列(permutations.cpp)
+- 零钱兑换(coin-change.cpp)
+- 螺旋矩阵(spiral-matrix.cpp)
+- 最长递增子序列(longest-increasing-subsequence.cpp)

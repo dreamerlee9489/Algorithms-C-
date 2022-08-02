@@ -10,22 +10,22 @@ using namespace std;
  * @param faces
  * @param money
  */
-void coinChange(vector<int> faces, int money)
+void coinChange(vector<int> coins, int amount)
 {
-    sort(faces.begin(), faces.end());
-    int coins = 0, index = faces.size() - 1;
+    sort(coins.begin(), coins.end());
+    int count = 0, index = coins.size() - 1;
     while (index >= 0)
     {
-        while (money >= faces[index])
+        while (amount >= coins[index])
         {
-            cout << faces[index] << "\t";
-            money -= faces[index];
-            coins++;
+            cout << coins[index] << "\t";
+            amount -= coins[index];
+            count++;
         }
         index--;
     }
     cout << "\n------------------------------\n"
-         << coins;
+         << count;
 }
 
 int main(int argc, char const *argv[])

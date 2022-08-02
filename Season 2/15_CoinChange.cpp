@@ -11,15 +11,15 @@ using namespace std;
  * @param faces
  * @param money
  */
-int coinChange(int n, vector<int> faces)
+int coinChange(int amount, vector<int> coins)
 {
-    if(n < 1 || faces.size() == 0)
+    if(amount < 1 || coins.size() == 0)
         return -1;
-    int *dp = new int[n + 1] {};
-    for (size_t i = 1; i <= n; i++)
+    int *dp = new int[amount + 1] {};
+    for (size_t i = 1; i <= amount; i++)
     {
         int min = INT_MAX;
-        for(int face : faces)
+        for(int face : coins)
         {
             if(i >= face)
             {
@@ -30,7 +30,7 @@ int coinChange(int n, vector<int> faces)
         }
         dp[i] = min == INT_MAX ? -1 : (min + 1);
     }
-    return dp[n];
+    return dp[amount];
 }
 
 int main(int argc, char const *argv[])

@@ -1,6 +1,6 @@
 /**
  * @file merge-two-sorted-lists.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 21. 合并两个有序链表
  * @version 0.1
  * @date 2022-08-01
