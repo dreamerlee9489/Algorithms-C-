@@ -131,3 +131,8 @@
 - 零钱兑换(coin-change.cpp)
 - 螺旋矩阵(spiral-matrix.cpp)
 - 最长递增子序列(longest-increasing-subsequence.cpp)
+- 二叉树中的最大路径和(binary-tree-maximum-path-sum.cpp)
+- 排序链表(sort-list.cpp)
+- 爬楼梯(climbing-stairs.cpp)
+- 有效的括号(valid-parentheses.cpp)
+- 有序矩阵中第 K 小的元素(kth-smallest-element-in-a-sorted-matrix.cpp)

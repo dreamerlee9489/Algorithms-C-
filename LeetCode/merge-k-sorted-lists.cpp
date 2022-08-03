@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2022
  *
  */
-#include "ListNode.hpp"
+#include "./ListNode.hpp"
 #include <iostream>
 #include <vector>
 #include <algorithm>
