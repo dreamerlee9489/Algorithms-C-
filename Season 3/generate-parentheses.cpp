@@ -4,7 +4,7 @@
  * @brief 22. 括号生成
  * @version 0.1
  * @date 2022-07-23
- * @remark https://leetcode.cn/problems/generate-parentheses/
+ * @link https://leetcode.cn/problems/generate-parentheses/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

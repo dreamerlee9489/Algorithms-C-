@@ -1,10 +1,10 @@
 /**
  * @file climbing-stairs.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 70. 爬楼梯
  * @version 0.1
  * @date 2022-08-03
- * @remark https://leetcode.cn/problems/climbing-stairs/
+ * @link https://leetcode.cn/problems/climbing-stairs/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

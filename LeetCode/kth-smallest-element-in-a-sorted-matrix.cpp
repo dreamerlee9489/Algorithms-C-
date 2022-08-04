@@ -1,10 +1,10 @@
 /**
  * @file kth-smallest-element-in-a-sorted-matrix.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 378. 有序矩阵中第 K 小的元素
  * @version 0.1
  * @date 2022-08-03
- * @remark https://leetcode.cn/problems/kth-smallest-element-in-a-sorted-matrix/
+ * @link https://leetcode.cn/problems/kth-smallest-element-in-a-sorted-matrix/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

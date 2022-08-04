@@ -4,7 +4,7 @@
  * @brief 151. 颠倒字符串中的单词
  * @version 0.1
  * @date 2022-07-20
- * @remark https://leetcode.cn/problems/reverse-words-in-a-string/
+ * @link https://leetcode.cn/problems/reverse-words-in-a-string/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

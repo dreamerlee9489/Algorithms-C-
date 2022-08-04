@@ -4,7 +4,7 @@
  * @brief 252. 会议室
  * @version 0.1
  * @date 2022-07-25
- * @remark https://leetcode.cn/problems/meeting-rooms/
+ * @link https://leetcode.cn/problems/meeting-rooms/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

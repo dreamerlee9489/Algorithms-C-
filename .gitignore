@@ -1,8 +1,12 @@
 .vscode/
 .idea/
-Test/
 cmake-build-debug/
 cmake-build-release/
+Test/
+
+# Clion
+CMakeLists.txt
+main.cpp
 
 # Prerequisites
 *.d

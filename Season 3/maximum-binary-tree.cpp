@@ -4,7 +4,7 @@
  * @brief 654. 最大二叉树
  * @version 0.1
  * @date 2022-07-19
- * @remark https://leetcode.cn/problems/maximum-binary-tree/
+ * @link https://leetcode.cn/problems/maximum-binary-tree/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

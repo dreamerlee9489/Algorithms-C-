@@ -4,7 +4,7 @@
  * @brief 1. 两数之和
  * @version 0.1
  * @date 2022-07-24
- * @remark https://leetcode.cn/problems/two-sum/
+ * @link https://leetcode.cn/problems/two-sum/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

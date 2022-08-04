@@ -4,7 +4,7 @@
  * @brief 23. 合并K个升序链表
  * @version 0.1
  * @date 2022-08-01
- * @remark https://leetcode.cn/problems/merge-k-sorted-lists/
+ * @link https://leetcode.cn/problems/merge-k-sorted-lists/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

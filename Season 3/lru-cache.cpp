@@ -4,7 +4,7 @@
  * @brief 146. LRU 缓存
  * @version 0.1
  * @date 2022-07-24
- * @remark https://leetcode.cn/problems/lru-cache/
+ * @link https://leetcode.cn/problems/lru-cache/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

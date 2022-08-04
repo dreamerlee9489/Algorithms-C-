@@ -4,7 +4,7 @@
  * @brief 333. 最大BST子树
  * @version 0.1
  * @date 2022-07-23
- * @remark https://leetcode-cn.com/problems/largest-bst-subtree/
+ * @link https://leetcode-cn.com/problems/largest-bst-subtree/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

@@ -4,7 +4,7 @@
  * @brief 剑指 Offer 62. 圆圈中最后剩下的数字
  * @version 0.1
  * @date 2022-07-24
- * @remark https://leetcode.cn/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/
+ * @link https://leetcode.cn/problems/yuan-quan-zhong-zui-hou-sheng-xia-de-shu-zi-lcof/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

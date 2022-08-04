@@ -1,10 +1,10 @@
 /**
  * @file sort-list.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 148. 排序链表
  * @version 0.1
  * @date 2022-08-03
- * @remark https://leetcode.cn/problems/sort-list/
+ * @link https://leetcode.cn/problems/sort-list/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

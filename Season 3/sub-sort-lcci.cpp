@@ -4,7 +4,7 @@
  * @brief 面试题 16.16. 部分排序
  * @version 0.1
  * @date 2022-07-18
- * @remark https://leetcode.cn/problems/sub-sort-lcci/
+ * @link https://leetcode.cn/problems/sub-sort-lcci/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

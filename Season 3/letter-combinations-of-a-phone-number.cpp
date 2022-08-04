@@ -4,7 +4,7 @@
  * @brief 17. 电话号码的字母组合
  * @version 0.1
  * @date 2022-07-23
- * @remark https://leetcode.cn/problems/letter-combinations-of-a-phone-number/
+ * @link https://leetcode.cn/problems/letter-combinations-of-a-phone-number/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

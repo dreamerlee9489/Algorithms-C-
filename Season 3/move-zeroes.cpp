@@ -4,7 +4,7 @@
  * @brief 283. 移动零
  * @version 0.1
  * @date 2022-07-24
- * @remark https://leetcode.cn/problems/move-zeroes/
+ * @link https://leetcode.cn/problems/move-zeroes/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

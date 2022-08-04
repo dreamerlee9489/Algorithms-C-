@@ -4,7 +4,7 @@
  * @brief 42. 接雨水
  * @version 0.1
  * @date 2022-07-31
- * @remark https://leetcode.cn/problems/trapping-rain-water/
+ * @link https://leetcode.cn/problems/trapping-rain-water/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

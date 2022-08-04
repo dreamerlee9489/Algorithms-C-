@@ -4,7 +4,7 @@
  * @brief 53. 最大子数组和
  * @version 0.1
  * @date 2022-07-31
- * @remark https://leetcode.cn/problems/maximum-subarray/
+ * @link https://leetcode.cn/problems/maximum-subarray/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

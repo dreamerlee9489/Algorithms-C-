@@ -4,7 +4,7 @@
  * @brief 269. 火星词典
  * @version 0.1
  * @date 2022-07-28
- * @remark https://leetcode.cn/problems/alien-dictionary/
+ * @link https://leetcode.cn/problems/alien-dictionary/ @endlink
  * @copyright Copyright (c) 2022
  *
  */
@@ -13,7 +13,6 @@
 #include <list>
 #include <unordered_set>
 #include <string>
-#include <algorithm>
 using namespace std;
 
 class Solution

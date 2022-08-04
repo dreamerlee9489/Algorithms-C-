@@ -1,10 +1,10 @@
 /**
  * @file binary-tree-maximum-path-sum.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 124. 二叉树中的最大路径和
  * @version 0.1
  * @date 2022-08-03
- * @remark https://leetcode.cn/problems/binary-tree-maximum-path-sum/
+ * @link https://leetcode.cn/problems/binary-tree-maximum-path-sum/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

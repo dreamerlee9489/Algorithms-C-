@@ -4,7 +4,7 @@
  * @brief 3. 无重复字符的最长子串
  * @version 0.1
  * @date 2022-07-30
- * @remark https://leetcode.cn/problems/longest-substring-without-repeating-characters/
+ * @link https://leetcode.cn/problems/longest-substring-without-repeating-characters/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

@@ -4,7 +4,7 @@
  * @brief 面试题 01.09. 字符串轮转
  * @version 0.1
  * @date 2022-07-20
- * @remark https://leetcode.cn/problems/string-rotation-lcci/
+ * @link https://leetcode.cn/problems/string-rotation-lcci/ @endlink
  * @copyright Copyright (c) 2022
  * 
  */

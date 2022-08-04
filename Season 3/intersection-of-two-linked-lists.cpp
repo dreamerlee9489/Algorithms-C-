@@ -4,7 +4,7 @@
  * @brief 160. 相交链表
  * @version 0.1
  * @date 2022-07-18
- * @remark https://leetcode.cn/problems/intersection-of-two-linked-lists/
+ * @link https://leetcode.cn/problems/intersection-of-two-linked-lists/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

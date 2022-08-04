@@ -4,7 +4,7 @@
  * @brief 300. 最长递增子序列
  * @version 0.1
  * @date 2022-08-02
- * @remark https://leetcode.cn/problems/longest-increasing-subsequence/
+ * @link https://leetcode.cn/problems/longest-increasing-subsequence/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

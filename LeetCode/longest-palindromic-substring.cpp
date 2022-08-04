@@ -4,7 +4,7 @@
  * @brief 5. 最长回文子串
  * @version 0.1
  * @date 2022-07-27
- * @remark https://leetcode.cn/problems/longest-palindromic-substring/
+ * @link https://leetcode.cn/problems/longest-palindromic-substring/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

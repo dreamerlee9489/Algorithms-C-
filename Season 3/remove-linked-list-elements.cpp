@@ -4,7 +4,7 @@
  * @brief 203. 移除链表元素
  * @version 0.1
  * @date 2022-07-18
- * @remark https://leetcode.cn/problems/remove-linked-list-elements/
+ * @link https://leetcode.cn/problems/remove-linked-list-elements/ @endlink
  * @copyright Copyright (c) 2022
  *
  */

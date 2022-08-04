@@ -4,7 +4,7 @@
  * @brief 236. 二叉树的最近公共祖先
  * @version 0.1
  * @date 2022-07-22
- * @remark https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/
+ * @link https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/ @endlink
  * @copyright Copyright (c) 2022
  *
  */
