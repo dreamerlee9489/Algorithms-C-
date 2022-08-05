@@ -1,10 +1,11 @@
-.vscode/
 .idea/
-cmake-build-debug/
-cmake-build-release/
+.vscode/
 Test/
 
-# Clion
+# CMake
+build/
+cmake-build-debug/
+cmake-build-release/
 CMakeLists.txt
 main.cpp
 
