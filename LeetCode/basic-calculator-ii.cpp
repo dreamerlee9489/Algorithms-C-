@@ -1,6 +1,6 @@
 /**
  * @file basic-calculator-ii.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 227. 基本计算器 II
  * @version 0.1
  * @date 2022-08-05

@@ -1,6 +1,6 @@
 /**
  * @file letter-combinations-of-a-phone-number.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 17. 电话号码的字母组合
  * @version 0.1
  * @date 2022-08-05

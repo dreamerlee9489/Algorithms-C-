@@ -16,7 +16,7 @@ namespace app
         size_t pivot_index(size_t beg, size_t end)
         {
             // static保持随机数引擎和分布对象状态
-            uniform_int_distribution<size_t> u(0, end - beg);    // 均匀整数分布
+            uniform_int_distribution<size_t> u(0, end - beg - 1);    // 均匀整数分布
             default_random_engine e;
             this->swap(beg, beg + u(e));
             T pivot = this->_array[beg];

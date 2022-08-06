@@ -1,6 +1,6 @@
 /**
  * @file happy-number.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 202. 快乐数
  * @version 0.1
  * @date 2022-08-05
