@@ -9,18 +9,16 @@
  *
  */
 #include <vector>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    vector<int> spiralOrder(vector<vector<int>> &matrix)
-    {
+    vector<int> spiralOrder(vector<vector<int>> &matrix) {
         vector<int> res;
         int top = 0, bottom = matrix.size() - 1;
         int left = 0, right = matrix[0].size() - 1;
-        while (top <= bottom && left <= right)
-        {
+        while (top <= bottom && left <= right) {
             for (int i = left; i <= right; i++)
                 res.emplace_back(matrix[top][i]);
             if (++top > bottom)
@@ -42,13 +40,19 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
-{
-    vector<vector<int>> matrix1 = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+int main(int argc, char const *argv[]) {
+    vector<vector<int>> matrix1 = {{1, 2, 3},
+                                   {4, 5, 6},
+                                   {7, 8, 9}};
     auto res1 = Solution().spiralOrder(matrix1);
-    vector<vector<int>> matrix2 = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};
+    vector<vector<int>> matrix2 = {{1, 2,  3,  4},
+                                   {5, 6,  7,  8},
+                                   {9, 10, 11, 12}};
     auto res2 = Solution().spiralOrder(matrix2);
-    vector<vector<int>> matrix3 = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}, {10, 11, 12}};
+    vector<vector<int>> matrix3 = {{1,  2,  3},
+                                   {4,  5,  6},
+                                   {7,  8,  9},
+                                   {10, 11, 12}};
     auto res3 = Solution().spiralOrder(matrix3);
     return 0;
 }

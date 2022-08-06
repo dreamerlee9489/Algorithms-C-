@@ -11,24 +11,21 @@
 #include "./ListNode.hpp"
 #include <vector>
 #include <algorithm>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    ListNode *sortList(ListNode *head)
-    {
+    ListNode *sortList(ListNode *head) {
         vector<int> vec;
         ListNode *temp = head;
-        while (temp != nullptr)
-        {
+        while (temp != nullptr) {
             vec.emplace_back(temp->val);
             temp = temp->next;
         }
         sort(vec.begin(), vec.end());
         temp = head;
-        for (size_t i = 0; i < vec.size(); i++)
-        {
+        for (size_t i = 0; i < vec.size(); i++) {
             temp->val = vec[i];
             temp = temp->next;
         }
@@ -36,8 +33,7 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     ListNode *head = new ListNode(-1);
     head->next = new ListNode(5);
     head->next->next = new ListNode(3);

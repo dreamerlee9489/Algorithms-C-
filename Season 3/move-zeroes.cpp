@@ -9,21 +9,17 @@
  *
  */
 #include <vector>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    void moveZeroes(vector<int> &nums)
-    {
+    void moveZeroes(vector<int> &nums) {
         if (nums.empty())
             return;
-        for (size_t i = 0, cur = 0; i < nums.size(); i++)
-        {
-            if (nums[i] != 0)
-            {
-                if (i != cur)
-                {
+        for (size_t i = 0, cur = 0; i < nums.size(); i++) {
+            if (nums[i] != 0) {
+                if (i != cur) {
                     nums[cur] = nums[i];
                     nums[i] = 0;
                 }

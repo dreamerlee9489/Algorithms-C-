@@ -11,22 +11,20 @@
 #include <iostream>
 #include <list>
 #include <unordered_map>
+
 using namespace std;
 
-class LRUCache
-{
+class LRUCache {
     list<pair<int, int>> _list;
     unordered_map<int, list<pair<int, int>>::iterator> _map;
     int _capacity = 0;
 
 public:
-    LRUCache(int capacity)
-    {
+    LRUCache(int capacity) {
         _capacity = capacity;
     }
 
-    int get(int key)
-    {
+    int get(int key) {
         auto iter = _map.find(key);
         if (iter == _map.end())
             return -1;
@@ -36,21 +34,16 @@ public:
         return iterPair->second;
     }
 
-    void put(int key, int value)
-    {
+    void put(int key, int value) {
         auto iter = _map.find(key);
-        if (iter != _map.end())
-        {
+        if (iter != _map.end()) {
             iter->second->second = value;
             auto iterPair = _list.emplace(_list.end(), make_pair(key, value));
             _list.erase(iter->second);
             _map[key] = iterPair;
-        }
-        else
-        {
+        } else {
             _map.emplace(key, _list.emplace(_list.end(), make_pair(key, value)));
-            if (_list.size() > _capacity)
-            {
+            if (_list.size() > _capacity) {
                 _map.erase(_list.begin()->first);
                 _list.erase(_list.begin());
             }
@@ -58,8 +51,7 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     LRUCache lRUCache = LRUCache(2);
     //    lRUCache.put(1, 1); // 缓存是 {1=1}
     //    lRUCache.put(2, 2); // 缓存是 {1=1, 2=2}

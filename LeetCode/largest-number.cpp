@@ -12,96 +12,82 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    string largestNumber(vector<int>& nums) {
+    string largestNumber(vector<int> &nums) {
         string res;
         vector<string> strVec;
-        for(int n : nums)
-        {
+        for (int n: nums) {
             strVec.push_back(to_string(n));
         }
-        sort(strVec.begin(), strVec.end(), 
-            [](const string& lhs, const string& rhs)
-            {
-                // 长度相同的整数字符串可以直接比较大小
-                return lhs + rhs > rhs + lhs;
-            });
-        for(string str : strVec)
-        {
+        sort(strVec.begin(), strVec.end(),
+             [](const string &lhs, const string &rhs) {
+                 // 长度相同的整数字符串可以直接比较大小
+                 return lhs + rhs > rhs + lhs;
+             });
+        for (string str: strVec) {
             res += str;
         }
-        if(res[0] == '0')
-        {
+        if (res[0] == '0') {
             // 如果0在字符串头部，则该字符串全为0
             return "0";
         }
         return res;
     }
 
-    string largestNumber_my(vector<int> &nums)
-    {
-        if (nums[0] == 0 && nums[nums.size() - 1] == 0)
-        {
+    string largestNumber_my(vector<int> &nums) {
+        if (nums[0] == 0 && nums[nums.size() - 1] == 0) {
             sort(nums.begin(), nums.end());
             if (nums[0] == 0 && nums[nums.size() - 1] == 0)
                 return "0";
         }
-        sort(nums.begin(), nums.end(), [](int a, int b)
-             {
-				if (a == b)
-					return false;
-				if (a < 10 && b < 10)
-					return a > b;
-				vector<int> digitsA, digitsB;
-				while (a != 0)
-				{
-					digitsA.emplace_back(a % 10);
-					a /= 10;
-				}
-				while (b != 0)
-				{
-					digitsB.emplace_back(b % 10);
-					b /= 10;
-				}
-				int diff = 0, idxA = digitsA.size() - 1, idxB = digitsB.size() - 1;
-				while (idxA >= 0 && idxB >= 0)
-				{
-					diff = digitsA[idxA] - digitsB[idxB];
-					idxA--, idxB--;
-					if (diff != 0)
-						return diff > 0;
-				}
-				if (idxA >= 0)
-				{
-					idxB = digitsB.size() - 1;
-					int step = digitsA.size();
-					while (digitsB[idxB] == digitsA[idxA])
-					{
-						idxB = (idxB - 1 + digitsB.size()) % digitsB.size();
-						idxA = (idxA - 1 + digitsA.size()) % digitsA.size();
-						if (--step <= 0)
-							return false;
-					}
-					return digitsA[idxA] > digitsB[idxB];
-				}
-				else if (idxB >= 0)
-				{
-					idxA = digitsA.size() - 1;
-					int step = digitsB.size();
-					while (digitsB[idxB] == digitsA[idxA])
-					{
-						idxB = (idxB - 1 + digitsB.size()) % digitsB.size();
-						idxA = (idxA - 1 + digitsA.size()) % digitsA.size();
-						if (--step <= 0)
-							return false;
-					}
-					return digitsA[idxA] > digitsB[idxB];
-				}
-				return false; });
+        sort(nums.begin(), nums.end(), [](int a, int b) {
+            if (a == b)
+                return false;
+            if (a < 10 && b < 10)
+                return a > b;
+            vector<int> digitsA, digitsB;
+            while (a != 0) {
+                digitsA.emplace_back(a % 10);
+                a /= 10;
+            }
+            while (b != 0) {
+                digitsB.emplace_back(b % 10);
+                b /= 10;
+            }
+            int diff = 0, idxA = digitsA.size() - 1, idxB = digitsB.size() - 1;
+            while (idxA >= 0 && idxB >= 0) {
+                diff = digitsA[idxA] - digitsB[idxB];
+                idxA--, idxB--;
+                if (diff != 0)
+                    return diff > 0;
+            }
+            if (idxA >= 0) {
+                idxB = digitsB.size() - 1;
+                int step = digitsA.size();
+                while (digitsB[idxB] == digitsA[idxA]) {
+                    idxB = (idxB - 1 + digitsB.size()) % digitsB.size();
+                    idxA = (idxA - 1 + digitsA.size()) % digitsA.size();
+                    if (--step <= 0)
+                        return false;
+                }
+                return digitsA[idxA] > digitsB[idxB];
+            } else if (idxB >= 0) {
+                idxA = digitsA.size() - 1;
+                int step = digitsB.size();
+                while (digitsB[idxB] == digitsA[idxA]) {
+                    idxB = (idxB - 1 + digitsB.size()) % digitsB.size();
+                    idxA = (idxA - 1 + digitsA.size()) % digitsA.size();
+                    if (--step <= 0)
+                        return false;
+                }
+                return digitsA[idxA] > digitsB[idxB];
+            }
+            return false;
+        });
         string res;
         for (int i = 0; i < nums.size(); i++)
             res += to_string(nums[i]);
@@ -109,8 +95,7 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     vector<int> nums1 = {432, 43243};
     cout << Solution().largestNumber(nums1) << "\n";
     for (size_t i = 0; i < nums1.size(); i++)
@@ -157,7 +142,7 @@ int main(int argc, char const *argv[])
         cout << nums9[i] << " ";
     cout << "\n-------------------------\n";
     const string a = "111311", b = "1113";
-    if((a + b) > (b + a))
+    if ((a + b) > (b + a))
         cout << a + b << " > " << b + a << "\n";
     else
         cout << a + b << " < " << b + a << "\n";

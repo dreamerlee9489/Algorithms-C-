@@ -10,16 +10,13 @@
  */
 #include "./ListNode.hpp"
 
-class Solution
-{
+class Solution {
 public:
-    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
-    {
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
         if (headA == nullptr || headB == nullptr)
             return nullptr;
         ListNode *currA = headA, *currB = headB;
-        while (currA != currB)
-        {
+        while (currA != currB) {
             currA = currA == nullptr ? headB : currA->next;
             currB = currB == nullptr ? headA : currB->next;
         }

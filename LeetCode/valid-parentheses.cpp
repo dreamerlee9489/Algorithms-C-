@@ -10,42 +10,38 @@
  */
 #include <string>
 #include <stack>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    bool isValid(string s)
-    {
+    bool isValid(string s) {
         stack<char> stk;
-        for (size_t i = 0; i < s.size(); i++)
-        {
+        for (size_t i = 0; i < s.size(); i++) {
             if (s[i] == '(' || s[i] == '[' || s[i] == '{')
                 stk.push(s[i]);
-            else
-            {
-                if(stk.empty())
+            else {
+                if (stk.empty())
                     return false;
-                switch (s[i])
-                {
-                case ')':
-                    if (stk.top() == '(')
-                        stk.pop();
-                    else
-                        return false;
-                    break;
-                case ']':
-                    if (stk.top() == '[')
-                        stk.pop();
-                    else
-                        return false;
-                    break;
-                case '}':
-                    if (stk.top() == '{')
-                        stk.pop();
-                    else
-                        return false;
-                    break;
+                switch (s[i]) {
+                    case ')':
+                        if (stk.top() == '(')
+                            stk.pop();
+                        else
+                            return false;
+                        break;
+                    case ']':
+                        if (stk.top() == '[')
+                            stk.pop();
+                        else
+                            return false;
+                        break;
+                    case '}':
+                        if (stk.top() == '{')
+                            stk.pop();
+                        else
+                            return false;
+                        break;
                 }
             }
         }

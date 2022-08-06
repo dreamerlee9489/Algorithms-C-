@@ -12,12 +12,11 @@
 #include <vector>
 #include <algorithm>
 #include <random>
+
 using namespace std;
 
-class Solution
-{
-    size_t pivot_index(vector<int> &nums, size_t begin, size_t end)
-    {
+class Solution {
+    size_t pivot_index(vector<int> &nums, size_t begin, size_t end) {
         default_random_engine e;
         uniform_int_distribution<size_t> d(0, end - begin);
         size_t index = begin + d(e);
@@ -27,39 +26,32 @@ class Solution
 
         int pivot = nums[begin];
         end--;
-        while (begin < end)
-        {
-            while (begin < end)
-            {
+        while (begin < end) {
+            while (begin < end) {
                 // 在轴心右侧找到第一个小于轴心的元素，将其置于begin
-                if(nums[end] >= pivot)
+                if (nums[end] >= pivot)
                     end--;
-                else
-                {
+                else {
                     nums[begin++] = nums[end];
                     break;
                 }
             }
-            while (begin < end)
-            {
+            while (begin < end) {
                 // 在轴心左侧找到第一个大于轴心的元素，将其置于end
-                if(nums[begin] <= pivot)
+                if (nums[begin] <= pivot)
                     begin++;
-                else
-                {
+                else {
                     nums[end--] = nums[begin];
                     break;
                 }
             }
         }
         nums[begin] = pivot;
-        return begin;        
+        return begin;
     }
 
-    void quick_sort(vector<int> &nums, size_t begin, size_t end)
-    {
-        if(end - begin > 1)
-        {
+    void quick_sort(vector<int> &nums, size_t begin, size_t end) {
+        if (end - begin > 1) {
             size_t mid = pivot_index(nums, begin, end);
             quick_sort(nums, begin, mid);
             quick_sort(nums, mid + 1, end);
@@ -67,8 +59,7 @@ class Solution
     }
 
 public:
-    double findMedianSortedArrays(vector<int> &nums1, vector<int> &nums2)
-    {
+    double findMedianSortedArrays(vector<int> &nums1, vector<int> &nums2) {
         nums1.resize(nums1.size() + nums2.size());
         for (size_t i = 0; i < nums2.size(); i++)
             nums1[nums1.size() - nums2.size() + i] = nums2[i];
@@ -79,8 +70,7 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     vector<int> nums1 = {1, 3, 5, 7, 9};
     vector<int> nums2 = {0, 2, 4, 6, 8};
     cout << Solution().findMedianSortedArrays(nums1, nums2) << "\n";

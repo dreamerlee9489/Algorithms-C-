@@ -10,17 +10,15 @@
  */
 #include <vector>
 #include <algorithm>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    int maxProfit(vector<int> &prices)
-    {
+    int maxProfit(vector<int> &prices) {
         int price = prices[0], profit = 0;
-        for (int i = 1; i < prices.size(); i++)
-        {
-            if(prices[i] < price)
+        for (int i = 1; i < prices.size(); i++) {
+            if (prices[i] < price)
                 price = prices[i];
             profit = max(profit, prices[i] - price);
         }

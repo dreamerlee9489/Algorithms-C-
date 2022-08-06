@@ -10,18 +10,16 @@
  */
 #include <vector>
 #include <unordered_map>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    vector<int> twoSum(vector<int> &nums, int target)
-    {
+    vector<int> twoSum(vector<int> &nums, int target) {
         if (nums.empty())
             return nums;
         unordered_map<int, int> map;
-        for (int i = 0; i < nums.size(); i++)
-        {
+        for (int i = 0; i < nums.size(); i++) {
             auto iter = map.find(target - nums[i]);
             if (iter != map.end())
                 return vector<int>({iter->second, i});

@@ -10,23 +10,21 @@
  */
 #include <string>
 #include <vector>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
     /**
      * @brief 扩展中心法
      * @param s 
      * @return string 
      */
-    string longestPalindrome(string s)
-    {
+    string longestPalindrome(string s) {
         if (s.size() < 2)
             return s;
         int maxLen = 1, begin = 0, center = 0;
-        while (center < s.size())
-        {
+        while (center < s.size()) {
             // 将连续相同的字符视为扩展中心
             // 找到s[center]右边第一个不相等的字符, 作为新的s[center]
             // 若s[left] == s[right], s[left]左移, s[right]右移
@@ -35,14 +33,12 @@ public:
             while (s[right] == s[center] && right < s.size())
                 right++;
             center = right;
-            while (left >= 0 && right < s.size() && s[left] == s[right])
-            {
+            while (left >= 0 && right < s.size() && s[left] == s[right]) {
                 left--;
                 right++;
             }
             int len = right - ++left;
-            if(len > maxLen)
-            {
+            if (len > maxLen) {
                 maxLen = len;
                 begin = left;
             }
@@ -55,23 +51,19 @@ public:
      * @param s 
      * @return string 
      */
-    string longestPalindrome1(string s)
-    {
+    string longestPalindrome1(string s) {
         if (s.size() < 2)
             return s;
         vector<vector<bool>> dp = vector<vector<bool>>(s.size(), vector<bool>(s.size(), false));
         int maxLen = 1, begin = 0;
-        for (int i = s.size() - 1; i >= 0; --i)
-        {
-            for (int j = i; j < s.size(); ++j)
-            {
+        for (int i = s.size() - 1; i >= 0; --i) {
+            for (int j = i; j < s.size(); ++j) {
                 // dp[i][j]表示s[i, j]是否为回文串, len = j - i + 1
                 // 当len <= 2时, dp[i][j] = s[i] == s[j]
                 // 当len > 2时, dp[i][j] = s[i] == s[j] && dp[i + 1][j - 1]
                 int len = j - i + 1;
                 dp[i][j] = s[i] == s[j] && (len <= 2 || dp[i + 1][j - 1]);
-                if(dp[i][j] && len > maxLen)
-                {
+                if (dp[i][j] && len > maxLen) {
                     maxLen = len;
                     begin = i;
                 }

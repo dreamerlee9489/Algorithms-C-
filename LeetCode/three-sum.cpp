@@ -10,30 +10,26 @@
  */
 #include <vector>
 #include <algorithm>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    vector<vector<int>> threeSum(vector<int> &nums)
-    {
+    vector<vector<int>> threeSum(vector<int> &nums) {
         if (nums.size() < 3)
             return vector<vector<int>>();
         vector<vector<int>> res;
         sort(nums.begin(), nums.end());
-        for (int i = 0; i < nums.size(); i++)
-        {
-            if(i > 0 && nums[i] == nums[i - 1])
+        for (int i = 0; i < nums.size(); i++) {
+            if (i > 0 && nums[i] == nums[i - 1])
                 continue;
             int l = i + 1, r = nums.size() - 1;
-            while (l < r)
-            {
-                if(nums[i] + nums[l] + nums[r] < 0)    
+            while (l < r) {
+                if (nums[i] + nums[l] + nums[r] < 0)
                     l++;
-                else if(nums[i] + nums[l] + nums[r] > 0)
+                else if (nums[i] + nums[l] + nums[r] > 0)
                     r--;
-                else
-                {
+                else {
                     res.emplace_back(vector<int>({nums[i], nums[l], nums[r]}));
                     while (l < r && nums[++l] == nums[l - 1]);
                     while (l < r && nums[--r] == nums[r + 1]);
@@ -44,8 +40,7 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     vector<int> nums1 = {-1, 0, 1, 2, -1, -4};
     auto res1 = Solution().threeSum(nums1);
     vector<int> nums2 = {1, 2, -2, -1};

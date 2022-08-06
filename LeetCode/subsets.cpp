@@ -9,17 +9,15 @@
  *
  */
 #include <vector>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
     vector<int> tmp;
     vector<vector<int>> res;
 
-    void dfs(int layer, vector<int> &nums)
-    {
-        if(layer == nums.size())
-        {
+    void dfs(int layer, vector<int> &nums) {
+        if (layer == nums.size()) {
             res.emplace_back(tmp);
             return;
         }
@@ -30,15 +28,13 @@ class Solution
     }
 
 public:
-    vector<vector<int>> subsets(vector<int> &nums)
-    {
+    vector<vector<int>> subsets(vector<int> &nums) {
         dfs(0, nums);
         return res;
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     vector<int> nums = {1, 2};
     auto res = Solution().subsets(nums);
     return 0;

@@ -1,9 +1,9 @@
 #include "./19_Trie.hpp"
 #include "./Person.hpp"
+
 using namespace app;
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     Trie<Person> tree;
     tree.add("cat", make_shared<Person>(1));
     tree.add("dog", make_shared<Person>(2));

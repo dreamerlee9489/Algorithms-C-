@@ -10,28 +10,22 @@
  */
 #include <vector>
 #include <stack>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    vector<int> dailyTemperatures(vector<int> &temperatures)
-    {
+    vector<int> dailyTemperatures(vector<int> &temperatures) {
         if (temperatures.empty())
             return vector<int>();
         vector<int> vals = vector<int>(temperatures.size());
-        for(int i = vals.size() - 2; i >= 0; i--)
-        {
+        for (int i = vals.size() - 2; i >= 0; i--) {
             int j = i + 1;
-            while (true)
-            {
-                if(temperatures[i] < temperatures[j])
-                {
+            while (true) {
+                if (temperatures[i] < temperatures[j]) {
                     vals[i] = j - i;
                     break;
-                }
-                else if(vals[j] == 0)
-                {
+                } else if (vals[j] == 0) {
                     vals[i] = 0;
                     break;
                 }
@@ -41,16 +35,13 @@ public:
         return vals;
     }
 
-    vector<int> dailyTemperatures1(vector<int> &temperatures)
-    {
+    vector<int> dailyTemperatures1(vector<int> &temperatures) {
         if (temperatures.empty())
             return vector<int>();
         vector<int> vals = vector<int>(temperatures.size());
         stack<int> stk = stack<int>();
-        for (size_t i = 0; i < temperatures.size(); i++)
-        {
-            while (!stk.empty() && temperatures[i] > temperatures[stk.top()])
-            {
+        for (size_t i = 0; i < temperatures.size(); i++) {
+            while (!stk.empty() && temperatures[i] > temperatures[stk.top()]) {
                 vals[stk.top()] = i - stk.top();
                 stk.pop();
             }

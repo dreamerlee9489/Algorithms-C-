@@ -1,9 +1,9 @@
 #include "./02_ArrayList.hpp"
 #include "./Person.hpp"
+
 using namespace app;
 
-int main()
-{
+int main() {
     auto list = make_shared<ArrayList<Person>>();
     cout << "----------Test add()----------\n";
     list->add(make_shared<Person>(20, "Alice0"));
@@ -17,13 +17,11 @@ int main()
     cout << "size=" << list->size() << ", capacity=" << list->capacity() << endl;
     cout << *list;
     cout << "----------Test insert()----------\n";
-    try
-    {
+    try {
         list->insert(5, make_shared<Person>(30, "Bob0"));
         list->insert(15, make_shared<Person>(35, "Bob1"));
     }
-    catch (const exception &e)
-    {
+    catch (const exception &e) {
         cerr << e.what() << '\n';
     }
     cout << "size=" << list->size() << ", capacity=" << list->capacity() << endl;
@@ -37,13 +35,11 @@ int main()
     cout << "size=" << list->size() << ", capacity=" << list->capacity() << endl;
     cout << *list;
     cout << "----------Test remove()----------\n";
-    try
-    {
+    try {
         cout << "Remove: " << *list->remove(5) << "\n";
         cout << "Remove: " << *list->remove(-1) << "\n";
     }
-    catch (const exception &e)
-    {
+    catch (const exception &e) {
         cerr << e.what() << '\n';
     }
     cout << "size=" << list->size() << ", capacity=" << list->capacity() << endl;

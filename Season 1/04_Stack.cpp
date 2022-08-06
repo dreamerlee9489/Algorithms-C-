@@ -1,9 +1,9 @@
 #include "./04_Stack.hpp"
 #include "./Person.hpp"
+
 using namespace app;
 
-int main()
-{
+int main() {
     Stack<Person> stack;
     stack.push(make_shared<Person>(10, "Alice0"));
     stack.push(make_shared<Person>(11, "Alice1"));

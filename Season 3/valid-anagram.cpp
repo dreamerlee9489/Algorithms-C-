@@ -10,20 +10,18 @@
  */
 #include <string>
 #include <vector>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    bool isAnagram(string s, string t)
-    {
+    bool isAnagram(string s, string t) {
         if (s.empty() || t.empty() || s.size() != t.size())
             return false;
         vector<int> counts = vector<int>(26);
         for (size_t i = 0; i < s.size(); ++i)
             counts[s[i] - 'a']++;
-        for (size_t i = 0; i < t.size(); ++i)
-        {
+        for (size_t i = 0; i < t.size(); ++i) {
             if (--counts[t[i] - 'a'] < 0)
                 return false;
         }

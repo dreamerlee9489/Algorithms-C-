@@ -10,24 +10,18 @@
  */
 #include "./ListNode.hpp"
 
-class Solution
-{
+class Solution {
 public:
-    ListNode *partition(ListNode *head, int x)
-    {
+    ListNode *partition(ListNode *head, int x) {
         if (head == nullptr)
             return nullptr;
         ListNode *lHead = new ListNode(0), *lTail = lHead;
         ListNode *rHead = new ListNode(0), *rTail = rHead;
-        while (head != nullptr)
-        {
-            if (head->val < x)
-            {
+        while (head != nullptr) {
+            if (head->val < x) {
                 lTail->next = head;
                 lTail = head;
-            }
-            else
-            {
+            } else {
                 rTail->next = head;
                 rTail = head;
             }

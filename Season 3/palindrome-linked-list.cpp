@@ -10,23 +10,19 @@
  */
 #include "./ListNode.hpp"
 
-class Solution
-{
-    ListNode *middleNode(ListNode *head)
-    {
+class Solution {
+    ListNode *middleNode(ListNode *head) {
         ListNode *fast = head, *slow = head;
-        while (fast->next != nullptr && fast->next->next != nullptr)
-        {
+        while (fast->next != nullptr && fast->next->next != nullptr) {
             slow = slow->next;
             fast = fast->next->next;
         }
         return slow;
     }
-    ListNode *reverseList(ListNode *head)
-    {
+
+    ListNode *reverseList(ListNode *head) {
         ListNode *newHead = nullptr;
-        while (head != nullptr)
-        {
+        while (head != nullptr) {
             ListNode *temp = head->next;
             head->next = newHead;
             newHead = head;
@@ -36,8 +32,7 @@ class Solution
     }
 
 public:
-    bool isPalindrome(ListNode *head)
-    {
+    bool isPalindrome(ListNode *head) {
         if (head == nullptr || head->next == nullptr)
             return true;
         if (head->next->next == nullptr)
@@ -47,10 +42,8 @@ public:
         ListNode *lHead = head;
         ListNode *rOldHead = rHead;
         bool result = true;
-        while (rHead != nullptr)
-        {
-            if (lHead->val != rHead->val)
-            {
+        while (rHead != nullptr) {
+            if (lHead->val != rHead->val) {
                 result = false;
                 break;
             }

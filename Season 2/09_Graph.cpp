@@ -1,27 +1,27 @@
 #include "./09_Graph.hpp"
 #include "./Person.hpp"
+
 using namespace std;
 using namespace app;
 
-int main(int argc, char const* argv[])
-{
-	tuple<Person*, Person*, double> array[] = {
-		make_tuple(new Person(0), new Person(2), 2),
-		make_tuple(new Person(0), new Person(4), 7),
-		make_tuple(new Person(1), new Person(2), 3),
-		make_tuple(new Person(1), new Person(5), 1),
-		make_tuple(new Person(1), new Person(6), 7),
-		make_tuple(new Person(2), new Person(4), 4),
-		make_tuple(new Person(2), new Person(5), 3),
-		make_tuple(new Person(2), new Person(6), 6),
-		make_tuple(new Person(3), new Person(7), 9),
-		make_tuple(new Person(4), new Person(6), 8),
-		make_tuple(new Person(5), new Person(6), 4),
-		make_tuple(new Person(5), new Person(7), 5)
-	};
-	Graph<Person> graph = Graph<Person>(false, 12, array);
-	graph.print();
-	return 0;
+int main(int argc, char const *argv[]) {
+    tuple<Person *, Person *, double> array[] = {
+            make_tuple(new Person(0), new Person(2), 2),
+            make_tuple(new Person(0), new Person(4), 7),
+            make_tuple(new Person(1), new Person(2), 3),
+            make_tuple(new Person(1), new Person(5), 1),
+            make_tuple(new Person(1), new Person(6), 7),
+            make_tuple(new Person(2), new Person(4), 4),
+            make_tuple(new Person(2), new Person(5), 3),
+            make_tuple(new Person(2), new Person(6), 6),
+            make_tuple(new Person(3), new Person(7), 9),
+            make_tuple(new Person(4), new Person(6), 8),
+            make_tuple(new Person(5), new Person(6), 4),
+            make_tuple(new Person(5), new Person(7), 5)
+    };
+    Graph<Person> graph = Graph<Person>(false, 12, array);
+    graph.print();
+    return 0;
 }
 
 /*

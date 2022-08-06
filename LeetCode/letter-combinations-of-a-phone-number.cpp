@@ -10,10 +10,10 @@
  */
 #include <vector>
 #include <string>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
     vector<vector<char>> map = {{},
                                 {},
                                 {'a', 'b', 'c'},
@@ -25,10 +25,8 @@ class Solution
                                 {'t', 'u', 'v'},
                                 {'w', 'x', 'y', 'z'}};
 
-    void dfs(int layer, string str, string &digits, vector<string> &res)
-    {
-        if (layer == digits.size())
-        {
+    void dfs(int layer, string str, string &digits, vector<string> &res) {
+        if (layer == digits.size()) {
             res.emplace_back(str);
             return;
         }
@@ -37,17 +35,15 @@ class Solution
     }
 
 public:
-    vector<string> letterCombinations(string digits)
-    {
+    vector<string> letterCombinations(string digits) {
         vector<string> res;
-        if(!digits.empty())
+        if (!digits.empty())
             dfs(0, "", digits, res);
         return res;
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     auto res1 = Solution().letterCombinations("2");
     auto res2 = Solution().letterCombinations("23");
     return 0;

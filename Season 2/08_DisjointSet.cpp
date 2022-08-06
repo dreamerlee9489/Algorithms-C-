@@ -1,10 +1,10 @@
 #include "./08_DisjointSet.hpp"
 #include "./Person.hpp"
+
 using namespace std;
 using namespace app;
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     DisjointSet<Person> set;
     size_t count = 20;
     for (size_t i = 0; i < count; ++i)

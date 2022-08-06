@@ -1,6 +1,7 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
+
 using namespace std;
 
 /**
@@ -12,8 +13,7 @@ using namespace std;
  * @param capacity 
  * @return int 
  */
-int maxValue(vector<int> &values, vector<int> &weights, size_t capacity)
-{
+int maxValue(vector<int> &values, vector<int> &weights, size_t capacity) {
     if (values.size() == 0 || weights.size() == 0)
         return 0;
     if (values.size() != weights.size() || capacity <= 0)
@@ -25,8 +25,7 @@ int maxValue(vector<int> &values, vector<int> &weights, size_t capacity)
     return dp[capacity];
 }
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     vector<int> values = {6, 3, 5, 4, 6};
     vector<int> weights = {2, 2, 6, 5, 4};
     int capacity = 10;

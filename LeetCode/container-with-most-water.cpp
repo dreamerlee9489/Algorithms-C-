@@ -10,28 +10,23 @@
  */
 #include <vector>
 #include <algorithm>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    int maxArea(vector<int> &height)
-    {
+    int maxArea(vector<int> &height) {
         int area = 0;
         int l = 0, r = height.size() - 1;
-        while (l < r)
-        {
-            if(height[l] <= height[r])
-            {
-                area = max((r - l) * height[l], area); 
+        while (l < r) {
+            if (height[l] <= height[r]) {
+                area = max((r - l) * height[l], area);
                 l++;
-            }
-            else
-            {
-                area = max((r - l) * height[r], area); 
+            } else {
+                area = max((r - l) * height[r], area);
                 r--;
             }
         }
-        return area; 
+        return area;
     }
 };

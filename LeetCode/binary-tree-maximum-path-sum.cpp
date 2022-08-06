@@ -10,15 +10,14 @@
  */
 #include "./TreeNode.hpp"
 #include <algorithm>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
     int sum = INT_MIN;
 
-    int getValue(TreeNode *node)
-    {
-        if(node == nullptr)
+    int getValue(TreeNode *node) {
+        if (node == nullptr)
             return 0;
         int lvalue = max(getValue(node->left), 0);
         int rvalue = max(getValue(node->right), 0);
@@ -27,8 +26,7 @@ class Solution
     }
 
 public:
-    int maxPathSum(TreeNode *root)
-    {
+    int maxPathSum(TreeNode *root) {
         getValue(root);
         return sum;
     }

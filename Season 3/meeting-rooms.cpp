@@ -10,13 +10,12 @@
  */
 #include <vector>
 #include <algorithm>
+
 using namespace std;
 
-class Solution 
-{
+class Solution {
 public:
-    bool canAttendMeetings(vector <vector<int>> &intervals) 
-    {
+    bool canAttendMeetings(vector<vector<int>> &intervals) {
         if (intervals.empty())
             return true;
         sort(intervals.begin(), intervals.end(), [](vector<int> vec1, vector<int> vec2) { return vec1[0] - vec2[0]; });

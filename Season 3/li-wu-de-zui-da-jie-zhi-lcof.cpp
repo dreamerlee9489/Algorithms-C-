@@ -10,13 +10,12 @@
  */
 #include <vector>
 #include <algorithm>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    int maxValue(vector<vector<int>> &grid)
-    {
+    int maxValue(vector<vector<int>> &grid) {
         size_t rows = grid.size(), cols = grid[0].size();
         vector<vector<int>> dp = vector<vector<int>>(rows, vector<int>(cols));
         dp[0][0] = grid[0][0];

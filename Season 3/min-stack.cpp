@@ -9,46 +9,41 @@
  *
  */
 #include <algorithm>
+
 using namespace std;
 
-class MinStack
-{
-    struct Node
-    {
+class MinStack {
+    struct Node {
         int _val = 0, _min = 0;
         Node *_next = nullptr;
-        Node(int val, int min_, Node *next)
-        {
+
+        Node(int val, int min_, Node *next) {
             _val = val;
             _min = min_;
             _next = next;
         }
     };
+
     Node *head = nullptr;
 
 public:
-    MinStack()
-    {
+    MinStack() {
         head = new Node(0, INT_MAX, nullptr);
     }
 
-    void push(int val)
-    {
+    void push(int val) {
         head = new Node(val, std::min(val, head->_min), head);
     }
 
-    void pop()
-    {
+    void pop() {
         head = head->_next;
     }
 
-    int top()
-    {
+    int top() {
         return head->_val;
     }
 
-    int getMin()
-    {
+    int getMin() {
         return head->_min;
     }
 };

@@ -10,14 +10,12 @@
  */
 #include "./TreeNode.hpp"
 
-class Solution
-{
-    struct Info
-    {
+class Solution {
+    struct Info {
         TreeNode *root = nullptr;
         int size = 0, max = 0, min = 0;
-        Info(TreeNode *root, int size, int max, int min)
-        {
+
+        Info(TreeNode *root, int size, int max, int min) {
             this->root = root;
             this->size = size;
             this->max = max;
@@ -25,8 +23,7 @@ class Solution
         }
     };
 
-    Info *getInfo(TreeNode *root)
-    {
+    Info *getInfo(TreeNode *root) {
         if (root == nullptr)
             return nullptr;
         Info *li = getInfo(root->left);
@@ -34,15 +31,13 @@ class Solution
         int leftSize = -1, rightSize = -1, max = root->val, min = root->val;
         if (li == nullptr)
             leftSize = 0;
-        else if (li->root == root->left && root->val > li->max)
-        {
+        else if (li->root == root->left && root->val > li->max) {
             leftSize = li->size;
             min = li->min;
         }
         if (ri == nullptr)
             rightSize = 0;
-        else if (ri->root == root->right && root->val < ri->min)
-        {
+        else if (ri->root == root->right && root->val < ri->min) {
             rightSize = ri->size;
             max = ri->max;
         }

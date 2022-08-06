@@ -12,50 +12,42 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    ListNode *mergeKLists(vector<ListNode *> &lists)
-    {
+    ListNode *mergeKLists(vector<ListNode *> &lists) {
         if (lists.size() == 0)
             return nullptr;
         if (lists.size() == 1)
             return lists[0];
         ListNode *res = new ListNode(), *tail = res, *p = nullptr;
         vector<int> nums;
-        for (size_t i = 0; i < lists.size(); i++)
-        {
-            while(lists[i] != nullptr)
-            {
+        for (size_t i = 0; i < lists.size(); i++) {
+            while (lists[i] != nullptr) {
                 nums.emplace_back(lists[i]->val);
                 lists[i] = lists[i]->next;
             }
         }
         sort(nums.begin(), nums.end());
-        for (size_t i = 0; i < nums.size(); i++)
-        {
+        for (size_t i = 0; i < nums.size(); i++) {
             tail->next = new ListNode(nums[i]);
             tail = tail->next;
-        }        
+        }
         return res->next;
     }
 
-    ListNode *mergeKLists_my(vector<ListNode *> &lists)
-    {
+    ListNode *mergeKLists_my(vector<ListNode *> &lists) {
         if (lists.size() == 0)
             return nullptr;
         if (lists.size() == 1)
             return lists[0];
         ListNode *res = new ListNode(), *tail = res, *minNode = res;
-        while (minNode != nullptr)
-        {
+        while (minNode != nullptr) {
             int min = INT_MAX, minIdx = 0;
-            for (int i = 0; i < lists.size(); i++)
-            {
-                if (lists[i] != nullptr && lists[i]->val < min)
-                {
+            for (int i = 0; i < lists.size(); i++) {
+                if (lists[i] != nullptr && lists[i]->val < min) {
                     min = lists[i]->val;
                     minIdx = i;
                     minNode = lists[i];
@@ -64,8 +56,7 @@ public:
             minNode = lists[minIdx];
             if (lists[minIdx] != nullptr)
                 lists[minIdx] = lists[minIdx]->next;
-            if (min < INT_MAX)
-            {
+            if (min < INT_MAX) {
                 tail->next = new ListNode(min);
                 tail = tail->next;
             }
@@ -74,8 +65,7 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     // ListNode *l1 = new ListNode(1);
     // l1->next = new ListNode(4);
     // l1->next->next = new ListNode(5);
@@ -91,8 +81,7 @@ int main(int argc, char const *argv[])
     vector<ListNode *> lists = {l1, l2};
 
     ListNode *res = Solution().mergeKLists(lists);
-    while (res != nullptr)
-    {
+    while (res != nullptr) {
         cout << res->val << " ";
         res = res->next;
     }

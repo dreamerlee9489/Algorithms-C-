@@ -1,9 +1,9 @@
 #include "./13_LinkedHashSet.hpp"
 #include "./Person.hpp"
+
 using namespace app;
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     LinkedHashSet<Person> set;
     set.add(make_shared<Person>(12, "Alice12"));
     set.add(make_shared<Person>(10, "Alice10"));
@@ -12,10 +12,9 @@ int main(int argc, char const *argv[])
     set.add(make_shared<Person>(10, "Alice10"));
     set.add(make_shared<Person>(11, "Alice11"));
     set.add(make_shared<Person>(9, "Alice19"));
-    set.traverse([](shared_ptr<Person> data, shared_ptr<bool> test)
-    {
+    set.traverse([](shared_ptr<Person> data, shared_ptr<bool> test) {
         cout << "lamdba: " << *data << "\n";
-        return false; 
+        return false;
     });
     return 0;
 }

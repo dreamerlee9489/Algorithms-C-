@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <iostream>
 #include <climits>
+
 using namespace std;
 
 /**
@@ -11,20 +12,16 @@ using namespace std;
  * @param faces
  * @param money
  */
-int coinChange(int amount, vector<int> coins)
-{
-    if(amount < 1 || coins.size() == 0)
+int coinChange(int amount, vector<int> coins) {
+    if (amount < 1 || coins.size() == 0)
         return -1;
-    int *dp = new int[amount + 1] {};
-    for (size_t i = 1; i <= amount; i++)
-    {
+    int *dp = new int[amount + 1]{};
+    for (size_t i = 1; i <= amount; i++) {
         int min = INT_MAX;
-        for(int face : coins)
-        {
-            if(i >= face)
-            {
+        for (int face: coins) {
+            if (i >= face) {
                 int v = dp[i - face];
-                if(v >= 0 && v < min)
+                if (v >= 0 && v < min)
                     min = v;
             }
         }
@@ -33,8 +30,7 @@ int coinChange(int amount, vector<int> coins)
     return dp[amount];
 }
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     cout << coinChange(41, vector<int>({1, 5, 25, 20}));
     return 0;
 }

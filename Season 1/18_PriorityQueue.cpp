@@ -1,9 +1,9 @@
 #include "./18_PriorityQueue.hpp"
 #include "./Person.hpp"
+
 using namespace app;
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     PriorityQueue<Person> q;
     q.push(make_shared<Person>(2));
     q.push(make_shared<Person>(10));

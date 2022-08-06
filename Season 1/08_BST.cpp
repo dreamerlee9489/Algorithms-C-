@@ -1,9 +1,9 @@
 #include "./08_BST.hpp"
 #include "./Person.hpp"
+
 using namespace app;
 
-int main()
-{
+int main() {
     BST<Person> tree;
     tree.add(make_shared<Person>(17, "Alice17"));
     tree.add(make_shared<Person>(14, "Alice14"));
@@ -19,10 +19,9 @@ int main()
     cout << "----------Test operator<<()----------\n";
     cout << tree;
     cout << "----------Test traverse(Level)----------\n";
-    tree.traverse(BST<Person>::TraverseOrder::Level, [](shared_ptr<Person> data)
-    { 
-        cout << "lambda: " << *data << "\n"; 
-        return false; 
+    tree.traverse(BST<Person>::TraverseOrder::Level, [](shared_ptr<Person> data) {
+        cout << "lambda: " << *data << "\n";
+        return false;
     });
     cout << "height=" << tree.height() << "\n";
     cout << "is complete: " << tree.is_complete() << "\n";

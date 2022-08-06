@@ -10,31 +10,26 @@
  */
 #include <vector>
 #include <unordered_set>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
     vector<int> nums, vec;
     vector<vector<int>> res;
 
-    bool contains(vector<int> &vec, int val)
-    {
+    bool contains(vector<int> &vec, int val) {
         for (size_t i = 0; i < vec.size(); i++)
             if (vec[i] == val)
                 return true;
         return false;
     }
 
-    void dfs(int layer)
-    {
+    void dfs(int layer) {
         if (layer == nums.size())
             res.emplace_back(vec);
-        else
-        {
-            for (size_t i = 0; i < nums.size(); i++)
-            {
-                if (!contains(vec, nums[i]))
-                {
+        else {
+            for (size_t i = 0; i < nums.size(); i++) {
+                if (!contains(vec, nums[i])) {
                     vec.emplace_back(nums[i]);
                     dfs(layer + 1);
                     vec.pop_back();
@@ -44,16 +39,14 @@ class Solution
     }
 
 public:
-    vector<vector<int>> permute(vector<int> &nums)
-    {
+    vector<vector<int>> permute(vector<int> &nums) {
         this->nums = nums;
         dfs(0);
         return res;
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     vector<int> nums = {1, 2, 3};
     auto res = Solution().permute(nums);
     return 0;

@@ -11,21 +11,18 @@
 #include <vector>
 #include <queue>
 #include <algorithm>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    int minMeetingRooms(vector<vector<int>> &intervals)
-    {
+    int minMeetingRooms(vector<vector<int>> &intervals) {
         if (intervals.empty())
             return 0;
-        sort(intervals.begin(), intervals.end(), [](vector<int> vec1, vector<int> vec2)
-             { return vec1[0] - vec2[0]; });
+        sort(intervals.begin(), intervals.end(), [](vector<int> vec1, vector<int> vec2) { return vec1[0] - vec2[0]; });
         priority_queue<int, vector<int>, greater<int>> heap;
         heap.push(intervals[0][1]);
-        for (size_t i = 1; i < intervals.size(); i++)
-        {
+        for (size_t i = 1; i < intervals.size(); i++) {
             if (intervals[i][0] >= heap.top())
                 heap.pop();
             heap.push(intervals[i][1]);

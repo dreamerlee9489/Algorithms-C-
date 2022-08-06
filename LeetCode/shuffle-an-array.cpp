@@ -14,33 +14,28 @@
 
 using namespace std;
 
-class Solution
-{
+class Solution {
     vector<int> nums, res;
     uniform_int_distribution<int> d;
     default_random_engine e;
 
 public:
-    Solution(vector<int> &nums)
-    {
+    Solution(vector<int> &nums) {
         this->nums = res = nums;
         d = uniform_int_distribution<int>(0, nums.size() - 1);
     }
 
-    vector<int> reset()
-    {
+    vector<int> reset() {
         return nums;
     }
 
-    vector<int> shuffle()
-    {
+    vector<int> shuffle() {
         int pivot = d(e);
         int temp = res[0];
         res[0] = res[pivot];
         res[pivot] = temp;
         int left = 0, right = res.size() - 1;
-        while (left < right)
-        {
+        while (left < right) {
             temp = res[left];
             res[left] = res[right];
             res[right] = temp;
@@ -51,8 +46,7 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     vector<int> nums = {0, -12893, 128384};
     Solution sol(nums);
     auto res1 = sol.shuffle();

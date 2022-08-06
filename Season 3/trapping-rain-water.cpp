@@ -10,18 +10,16 @@
  */
 #include <vector>
 #include <algorithm>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    int trap(vector<int> &height)
-    {
+    int trap(vector<int> &height) {
         if (height.empty())
             return 0;
         int l = 0, r = height.size() - 1, lowerMax = 0, water = 0;
-        while (l < r)
-        {
+        while (l < r) {
             int lower = height[height[l] <= height[r] ? l++ : r--];
             lowerMax = max(lowerMax, lower);
             water += lowerMax - lower;
@@ -29,8 +27,7 @@ public:
         return water;
     }
 
-    int trap1(vector<int> &height)
-    {
+    int trap1(vector<int> &height) {
         if (height.empty())
             return 0;
         int lastIndex = height.size() - 2, water = 0;
@@ -40,8 +37,7 @@ public:
             leftMaxes[i] = max(leftMaxes[i - 1], height[i - 1]);
         for (int i = lastIndex; i >= 1; --i)
             rightMaxes[i] = max(rightMaxes[i + 1], height[i + 1]);
-        for (int i = 1; i <= lastIndex; ++i)
-        {
+        for (int i = 1; i <= lastIndex; ++i) {
             int min = std::min(leftMaxes[i], rightMaxes[i]);
             if (min > height[i])
                 water += min - height[i];

@@ -1,16 +1,15 @@
 #include <ctime>
 #include <iostream>
+
 using namespace std;
 
-int fib0(int n)
-{
+int fib0(int n) {
     if (n <= 2)
         return 1;
     return fib0(n - 1) + fib0(n - 2);
 }
 
-int fib1(int n)
-{
+int fib1(int n) {
     if (n <= 2)
         return 1;
     int array[2] = {1, 1};
@@ -19,13 +18,11 @@ int fib1(int n)
     return array[n & 1];
 }
 
-int fib2(int n)
-{
+int fib2(int n) {
     if (n <= 2)
         return 1;
     int first = 0, second = 1;
-    for (size_t i = 0; i < n - 1; i++)
-    {
+    for (size_t i = 0; i < n - 1; i++) {
         int sum = first + second;
         first = second;
         second = sum;
@@ -33,8 +30,7 @@ int fib2(int n)
     return second;
 }
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     clock_t start, end0, end1, end2;
     start = clock();
     fib0(48);

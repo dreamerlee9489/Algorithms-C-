@@ -1,9 +1,9 @@
 #include "./06_Deque.hpp"
 #include "./Person.hpp"
+
 using namespace app;
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     Deque<Person> deque;
     deque.push(make_shared<Person>(10, "Alice10"));
     deque.push(make_shared<Person>(11, "Alice11"));
@@ -16,7 +16,7 @@ int main(int argc, char const *argv[])
     size_t size = deque.size();
     cout << "size=" << size << "\n";
     cout << "----------Test pop()----------\n";
-    for(size_t i = 0; i < size / 2; ++i)
+    for (size_t i = 0; i < size / 2; ++i)
         cout << *deque.pop() << "\n";
     cout << "----------Test pop_rear()----------\n";
     for (size_t i = 0; i < size / 2; ++i)

@@ -8,15 +8,12 @@
  * @copyright Copyright (c) 2022
  *
  */
-class Solution
-{
+class Solution {
 public:
-    double myPow(double x, int n)
-    {
-        long y = n < 0 ? -(long)n : n;
+    double myPow(double x, int n) {
+        long y = n < 0 ? -(long) n : n;
         double res = 1;
-        while (y > 0)
-        {
+        while (y > 0) {
             if (y & 1 == 1)
                 res *= x;
             x *= x;
@@ -25,8 +22,7 @@ public:
         return n < 0 ? 1 / res : res;
     }
 
-    double myPow1(double x, int n)
-    {
+    double myPow1(double x, int n) {
         if (n == 0)
             return 1;
         if (n == -1)
@@ -35,14 +31,12 @@ public:
         return n & 1 == 1 ? half * half * x : half * half;
     }
 
-    int powMod(int x, unsigned y, int z)
-    {
+    int powMod(int x, unsigned y, int z) {
         if (z == 0)
             return 0;
         x %= z;
         int res = 1 % z;
-        while (y > 0)
-        {
+        while (y > 0) {
             if (y & 1 == 1)
                 res = (res * x) % z;
             x = (x * x) % z;
@@ -51,8 +45,7 @@ public:
         return res;
     }
 
-    int powMod1(int x, unsigned y, int z)
-    {
+    int powMod1(int x, unsigned y, int z) {
         if (z == 0)
             return 0;
         if (y == 0)

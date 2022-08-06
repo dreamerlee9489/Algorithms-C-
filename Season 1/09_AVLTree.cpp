@@ -1,9 +1,9 @@
 #include "./09_AVLTree.hpp"
 #include "./Person.hpp"
+
 using namespace app;
 
-int main()
-{
+int main() {
     AVLTree<Person> tree;
     cout << "----------Test add()----------\n";
     tree.add(make_shared<Person>(55, "Alice01"));

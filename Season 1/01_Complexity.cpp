@@ -10,22 +10,22 @@
  */
 #include <ctime>
 #include <iostream>
+
 using namespace std;
+
 // 递归算法
-int fib1(int n)
-{
+int fib1(int n) {
     if (n <= 1)
         return n;
     return fib1(n - 1) + fib1(n - 2);
 }
+
 // 迭代算法
-int fib2(int n)
-{
+int fib2(int n) {
     if (n <= 1)
         return n;
     int first = 0, second = 1;
-    for (size_t i = 0; i < n - 1; i++)
-    {
+    for (size_t i = 0; i < n - 1; i++) {
         int sum = first + second;
         first = second;
         second = sum;
@@ -33,8 +33,7 @@ int fib2(int n)
     return second;
 }
 
-int main()
-{
+int main() {
     clock_t start, end1, end2;
     start = clock();
     fib1(48);

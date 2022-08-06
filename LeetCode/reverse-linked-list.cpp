@@ -10,17 +10,14 @@
  */
 #include "./ListNode.hpp"
 
-class Solution
-{
+class Solution {
 public:
-    ListNode *reverseList(ListNode *head)
-    {
-        if(head == nullptr || head->next == nullptr)
+    ListNode *reverseList(ListNode *head) {
+        if (head == nullptr || head->next == nullptr)
             return head;
         ListNode *newHead = head->next;
         head->next = nullptr;
-        while (newHead != nullptr)
-        {
+        while (newHead != nullptr) {
             ListNode *newNext = newHead->next;
             newHead->next = head;
             head = newHead;

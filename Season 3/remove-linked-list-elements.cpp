@@ -10,17 +10,14 @@
  */
 #include "./ListNode.hpp"
 
-class Solution
-{
+class Solution {
 public:
-    ListNode *removeElements(ListNode *head, int val)
-    {
+    ListNode *removeElements(ListNode *head, int val) {
         if (head == nullptr)
             return nullptr;
         ListNode *newHead = new ListNode(0);
         ListNode *newTail = newHead;
-        while (head != nullptr)
-        {
+        while (head != nullptr) {
             if (head->val != val)
                 newTail = newTail->next = head;
             head = head->next;

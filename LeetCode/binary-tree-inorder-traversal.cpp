@@ -10,15 +10,14 @@
  */
 #include "./TreeNode.hpp"
 #include <vector>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
     vector<int> res;
-    void inorder(TreeNode* root)
-    {
-        if(root != nullptr)
-        {
+
+    void inorder(TreeNode *root) {
+        if (root != nullptr) {
             inorderTraversal(root->left);
             res.emplace_back(root->val);
             inorderTraversal(root->right);
@@ -26,8 +25,7 @@ class Solution
     }
 
 public:
-    vector<int> inorderTraversal(TreeNode *root)
-    {
+    vector<int> inorderTraversal(TreeNode *root) {
         inorder(root);
         return res;
     }

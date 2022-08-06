@@ -10,32 +10,27 @@
  */
 #include <vector>
 #include <string>
+
 using namespace std;
 
-class Solution
-{
-    void dfs(int index, int leftRemain, int rightRemain, string str, vector<string> &list)
-    {
-        if (index == str.size())
-        {
+class Solution {
+    void dfs(int index, int leftRemain, int rightRemain, string str, vector<string> &list) {
+        if (index == str.size()) {
             list.emplace_back(str);
             return;
         }
-        if (leftRemain > 0)
-        {
+        if (leftRemain > 0) {
             str[index] = '(';
             dfs(index + 1, leftRemain - 1, rightRemain, str, list);
         }
-        if (rightRemain > 0 && leftRemain != rightRemain)
-        {
+        if (rightRemain > 0 && leftRemain != rightRemain) {
             str[index] = ')';
             dfs(index + 1, leftRemain, rightRemain - 1, str, list);
         }
     }
 
 public:
-    vector<string> generateParenthesis(int n)
-    {
+    vector<string> generateParenthesis(int n) {
         if (n < 0)
             return vector<string>();
         vector<string> list;

@@ -1,6 +1,7 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
+
 using namespace std;
 
 /**
@@ -10,14 +11,11 @@ using namespace std;
  * @param faces
  * @param money
  */
-void coinChange(vector<int> coins, int amount)
-{
+void coinChange(vector<int> coins, int amount) {
     sort(coins.begin(), coins.end());
     int count = 0, index = coins.size() - 1;
-    while (index >= 0)
-    {
-        while (amount >= coins[index])
-        {
+    while (index >= 0) {
+        while (amount >= coins[index]) {
             cout << coins[index] << "\t";
             amount -= coins[index];
             count++;
@@ -28,8 +26,7 @@ void coinChange(vector<int> coins, int amount)
          << count;
 }
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     coinChange(vector<int>({25, 20, 5, 1}), 41);
     return 0;
 }

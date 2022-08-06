@@ -10,30 +10,22 @@
  */
 #include "./ListNode.hpp"
 
-class Solution
-{
+class Solution {
 public:
-    ListNode *mergeTwoLists(ListNode *list1, ListNode *list2)
-    {
+    ListNode *mergeTwoLists(ListNode *list1, ListNode *list2) {
         ListNode *res = new ListNode(), *tail = res;
-        while (list1 != nullptr && list2 != nullptr)
-        {
-            if (list1->val < list2->val)
-            {
+        while (list1 != nullptr && list2 != nullptr) {
+            if (list1->val < list2->val) {
                 tail->next = list1;
                 tail = tail->next;
                 list1 = list1->next;
                 tail->next = nullptr;
-            }
-            else if (list1->val > list2->val)
-            {
+            } else if (list1->val > list2->val) {
                 tail->next = list2;
                 tail = tail->next;
                 list2 = list2->next;
                 tail->next = nullptr;
-            }
-            else
-            {
+            } else {
                 tail->next = list1;
                 tail = tail->next;
                 list1 = list1->next;
@@ -51,8 +43,7 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     ListNode *l1 = new ListNode(1);
     l1->next = new ListNode(2);
     l1->next->next = new ListNode(4);

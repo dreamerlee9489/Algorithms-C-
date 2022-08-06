@@ -11,16 +11,14 @@
 #include <string>
 #include <iostream>
 #include "./TreeNode.hpp"
+
 using namespace std;
 
-class Solution
-{
-    string postSerialize(TreeNode *root, string &str)
-    {
+class Solution {
+    string postSerialize(TreeNode *root, string &str) {
         if (root == nullptr)
             return str.append("#!");
-        else
-        {
+        else {
             postSerialize(root->left, str);
             postSerialize(root->right, str);
             return str.append(to_string(root->val) + "!");
@@ -28,17 +26,15 @@ class Solution
     }
 
 public:
-    bool isSubtree(TreeNode *root, TreeNode *subRoot)
-    {
-        if(root == nullptr || subRoot == nullptr)
+    bool isSubtree(TreeNode *root, TreeNode *subRoot) {
+        if (root == nullptr || subRoot == nullptr)
             return false;
         string str1 = "", str2 = "";
         return postSerialize(root, str1).find(postSerialize(subRoot, str2)) != string::npos;
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     TreeNode *root = new TreeNode(3);
     root->left = new TreeNode(4);
     root->right = new TreeNode(5);

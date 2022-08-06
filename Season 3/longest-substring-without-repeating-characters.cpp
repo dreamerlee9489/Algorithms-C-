@@ -12,20 +12,18 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    int lengthOfLongestSubstring(string s)
-    {
+    int lengthOfLongestSubstring(string s) {
         if (s.empty())
             return 0;
         vector<int> prevIdxs = vector<int>(128, -1);
         prevIdxs[s[0]] = 0;
         int li = 0, max = 1;
-        for (int i = 1; i < s.size(); ++i)
-        {
+        for (int i = 1; i < s.size(); ++i) {
             int pi = prevIdxs[s[i]];
             if (li <= pi)
                 li = pi + 1;
@@ -36,8 +34,7 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     // cout << Solution().lengthOfLongestSubstring("abcabcbb") << "\n";
     // cout << Solution().lengthOfLongestSubstring("bbbbb") << "\n";
     cout << Solution().lengthOfLongestSubstring("pwwkew") << "\n";

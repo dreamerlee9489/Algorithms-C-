@@ -9,20 +9,18 @@
  *
  */
 #include <algorithm>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    int reverse(int x)
-    {
+    int reverse(int x) {
         int res = 0;
-        while (x != 0)
-        {
+        while (x != 0) {
             int prevRes = res;
             int mod = x % 10;
             res = prevRes * 10 + mod;
-            if((res - mod) / 10 != prevRes)
+            if ((res - mod) / 10 != prevRes)
                 return 0;
             x /= 10;
         }

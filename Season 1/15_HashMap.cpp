@@ -1,9 +1,9 @@
 #include "./15_HashMap.hpp"
 #include "./Person.hpp"
+
 using namespace app;
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     HashMap<Person, int> map;
     map.add(make_shared<Person>(10, "Alice10"), make_shared<int>(10));
     map.add(make_shared<Person>(11, "Alice11"), make_shared<int>(11));
@@ -22,16 +22,14 @@ int main(int argc, char const *argv[])
     cout << "size=" << map.size() << ", capacity=" << map.capacity() << "\n";
     map.traverse();
     cout << "----------Test traverse()----------\n";
-    for (size_t i = 0; i < 10; ++i)
-    {
+    for (size_t i = 0; i < 10; ++i) {
         map.add(make_shared<Person>(i + 2, "Bob" + std::to_string(i + 2)), make_shared<int>(i + 2));
         map.add(make_shared<Person>(i * 2, "Jack" + std::to_string(i * 2)), make_shared<int>(i * 2));
     }
     cout << "size=" << map.size() << ", capacity=" << map.capacity() << "\n";
-    map.traverse([](shared_ptr<Person> key, shared_ptr<int> value)
-    {
+    map.traverse([](shared_ptr<Person> key, shared_ptr<int> value) {
         cout << "lamdba<" << *key << "-" << *value << ">\t";
-        return false; 
+        return false;
     });
     cout << "----------Test HashMap(const HashMap<K, V> &)----------\n";
     HashMap<Person, int> map1 = HashMap<Person, int>(map);

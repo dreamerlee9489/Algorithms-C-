@@ -2,10 +2,10 @@
 #include <string>
 #include "./14_TreeMap.hpp"
 #include "./Person.hpp"
+
 using namespace app;
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     TreeMap<int, Person> map;
     map.add(make_shared<int>(10006), make_shared<Person>(12, "Alice12"));
     map.add(make_shared<int>(10008), make_shared<Person>(15, "Alice15"));

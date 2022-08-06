@@ -1,33 +1,35 @@
 #ifndef BBST_HPP
 #define BBST_HPP
+
 #include "./08_BST.hpp"
 
-namespace app
-{
+namespace app {
     /**
      * @brief 平衡二叉搜索树基类
      * @date 2022-04-12
      * @tparam T
      */
-    template <typename T>
-    class BBST : public BST<T>
-    {
+    template<typename T>
+    class BBST : public BST<T> {
         using NODE = typename IBinaryTree<T>::template Node<T>;
 
     protected:
         virtual void rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f);
+
         virtual void after_rotate(NODE *grand, NODE *parent, NODE *child);
+
         void rotate_left(NODE *grand);
+
         void rotate_right(NODE *grand);
 
     public:
         BBST(typename IBinaryTree<T>::Comparator comparator = nullptr) : BST<T>(comparator) {}
+
         virtual ~BBST() = default;
     };
 
-    template <typename T>
-    inline void BBST<T>::rotate_left(NODE *grand)
-    {
+    template<typename T>
+    inline void BBST<T>::rotate_left(NODE *grand) {
         NODE *parent = grand->_right;
         NODE *child = parent->_left;
         grand->_right = child;
@@ -35,9 +37,8 @@ namespace app
         this->after_rotate(grand, parent, child);
     }
 
-    template <typename T>
-    inline void BBST<T>::rotate_right(NODE *grand)
-    {
+    template<typename T>
+    inline void BBST<T>::rotate_right(NODE *grand) {
         NODE *parent = grand->_left;
         NODE *child = parent->_right;
         grand->_left = child;
@@ -45,9 +46,8 @@ namespace app
         this->after_rotate(grand, parent, child);
     }
 
-    template <typename T>
-    inline void BBST<T>::rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f)
-    {
+    template<typename T>
+    inline void BBST<T>::rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f) {
         d->_parent = r->_parent;
         if (r->is_left())
             r->_parent->_left = d;
@@ -67,9 +67,8 @@ namespace app
         f->_parent = d;
     }
 
-    template <typename T>
-    inline void BBST<T>::after_rotate(NODE *grand, NODE *parent, NODE *child)
-    {
+    template<typename T>
+    inline void BBST<T>::after_rotate(NODE *grand, NODE *parent, NODE *child) {
         parent->_parent = grand->_parent;
         if (grand->is_left())
             grand->_parent->_left = parent;

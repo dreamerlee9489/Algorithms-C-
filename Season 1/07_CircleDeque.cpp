@@ -1,18 +1,16 @@
 #include <string>
 #include "./07_CircleDeque.hpp"
 #include "./Person.hpp"
+
 using namespace app;
 
-int main()
-{
+int main() {
     CircleDeque<Person> deque;
-    for (size_t i = 0; i < 10; ++i)
-    {
+    for (size_t i = 0; i < 10; ++i) {
         deque.push_front(make_shared<Person>(i + 1, "Alice" + to_string(i + 1)));
         deque.push(make_shared<Person>(i + 100, "Alice" + to_string(i + 100)));
     }
-    for (size_t i = 0; i < 3; ++i)
-    {
+    for (size_t i = 0; i < 3; ++i) {
         deque.pop();
         deque.pop_rear();
     }

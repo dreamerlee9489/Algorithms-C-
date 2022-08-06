@@ -1,9 +1,9 @@
 #include "./05_Queue.hpp"
 #include "./Person.hpp"
+
 using namespace app;
 
-int main()
-{
+int main() {
     Queue<Person> queue;
     queue.push(make_shared<Person>(10, "Alice0"));
     queue.push(make_shared<Person>(11, "Alice1"));

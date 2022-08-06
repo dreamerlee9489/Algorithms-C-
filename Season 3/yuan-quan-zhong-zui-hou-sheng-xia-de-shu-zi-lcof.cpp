@@ -8,11 +8,9 @@
  * @copyright Copyright (c) 2022
  *
  */
-class Solution
-{
+class Solution {
 public:
-    int lastRemaining(int n, int m)
-    {
+    int lastRemaining(int n, int m) {
         int res = 0;
         for (size_t i = 2; i <= n; i++)
             res = (res + m) % i;

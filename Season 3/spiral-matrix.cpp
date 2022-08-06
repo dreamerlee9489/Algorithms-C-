@@ -9,20 +9,18 @@
  *
  */
 #include <vector>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    vector<int> spiralOrder(vector<vector<int>> &matrix)
-    {
+    vector<int> spiralOrder(vector<vector<int>> &matrix) {
         if (matrix.empty())
             return vector<int>();
         vector<int> result;
         int top = 0, bottom = matrix.size() - 1;
         int left = 0, right = matrix[0].size() - 1;
-        while (top <= bottom && left <= right)
-        {
+        while (top <= bottom && left <= right) {
             for (int i = left; i <= right; ++i)
                 result.emplace_back(matrix[top][i]);
             top++;

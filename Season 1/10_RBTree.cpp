@@ -1,9 +1,9 @@
 #include "./10_RBTree.hpp"
 #include "./Person.hpp"
+
 using namespace app;
 
-int main()
-{
+int main() {
     RBTree<Person> tree;
     cout << "----------Test add()----------\n";
     tree.add(make_shared<Person>(55, "Alice01"));

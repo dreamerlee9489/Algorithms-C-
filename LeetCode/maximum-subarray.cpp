@@ -10,17 +10,15 @@
  */
 #include <iostream>
 #include <vector>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    int maxSubArray(vector<int> &nums)
-    {
+    int maxSubArray(vector<int> &nums) {
         vector<int> dp(nums);
         int maxSum = nums[0];
-        for (int i = 1; i < nums.size(); i++)
-        {
+        for (int i = 1; i < nums.size(); i++) {
             dp[i] = max(dp[i - 1] + nums[i], nums[i]);
             maxSum = max(maxSum, dp[i]);
         }
@@ -28,8 +26,7 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     vector<int> nums1 = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
     cout << Solution().maxSubArray(nums1) << endl;
     vector<int> nums2 = {5, 4, -1, 7, 8};
