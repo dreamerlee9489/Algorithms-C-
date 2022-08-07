@@ -33,7 +33,6 @@ public:
             queue<int> digits;
             for (; i < s.size(); i++) {
                 if (s[i] - '0' >= 0 && s[i] - '0' <= 9) {
-
                     if (s[i] == '0' && digits.empty())
                         continue;
                     digits.push(s[i] - '0');
