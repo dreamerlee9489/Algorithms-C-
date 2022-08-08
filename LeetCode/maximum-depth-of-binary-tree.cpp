@@ -10,16 +10,14 @@
  */
 #include <algorithm>
 #include "./TreeNode.hpp"
+
 using namespace std;
 
-class Solution
-{
+class Solution {
     int height = 0;
 
-    void inorder(int layer, TreeNode *node)
-    {
-        if(node != nullptr)
-        {
+    void inorder(int layer, TreeNode *node) {
+        if (node != nullptr) {
             inorder(layer + 1, node->left);
             height = max(layer + 1, height);
             inorder(layer + 1, node->right);
@@ -27,8 +25,7 @@ class Solution
     }
 
 public:
-    int maxDepth(TreeNode *root)
-    {
+    int maxDepth(TreeNode *root) {
         inorder(0, root);
         return height;
     }

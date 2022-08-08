@@ -11,15 +11,13 @@
 #include <iostream>
 #include <vector>
 #include "./TreeNode.hpp"
+
 using namespace std;
 
-class Solution
-{
-    void preorder(int layer, TreeNode *root, vector<vector<int>> &res)
-    {
-        if(root != nullptr)
-        {
-            if(layer >= res.size())
+class Solution {
+    void preorder(int layer, TreeNode *root, vector<vector<int>> &res) {
+        if (root != nullptr) {
+            if (layer >= res.size())
                 res.emplace(res.begin() + layer, vector<int>({root->val}));
             else
                 res[layer].emplace_back(root->val);
@@ -29,16 +27,14 @@ class Solution
     }
 
 public:
-    vector<vector<int>> levelOrder(TreeNode *root)
-    {
+    vector<vector<int>> levelOrder(TreeNode *root) {
         vector<vector<int>> res;
         preorder(0, root, res);
         return res;
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     TreeNode *root = new TreeNode(1);
 
     root->left = new TreeNode(2);

@@ -10,13 +10,12 @@
  */
 #include <iostream>
 #include <algorithm>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    int uniquePaths(int m, int n)
-    {
+    int uniquePaths(int m, int n) {
         size_t res = 1;
         for (int i = n, j = 1; j < m; i++, j++)
             res = res * i / j;
@@ -24,8 +23,7 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     cout << Solution().uniquePaths(3, 7) << "\n";
     cout << Solution().uniquePaths(3, 3) << "\n";
     cout << Solution().uniquePaths(3, 2) << "\n";

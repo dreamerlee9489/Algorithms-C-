@@ -11,17 +11,15 @@
 #include <vector>
 #include <list>
 #include "./TreeNode.hpp"
+
 using namespace std;
 
-class Solution
-{
-    void preorder(int layer, TreeNode *node, vector<list<int>> &res)
-    {
-        if(node != nullptr)
-        {
-            if(layer >= res.size())
+class Solution {
+    void preorder(int layer, TreeNode *node, vector<list<int>> &res) {
+        if (node != nullptr) {
+            if (layer >= res.size())
                 res.emplace(res.begin() + layer, list<int>({node->val}));
-            else if((layer & 1) == 0)
+            else if ((layer & 1) == 0)
                 res[layer].emplace_back(node->val);
             else
                 res[layer].emplace_front(node->val);
@@ -31,20 +29,18 @@ class Solution
     }
 
 public:
-    vector<vector<int>> zigzagLevelOrder(TreeNode *root)
-    {
+    vector<vector<int>> zigzagLevelOrder(TreeNode *root) {
         vector<list<int>> resList;
         preorder(0, root, resList);
         vector<vector<int>> resVec(resList.size());
         for (int i = 0; i < resList.size(); i++)
-            for(int val : resList[i])
+            for (int val: resList[i])
                 resVec[i].emplace_back(val);
         return resVec;
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     TreeNode *root = new TreeNode(3);
 
     root->left = new TreeNode(9);
