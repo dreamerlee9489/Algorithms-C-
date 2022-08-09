@@ -15,7 +15,7 @@ namespace app {
      */
     template<typename T>
     class ISort {
-        size_t _cmp_cnt = 0, _swap_cnt = 0;
+        size_t _cmpCount = 0, _swapCount = 0;
         clock_t _time = 0;
 
     protected:
@@ -25,7 +25,7 @@ namespace app {
         virtual void sort_algorithm() = 0;
 
         int compare(size_t index0, size_t index1) {
-            _cmp_cnt++;
+            _cmpCount++;
             if (_array[index0] < _array[index1])
                 return -1;
             else if (_array[index0] > _array[index1])
@@ -35,7 +35,7 @@ namespace app {
         }
 
         int compare(T data0, T data1) {
-            _cmp_cnt++;
+            _cmpCount++;
             if (data0 < data1)
                 return -1;
             else if (data0 > data1)
@@ -46,7 +46,7 @@ namespace app {
 
         void swap(size_t index0, size_t index1) {
             if (index0 != index1) {
-                _swap_cnt++;
+                _swapCount++;
                 T temp = _array[index0];
                 _array[index0] = _array[index1];
                 _array[index1] = temp;

@@ -28,7 +28,7 @@ public:
         if (n == -1)
             return 1 / x;
         double half = myPow1(x, n >> 1);
-        return n & 1 == 1 ? half * half * x : half * half;
+        return n & 1 ? half * half * x : half * half;
     }
 
     int powMod(int x, unsigned y, int z) {

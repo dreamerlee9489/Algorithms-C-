@@ -11,8 +11,8 @@ class NQueens {
     int _ways = 0;
     int *_queens = nullptr;
     bool *_columns = nullptr;
-    bool *_left_top = nullptr;
-    bool *_right_top = nullptr;
+    bool *_leftTop = nullptr;
+    bool *_rightTop = nullptr;
 
     void place(int row) {
         if (row == _n) {
@@ -23,19 +23,19 @@ class NQueens {
                 if (_columns[col])
                     continue;
                 int lt_index = row - col + _n - 1;
-                if (_left_top[lt_index])
+                if (_leftTop[lt_index])
                     continue;
                 int rt_index = row + col;
-                if (_right_top[rt_index])
+                if (_rightTop[rt_index])
                     continue;
                 _queens[row] = col;
                 _columns[col] = true;
-                _left_top[lt_index] = true;
-                _right_top[rt_index] = true;
+                _leftTop[lt_index] = true;
+                _rightTop[rt_index] = true;
                 place(row + 1);
                 _columns[col] = false;
-                _left_top[lt_index] = false;
-                _right_top[rt_index] = false;
+                _leftTop[lt_index] = false;
+                _rightTop[rt_index] = false;
             }
         }
     }
@@ -64,8 +64,8 @@ public:
             int len = (n << 1) - 1;
             _queens = new int[n]{};
             _columns = new bool[n]{};
-            _left_top = new bool[len]{};
-            _right_top = new bool[len]{};
+            _leftTop = new bool[len]{};
+            _rightTop = new bool[len]{};
             place(0);
             cout << n << "皇后一共有" << _ways << "种摆法\n";
         }
