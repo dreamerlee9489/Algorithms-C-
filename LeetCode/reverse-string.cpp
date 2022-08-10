@@ -1,0 +1,29 @@
+/**
+ * @file reverse-string.cpp
+ * @author your name (you@domain.com)
+ * @brief 344. 反转字符串
+ * @version 0.1
+ * @date 2022-08-10
+ * @link https://leetcode.cn/problems/reverse-string/ @endlink
+ * @copyright Copyright (c) 2022
+ *
+ */
+#include <vector>
+using namespace std;
+
+class Solution
+{
+public:
+    void reverseString(vector<char> &s)
+    {
+        int l = 0, r = s.size() - 1;
+        while (l < r)
+        {
+            char tmp = s[l];
+            s[l] = s[r];
+            s[r] = tmp;
+            ++l;
+            --r;
+        }
+    }
+};
