@@ -1,6 +1,6 @@
 /**
  * @file count-and-say.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 38. 外观数列
  * @version 0.1
  * @date 2022-08-10
@@ -10,21 +10,18 @@
  */
 #include <string>
 #include <iostream>
+
 using namespace std;
 
-class Solution
-{
-    string parse(string s)
-    {
+class Solution {
+    string parse(string s) {
         int count = 1;
         char ch = s[0];
         string res;
-        for (int i = 1; i < s.size(); i++)
-        {
+        for (int i = 1; i < s.size(); i++) {
             if (s[i] == ch)
                 ++count;
-            else
-            {
+            else {
                 res += to_string(count) + ch;
                 ch = s[i];
                 count = 1;
@@ -34,16 +31,14 @@ class Solution
     }
 
 public:
-    string countAndSay(int n)
-    {
+    string countAndSay(int n) {
         if (n == 1)
             return "1";
         return parse(countAndSay(n - 1));
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     cout << Solution().countAndSay(5) << "\n";
     return 0;
 }

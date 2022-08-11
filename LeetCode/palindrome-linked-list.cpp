@@ -10,23 +10,20 @@
  */
 #include <vector>
 #include "./ListNode.hpp"
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    bool isPalindrome(ListNode *head)
-    {
+    bool isPalindrome(ListNode *head) {
         vector<int> vec;
-        while (head != nullptr)
-        {
+        while (head != nullptr) {
             vec.emplace_back(head->val);
             head = head->next;
         }
         int left = 0, right = vec.size() - 1;
-        while (left < right)
-        {
-            if(vec[left] != vec[right])
+        while (left < right) {
+            if (vec[left] != vec[right])
                 return false;
             ++left;
             --right;

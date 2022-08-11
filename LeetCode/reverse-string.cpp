@@ -1,6 +1,6 @@
 /**
  * @file reverse-string.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 344. 反转字符串
  * @version 0.1
  * @date 2022-08-10
@@ -9,16 +9,14 @@
  *
  */
 #include <vector>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    void reverseString(vector<char> &s)
-    {
+    void reverseString(vector<char> &s) {
         int l = 0, r = s.size() - 1;
-        while (l < r)
-        {
+        while (l < r) {
             char tmp = s[l];
             s[l] = s[r];
             s[r] = tmp;

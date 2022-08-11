@@ -13,12 +13,11 @@
 #include <queue>
 #include <iostream>
 #include "./TreeNode.hpp"
+
 using namespace std;
 
-class Solution1
-{
-    bool levelorder(TreeNode *node)
-    {
+class Solution1 {
+    bool levelorder(TreeNode *node) {
         if (node == nullptr)
             return false;
         queue<TreeNode *> q;
@@ -26,35 +25,29 @@ class Solution1
         q.push(node);
         nums.emplace_back(node->val);
         int levelCount = 1;
-        while (!q.empty())
-        {
+        while (!q.empty()) {
             TreeNode *top = q.front();
             q.pop();
             auto iter = nums.begin();
-            while (iter != nums.end())
-            {
+            while (iter != nums.end()) {
                 if (*iter == top->val)
                     break;
                 ++iter;
             }
             nums.erase(iter);
-            if (top->left != nullptr)
-            {
+            if (top->left != nullptr) {
                 q.push(top->left);
                 nums.emplace_back(top->left->val);
             }
-            if (top->right != nullptr)
-            {
+            if (top->right != nullptr) {
                 q.push(top->right);
                 nums.emplace_back(top->right->val);
             }
             --levelCount;
-            if (levelCount == 0)
-            {
+            if (levelCount == 0) {
                 levelCount = q.size();
                 int l = 0, r = nums.size() - 1;
-                while (l < r)
-                {
+                while (l < r) {
                     if (nums[l] != nums[r])
                         return false;
                     ++l;
@@ -65,10 +58,8 @@ class Solution1
         return true;
     }
 
-    void inorder(TreeNode *node, vector<int> &nums)
-    {
-        if (node != nullptr)
-        {
+    void inorder(TreeNode *node, vector<int> &nums) {
+        if (node != nullptr) {
             inorder(node->left, nums);
             if (node->left == nullptr && node->right != nullptr)
                 nums.emplace_back(INT_MIN);
@@ -80,13 +71,11 @@ class Solution1
     }
 
 public:
-    bool isSymmetric(TreeNode *root)
-    {
+    bool isSymmetric(TreeNode *root) {
         vector<int> nums;
         inorder(root, nums);
         int l = 0, r = nums.size() - 1;
-        while (l < r)
-        {
+        while (l < r) {
             if (nums[l] != nums[r])
                 return false;
             ++l;
@@ -96,26 +85,22 @@ public:
     }
 };
 
-class Solution
-{
-    bool check(TreeNode *left, TreeNode *right)
-    {
-        if(left == nullptr && right == nullptr)
+class Solution {
+    bool check(TreeNode *left, TreeNode *right) {
+        if (left == nullptr && right == nullptr)
             return true;
-        if(left == nullptr || right == nullptr)
+        if (left == nullptr || right == nullptr)
             return false;
         return (left->val == right->val) && check(left->left, right->right) && check(left->right, right->left);
     }
 
 public:
-    bool isSymmetric(TreeNode *root)
-    {
+    bool isSymmetric(TreeNode *root) {
         return check(root, root);
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     TreeNode *root1 = new TreeNode(5);
     root1->left = new TreeNode(4);
     root1->left->left = nullptr;

@@ -10,35 +10,33 @@
  */
 #include <vector>
 #include <iostream>
+
 using namespace std;
 
-class Vector2D
-{
+class Vector2D {
     vector<int> mVec;
     int mIdx = 0;
 
 public:
-    Vector2D(vector<vector<int>> &vec)
-    {
+    Vector2D(vector<vector<int>> &vec) {
         for (int i = 0; i < vec.size(); i++)
             for (int j = 0; j < vec[i].size(); j++)
                 mVec.emplace_back(vec[i][j]);
     }
 
-    int next()
-    {
+    int next() {
         return mVec[mIdx++];
     }
 
-    bool hasNext()
-    {
+    bool hasNext() {
         return mIdx < mVec.size();
     }
 };
 
-int main(int argc, char const *argv[])
-{
-    vector<vector<int>> vec = {{1, 2}, {3}, {4}};
+int main(int argc, char const *argv[]) {
+    vector<vector<int>> vec = {{1, 2},
+                               {3},
+                               {4}};
     Vector2D iterator = Vector2D(vec);
     cout << iterator.next() << "\n";    // 返回 1
     cout << iterator.next() << "\n";    // 返回 2

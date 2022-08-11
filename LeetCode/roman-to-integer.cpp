@@ -47,8 +47,7 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     cout << Solution().romanToInt("III") << "\n";
     cout << Solution().romanToInt("IV") << "\n";
     cout << Solution().romanToInt("IX") << "\n";

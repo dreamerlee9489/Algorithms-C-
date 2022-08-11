@@ -11,15 +11,13 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    int singleNumber(vector<int> &nums)
-    {
-        if (nums.size() > 1)
-        {
+    int singleNumber(vector<int> &nums) {
+        if (nums.size() > 1) {
             sort(nums.begin(), nums.end());
             for (int i = 0; i < nums.size(); i += 2)
                 if (nums[i] != nums[i + 1])
@@ -29,8 +27,7 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     vector<int> nums = {4, 1, 2, 1, 2};
     cout << Solution().singleNumber(nums) << "\n";
     return 0;

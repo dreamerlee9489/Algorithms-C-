@@ -1,6 +1,6 @@
 /**
  * @file implement-strstr.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 28. 实现 strStr()
  * @version 0.1
  * @date 2022-08-10
@@ -9,17 +9,16 @@
  *
  */
 #include <string>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    int strStr(string haystack, string needle)
-    {
+    int strStr(string haystack, string needle) {
         // size_t pos = haystack.find(needle);
         // return pos == string::npos ? -1 : pos;
         for (int i = 0; i < haystack.size(); i++)
-            if(haystack.substr(i, needle.size()) == needle)
+            if (haystack.substr(i, needle.size()) == needle)
                 return i;
         return -1;
     }

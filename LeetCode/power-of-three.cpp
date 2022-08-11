@@ -1,0 +1,25 @@
+/**
+ * @file power-of-three.cpp
+ * @author dreamerlee9489@outlook.com
+ * @brief 326. 3 的幂
+ * @version 0.1
+ * @date 2022-08-11
+ * @link https://leetcode.cn/problems/power-of-three/ @endlink
+ * @copyright Copyright (c) 2022
+ *
+ */
+class Solution {
+public:
+    bool isPowerOfThree(int n) {
+        if (n == 1)
+            return true;
+        if (n < 3)
+            return false;
+        while (n > 2) {
+            if (n * 1.0 / 3.0 != n / 3)
+                return false;
+            n /= 3;
+        }
+        return true;
+    }
+};  
