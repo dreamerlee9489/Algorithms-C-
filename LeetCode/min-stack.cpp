@@ -61,13 +61,13 @@ int main(int argc, char const *argv[]) {
     // cout << minStack.top() << "\n";    //返回 0.
     // cout << minStack.getMin() << "\n"; //返回 -2.
 
-    MinStack minStack2 = MinStack();
-    minStack2.push(-2);
-    minStack2.push(0);
-    minStack2.push(-1);
-    cout << minStack2.getMin() << "\n"; //返回 -2.
-    cout << minStack2.top() << "\n";    //返回 -1.
-    minStack2.pop();
-    cout << minStack2.getMin() << "\n"; //返回 -2.
+    MinStack minStack1 = MinStack();
+    minStack1.push(-2);
+    minStack1.push(0);
+    minStack1.push(-1);
+    cout << minStack1.getMin() << "\n"; //返回 -2.
+    cout << minStack1.top() << "\n";    //返回 -1.
+    minStack1.pop();
+    cout << minStack1.getMin() << "\n"; //返回 -2.
     return 0;
 }
