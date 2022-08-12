@@ -11,51 +11,51 @@ namespace app {
      */
     template<typename T>
     class Stack {
-        friend ostream &operator<<(ostream &os, const Stack<T> &stack) { return os << *stack.pList; }
+        friend ostream &operator<<(ostream &os, const Stack<T> &stack) { return os << *stack._list; }
 
-        ArrayList<T> *pList = nullptr;
+        ArrayList<T> *_list = nullptr;
 
     public:
         Stack<T> &operator=(const Stack<T> &stack);
 
         Stack<T> &operator=(Stack<T> &&stack) noexcept;
 
-        Stack() { pList = new ArrayList<T>(); }
+        Stack() { _list = new ArrayList<T>(); }
 
         Stack(const Stack<T> &stack) { *this = stack; }
 
         Stack(Stack<T> &&stack) noexcept { *this = move(stack); }
 
-        ~Stack() { delete pList; }
+        ~Stack() { delete _list; }
 
-        size_t size() const { return pList->size(); }
+        size_t size() const { return _list->size(); }
 
-        bool is_empty() const { return pList->is_empty(); }
+        bool is_empty() const { return _list->is_empty(); }
 
-        void push(shared_ptr<T> data) { pList->add(data); }
+        void push(shared_ptr<T> data) { _list->add(data); }
 
-        shared_ptr<T> pop() { return pList->remove(pList->size() - 1); }
+        shared_ptr<T> pop() { return _list->remove(_list->size() - 1); }
 
-        shared_ptr<T> top() const { return pList->get(pList->size() - 1); }
+        shared_ptr<T> top() const { return _list->get(_list->size() - 1); }
 
-        void clear() { pList->clear(); }
+        void clear() { _list->clear(); }
     };
 
     template<typename T>
     inline Stack<T> &Stack<T>::operator=(const Stack<T> &stack) {
         clear();
-        delete pList;
-        pList = new ArrayList<T>();
-        *pList = *stack.pList;
+        delete _list;
+        _list = new ArrayList<T>();
+        *_list = *stack._list;
         return *this;
     }
 
     template<typename T>
     inline Stack<T> &Stack<T>::operator=(Stack<T> &&stack) noexcept {
         clear();
-        delete pList;
-        pList = new ArrayList<T>();
-        *pList = move(*stack.pList);
+        delete _list;
+        _list = new ArrayList<T>();
+        *_list = move(*stack._list);
         return *this;
     }
 } // namespace app

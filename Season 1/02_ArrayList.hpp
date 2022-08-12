@@ -15,10 +15,10 @@ namespace app {
         friend ostream &operator<<(ostream &os, const ArrayList<U> &list);
 
         const size_t DEFAULT_CAPACITY = 8;
-        size_t mCapacity = 0;
-        shared_ptr<T> *pArray = nullptr;
+        size_t _capacity = 0;
+        shared_ptr<T> *_array = nullptr;
 
-        void ensuremCapacity();
+        void ensure_capacity();
 
     public:
         ArrayList<T> &operator=(const ArrayList<T> &list);
@@ -31,9 +31,9 @@ namespace app {
 
         ArrayList(ArrayList<T> &&list) noexcept { *this = move(list); }
 
-        ~ArrayList() { delete[] pArray; }
+        ~ArrayList() { delete[] _array; }
 
-        size_t capacity() const { return mCapacity; }
+        size_t capacity() const { return _capacity; }
 
         int index_of(shared_ptr<T> data) const override;
 
@@ -43,24 +43,24 @@ namespace app {
 
         shared_ptr<T> get(int index) const override {
             this->check_range(index);
-            return pArray[index];
+            return _array[index];
         }
 
         void set(int index, shared_ptr<T> data) override {
             this->check_range(index);
-            pArray[index] = data;
+            _array[index] = data;
         }
 
         void clear() override {
-            for (size_t i = 0; i < this->mSize; ++i)
-                pArray[i] = nullptr;
-            this->mSize = 0;
+            for (size_t i = 0; i < this->_size; ++i)
+                _array[i] = nullptr;
+            this->_size = 0;
         }
     };
 
     template<typename U>
     inline ostream &operator<<(ostream &os, const ArrayList<U> &list) {
-        for (size_t i = 0; i < list.mSize; ++i)
+        for (size_t i = 0; i < list._size; ++i)
             if (list.get(i) != nullptr)
                 os << *list.get(i) << "\n";
         return os;
@@ -69,7 +69,7 @@ namespace app {
     template<typename T>
     inline ArrayList<T> &ArrayList<T>::operator=(const ArrayList<T> &list) {
         clear();
-        for (size_t i = 0; i < list.mSize; ++i)
+        for (size_t i = 0; i < list._size; ++i)
             insert(i, list.get(i));
         return *this;
     }
@@ -77,25 +77,25 @@ namespace app {
     template<typename T>
     inline ArrayList<T> &ArrayList<T>::operator=(ArrayList<T> &&list) noexcept {
         clear();
-        this->mSize = list.mSize;
-        pArray = list.pArray;
-        mCapacity = list.mCapacity;
-        list.mSize = 0;
-        list.pArray = nullptr;
+        this->_size = list._size;
+        _array = list._array;
+        _capacity = list._capacity;
+        list._size = 0;
+        list._array = nullptr;
         return *this;
     }
 
     template<typename T>
     inline ArrayList<T>::ArrayList() {
-        this->mSize = 0;
-        mCapacity = DEFAULT_CAPACITY;
-        pArray = new shared_ptr<T>[mCapacity];
+        this->_size = 0;
+        _capacity = DEFAULT_CAPACITY;
+        _array = new shared_ptr<T>[_capacity];
     }
 
     template<typename T>
     inline int ArrayList<T>::index_of(shared_ptr<T> data) const {
-        for (size_t i = 0; i < this->mSize; ++i)
-            if (*pArray[i] == *data)
+        for (size_t i = 0; i < this->_size; ++i)
+            if (*_array[i] == *data)
                 return i;
         return -1;
     }
@@ -103,31 +103,31 @@ namespace app {
     template<typename T>
     inline void ArrayList<T>::insert(int index, shared_ptr<T> data) {
         this->check_range(index, true);
-        ensuremCapacity();
-        for (size_t i = this->mSize; i > index; --i)
-            pArray[i] = pArray[i - 1];
-        pArray[index] = data;
-        this->mSize++;
+        ensure_capacity();
+        for (size_t i = this->_size; i > index; --i)
+            _array[i] = _array[i - 1];
+        _array[index] = data;
+        this->_size++;
     }
 
     template<typename T>
     inline shared_ptr<T> ArrayList<T>::remove(int index) {
         this->check_range(index);
-        auto old = pArray[index];
-        for (size_t i = index + 1; i < this->mSize; ++i)
-            pArray[i - 1] = pArray[i];
-        pArray[--this->mSize] = nullptr;
+        auto old = _array[index];
+        for (size_t i = index + 1; i < this->_size; ++i)
+            _array[i - 1] = _array[i];
+        _array[--this->_size] = nullptr;
         return old;
     }
 
     template<typename T>
-    inline void ArrayList<T>::ensuremCapacity() {
-        if (this->mSize >= mCapacity) {
-            shared_ptr<T> *old = pArray;
-            mCapacity <<= 1;
-            pArray = new shared_ptr<T>[mCapacity];
-            for (size_t i = 0; i < this->mSize; ++i)
-                pArray[i] = old[i];
+    inline void ArrayList<T>::ensure_capacity() {
+        if (this->_size >= _capacity) {
+            shared_ptr<T> *old = _array;
+            _capacity <<= 1;
+            _array = new shared_ptr<T>[_capacity];
+            for (size_t i = 0; i < this->_size; ++i)
+                _array[i] = old[i];
             delete[] old;
         }
     }

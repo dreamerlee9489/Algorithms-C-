@@ -11,31 +11,31 @@ namespace app {
      */
     template<typename T>
     class HeapSort : public ISort<T> {
-        size_t _heapmSize = 0;
+        size_t _heapSize = 0;
 
         void sift_down(size_t index) {
-            T data = this->pArray[index];
-            size_t half = _heapmSize >> 1;
+            T data = this->_array[index];
+            size_t half = _heapSize >> 1;
             while (index < half) {
                 size_t child_index = (index << 1) + 1;
-                T child = this->pArray[child_index];
+                T child = this->_array[child_index];
                 size_t right_index = child_index + 1;
-                if (right_index < _heapmSize && this->compare(this->pArray[right_index], child) > 0)
-                    child = this->pArray[child_index = right_index];
+                if (right_index < _heapSize && this->compare(this->_array[right_index], child) > 0)
+                    child = this->_array[child_index = right_index];
                 if (this->compare(data, child) >= 0)
                     break;
-                this->pArray[index] = child;
+                this->_array[index] = child;
                 index = child_index;
             }
-            this->pArray[index] = data;
+            this->_array[index] = data;
         }
 
         void sort_algorithm() override {
-            _heapmSize = this->mSize;
-            for (int i = (_heapmSize >> 1) - 1; i >= 0; --i)
+            _heapSize = this->_size;
+            for (int i = (_heapSize >> 1) - 1; i >= 0; --i)
                 sift_down(i);
-            while (_heapmSize > 1) {
-                this->swap(0, --_heapmSize);
+            while (_heapSize > 1) {
+                this->swap(0, --_heapSize);
                 sift_down(0);
             }
         }

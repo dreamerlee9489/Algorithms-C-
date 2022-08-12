@@ -15,37 +15,37 @@ namespace app {
      * @tparam V
      */
     template<typename K, typename V>
-    class SkipList {
+    class Ski_list {
         template<typename _K, typename _V>
         struct Node {
-            _K *pKey = nullptr;
-            _V *pValue = nullptr;
-            size_t mLevel = 0;
-            Node<_K, _V> **pNexts = nullptr;
+            _K *_key = nullptr;
+            _V *_value = nullptr;
+            size_t _level = 0;
+            Node<_K, _V> **_nexts = nullptr;
 
             friend ostream &operator<<(ostream &out, const Node &node) {
-                return out << "[" << *node.pKey << " - " << *node.pValue << "]";
+                return out << "[" << *node._key << " - " << *node._value << "]";
             }
 
             Node(_K *key, _V *value, size_t level) {
-                pKey = key;
-                pValue = value;
-                mLevel = level;
-                pNexts = new Node<_K, _V> *[level]{};
+                _key = key;
+                _value = value;
+                _level = level;
+                _nexts = new Node<_K, _V> *[level]{};
             }
 
-            ~Node() { delete pNexts; }
+            ~Node() { delete _nexts; }
         };
 
         using Comparator = int (*)(K *a, K *b);
         const size_t MAX_LEVEL = 32;
         const double P = 0.25;
-        size_t mSize = 0;
-        int mLevel = 0;
-        Node<K, V> *pFirst = nullptr;
-        Comparator mComparator = nullptr;
+        size_t _size = 0;
+        int _level = 0;
+        Node<K, V> *_first = nullptr;
+        Comparator _comparator = nullptr;
 
-        size_t randomLevel() {
+        size_t rando_level() {
             int level = 1;
             default_random_engine eng;
             uniform_real_distribution<double> dist(0, 1); //均匀实数分布
@@ -55,8 +55,8 @@ namespace app {
         }
 
         int compare(K *key1, K *key2) {
-            if (mComparator != nullptr)
-                return mComparator(key1, key2);
+            if (_comparator != nullptr)
+                return _comparator(key1, key2);
             else {
                 if (*key1 < *key2)
                     return -1;
@@ -72,96 +72,96 @@ namespace app {
         }
 
     public:
-        friend ostream &operator<<(ostream &out, const SkipList &list) {
-            out << "level = " << list.mLevel << "\n";
-            for (int i = list.mLevel - 1; i >= 0; i--) {
-                Node<K, V> *node = list.pFirst;
-                while (node->pNexts[i] != nullptr) {
-                    out << node->pNexts[i] << " ";
-                    node = node->pNexts[i];
+        friend ostream &operator<<(ostream &out, const Ski_list &list) {
+            out << "level = " << list._level << "\n";
+            for (int i = list._level - 1; i >= 0; i--) {
+                Node<K, V> *node = list._first;
+                while (node->_nexts[i] != nullptr) {
+                    out << node->_nexts[i] << " ";
+                    node = node->_nexts[i];
                 }
                 out << "\n";
             }
             return out << endl;
         }
 
-        SkipList(Comparator comparator = nullptr) {
-            mComparator = comparator;
-            pFirst = new Node<K, V>(nullptr, nullptr, MAX_LEVEL);
+        Ski_list(Comparator comparator = nullptr) {
+            _comparator = comparator;
+            _first = new Node<K, V>(nullptr, nullptr, MAX_LEVEL);
         }
 
-        ~SkipList() { delete pFirst; }
+        ~Ski_list() { delete _first; }
 
-        size_t size() { return mSize; }
+        size_t size() { return _size; }
 
-        bool isEmpty() { return mSize == 0; }
+        bool isEmpty() { return _size == 0; }
 
         V *add(K *key, V *value) {
             checkKey(key);
-            Node<K, V> *node = pFirst;
-            Node<K, V> **prevs = new Node<K, V> *[mLevel]{};
-            for (int i = mLevel - 1; i >= 0; i--) {
+            Node<K, V> *node = _first;
+            Node<K, V> **prevs = new Node<K, V> *[_level]{};
+            for (int i = _level - 1; i >= 0; i--) {
                 int cmp = -1;
-                while (node->pNexts[i] != nullptr && (cmp = compare(key, node->pNexts[i]->pKey)) > 0)
-                    node = node->pNexts[i];
+                while (node->_nexts[i] != nullptr && (cmp = compare(key, node->_nexts[i]->_key)) > 0)
+                    node = node->_nexts[i];
                 if (cmp == 0) {
-                    V *oldV = node->pNexts[i]->pValue;
-                    node->pNexts[i]->pValue = value;
+                    V *oldV = node->_nexts[i]->_value;
+                    node->_nexts[i]->_value = value;
                     return oldV;
                 }
                 prevs[i] = node;
             }
-            int newLevel = randomLevel();
+            int newLevel = rando_level();
             Node<K, V> *newNode = new Node<K, V>(key, value, newLevel);
             for (int i = 0; i < newLevel; i++) {
-                if (i >= mLevel)
-                    pFirst->pNexts[i] = newNode;
+                if (i >= _level)
+                    _first->_nexts[i] = newNode;
                 else {
-                    newNode->pNexts[i] = prevs[i]->pNexts[i];
-                    prevs[i]->pNexts[i] = newNode;
+                    newNode->_nexts[i] = prevs[i]->_nexts[i];
+                    prevs[i]->_nexts[i] = newNode;
                 }
             }
-            mSize++;
-            mLevel = max(mLevel, newLevel);
+            _size++;
+            _level = max(_level, newLevel);
             delete[]prevs, newNode;
             return nullptr;
         }
 
         V *remove(K *key) {
             checkKey(key);
-            Node<K, V> *node = pFirst;
-            Node<K, V> **prevs = new Node<K, V> *[mLevel]{};
+            Node<K, V> *node = _first;
+            Node<K, V> **prevs = new Node<K, V> *[_level]{};
             bool isExist = false;
-            for (int i = mLevel - 1; i >= 0; i--) {
+            for (int i = _level - 1; i >= 0; i--) {
                 int cmp = -1;
-                while (node->pNexts[i] != nullptr && (cmp = compare(key, node->pNexts[i]->pKey)) > 0)
-                    node = node->pNexts[i];
+                while (node->_nexts[i] != nullptr && (cmp = compare(key, node->_nexts[i]->_key)) > 0)
+                    node = node->_nexts[i];
                 if (cmp == 0)
                     isExist = true;
                 prevs[i] = node;
             }
             if (!isExist)
                 return nullptr;
-            Node<K, V> *rmvNode = node->pNexts[0];
-            for (int i = 0; i < rmvNode->mLevel; i++)
-                prevs[i]->pNexts[i] = rmvNode->pNexts[i];
-            int newLevel = mLevel;
-            while (--newLevel >= 0 && pFirst->pNexts[newLevel] == nullptr)
-                mLevel = newLevel;
-            mSize--;
+            Node<K, V> *rmvNode = node->_nexts[0];
+            for (int i = 0; i < rmvNode->_level; i++)
+                prevs[i]->_nexts[i] = rmvNode->_nexts[i];
+            int newLevel = _level;
+            while (--newLevel >= 0 && _first->_nexts[newLevel] == nullptr)
+                _level = newLevel;
+            _size--;
             delete[]prevs;
-            return rmvNode->pValue;
+            return rmvNode->_value;
         }
 
         V *get(K *key) {
             checkKey(key);
-            Node<K, V> *node = pFirst;
-            for (int i = mLevel - 1; i >= 0; i--) {
+            Node<K, V> *node = _first;
+            for (int i = _level - 1; i >= 0; i--) {
                 int cmp = -1;
-                while (node->pNexts[i] != nullptr && (cmp = compare(key, node->pNexts[i]->pKey)) > 0)
-                    node = node->pNexts[i];
+                while (node->_nexts[i] != nullptr && (cmp = compare(key, node->_nexts[i]->_key)) > 0)
+                    node = node->_nexts[i];
                 if (cmp == 0)
-                    return node->pNexts[i]->pValue;
+                    return node->_nexts[i]->_value;
             }
             return nullptr;
         }

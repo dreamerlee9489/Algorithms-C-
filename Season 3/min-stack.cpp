@@ -14,13 +14,13 @@ using namespace std;
 
 class MinStack {
     struct Node {
-        int mVal = 0, mMin = 0;
-        Node *pNext = nullptr;
+        int _val = 0, _min = 0;
+        Node *_next = nullptr;
 
         Node(int val, int min, Node *next) {
-            mVal = val;
-            mMin = min;
-            pNext = next;
+            _val = val;
+            _min = min;
+            _next = next;
         }
     };
 
@@ -32,19 +32,19 @@ public:
     }
 
     void push(int val) {
-        head = new Node(val, std::min(val, head->mMin), head);
+        head = new Node(val, std::min(val, head->_min), head);
     }
 
     void pop() {
-        head = head->pNext;
+        head = head->_next;
     }
 
     int top() {
-        return head->mVal;
+        return head->_val;
     }
 
     int getMin() {
-        return head->mMin;
+        return head->_min;
     }
 };
 

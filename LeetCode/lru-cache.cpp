@@ -17,11 +17,11 @@ using namespace std;
 class LRUCache {
     list<pair<int, int>> _list;
     unordered_map<int, list<pair<int, int>>::iterator> _map;
-    int mCapacity = 0;
+    int _capacity = 0;
 
 public:
     LRUCache(int capacity) {
-        mCapacity = capacity;
+        _capacity = capacity;
     }
 
     int get(int key) {
@@ -43,7 +43,7 @@ public:
             _map[key] = iterPair;
         } else {
             _map.emplace(key, _list.emplace(_list.end(), make_pair(key, value)));
-            if (_list.size() > mCapacity) {
+            if (_list.size() > _capacity) {
                 _map.erase(_list.begin()->first);
                 _list.erase(_list.begin());
             }

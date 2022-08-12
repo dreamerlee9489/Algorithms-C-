@@ -30,11 +30,11 @@ namespace app {
 
         virtual bool is_empty() const = 0;
 
-        virtual bool containspKey(shared_ptr <K> key) const = 0;
+        virtual bool contains_key(shared_ptr <K> key) const = 0;
 
-        virtual bool containspValue(shared_ptr <V> value) const = 0;
+        virtual bool contains_value(shared_ptr <V> value) const = 0;
 
-        virtual shared_ptr <V> getpValue(shared_ptr <K> key) const = 0;
+        virtual shared_ptr <V> get_value(shared_ptr <K> key) const = 0;
 
         virtual shared_ptr <V> add(shared_ptr <K> key, shared_ptr <V> value) = 0;
 

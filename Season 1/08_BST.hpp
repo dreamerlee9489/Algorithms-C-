@@ -42,18 +42,18 @@ namespace app {
     template<typename T>
     inline BST<T> &BST<T>::operator=(const BST<T> &tree) {
         this->clear();
-        if (tree.mSize > 0) {
-            this->mComparator = tree.mComparator;
+        if (tree._size > 0) {
+            this->_comparator = tree._comparator;
             queue<NODE *> q;
-            q.push(tree.pRoot);
+            q.push(tree._root);
             while (!q.empty()) {
                 NODE *elem = q.front();
-                add(elem->pData);
+                add(elem->_data);
                 q.pop();
-                if (elem->pLeft != nullptr)
-                    q.push(elem->pLeft);
-                if (elem->pRight != nullptr)
-                    q.push(elem->pRight);
+                if (elem->_left != nullptr)
+                    q.push(elem->_left);
+                if (elem->_right != nullptr)
+                    q.push(elem->_right);
             }
         }
         return *this;
@@ -62,60 +62,60 @@ namespace app {
     template<typename T>
     inline BST<T> &BST<T>::operator=(BST<T> &&tree) noexcept {
         this->clear();
-        this->mSize = tree.mSize;
-        this->pRoot = tree.pRoot;
-        this->mComparator = tree.mComparator;
-        tree.mSize = 0;
-        tree.pRoot = nullptr;
-        tree.mComparator = nullptr;
+        this->_size = tree._size;
+        this->_root = tree._root;
+        this->_comparator = tree._comparator;
+        tree._size = 0;
+        tree._root = nullptr;
+        tree._comparator = nullptr;
         return *this;
     }
 
     template<typename T>
     inline void BST<T>::add(shared_ptr<T> data) {
         this->not_null_check(data);
-        if (this->pRoot == nullptr) {
-            this->pRoot = this->create_node(data, nullptr);
-            this->mSize++;
-            this->after_add(this->pRoot);
+        if (this->_root == nullptr) {
+            this->_root = this->create_node(data, nullptr);
+            this->_size++;
+            this->after_add(this->_root);
             return;
         }
-        NODE *node = this->pRoot, *parent = this->pRoot;
+        NODE *node = this->_root, *parent = this->_root;
         while (node != nullptr) {
             parent = node;
-            if (this->mComparator == nullptr) {
-                if (*node->pData < *data)
-                    node = node->pRight;
-                else if (*node->pData > *data)
-                    node = node->pLeft;
+            if (this->_comparator == nullptr) {
+                if (*node->_data < *data)
+                    node = node->_right;
+                else if (*node->_data > *data)
+                    node = node->_left;
                 else {
-                    node->pData = data;
+                    node->_data = data;
                     return;
                 }
             } else {
-                if (this->mComparator(node->pData, data) < 0)
-                    node = node->pRight;
-                else if (this->mComparator(node->pData, data) > 0)
-                    node = node->pLeft;
+                if (this->_comparator(node->_data, data) < 0)
+                    node = node->_right;
+                else if (this->_comparator(node->_data, data) > 0)
+                    node = node->_left;
                 else {
-                    node->pData = data;
+                    node->_data = data;
                     return;
                 }
             }
         }
         NODE *temp = this->create_node(data, parent);
-        if (this->mComparator == nullptr) {
-            if (*parent->pData < *data)
-                parent->pRight = temp;
+        if (this->_comparator == nullptr) {
+            if (*parent->_data < *data)
+                parent->_right = temp;
             else
-                parent->pLeft = temp;
+                parent->_left = temp;
         } else {
-            if (this->mComparator(parent->pData, data) < 0)
-                parent->pRight = temp;
+            if (this->_comparator(parent->_data, data) < 0)
+                parent->_right = temp;
             else
-                parent->pLeft = temp;
+                parent->_left = temp;
         }
-        this->mSize++;
+        this->_size++;
         this->after_add(temp);
     }
 
@@ -123,30 +123,30 @@ namespace app {
     inline void BST<T>::remove(shared_ptr<T> data) {
         NODE *node = get_node(data);
         if (node != nullptr) {
-            this->mSize--;
+            this->_size--;
             if (node->is_binary()) {
                 NODE *s = this->get_successor(node);
-                node->pData = s->pData;
+                node->_data = s->_data;
                 node = s; //删除前驱结点
             }
-            NODE *replace = node->pLeft != nullptr ? node->pLeft : node->pRight;
+            NODE *replace = node->_left != nullptr ? node->_left : node->_right;
             if (replace != nullptr) {
-                replace->pParent = node->pParent;
-                if (node->pParent == nullptr)
-                    this->pRoot = replace;
-                else if (node == node->pParent->pLeft)
-                    node->pParent->pLeft = replace;
+                replace->_parent = node->_parent;
+                if (node->_parent == nullptr)
+                    this->_root = replace;
+                else if (node == node->_parent->_left)
+                    node->_parent->_left = replace;
                 else
-                    node->pParent->pRight = replace;
+                    node->_parent->_right = replace;
                 this->after_remove(replace);
-            } else if (node->pParent != nullptr) {
-                if (node == node->pParent->pLeft)
-                    node->pParent->pLeft = nullptr;
+            } else if (node->_parent != nullptr) {
+                if (node == node->_parent->_left)
+                    node->_parent->_left = nullptr;
                 else
-                    node->pParent->pRight = nullptr;
+                    node->_parent->_right = nullptr;
                 this->after_remove(node);
             } else {
-                this->pRoot = nullptr;
+                this->_root = nullptr;
                 this->after_remove(node);
             }
             delete node;
@@ -155,20 +155,20 @@ namespace app {
 
     template<typename T>
     inline typename BST<T>::NODE *BST<T>::get_node(shared_ptr<T> data) const {
-        NODE *node = this->pRoot;
+        NODE *node = this->_root;
         while (node != nullptr) {
-            if (this->mComparator == nullptr) {
-                if (*node->pData < *data)
-                    node = node->pRight;
-                else if (*node->pData > *data)
-                    node = node->pLeft;
+            if (this->_comparator == nullptr) {
+                if (*node->_data < *data)
+                    node = node->_right;
+                else if (*node->_data > *data)
+                    node = node->_left;
                 else
                     return node;
             } else {
-                if (this->mComparator(node->pData, data) < 0)
-                    node = node->pRight;
-                else if (this->mComparator(node->pData, data) > 0)
-                    node = node->pLeft;
+                if (this->_comparator(node->_data, data) < 0)
+                    node = node->_right;
+                else if (this->_comparator(node->_data, data) > 0)
+                    node = node->_left;
                 else
                     return node;
             }

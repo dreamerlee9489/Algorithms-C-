@@ -17,27 +17,27 @@ namespace app {
             uniform_int_distribution<size_t> u(0, end - beg - 1);    // 均匀整数分布
             default_random_engine e;
             this->swap(beg, beg + u(e));
-            T pivot = this->pArray[beg];
+            T pivot = this->_array[beg];
             end--;
             while (beg < end) {
                 while (beg < end) {
-                    if (this->compare(pivot, this->pArray[end]) < 0)
+                    if (this->compare(pivot, this->_array[end]) < 0)
                         end--;
                     else {
-                        this->pArray[beg++] = this->pArray[end];
+                        this->_array[beg++] = this->_array[end];
                         break;
                     }
                 }
                 while (beg < end) {
-                    if (this->compare(pivot, this->pArray[beg]) > 0)
+                    if (this->compare(pivot, this->_array[beg]) > 0)
                         beg++;
                     else {
-                        this->pArray[end--] = this->pArray[beg];
+                        this->_array[end--] = this->_array[beg];
                         break;
                     }
                 }
             }
-            this->pArray[beg] = pivot;
+            this->_array[beg] = pivot;
             return beg;
         }
 
@@ -49,7 +49,7 @@ namespace app {
             }
         }
 
-        void sort_algorithm() override { quick_sort(0, this->mSize); }
+        void sort_algorithm() override { quick_sort(0, this->_size); }
 
     public:
         QuickSort() = default;

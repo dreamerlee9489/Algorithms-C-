@@ -12,24 +12,24 @@ namespace app {
     template<typename T>
     class PriorityQueue {
         using Comparator = int (*)(shared_ptr<T> a, shared_ptr<T> b);
-        BinaryHeap<T> *mHeap = nullptr;
+        BinaryHeap<T> *_heap = nullptr;
 
     public:
-        PriorityQueue(Comparator comparator = nullptr) { mHeap = new BinaryHeap<T>(comparator); }
+        PriorityQueue(Comparator comparator = nullptr) { _heap = new BinaryHeap<T>(comparator); }
 
-        ~PriorityQueue() { delete mHeap; }
+        ~PriorityQueue() { delete _heap; }
 
-        size_t size() const { return mHeap->size(); }
+        size_t size() const { return _heap->size(); }
 
-        bool is_empty() const { return mHeap->is_empty(); }
+        bool is_empty() const { return _heap->is_empty(); }
 
-        void clear() { mHeap->clear(); }
+        void clear() { _heap->clear(); }
 
-        void push(shared_ptr<T> data) { mHeap->add(data); }
+        void push(shared_ptr<T> data) { _heap->add(data); }
 
-        shared_ptr<T> pop() { return mHeap->remove(); }
+        shared_ptr<T> pop() { return _heap->remove(); }
 
-        shared_ptr<T> front() const { return mHeap->get(); }
+        shared_ptr<T> front() const { return _heap->get(); }
     };
 } // namespace app
 

@@ -18,9 +18,9 @@ namespace app {
 
         virtual void after_rotate(NODE *grand, NODE *parent, NODE *child);
 
-        void rotatepLeft(NODE *grand);
+        void rotate_left(NODE *grand);
 
-        void rotatepRight(NODE *grand);
+        void rotate_right(NODE *grand);
 
     public:
         BBST(typename IBinaryTree<T>::Comparator comparator = nullptr) : BST<T>(comparator) {}
@@ -29,56 +29,56 @@ namespace app {
     };
 
     template<typename T>
-    inline void BBST<T>::rotatepLeft(NODE *grand) {
-        NODE *parent = grand->pRight;
-        NODE *child = parent->pLeft;
-        grand->pRight = child;
-        parent->pLeft = grand;
+    inline void BBST<T>::rotate_left(NODE *grand) {
+        NODE *parent = grand->_right;
+        NODE *child = parent->_left;
+        grand->_right = child;
+        parent->_left = grand;
         this->after_rotate(grand, parent, child);
     }
 
     template<typename T>
-    inline void BBST<T>::rotatepRight(NODE *grand) {
-        NODE *parent = grand->pLeft;
-        NODE *child = parent->pRight;
-        grand->pLeft = child;
-        parent->pRight = grand;
+    inline void BBST<T>::rotate_right(NODE *grand) {
+        NODE *parent = grand->_left;
+        NODE *child = parent->_right;
+        grand->_left = child;
+        parent->_right = grand;
         this->after_rotate(grand, parent, child);
     }
 
     template<typename T>
     inline void BBST<T>::rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f) {
-        d->pParent = r->pParent;
-        if (r->ispLeft())
-            r->pParent->pLeft = d;
-        else if (r->ispRight())
-            r->pParent->pRight = d;
+        d->_parent = r->_parent;
+        if (r->is_left())
+            r->_parent->_left = d;
+        else if (r->is_right())
+            r->_parent->_right = d;
         else
-            this->pRoot = d;
-        b->pRight = c;
+            this->_root = d;
+        b->_right = c;
         if (c != nullptr)
-            c->pParent = b;
-        f->pLeft = e;
+            c->_parent = b;
+        f->_left = e;
         if (e != nullptr)
-            e->pParent = f;
-        d->pLeft = b;
-        d->pRight = f;
-        b->pParent = d;
-        f->pParent = d;
+            e->_parent = f;
+        d->_left = b;
+        d->_right = f;
+        b->_parent = d;
+        f->_parent = d;
     }
 
     template<typename T>
     inline void BBST<T>::after_rotate(NODE *grand, NODE *parent, NODE *child) {
-        parent->pParent = grand->pParent;
-        if (grand->ispLeft())
-            grand->pParent->pLeft = parent;
-        else if (grand->ispRight())
-            grand->pParent->pRight = parent;
+        parent->_parent = grand->_parent;
+        if (grand->is_left())
+            grand->_parent->_left = parent;
+        else if (grand->is_right())
+            grand->_parent->_right = parent;
         else
-            this->pRoot = parent;
+            this->_root = parent;
         if (child != nullptr)
-            child->pParent = grand;
-        grand->pParent = parent;
+            child->_parent = grand;
+        grand->_parent = parent;
     }
 } // namespace app
 

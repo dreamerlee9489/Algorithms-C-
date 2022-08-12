@@ -15,7 +15,7 @@
 using namespace std;
 
 class Solution {
-    unordered_map<char, int> mMap = {{'I', 1},
+    unordered_map<char, int> _map = {{'I', 1},
                                      {'V', 5},
                                      {'X', 10},
                                      {'L', 50},
@@ -28,17 +28,17 @@ public:
         int sum = 0;
         for (int i = 0; i < s.size(); ++i) {
             if (i == s.size() - 1) {
-                sum += mMap[s[i]];
+                sum += _map[s[i]];
                 break;
             }
-            if (mMap[s[i]] >= mMap[s[i + 1]]) {
-                sum += mMap[s[i]];
+            if (_map[s[i]] >= _map[s[i + 1]]) {
+                sum += _map[s[i]];
             } else {
                 switch (s[i]) {
                     case 'I':
                     case 'X':
                     case 'C':
-                        sum += -mMap[s[i]];
+                        sum += -_map[s[i]];
                         break;
                 }
             }

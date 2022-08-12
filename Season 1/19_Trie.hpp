@@ -18,29 +18,29 @@ namespace app {
         template<typename _V>
         struct Node {
             friend bool operator==(const Node &lhs, const Node &rhs) {
-                return *lhs.pKey == *rhs.pKey && *lhs.pValue == *rhs.pValue;
+                return *lhs._key == *rhs._key && *lhs._value == *rhs._value;
             }
 
             friend ostream &operator<<(ostream &os, const Node &node) {
-                return os << "<" << *node.pKey << "-" << *node.pValue << ">";
+                return os << "<" << *node._key << "-" << *node._value << ">";
             }
 
-            bool mWord = false;
-            shared_ptr<char> pKey = nullptr;
-            shared_ptr<_V> pValue = nullptr;
-            shared_ptr<Node<_V>> pParent = nullptr;
-            HashMap<char, Node<_V>> *mTree = nullptr;
+            bool _word = false;
+            shared_ptr<char> _key = nullptr;
+            shared_ptr<_V> _value = nullptr;
+            shared_ptr<Node<_V>> _parent = nullptr;
+            HashMap<char, Node<_V>> *_tree = nullptr;
 
             Node(shared_ptr<Node<_V>> parent = nullptr) {
-                mTree = new HashMap<char, Node<V>>();
-                pParent = parent;
+                _tree = new HashMap<char, Node<V>>();
+                _parent = parent;
             }
 
-            ~Node() { delete mTree; }
+            ~Node() { delete _tree; }
         };
 
-        size_t mSize = 0;
-        shared_ptr<Node<V>> pRoot = nullptr;
+        size_t _size = 0;
+        shared_ptr<Node<V>> _root = nullptr;
 
         shared_ptr<Node<V>> get_node(string key) const;
 
@@ -52,22 +52,22 @@ namespace app {
     public:
         Trie() = default;
 
-        ~Trie() { pRoot = nullptr; }
+        ~Trie() { _root = nullptr; }
 
-        size_t size() const { return mSize; }
+        size_t size() const { return _size; }
 
-        bool is_empty() const { return mSize == 0; }
+        bool is_empty() const { return _size == 0; }
 
         bool start_with(string prefix) const { return get_node(prefix) != nullptr; }
 
         bool contains(string key) const {
             shared_ptr<Node<V>> node = get_node(key);
-            return node != nullptr && node->mWord;
+            return node != nullptr && node->_word;
         }
 
         shared_ptr<V> get(string key) const {
             shared_ptr<Node<V>> node = get_node(key);
-            return node != nullptr && node->mWord ? node->pValue : nullptr;
+            return node != nullptr && node->_word ? node->_value : nullptr;
         }
 
         shared_ptr<V> add(string key, shared_ptr<V> value);
@@ -75,54 +75,54 @@ namespace app {
         shared_ptr<V> remove(string key);
 
         void clear() {
-            mSize = 0;
-            pRoot = nullptr;
+            _size = 0;
+            _root = nullptr;
         }
     };
 
     template<typename V>
     shared_ptr<V> Trie<V>::add(string key, shared_ptr<V> value) {
         key_null_check(key);
-        if (pRoot == nullptr)
-            pRoot = make_shared<Node<V>>();
-        shared_ptr<Node<V>> node = pRoot;
+        if (_root == nullptr)
+            _root = make_shared<Node<V>>();
+        shared_ptr<Node<V>> node = _root;
         for (size_t i = 0; i < key.size(); ++i) {
             char ch = key[i];
-            shared_ptr<Node<V>> child = node->mTree->getpValue(make_shared<char>(ch));
+            shared_ptr<Node<V>> child = node->_tree->get_value(make_shared<char>(ch));
             if (child == nullptr) {
                 child = make_shared<Node<V>>(node);
-                child->pKey = make_shared<char>(ch);
-                node->mTree->add(child->pKey, child);
+                child->_key = make_shared<char>(ch);
+                node->_tree->add(child->_key, child);
             }
             node = child;
         }
-        if (node->mWord) {
-            shared_ptr<V> old = node->pValue;
-            node->pValue = value;
+        if (node->_word) {
+            shared_ptr<V> old = node->_value;
+            node->_value = value;
             return old;
         }
-        node->mWord = true;
-        node->pValue = value;
-        mSize++;
+        node->_word = true;
+        node->_value = value;
+        _size++;
         return nullptr;
     }
 
     template<typename V>
     shared_ptr<V> Trie<V>::remove(string key) {
         shared_ptr<Node<V>> node = get_node(key);
-        if (node == nullptr || !node->mWord)
+        if (node == nullptr || !node->_word)
             return nullptr;
-        mSize--;
-        shared_ptr<V> old = node->pValue;
-        if (node->mTree != nullptr && !node->mTree->is_empty()) {
-            node->mWord = false;
-            node->pValue = nullptr;
+        _size--;
+        shared_ptr<V> old = node->_value;
+        if (node->_tree != nullptr && !node->_tree->is_empty()) {
+            node->_word = false;
+            node->_value = nullptr;
             return old;
         }
         shared_ptr<Node<V>> parent = nullptr;
-        while ((parent = node->pParent) != nullptr) {
-            parent->mTree->remove(node->pKey);
-            if (parent->mWord || !parent->mTree->is_empty())
+        while ((parent = node->_parent) != nullptr) {
+            parent->_tree->remove(node->_key);
+            if (parent->_word || !parent->_tree->is_empty())
                 break;
             node = parent;
         }
@@ -132,12 +132,12 @@ namespace app {
     template<typename V>
     shared_ptr<typename Trie<V>::template Node<V>> Trie<V>::get_node(string key) const {
         key_null_check(key);
-        shared_ptr<Node<V>> node = pRoot;
+        shared_ptr<Node<V>> node = _root;
         for (size_t i = 0; i < key.size(); ++i) {
-            if (node == nullptr || node->mTree == nullptr || node->mTree->is_empty())
+            if (node == nullptr || node->_tree == nullptr || node->_tree->is_empty())
                 return nullptr;
             char ch = key[i];
-            node = node->mTree->getpValue(make_shared<char>(ch));
+            node = node->_tree->get_value(make_shared<char>(ch));
         }
         return node;
     }

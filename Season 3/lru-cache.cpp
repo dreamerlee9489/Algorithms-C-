@@ -16,38 +16,38 @@ using namespace std;
 
 class LRUCache {
     struct Node {
-        int pKey = 0, pValue = 0;
-        shared_ptr<Node> pPrev = nullptr, pNext = nullptr;
+        int _key = 0, _value = 0;
+        shared_ptr<Node> _prev = nullptr, _next = nullptr;
 
         Node() {}
 
         Node(int key, int value) {
-            pKey = key;
-            pValue = value;
+            _key = key;
+            _value = value;
         }
     };
 
-    int mCapacity = 0;
+    int _capacity = 0;
     unordered_map<int, shared_ptr<Node>> _map;
     shared_ptr<Node> _head = make_shared<Node>(), _tail = make_shared<Node>();
 
     void removeNode(shared_ptr<Node> node) {
-        node->pNext->pPrev = node->pPrev;
-        node->pPrev->pNext = node->pNext;
+        node->_next->_prev = node->_prev;
+        node->_prev->_next = node->_next;
     }
 
     void addAfterHead(shared_ptr<Node> node) {
-        node->pNext = _head->pNext;
-        _head->pNext->pPrev = node;
-        _head->pNext = node;
-        node->pPrev = _head;
+        node->_next = _head->_next;
+        _head->_next->_prev = node;
+        _head->_next = node;
+        node->_prev = _head;
     }
 
 public:
     LRUCache(int capacity) {
-        mCapacity = capacity;
-        _head->pNext = _tail;
-        _tail->pPrev = _head;
+        _capacity = capacity;
+        _head->_next = _tail;
+        _tail->_prev = _head;
     }
 
     int get(int key) {
@@ -55,7 +55,7 @@ public:
         if (iter != _map.end()) {
             removeNode(iter->second);
             addAfterHead(iter->second);
-            return iter->second->pValue;
+            return iter->second->_value;
         }
         return -1;
     }
@@ -63,12 +63,12 @@ public:
     void put(int key, int value) {
         auto iter = _map.find(key);
         if (iter != _map.end()) {
-            iter->second->pValue = value;
+            iter->second->_value = value;
             removeNode(iter->second);
             addAfterHead(iter->second);
         } else {
-            if (_map.size() == mCapacity) {
-                auto last = _map.find(_tail->pPrev->pKey);
+            if (_map.size() == _capacity) {
+                auto last = _map.find(_tail->_prev->_key);
                 removeNode(last->second);
                 _map.erase(last);
             }

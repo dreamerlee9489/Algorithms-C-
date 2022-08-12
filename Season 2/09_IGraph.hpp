@@ -14,53 +14,53 @@ namespace app {
     template<typename V>
     struct EdgeInfo {
         friend std::ostream &operator<<(std::ostream &out, const EdgeInfo &edge) {
-            return out << "EdgeInfo <" << *edge.pFrom << ", " << *edge.pTo << ", " << edge.mWeight << ">";
+            return out << "EdgeInfo <" << *edge._from << ", " << *edge._to << ", " << edge._weight << ">";
         }
 
         friend bool operator==(const EdgeInfo &lhs, const EdgeInfo &rhs) {
-            return *lhs.pFrom == *rhs.pFrom && *lhs.pTo == *rhs.pTo && lhs.mWeight == rhs.mWeight;
+            return *lhs._from == *rhs._from && *lhs._to == *rhs._to && lhs._weight == rhs._weight;
         }
 
         friend bool operator!=(const EdgeInfo &lhs, const EdgeInfo &rhs) { return !(lhs == rhs); }
 
-        V *pFrom = nullptr, *pTo = nullptr;
-        double mWeight = 0;
+        V *_from = nullptr, *_to = nullptr;
+        double _weight = 0;
 
         EdgeInfo(V *from, V *to, double weight = 0) {
-            pFrom = from;
-            pTo = to;
-            mWeight = weight;
+            _from = from;
+            _to = to;
+            _weight = weight;
         }
 
         EdgeInfo(const EdgeInfo &edge) {
-            pFrom = edge.pFrom;
-            pTo = edge.pTo;
-            mWeight = edge.mWeight;
+            _from = edge._from;
+            _to = edge._to;
+            _weight = edge._weight;
         }
 
-        ~EdgeInfo() { delete pFrom, pTo; }
+        ~EdgeInfo() { delete _from, _to; }
     };
 
     template<typename V>
     struct PathInfo {
         friend std::ostream &operator<<(std::ostream &out, const PathInfo &path) { return path.traverse(); }
 
-        double mWeight;
-        std::vector<EdgeInfo<V>> mEdgeInfos;
+        double _weight;
+        std::vector<EdgeInfo<V>> _edgeInfos;
 
-        PathInfo(double weight = 0) { mWeight = weight; }
+        PathInfo(double weight = 0) { _weight = weight; }
 
         PathInfo(const PathInfo &path) {
-            mWeight = path.mWeight;
-            mEdgeInfos = path.mEdgeInfos;
+            _weight = path._weight;
+            _edgeInfos = path._edgeInfos;
         }
 
         ~PathInfo() = default;
 
         std::ostream &traverse() const {
-            std::cout << "PathInfo <weight =" << mWeight << "\n";
-            for (size_t i = 0; i < mEdgeInfos.size(); ++i)
-                std::cout << mEdgeInfos[i] << "\n";
+            std::cout << "PathInfo <weight =" << _weight << "\n";
+            for (size_t i = 0; i < _edgeInfos.size(); ++i)
+                std::cout << _edgeInfos[i] << "\n";
             return std::cout << ">\n";
         }
     };
@@ -78,9 +78,9 @@ namespace app {
 
         virtual ~IGraph() = default;
 
-        virtual size_t vertex_mapmSize() = 0;
+        virtual size_t vertex_map_size() = 0;
 
-        virtual size_t edge_setmSize() = 0;
+        virtual size_t edge_set_size() = 0;
 
         virtual void add_vertex(V *v) = 0;
 
@@ -105,7 +105,7 @@ namespace app {
 template<typename V>
 struct std::hash<app::EdgeInfo<V>> {
     size_t operator()(const app::EdgeInfo<V> &edge) const {
-        return hash<V>()(*edge.pFrom) ^ hash<V>()(*edge.pTo) ^ hash<double>()(edge.mWeight);
+        return hash<V>()(*edge._from) ^ hash<V>()(*edge._to) ^ hash<double>()(edge._weight);
     }
 };
 

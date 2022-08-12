@@ -11,19 +11,19 @@ namespace app {
      */
     template<typename T>
     class MergeSort : public ISort<T> {
-        T *pLeftpArray = nullptr;
+        T *_leftArray = nullptr;
 
         void merge(size_t beg, size_t mid, size_t end) {
             size_t li = 0, le = mid - beg;
             size_t ri = mid, re = end;
             size_t ai = beg;
             for (size_t i = li; i < le; ++i)
-                pLeftpArray[i] = this->pArray[beg + i];
+                _leftArray[i] = this->_array[beg + i];
             while (li < le) {
-                if (ri < re && this->compare(this->pArray[ri], pLeftpArray[li]) < 0)
-                    this->pArray[ai++] = this->pArray[ri++];
+                if (ri < re && this->compare(this->_array[ri], _leftArray[li]) < 0)
+                    this->_array[ai++] = this->_array[ri++];
                 else
-                    this->pArray[ai++] = pLeftpArray[li++];
+                    this->_array[ai++] = _leftArray[li++];
             }
         }
 
@@ -37,8 +37,8 @@ namespace app {
         }
 
         void sort_algorithm() override {
-            pLeftpArray = new T[this->mSize >> 1];
-            divide(0, this->mSize);
+            _leftArray = new T[this->_size >> 1];
+            divide(0, this->_size);
         }
 
     public:

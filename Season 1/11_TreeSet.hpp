@@ -13,26 +13,26 @@ namespace app {
     template<typename K>
     class TreeSet : public ISet<K> {
         using TraverseFunc = bool (*)(shared_ptr<K> data);
-        RBTree<K> *mTree = nullptr;
+        RBTree<K> *_tree = nullptr;
 
     public:
-        TreeSet(typename ISet<K>::Comparator comparator = nullptr) { mTree = new RBTree<K>(comparator); }
+        TreeSet(typename ISet<K>::Comparator comparator = nullptr) { _tree = new RBTree<K>(comparator); }
 
-        ~TreeSet() { delete mTree; }
+        ~TreeSet() { delete _tree; }
 
-        size_t size() override { return mTree->size(); }
+        size_t size() override { return _tree->size(); }
 
-        bool is_empty() override { return mTree->is_empty(); }
+        bool is_empty() override { return _tree->is_empty(); }
 
-        bool contains(shared_ptr<K> data) override { return mTree->contains(data); }
+        bool contains(shared_ptr<K> data) override { return _tree->contains(data); }
 
-        void add(shared_ptr<K> data) override { mTree->add(data); }
+        void add(shared_ptr<K> data) override { _tree->add(data); }
 
-        void remove(shared_ptr<K> data) override { mTree->remove(data); }
+        void remove(shared_ptr<K> data) override { _tree->remove(data); }
 
-        void traverse(TraverseFunc func = nullptr) { mTree->traverse(RBTree<K>::TraverseOrder::In, func); }
+        void traverse(TraverseFunc func = nullptr) { _tree->traverse(RBTree<K>::TraverseOrder::In, func); }
 
-        void clear() override { mTree->clear(); }
+        void clear() override { _tree->clear(); }
     };
 } // namespace app
 
