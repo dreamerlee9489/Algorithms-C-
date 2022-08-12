@@ -139,7 +139,7 @@ namespace app {
 
     template<typename T>
     template<typename U>
-    inline IBinaryTree<T>::Node<U> &IBinaryTree<T>::Node<U>::operator=(const IBinaryTree<T>::Node<U> &node) {
+    inline typename IBinaryTree<T>::template Node<U> &IBinaryTree<T>::Node<U>::operator=(const IBinaryTree<T>::Node<U> &node) {
         pData = node.pData;
         pParent = node.pParent;
         pLeft = node.pLeft;
@@ -149,7 +149,7 @@ namespace app {
 
     template<typename T>
     template<typename U>
-    inline IBinaryTree<T>::Node<U> &IBinaryTree<T>::Node<U>::operator=(Node<U> &&node) noexcept {
+    inline typename IBinaryTree<T>::template Node<U> &IBinaryTree<T>::Node<U>::operator=(Node<U> &&node) noexcept {
         pData = nullptr;
         this = &node;
         return *this;
@@ -157,7 +157,7 @@ namespace app {
 
     template<typename T>
     template<typename U>
-    inline IBinaryTree<T>::Node<U> *IBinaryTree<T>::Node<U>::get_sibling() const {
+    inline typename IBinaryTree<T>::template Node<U> *IBinaryTree<T>::Node<U>::get_sibling() const {
         if (ispLeft())
             return pParent->pRight;
         else if (ispRight())
@@ -193,7 +193,7 @@ namespace app {
     }
 
     template<typename T>
-    inline IBinaryTree<T>::Node<T> *IBinaryTree<T>::get_predecessor(Node<T> *node) const {
+    inline typename IBinaryTree<T>::template Node<T> *IBinaryTree<T>::get_predecessor(Node<T> *node) const {
         if (node != nullptr) {
             Node <T> *p = node->pLeft;
             if (p != nullptr) {
@@ -209,7 +209,7 @@ namespace app {
     }
 
     template<typename T>
-    inline IBinaryTree<T>::Node<T> *IBinaryTree<T>::get_successor(Node<T> *node) const {
+    inline typename IBinaryTree<T>::template Node<T> *IBinaryTree<T>::get_successor(Node<T> *node) const {
         if (node != nullptr) {
             Node <T> *p = node->pRight;
             if (p != nullptr) {

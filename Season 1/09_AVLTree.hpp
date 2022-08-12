@@ -15,7 +15,7 @@ namespace app {
 
         template<typename U>
         struct AVLNode : public NODE {
-            size_t _height = 1;
+            size_t pHeight = 1;
 
             AVLNode<U> &operator=(const AVLNode<U> &node);
 
@@ -32,12 +32,12 @@ namespace app {
 
             int balance_factor();
 
-            void update_height();
+            void updatepHeight();
 
             NODE *taller_child();
 
             string to_string() const override {
-                return ((IString &) *this->pData).to_string() + " h=" + std::to_string(_height);
+                return ((IString &) *this->pData).to_string() + " h=" + std::to_string(pHeight);
             }
         };
 
@@ -55,7 +55,7 @@ namespace app {
 
         bool is_balanced(NODE *node) { return abs(((AVLNode<T> *) node)->balance_factor()) <= 1; }
 
-        void update_height(NODE *node) { ((AVLNode<T> *) node)->update_height(); }
+        void updatepHeight(NODE *node) { ((AVLNode<T> *) node)->updatepHeight(); }
 
         void rebalance(NODE *grand);
 
@@ -75,18 +75,18 @@ namespace app {
 
     template<typename T>
     template<typename U>
-    inline AVLTree<T>::AVLNode<U> &AVLTree<T>::AVLNode<U>::operator=(const AVLNode<U> &node) {
+    inline typename AVLTree<T>::template AVLNode<U> &AVLTree<T>::AVLNode<U>::operator=(const AVLNode<U> &node) {
         this->pData = node.pData;
         this->pParent = node.pParent;
         this->pLeft = node.pLeft;
         this->pRight = node.pRight;
-        _height = node._height;
+        this->pHeight = node.pHeight;
         return *this;
     }
 
     template<typename T>
     template<typename U>
-    inline AVLTree<T>::AVLNode<U> &AVLTree<T>::AVLNode<U>::operator=(AVLNode<U> &&node) noexcept {
+    inline typename AVLTree<T>::template AVLNode<U> &AVLTree<T>::AVLNode<U>::operator=(AVLNode<U> &&node) noexcept {
         this->pData = nullptr;
         this = &node;
         return *this;
@@ -95,24 +95,24 @@ namespace app {
     template<typename T>
     template<typename U>
     inline int AVLTree<T>::AVLNode<U>::balance_factor() {
-        size_t leftH = (this->pLeft == nullptr) ? 0 : ((AVLNode<U> *) this->pLeft)->_height;
-        size_t rightH = (this->pRight == nullptr) ? 0 : ((AVLNode<U> *) this->pRight)->_height;
+        size_t leftH = (this->pLeft == nullptr) ? 0 : ((AVLNode<U> *) this->pLeft)->pHeight;
+        size_t rightH = (this->pRight == nullptr) ? 0 : ((AVLNode<U> *) this->pRight)->pHeight;
         return (int) (leftH - rightH);
     }
 
     template<typename T>
     template<typename U>
-    inline void AVLTree<T>::AVLNode<U>::update_height() {
-        size_t leftH = (this->pLeft == nullptr) ? 0 : ((AVLNode<U> *) this->pLeft)->_height;
-        size_t rightH = (this->pRight == nullptr) ? 0 : ((AVLNode<U> *) this->pRight)->_height;
-        _height = 1 + max(leftH, rightH);
+    inline void AVLTree<T>::AVLNode<U>::updatepHeight() {
+        size_t leftH = (this->pLeft == nullptr) ? 0 : ((AVLNode<U> *) this->pLeft)->pHeight;
+        size_t rightH = (this->pRight == nullptr) ? 0 : ((AVLNode<U> *) this->pRight)->pHeight;
+        pHeight = 1 + max(leftH, rightH);
     }
 
     template<typename T>
     template<typename U>
     inline typename AVLTree<T>::NODE *AVLTree<T>::AVLNode<U>::taller_child() {
-        size_t leftH = (this->pLeft == nullptr) ? 0 : ((AVLNode<U> *) this->pLeft)->_height;
-        size_t rightH = (this->pRight == nullptr) ? 0 : ((AVLNode<U> *) this->pRight)->_height;
+        size_t leftH = (this->pLeft == nullptr) ? 0 : ((AVLNode<U> *) this->pLeft)->pHeight;
+        size_t rightH = (this->pRight == nullptr) ? 0 : ((AVLNode<U> *) this->pRight)->pHeight;
         if (leftH > rightH)
             return this->pLeft;
         if (leftH < rightH)
@@ -156,7 +156,7 @@ namespace app {
     inline void AVLTree<T>::after_add(NODE *node) {
         while ((node = node->pParent) != nullptr) {
             if (is_balanced(node))
-                update_height(node);
+                updatepHeight(node);
             else {
                 rebalance(node);
                 break;
@@ -168,7 +168,7 @@ namespace app {
     inline void AVLTree<T>::after_remove(NODE *node) {
         while ((node = node->pParent) != nullptr) {
             if (is_balanced(node))
-                update_height(node);
+                updatepHeight(node);
             else
                 rebalance(node);
         }
@@ -202,16 +202,16 @@ namespace app {
     template<typename T>
     inline void AVLTree<T>::rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f) {
         BBST<T>::rotate(r, b, c, d, e, f);
-        update_height(b);
-        update_height(f);
-        update_height(d);
+        updatepHeight(b);
+        updatepHeight(f);
+        updatepHeight(d);
     }
 
     template<typename T>
     inline void AVLTree<T>::after_rotate(NODE *grand, NODE *parent, NODE *child) {
         BBST<T>::after_rotate(grand, parent, child);
-        update_height(grand);
-        update_height(parent);
+        updatepHeight(grand);
+        updatepHeight(parent);
     }
 } // namespace app
 

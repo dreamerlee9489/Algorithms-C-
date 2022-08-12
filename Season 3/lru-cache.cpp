@@ -16,14 +16,14 @@ using namespace std;
 
 class LRUCache {
     struct Node {
-        int pKey = 0, mValue = 0;
+        int pKey = 0, pValue = 0;
         shared_ptr<Node> pPrev = nullptr, pNext = nullptr;
 
         Node() {}
 
         Node(int key, int value) {
             pKey = key;
-            mValue = value;
+            pValue = value;
         }
     };
 
@@ -55,7 +55,7 @@ public:
         if (iter != _map.end()) {
             removeNode(iter->second);
             addAfterHead(iter->second);
-            return iter->second->mValue;
+            return iter->second->pValue;
         }
         return -1;
     }
@@ -63,7 +63,7 @@ public:
     void put(int key, int value) {
         auto iter = _map.find(key);
         if (iter != _map.end()) {
-            iter->second->mValue = value;
+            iter->second->pValue = value;
             removeNode(iter->second);
             addAfterHead(iter->second);
         } else {

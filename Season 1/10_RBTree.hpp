@@ -69,7 +69,7 @@ namespace app {
 
     template<typename T>
     template<typename U>
-    inline RBTree<T>::RBNode<U> &RBTree<T>::RBNode<U>::operator=(const RBNode<U> &node) {
+    inline typename RBTree<T>::template RBNode<U> &RBTree<T>::RBNode<U>::operator=(const RBNode<U> &node) {
         this->pData = node.pData;
         this->pParent = node.pParent;
         this->pLeft = node.pLeft;
@@ -80,7 +80,7 @@ namespace app {
 
     template<typename T>
     template<typename U>
-    inline RBTree<T>::RBNode<U> &RBTree<T>::RBNode<U>::operator=(RBNode<U> &&node) noexcept {
+    inline typename RBTree<T>::template RBNode<U> &RBTree<T>::RBNode<U>::operator=(RBNode<U> &&node) noexcept {
         this->pData = nullptr;
         this = &node;
         return *this;

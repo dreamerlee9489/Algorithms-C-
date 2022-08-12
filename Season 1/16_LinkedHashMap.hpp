@@ -51,7 +51,7 @@ namespace app {
 
         ~LinkedHashMap() = default;
 
-        bool containsmValue(shared_ptr<V> value) const override;
+        bool containspValue(shared_ptr<V> value) const override;
 
         void traverse(typename HashMap<K, V>::TraverseFunc func = nullptr) const override;
 
@@ -67,7 +67,7 @@ namespace app {
     inline LinkedHashMap<K, V>::LinkedNode<_K, _V> &
     LinkedHashMap<K, V>::LinkedNode<_K, _V>::operator=(const LinkedNode<_K, _V> &node) {
         this->pKey = node.pKey;
-        this->mValue = node.mValue;
+        this->pValue = node.pValue;
         this->pParent = node.pParent;
         this->pLeft = node.pLeft;
         this->pRight = node.pRight;
@@ -81,7 +81,7 @@ namespace app {
     inline LinkedHashMap<K, V>::LinkedNode<_K, _V> &
     LinkedHashMap<K, V>::LinkedNode<_K, _V>::operator=(LinkedNode<_K, _V> &&node) noexcept {
         this->pKey = nullptr;
-        this->mValue = nullptr;
+        this->pValue = nullptr;
         this = &node;
         return *this;
     }
@@ -154,7 +154,7 @@ namespace app {
                 this->_table[i] = nullptr;
             LinkedNode<K, V> *node = map._head;
             while (node != nullptr) {
-                this->add(node->pKey, node->mValue);
+                this->add(node->pKey, node->pValue);
                 node = node->pNext;
             }
         }
@@ -178,10 +178,10 @@ namespace app {
     }
 
     template<typename K, typename V>
-    inline bool LinkedHashMap<K, V>::containsmValue(shared_ptr<V> value) const {
+    inline bool LinkedHashMap<K, V>::containspValue(shared_ptr<V> value) const {
         LinkedNode<K, V> *node = _head;
         while (node != nullptr) {
-            if (*value == *node->mValue)
+            if (*value == *node->pValue)
                 return true;
             node = node->pNext;
         }
@@ -193,7 +193,7 @@ namespace app {
         LinkedNode<K, V> *node = _head;
         while (node != nullptr) {
             if (func != nullptr)
-                func(node->pKey, node->mValue);
+                func(node->pKey, node->pValue);
             else
                 cout << *node << "\n";
             node = node->pNext;

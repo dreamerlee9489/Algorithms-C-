@@ -20,13 +20,13 @@ namespace app {
         template<typename _K, typename _V>
         struct Node {
             friend ostream &operator<<(ostream &os, const Node &node) {
-                return os << "<" << *node.pKey << "-" << *node.mValue << ">";
+                return os << "<" << *node.pKey << "-" << *node.pValue << ">";
             }
 
-            size_t _hash = 0;
+            size_t mHash = 0;
             bool mColor = RED;
             shared_ptr<_K> pKey = nullptr;
-            shared_ptr<_V> mValue = nullptr;
+            shared_ptr<_V> pValue = nullptr;
             Node<_K, _V> *pParent = nullptr, *pLeft = nullptr, *pRight = nullptr;
 
             Node<_K, _V> &operator=(const Node<_K, _V> &node);
@@ -35,8 +35,8 @@ namespace app {
 
             Node(shared_ptr<_K> key, shared_ptr<_V> value, Node<_K, _V> *parent = nullptr, Node<_K, _V> *left = nullptr,
                  Node<_K, _V> *right = nullptr)
-                    : pKey(key), mValue(value), pParent(parent), pLeft(left), pRight(right) {
-                _hash = pKey == nullptr ? 0 : hash<_K>()(*key);
+                    : pKey(key), pValue(value), pParent(parent), pLeft(left), pRight(right) {
+                mHash = pKey == nullptr ? 0 : hash<_K>()(*key);
             }
 
             Node(const Node<_K, _V> &node) { *this = node; }
@@ -45,7 +45,7 @@ namespace app {
 
             virtual ~Node() {
                 pKey = nullptr;
-                mValue = nullptr;
+                pValue = nullptr;
             }
 
             bool is_leaf() const { return pLeft == nullptr && pRight == nullptr; }
@@ -60,11 +60,11 @@ namespace app {
         };
 
         size_t mSize = 0, mCapacity = DEFAULT_CAPACITY;
-        Node<K, V> **_table = nullptr;
+        Node<K, V> **pTable = nullptr;
         typename IMap<K, V>::Comparator mComparator = nullptr;
 
         Node<K, V> *get_node(shared_ptr<K> key) const {
-            Node<K, V> *root = _table[get_index(key)];
+            Node<K, V> *root = pTable[get_index(key)];
             return root == nullptr ? nullptr : get_node(root, key);
         }
 
@@ -72,7 +72,7 @@ namespace app {
 
         Node<K, V> *get_successor(Node<K, V> *node) const;
 
-        int get_index(Node<K, V> *node) const { return node->_hash & (mCapacity - 1); }
+        int get_index(Node<K, V> *node) const { return node->mHash & (mCapacity - 1); }
 
         int get_index(shared_ptr<K> key) const { return get_hash(key) & (mCapacity - 1); } // 哈希值位与容量映射到哈希数组
         size_t get_hash(shared_ptr<K> key) const {
@@ -118,14 +118,14 @@ namespace app {
 
         HashMap(typename IMap<K, V>::Comparator comparator = nullptr) {
             mComparator = comparator;
-            _table = new Node<K, V> *[DEFAULT_CAPACITY];
+            pTable = new Node<K, V> *[DEFAULT_CAPACITY];
             for (size_t i = 0; i < mCapacity; ++i)
-                _table[i] = nullptr;
+                pTable[i] = nullptr;
         }
 
         virtual ~HashMap() {
             clear();
-            delete[] _table;
+            delete[] pTable;
         }
 
         HashMap(const HashMap<K, V> &map) { *this = map; }
@@ -140,11 +140,11 @@ namespace app {
 
         bool containspKey(shared_ptr<K> key) const override { return get_node(key) != nullptr; }
 
-        bool containsmValue(shared_ptr<V> value) const override;
+        bool containspValue(shared_ptr<V> value) const override;
 
-        shared_ptr<V> getmValue(shared_ptr<K> key) const override {
+        shared_ptr<V> getpValue(shared_ptr<K> key) const override {
             Node<K, V> *node = get_node(key);
-            return node != nullptr ? node->mValue : nullptr;
+            return node != nullptr ? node->pValue : nullptr;
         }
 
         shared_ptr<V> add(shared_ptr<K> key, shared_ptr<V> value) override;
@@ -157,36 +157,36 @@ namespace app {
             if (mSize > 0) {
                 mSize = 0;
                 for (size_t i = 0; i < mCapacity; ++i)
-                    clear_recu(_table[i]);
+                    clear_recu(pTable[i]);
             }
         }
     };
 
     template<typename K, typename V>
     template<typename _K, typename _V>
-    inline HashMap<K, V>::Node<_K, _V> &HashMap<K, V>::Node<_K, _V>::operator=(const Node<_K, _V> &node) {
+    inline typename HashMap<K, V>::template Node<_K, _V> &HashMap<K, V>::Node<_K, _V>::operator=(const Node<_K, _V> &node) {
         pKey = node.pKey;
-        mValue = node.mValue;
+        pValue = node.pValue;
         pParent = node.pParent;
         pLeft = node.pLeft;
         pRight = node.pRight;
         mColor = node.mColor;
-        _hash = node._hash;
+        mHash = node.mHash;
         return *this;
     }
 
     template<typename K, typename V>
     template<typename _K, typename _V>
-    inline HashMap<K, V>::Node<_K, _V> &HashMap<K, V>::Node<_K, _V>::operator=(Node<_K, _V> &&node) noexcept {
+    inline typename HashMap<K, V>::template Node<_K, _V> &HashMap<K, V>::Node<_K, _V>::operator=(Node<_K, _V> &&node) noexcept {
         pKey = nullptr;
-        mValue = nullptr;
+        pValue = nullptr;
         this = &node;
         return *this;
     }
 
     template<typename K, typename V>
     template<typename _K, typename _V>
-    inline HashMap<K, V>::Node<_K, _V> *HashMap<K, V>::Node<_K, _V>::get_sibling() const {
+    inline typename HashMap<K, V>::template Node<_K, _V> *HashMap<K, V>::Node<_K, _V>::get_sibling() const {
         if (ispLeft())
             return pParent->pRight;
         else if (ispRight())
@@ -197,20 +197,20 @@ namespace app {
     template<typename K, typename V>
     inline HashMap<K, V> &HashMap<K, V>::operator=(const HashMap<K, V> &map) {
         clear();
-        delete[] _table;
+        delete[] pTable;
         mCapacity = DEFAULT_CAPACITY;
-        _table = new Node<K, V> *[mCapacity];
+        pTable = new Node<K, V> *[mCapacity];
         mComparator = map.mComparator;
         for (size_t i = 0; i < mCapacity; ++i)
-            _table[i] = nullptr;
+            pTable[i] = nullptr;
         if (map.mSize > 0) {
             queue<Node<K, V> *> q;
             for (size_t i = 0; i < map.mCapacity; ++i) {
-                if (map._table[i] != nullptr) {
-                    q.push(map._table[i]);
+                if (map.pTable[i] != nullptr) {
+                    q.push(map.pTable[i]);
                     while (!q.empty()) {
                         Node<K, V> *node = q.front();
-                        add(node->pKey, node->mValue);
+                        add(node->pKey, node->pValue);
                         q.pop();
                         if (node->pLeft != nullptr)
                             q.push(node->pLeft);
@@ -229,24 +229,24 @@ namespace app {
         mSize = map.mSize;
         mCapacity = map.mCapacity;
         mComparator = map.mComparator;
-        _table = map._table;
+        pTable = map.pTable;
         map.mSize = 0;
         map.mComparator = nullptr;
-        map._table = nullptr;
+        map.pTable = nullptr;
         return *this;
     }
 
     template<typename K, typename V>
-    inline bool HashMap<K, V>::containsmValue(shared_ptr<V> value) const {
+    inline bool HashMap<K, V>::containspValue(shared_ptr<V> value) const {
         if (mSize != 0) {
             queue<Node<K, V> *> q;
             for (size_t i = 0; i < mCapacity; ++i) {
-                if (_table[i] != nullptr) {
-                    q.push(_table[i]);
+                if (pTable[i] != nullptr) {
+                    q.push(pTable[i]);
                     while (!q.empty()) {
                         Node<K, V> *node = q.front();
                         q.pop();
-                        if (*value == *node->mValue)
+                        if (*value == *node->pValue)
                             return true;
                         if (node->pLeft != nullptr)
                             q.push(node->pLeft);
@@ -263,10 +263,10 @@ namespace app {
     inline shared_ptr<V> HashMap<K, V>::add(shared_ptr<K> key, shared_ptr<V> value) {
         ensuremCapacity();
         int index = get_index(key);
-        Node<K, V> *root = _table[index];
+        Node<K, V> *root = pTable[index];
         if (root == nullptr) {
             root = this->create_node(key, value, nullptr);
-            _table[index] = root;
+            pTable[index] = root;
             mSize++;
             after_add(root);
             return nullptr;
@@ -280,7 +280,7 @@ namespace app {
         while (node != nullptr) {
             parent = node;
             shared_ptr<K> key2 = node->pKey;
-            size_t hash2 = node->_hash;
+            size_t hash2 = node->mHash;
             if (hash1 > hash2)
                 cmp = 1;
             else if (hash1 < hash2)
@@ -306,10 +306,10 @@ namespace app {
             else if (cmp < 0)
                 node = node->pLeft;
             else {
-                shared_ptr<V> old = node->mValue;
+                shared_ptr<V> old = node->pValue;
                 node->pKey = key;
-                node->mValue = value;
-                node->_hash = hash1;
+                node->pValue = value;
+                node->mHash = hash1;
                 return old;
             }
         }
@@ -329,12 +329,12 @@ namespace app {
         if (node != nullptr) {
             mSize--;
             Node<K, V> *willnode = node;
-            shared_ptr<V> old = node->mValue;
+            shared_ptr<V> old = node->pValue;
             if (node->is_binary()) {
                 Node<K, V> *s = get_successor(node);
                 node->pKey = s->pKey;
-                node->mValue = s->mValue;
-                node->_hash = s->_hash;
+                node->pValue = s->pValue;
+                node->mHash = s->mHash;
                 node = s;
             }
             Node<K, V> *replace = node->pLeft != nullptr ? node->pLeft : node->pRight;
@@ -342,7 +342,7 @@ namespace app {
             if (replace != nullptr) {
                 replace->pParent = node->pParent;
                 if (node->pParent == nullptr)
-                    _table[index] = replace;
+                    pTable[index] = replace;
                 else if (node == node->pParent->pLeft)
                     node->pParent->pLeft = replace;
                 else
@@ -355,7 +355,7 @@ namespace app {
                     node->pParent->pRight = nullptr;
                 after_remove(node);
             } else {
-                _table[index] = nullptr;
+                pTable[index] = nullptr;
             }
             this->after_remove_derived(willnode, node);
             return old;
@@ -368,9 +368,9 @@ namespace app {
         if (mSize > 0) {
             queue<Node<K, V> *> q;
             for (size_t i = 0; i < mCapacity; ++i) {
-                if (_table[i] != nullptr) {
+                if (pTable[i] != nullptr) {
                     cout << "---------- " << i << " ----------\n";
-                    q.push(_table[i]);
+                    q.push(pTable[i]);
                     size_t lv_cnt = 1;
                     while (!q.empty()) {
                         Node<K, V> *node = q.front();
@@ -381,7 +381,7 @@ namespace app {
                         if (node->pRight != nullptr)
                             q.push(node->pRight);
                         if (func != nullptr)
-                            func(node->pKey, node->mValue);
+                            func(node->pKey, node->pValue);
                         else
                             cout << *node << "\t";
                         if (lv_cnt == 0) {
@@ -395,13 +395,13 @@ namespace app {
     }
 
     template<typename K, typename V>
-    inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::get_node(Node<K, V> *node, shared_ptr<K> key1) const {
+    inline typename HashMap<K, V>::template Node<K, V> *HashMap<K, V>::get_node(Node<K, V> *node, shared_ptr<K> key1) const {
         size_t hash1 = get_hash(key1);
         Node<K, V> *result = nullptr;
         int cmp = 0;
         while (node != nullptr) {
             shared_ptr<K> key2 = node->pKey;
-            size_t hash2 = node->_hash;
+            size_t hash2 = node->mHash;
             if (hash1 > hash2)
                 node = node->pRight;
             else if (hash1 < hash2)
@@ -420,7 +420,7 @@ namespace app {
     }
 
     template<typename K, typename V>
-    inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::get_successor(Node<K, V> *node) const {
+    inline typename HashMap<K, V>::template Node<K, V> *HashMap<K, V>::get_successor(Node<K, V> *node) const {
         if (node != nullptr) {
             Node<K, V> *p = node->pRight;
             if (p != nullptr) {
@@ -438,10 +438,10 @@ namespace app {
     template<typename K, typename V>
     inline void HashMap<K, V>::ensuremCapacity() {
         if (mSize * 1.0 / mCapacity * 1.0 > LOAD_FACTOR) {
-            Node<K, V> **old = _table;
-            _table = new Node<K, V> *[mCapacity << 1];
+            Node<K, V> **old = pTable;
+            pTable = new Node<K, V> *[mCapacity << 1];
             for (size_t i = 0; i < mCapacity << 1; ++i)
-                _table[i] = nullptr;
+                pTable[i] = nullptr;
             queue<Node<K, V> *> q;
             for (size_t i = 0; i < mCapacity; ++i) {
                 if (old[i] != nullptr) {
@@ -469,21 +469,21 @@ namespace app {
         newnode->pRight = nullptr;
         newnode->mColor = RED;
         int index = get_index(newnode);
-        Node<K, V> *root = _table[index];
+        Node<K, V> *root = pTable[index];
         if (root == nullptr) {
             root = newnode;
-            _table[index] = root;
+            pTable[index] = root;
             after_add(root);
             return;
         }
         Node<K, V> *parent = root, *node = root;
         int cmp = 0;
         shared_ptr<K> key1 = newnode->pKey;
-        size_t hash1 = newnode->_hash;
+        size_t hash1 = newnode->mHash;
         while (node != nullptr) {
             parent = node;
             shared_ptr<K> key2 = node->pKey;
-            size_t hash2 = node->_hash;
+            size_t hash2 = node->mHash;
             if (hash1 > hash2)
                 cmp = 1;
             else if (hash1 < hash2)
@@ -627,14 +627,14 @@ namespace app {
         else if (grand->ispRight())
             grand->pParent->pRight = parent;
         else
-            _table[get_index(grand)] = parent;
+            pTable[get_index(grand)] = parent;
         if (child != nullptr)
             child->pParent = grand;
         grand->pParent = parent;
     }
 
     template<typename K, typename V>
-    inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::setmColor(Node<K, V> *node, bool color) {
+    inline typename HashMap<K, V>::template Node<K, V> *HashMap<K, V>::setmColor(Node<K, V> *node, bool color) {
         if (node != nullptr)
             node->mColor = color;
         return node;

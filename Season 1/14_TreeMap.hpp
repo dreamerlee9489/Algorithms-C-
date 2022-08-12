@@ -17,12 +17,12 @@ namespace app {
         template<typename _K, typename _V>
         struct Node {
             friend ostream &operator<<(ostream &os, const Node &node) {
-                return os << "<" << *node.pKey << "-" << *node.mValue << ">";
+                return os << "<" << *node.pKey << "-" << *node.pValue << ">";
             }
 
             bool mColor = RED;
             shared_ptr<_K> pKey;
-            shared_ptr<_V> mValue;
+            shared_ptr<_V> pValue;
             Node<_K, _V> *pParent = nullptr, *pLeft = nullptr, *pRight = nullptr;
 
             Node<_K, _V> &operator=(const Node<_K, _V> &node);
@@ -31,7 +31,7 @@ namespace app {
 
             Node(shared_ptr<_K> key, shared_ptr<_V> value, Node<_K, _V> *parent = nullptr, Node<_K, _V> *left = nullptr,
                  Node<_K, _V> *right = nullptr)
-                    : pKey(key), mValue(value), pParent(parent), pLeft(left), pRight(right) {}
+                    : pKey(key), pValue(value), pParent(parent), pLeft(left), pRight(right) {}
 
             Node(const Node<_K, _V> &node) { *this = node; }
 
@@ -39,7 +39,7 @@ namespace app {
 
             virtual ~Node() {
                 pKey = nullptr;
-                mValue = nullptr;
+                pValue = nullptr;
             }
 
             bool is_leaf() const { return pLeft == nullptr && pRight == nullptr; }
@@ -109,11 +109,11 @@ namespace app {
 
         bool containspKey(shared_ptr<K> key) const override { return get_node(key) != nullptr; }
 
-        bool containsmValue(shared_ptr<V> value) const override;
+        bool containspValue(shared_ptr<V> value) const override;
 
-        shared_ptr<V> getmValue(shared_ptr<K> key) const override {
+        shared_ptr<V> getpValue(shared_ptr<K> key) const override {
             Node<K, V> *node = get_node(key);
-            return node != nullptr ? node->mValue : nullptr;
+            return node != nullptr ? node->pValue : nullptr;
         }
 
         shared_ptr<V> add(shared_ptr<K> key, shared_ptr<V> value) override;
@@ -131,9 +131,9 @@ namespace app {
 
     template<typename K, typename V>
     template<typename _K, typename _V>
-    inline TreeMap<K, V>::Node<_K, _V> &TreeMap<K, V>::Node<_K, _V>::operator=(const Node<_K, _V> &node) {
+    inline typename TreeMap<K, V>::template Node<_K, _V> &TreeMap<K, V>::Node<_K, _V>::operator=(const Node<_K, _V> &node) {
         pKey = node.pKey;
-        mValue = node.mValue;
+        pValue = node.pValue;
         pParent = node.pParent;
         pLeft = node.pLeft;
         pRight = node.pRight;
@@ -143,16 +143,16 @@ namespace app {
 
     template<typename K, typename V>
     template<typename _K, typename _V>
-    inline TreeMap<K, V>::Node<_K, _V> &TreeMap<K, V>::Node<_K, _V>::operator=(Node<_K, _V> &&node) noexcept {
+    inline typename TreeMap<K, V>::template Node<_K, _V> &TreeMap<K, V>::Node<_K, _V>::operator=(Node<_K, _V> &&node) noexcept {
         pKey = nullptr;
-        mValue = nullptr;
+        pValue = nullptr;
         this = &node;
         return *this;
     }
 
     template<typename K, typename V>
     template<typename _K, typename _V>
-    inline TreeMap<K, V>::Node<_K, _V> *TreeMap<K, V>::Node<_K, _V>::get_sibling() const {
+    inline typename TreeMap<K, V>::template Node<_K, _V> *TreeMap<K, V>::Node<_K, _V>::get_sibling() const {
         if (ispLeft())
             return pParent->pRight;
         else if (ispRight())
@@ -169,7 +169,7 @@ namespace app {
             q.push(map.pRoot);
             while (!q.empty()) {
                 Node<K, V> *node = q.front();
-                add(node->pKey, node->mValue);
+                add(node->pKey, node->pValue);
                 q.pop();
                 if (node->pLeft != nullptr)
                     q.push(node->pLeft);
@@ -193,7 +193,7 @@ namespace app {
     }
 
     template<typename K, typename V>
-    inline TreeMap<K, V>::Node<K, V> *TreeMap<K, V>::get_node(shared_ptr<K> key) const {
+    inline typename TreeMap<K, V>::template Node<K, V> *TreeMap<K, V>::get_node(shared_ptr<K> key) const {
         Node<K, V> *node = pRoot;
         while (node != nullptr) {
             if (mComparator == nullptr) {
@@ -216,7 +216,7 @@ namespace app {
     }
 
     template<typename K, typename V>
-    inline TreeMap<K, V>::Node<K, V> *TreeMap<K, V>::get_predecessor(Node<K, V> *node) const {
+    inline typename TreeMap<K, V>::template Node<K, V> *TreeMap<K, V>::get_predecessor(Node<K, V> *node) const {
         if (node != nullptr) {
             Node<K, V> *p = node->pLeft;
             if (p != nullptr) {
@@ -232,7 +232,7 @@ namespace app {
     }
 
     template<typename K, typename V>
-    inline TreeMap<K, V>::Node<K, V> *TreeMap<K, V>::get_successor(Node<K, V> *node) const {
+    inline typename TreeMap<K, V>::template Node<K, V> *TreeMap<K, V>::get_successor(Node<K, V> *node) const {
         if (node != nullptr) {
             Node<K, V> *p = node->pRight;
             if (p != nullptr) {
@@ -375,7 +375,7 @@ namespace app {
     }
 
     template<typename K, typename V>
-    inline TreeMap<K, V>::Node<K, V> *TreeMap<K, V>::setmColor(Node<K, V> *node, bool color) {
+    inline typename TreeMap<K, V>::template Node<K, V> *TreeMap<K, V>::setmColor(Node<K, V> *node, bool color) {
         if (node != nullptr)
             node->mColor = color;
         return node;
@@ -391,13 +391,13 @@ namespace app {
     }
 
     template<typename K, typename V>
-    inline bool TreeMap<K, V>::containsmValue(shared_ptr<V> value) const {
+    inline bool TreeMap<K, V>::containspValue(shared_ptr<V> value) const {
         if (pRoot != nullptr) {
             queue<Node<K, V> *> q;
             q.push(pRoot);
             while (!q.empty()) {
                 Node<K, V> *node = q.front();
-                if (*node->mValue == *value)
+                if (*node->pValue == *value)
                     return true;
                 q.pop();
                 if (node->pLeft != nullptr)
@@ -428,8 +428,8 @@ namespace app {
                     node = node->pLeft;
                 else {
                     node->pKey = key;
-                    shared_ptr<V> old = node->mValue;
-                    node->mValue = value;
+                    shared_ptr<V> old = node->pValue;
+                    node->pValue = value;
                     return old;
                 }
             } else {
@@ -439,8 +439,8 @@ namespace app {
                     node = node->pLeft;
                 else {
                     node->pKey = key;
-                    shared_ptr<V> old = node->mValue;
-                    node->mValue = value;
+                    shared_ptr<V> old = node->pValue;
+                    node->pValue = value;
                     return old;
                 }
             }
@@ -467,11 +467,11 @@ namespace app {
         Node<K, V> *node = get_node(key);
         if (node != nullptr) {
             mSize--;
-            shared_ptr<V> old = node->mValue;
+            shared_ptr<V> old = node->pValue;
             if (node->is_binary()) {
                 Node<K, V> *s = get_successor(node);
                 node->pKey = s->pKey;
-                node->mValue = s->mValue;
+                node->pValue = s->pValue;
                 node = s; //删除前驱结点
             }
             Node<K, V> *replace = node->pLeft != nullptr ? node->pLeft : node->pRight;
@@ -504,7 +504,7 @@ namespace app {
         if (node != nullptr) {
             inorder_traverse(node->pLeft, func);
             if (func != nullptr)
-                func(node->pKey, node->mValue);
+                func(node->pKey, node->pValue);
             else
                 cout << *node << "\n";
             inorder_traverse(node->pRight, func);

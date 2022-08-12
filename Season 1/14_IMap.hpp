@@ -32,9 +32,9 @@ namespace app {
 
         virtual bool containspKey(shared_ptr <K> key) const = 0;
 
-        virtual bool containsmValue(shared_ptr <V> value) const = 0;
+        virtual bool containspValue(shared_ptr <V> value) const = 0;
 
-        virtual shared_ptr <V> getmValue(shared_ptr <K> key) const = 0;
+        virtual shared_ptr <V> getpValue(shared_ptr <K> key) const = 0;
 
         virtual shared_ptr <V> add(shared_ptr <K> key, shared_ptr <V> value) = 0;
 

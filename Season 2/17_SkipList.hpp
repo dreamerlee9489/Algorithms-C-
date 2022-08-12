@@ -19,17 +19,17 @@ namespace app {
         template<typename _K, typename _V>
         struct Node {
             _K *pKey = nullptr;
-            _V *mValue = nullptr;
+            _V *pValue = nullptr;
             size_t mLevel = 0;
             Node<_K, _V> **pNexts = nullptr;
 
             friend ostream &operator<<(ostream &out, const Node &node) {
-                return out << "[" << *node.pKey << " - " << *node.mValue << "]";
+                return out << "[" << *node.pKey << " - " << *node.pValue << "]";
             }
 
             Node(_K *key, _V *value, size_t level) {
                 pKey = key;
-                mValue = value;
+                pValue = value;
                 mLevel = level;
                 pNexts = new Node<_K, _V> *[level]{};
             }
@@ -105,8 +105,8 @@ namespace app {
                 while (node->pNexts[i] != nullptr && (cmp = compare(key, node->pNexts[i]->pKey)) > 0)
                     node = node->pNexts[i];
                 if (cmp == 0) {
-                    V *oldV = node->pNexts[i]->mValue;
-                    node->pNexts[i]->mValue = value;
+                    V *oldV = node->pNexts[i]->pValue;
+                    node->pNexts[i]->pValue = value;
                     return oldV;
                 }
                 prevs[i] = node;
@@ -150,7 +150,7 @@ namespace app {
                 mLevel = newLevel;
             mSize--;
             delete[]prevs;
-            return rmvNode->mValue;
+            return rmvNode->pValue;
         }
 
         V *get(K *key) {
@@ -161,7 +161,7 @@ namespace app {
                 while (node->pNexts[i] != nullptr && (cmp = compare(key, node->pNexts[i]->pKey)) > 0)
                     node = node->pNexts[i];
                 if (cmp == 0)
-                    return node->pNexts[i]->mValue;
+                    return node->pNexts[i]->pValue;
             }
             return nullptr;
         }

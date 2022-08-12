@@ -1,5 +1,6 @@
 # 数据结构与算法(C++版)
-该项目使用C++重写了小码哥《恋上数据结构与算法》视频教程系列
+目录 Season 1/2/3 对应小码哥《恋上数据结构与算法》视频教程第一/二/三季  
+目录 LeetCode 为本人刷题记录  
 ## Season 1    
 - 动态数组(ArrayList)    
 - 双向循环链表(LinkedList)  
@@ -111,7 +112,7 @@
 - 会议室 II(meeting-rooms-ii.cpp)  
 - 盛最多水的容器(container-with-most-water.cpp)  
 - 接雨水(trapping-rain-water.cpp)  
-## LeetCode(个人刷题记录)   
+## LeetCode   
 - 两数之和(two-sum.cpp)  
 - 最长回文子串(longest-palindromic-substring.cpp)  
 - 直线上最多的点数(max-points-on-a-line.cpp)  

@@ -21,8 +21,8 @@ namespace app {
         const size_t DEFAULT_CAPACITY = 8;
         size_t mSize = 0;
         size_t mCapacity = 0;
-        T **pArray = nullptr;
         Comparator mComparator = nullptr;
+        T **pArray = nullptr;
 
         void ensuremCapacity();
 

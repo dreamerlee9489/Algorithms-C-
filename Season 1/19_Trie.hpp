@@ -18,16 +18,16 @@ namespace app {
         template<typename _V>
         struct Node {
             friend bool operator==(const Node &lhs, const Node &rhs) {
-                return *lhs.pKey == *rhs.pKey && *lhs.mValue == *rhs.mValue;
+                return *lhs.pKey == *rhs.pKey && *lhs.pValue == *rhs.pValue;
             }
 
             friend ostream &operator<<(ostream &os, const Node &node) {
-                return os << "<" << *node.pKey << "-" << *node.mValue << ">";
+                return os << "<" << *node.pKey << "-" << *node.pValue << ">";
             }
 
             bool mWord = false;
             shared_ptr<char> pKey = nullptr;
-            shared_ptr<_V> mValue = nullptr;
+            shared_ptr<_V> pValue = nullptr;
             shared_ptr<Node<_V>> pParent = nullptr;
             HashMap<char, Node<_V>> *mTree = nullptr;
 
@@ -67,7 +67,7 @@ namespace app {
 
         shared_ptr<V> get(string key) const {
             shared_ptr<Node<V>> node = get_node(key);
-            return node != nullptr && node->mWord ? node->mValue : nullptr;
+            return node != nullptr && node->mWord ? node->pValue : nullptr;
         }
 
         shared_ptr<V> add(string key, shared_ptr<V> value);
@@ -88,7 +88,7 @@ namespace app {
         shared_ptr<Node<V>> node = pRoot;
         for (size_t i = 0; i < key.size(); ++i) {
             char ch = key[i];
-            shared_ptr<Node<V>> child = node->mTree->getmValue(make_shared<char>(ch));
+            shared_ptr<Node<V>> child = node->mTree->getpValue(make_shared<char>(ch));
             if (child == nullptr) {
                 child = make_shared<Node<V>>(node);
                 child->pKey = make_shared<char>(ch);
@@ -97,12 +97,12 @@ namespace app {
             node = child;
         }
         if (node->mWord) {
-            shared_ptr<V> old = node->mValue;
-            node->mValue = value;
+            shared_ptr<V> old = node->pValue;
+            node->pValue = value;
             return old;
         }
         node->mWord = true;
-        node->mValue = value;
+        node->pValue = value;
         mSize++;
         return nullptr;
     }
@@ -113,10 +113,10 @@ namespace app {
         if (node == nullptr || !node->mWord)
             return nullptr;
         mSize--;
-        shared_ptr<V> old = node->mValue;
+        shared_ptr<V> old = node->pValue;
         if (node->mTree != nullptr && !node->mTree->is_empty()) {
             node->mWord = false;
-            node->mValue = nullptr;
+            node->pValue = nullptr;
             return old;
         }
         shared_ptr<Node<V>> parent = nullptr;
@@ -137,7 +137,7 @@ namespace app {
             if (node == nullptr || node->mTree == nullptr || node->mTree->is_empty())
                 return nullptr;
             char ch = key[i];
-            node = node->mTree->getmValue(make_shared<char>(ch));
+            node = node->mTree->getpValue(make_shared<char>(ch));
         }
         return node;
     }

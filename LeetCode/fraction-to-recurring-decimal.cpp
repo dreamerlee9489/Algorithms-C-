@@ -12,13 +12,12 @@
 #include <cmath>
 #include <algorithm>
 #include <unordered_map>
-#include <list>
 #include <iostream>
 
 using namespace std;
 
 class Solution {
-    pair<string, string> fractionToDecimald(string nume, string deno) {
+    pair<string, string> divide(string nume, string deno) {
         long numerator = stol(nume), denominator = stol(deno);
         if ((numerator * 1.0 / denominator * 1.0) == numerator / denominator)
             return pair<string, string>(to_string(numerator / denominator), "0");
@@ -34,15 +33,15 @@ public:
     string fractionToDecimal(int numerator, int denominator) {
         if (numerator == 0)
             return "0";
-        if (((long) numerator * 1.0 / denominator) == numerator / denominator)
-            return to_string(numerator / denominator);
+        if (((long) numerator * 1.0 / denominator) == (long) numerator / denominator)
+            return to_string((long) numerator / denominator);
         string nume = to_string(abs((long) numerator)), deno = to_string(abs((long) denominator));
         string curNume = nume.substr(0, min(nume.size(), deno.size()));
         string res = "";
         pair<string, string> p;
         int index = curNume.size() - 1;
         while (index < nume.size()) {
-            p = fractionToDecimald(curNume, deno);
+            p = divide(curNume, deno);
             res += p.first;
             ++index;
             if (index < nume.size())
@@ -64,7 +63,7 @@ public:
                     res = intFrac + decFrac;
                     break;
                 }
-                p = fractionToDecimald(curNume, deno);
+                p = divide(curNume, deno);
                 res += p.first;
                 curNume = p.second + "0";
             }

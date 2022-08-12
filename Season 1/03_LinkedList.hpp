@@ -80,7 +80,7 @@ namespace app {
 
     template<typename T>
     template<typename U>
-    inline LinkedList<T>::Node<U> &LinkedList<T>::Node<U>::operator=(const Node<U> &node) {
+    inline typename LinkedList<T>::template Node<U> &LinkedList<T>::Node<U>::operator=(const Node<U> &node) {
         mData = node.mData;
         pPrev = node.pPrev;
         pNext = node.pNext;
@@ -89,7 +89,7 @@ namespace app {
 
     template<typename T>
     template<typename U>
-    inline LinkedList<T>::Node<U> &LinkedList<T>::Node<U>::operator=(Node<U> &&node) noexcept {
+    inline typename LinkedList<T>::template Node<U> &LinkedList<T>::Node<U>::operator=(Node<U> &&node) noexcept {
         mData = nullptr;
         this = &node;
         return *this;
@@ -223,7 +223,7 @@ namespace app {
     }
 
     template<typename T>
-    inline LinkedList<T>::Node<T> *LinkedList<T>::get_node(int index) const {
+    inline typename LinkedList<T>::template Node<T> *LinkedList<T>::get_node(int index) const {
         if (index == -1)
             return mHead;
         if (index == this->mSize - 1)
