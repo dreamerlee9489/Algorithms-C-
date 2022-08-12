@@ -16,7 +16,7 @@ namespace app {
 
         template<typename _K, typename _V>
         struct LinkedNode : public NODE {
-            LinkedNode<_K, _V> *_prev = nullptr, *_next = nullptr;
+            LinkedNode<_K, _V> *pPrev = nullptr, *pNext = nullptr;
 
             LinkedNode &operator=(const LinkedNode<_K, _V> &node);
 
@@ -51,7 +51,7 @@ namespace app {
 
         ~LinkedHashMap() = default;
 
-        bool contains_value(shared_ptr<V> value) const override;
+        bool containsmValue(shared_ptr<V> value) const override;
 
         void traverse(typename HashMap<K, V>::TraverseFunc func = nullptr) const override;
 
@@ -66,13 +66,13 @@ namespace app {
     template<typename _K, typename _V>
     inline LinkedHashMap<K, V>::LinkedNode<_K, _V> &
     LinkedHashMap<K, V>::LinkedNode<_K, _V>::operator=(const LinkedNode<_K, _V> &node) {
-        this->_key = node._key;
-        this->_value = node._value;
-        this->_parent = node._parent;
-        this->_left = node._left;
-        this->_right = node._right;
-        _prev = node._prev;
-        _next = node._next;
+        this->pKey = node.pKey;
+        this->mValue = node.mValue;
+        this->pParent = node.pParent;
+        this->pLeft = node.pLeft;
+        this->pRight = node.pRight;
+        pPrev = node.pPrev;
+        pNext = node.pNext;
         return *this;
     }
 
@@ -80,8 +80,8 @@ namespace app {
     template<typename _K, typename _V>
     inline LinkedHashMap<K, V>::LinkedNode<_K, _V> &
     LinkedHashMap<K, V>::LinkedNode<_K, _V>::operator=(LinkedNode<_K, _V> &&node) noexcept {
-        this->_key = nullptr;
-        this->_value = nullptr;
+        this->pKey = nullptr;
+        this->mValue = nullptr;
         this = &node;
         return *this;
     }
@@ -93,8 +93,8 @@ namespace app {
         if (_head == nullptr)
             _head = _tail = node;
         else {
-            _tail->_next = node;
-            node->_prev = _tail;
+            _tail->pNext = node;
+            node->pPrev = _tail;
             _tail = node;
         }
         return node;
@@ -105,39 +105,39 @@ namespace app {
         LinkedNode<K, V> *node1 = (LinkedNode<K, V> *) willnode;
         LinkedNode<K, V> *node2 = (LinkedNode<K, V> *) rmvnode;
         if (node1 != node2) {
-            LinkedNode<K, V> *temp = node1->_prev;
-            node1->_prev = node2->_prev;
-            node2->_prev = temp;
-            if (node1->_prev == nullptr)
+            LinkedNode<K, V> *temp = node1->pPrev;
+            node1->pPrev = node2->pPrev;
+            node2->pPrev = temp;
+            if (node1->pPrev == nullptr)
                 _head = node1;
             else
-                node1->_prev->_next = node1;
-            if (node2->_prev == nullptr)
+                node1->pPrev->pNext = node1;
+            if (node2->pPrev == nullptr)
                 _head = node2;
             else
-                node2->_prev->_next = node2;
-            temp = node1->_next;
-            node1->_next = node2->_next;
-            node2->_next = temp;
-            if (node1->_next == nullptr)
+                node2->pPrev->pNext = node2;
+            temp = node1->pNext;
+            node1->pNext = node2->pNext;
+            node2->pNext = temp;
+            if (node1->pNext == nullptr)
                 _tail = node1;
             else
-                node1->_next->_prev = node1;
-            if (node2->_next == nullptr)
+                node1->pNext->pPrev = node1;
+            if (node2->pNext == nullptr)
                 _tail = node2;
             else
-                node2->_next->_prev = node2;
+                node2->pNext->pPrev = node2;
         }
-        LinkedNode<K, V> *prev = node2->_prev;
-        LinkedNode<K, V> *next = node2->_next;
+        LinkedNode<K, V> *prev = node2->pPrev;
+        LinkedNode<K, V> *next = node2->pNext;
         if (prev == nullptr)
             _head = next;
         else
-            prev->_next = next;
+            prev->pNext = next;
         if (next == nullptr)
             _tail = prev;
         else
-            next->_prev = prev;
+            next->pPrev = prev;
         delete node2;
     }
 
@@ -146,16 +146,16 @@ namespace app {
         clear();
         delete[] this->_table;
         this->_table = nullptr;
-        if (map._size > 0) {
-            this->_capacity = map._capacity;
-            this->_table = new NODE *[this->_capacity];
-            this->_comparator = map._comparator;
-            for (size_t i = 0; i < this->_capacity; ++i)
+        if (map.mSize > 0) {
+            this->mCapacity = map.mCapacity;
+            this->_table = new NODE *[this->mCapacity];
+            this->mComparator = map.mComparator;
+            for (size_t i = 0; i < this->mCapacity; ++i)
                 this->_table[i] = nullptr;
             LinkedNode<K, V> *node = map._head;
             while (node != nullptr) {
-                this->add(node->_key, node->_value);
-                node = node->_next;
+                this->add(node->pKey, node->mValue);
+                node = node->pNext;
             }
         }
         return *this;
@@ -164,26 +164,26 @@ namespace app {
     template<typename K, typename V>
     inline LinkedHashMap<K, V> &LinkedHashMap<K, V>::operator=(LinkedHashMap<K, V> &&map) noexcept {
         clear();
-        this->_size = map._size;
-        this->_capacity = map._capacity;
-        this->_comparator = map._comparator;
+        this->mSize = map.mSize;
+        this->mCapacity = map.mCapacity;
+        this->mComparator = map.mComparator;
         this->_table = map._table;
         _head = map._head;
         _tail = map._tail;
-        map._size = 0;
-        map._comparator = nullptr;
+        map.mSize = 0;
+        map.mComparator = nullptr;
         map._table = nullptr;
         map._head = map._tail = nullptr;
         return *this;
     }
 
     template<typename K, typename V>
-    inline bool LinkedHashMap<K, V>::contains_value(shared_ptr<V> value) const {
+    inline bool LinkedHashMap<K, V>::containsmValue(shared_ptr<V> value) const {
         LinkedNode<K, V> *node = _head;
         while (node != nullptr) {
-            if (*value == *node->_value)
+            if (*value == *node->mValue)
                 return true;
-            node = node->_next;
+            node = node->pNext;
         }
         return false;
     }
@@ -193,10 +193,10 @@ namespace app {
         LinkedNode<K, V> *node = _head;
         while (node != nullptr) {
             if (func != nullptr)
-                func(node->_key, node->_value);
+                func(node->pKey, node->mValue);
             else
                 cout << *node << "\n";
-            node = node->_next;
+            node = node->pNext;
         }
     }
 } // namespace app

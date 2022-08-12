@@ -7,43 +7,43 @@ using namespace std;
  * @date 2022-06-06
  */
 class NQueens {
-    int _n = 0;
-    int _ways = 0;
-    int *_queens = nullptr;
-    bool *_columns = nullptr;
-    bool *_leftTop = nullptr;
-    bool *_rightTop = nullptr;
+    int mN = 0;
+    int mWays = 0;
+    int *pQueens = nullptr;
+    bool *pCols = nullptr;
+    bool *pLeftTop = nullptr;
+    bool *pRightTop = nullptr;
 
     void place(int row) {
-        if (row == _n) {
-            _ways++;
+        if (row == mN) {
+            mWays++;
             show();
         } else {
-            for (size_t col = 0; col < _n; col++) {
-                if (_columns[col])
+            for (size_t col = 0; col < mN; col++) {
+                if (pCols[col])
                     continue;
-                int lt_index = row - col + _n - 1;
-                if (_leftTop[lt_index])
+                int lt_index = row - col + mN - 1;
+                if (pLeftTop[lt_index])
                     continue;
                 int rt_index = row + col;
-                if (_rightTop[rt_index])
+                if (pRightTop[rt_index])
                     continue;
-                _queens[row] = col;
-                _columns[col] = true;
-                _leftTop[lt_index] = true;
-                _rightTop[rt_index] = true;
+                pQueens[row] = col;
+                pCols[col] = true;
+                pLeftTop[lt_index] = true;
+                pRightTop[rt_index] = true;
                 place(row + 1);
-                _columns[col] = false;
-                _leftTop[lt_index] = false;
-                _rightTop[rt_index] = false;
+                pCols[col] = false;
+                pLeftTop[lt_index] = false;
+                pRightTop[rt_index] = false;
             }
         }
     }
 
     void show() {
-        for (size_t row = 0; row < _n; row++) {
-            for (size_t col = 0; col < _n; col++) {
-                if (_queens[row] == col)
+        for (size_t row = 0; row < mN; row++) {
+            for (size_t col = 0; col < mN; col++) {
+                if (pQueens[row] == col)
                     cout << "1 ";
                 else
                     cout << "0 ";
@@ -60,14 +60,14 @@ public:
 
     void place_queens(int n) {
         if (n >= 1) {
-            _n = n;
+            mN = n;
             int len = (n << 1) - 1;
-            _queens = new int[n]{};
-            _columns = new bool[n]{};
-            _leftTop = new bool[len]{};
-            _rightTop = new bool[len]{};
+            pQueens = new int[n]{};
+            pCols = new bool[n]{};
+            pLeftTop = new bool[len]{};
+            pRightTop = new bool[len]{};
             place(0);
-            cout << n << "皇后一共有" << _ways << "种摆法\n";
+            cout << n << "皇后一共有" << mWays << "种摆法\n";
         }
     }
 };

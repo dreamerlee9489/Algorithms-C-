@@ -16,7 +16,7 @@ namespace app {
 
         template<typename U>
         struct RBNode : public NODE {
-            bool _color = RED;
+            bool mColor = RED;
 
             RBNode<U> &operator=(const RBNode<U> &node);
 
@@ -32,8 +32,8 @@ namespace app {
             ~RBNode() = default;
 
             string to_string() const override {
-                string str = ((IString &) *this->_data).to_string();
-                return str += _color == RED ? " R E D" : " BLACK";
+                string str = ((IString &) *this->pData).to_string();
+                return str += mColor == RED ? " R E D" : " BLACK";
             }
         };
 
@@ -45,9 +45,9 @@ namespace app {
 
         void after_remove(NODE *node) override;
 
-        NODE *set_color(NODE *node, bool color);
+        NODE *setmColor(NODE *node, bool color);
 
-        bool color_of(NODE *node) { return node == nullptr ? BLACK : ((RBNode<T> *) node)->_color; }
+        bool color_of(NODE *node) { return node == nullptr ? BLACK : ((RBNode<T> *) node)->mColor; }
 
         bool is_black(NODE *node) { return color_of(node) == BLACK; }
 
@@ -70,18 +70,18 @@ namespace app {
     template<typename T>
     template<typename U>
     inline RBTree<T>::RBNode<U> &RBTree<T>::RBNode<U>::operator=(const RBNode<U> &node) {
-        this->_data = node._data;
-        this->_parent = node._parent;
-        this->_left = node._left;
-        this->_right = node._right;
-        _color = node._color;
+        this->pData = node.pData;
+        this->pParent = node.pParent;
+        this->pLeft = node.pLeft;
+        this->pRight = node.pRight;
+        mColor = node.mColor;
         return *this;
     }
 
     template<typename T>
     template<typename U>
     inline RBTree<T>::RBNode<U> &RBTree<T>::RBNode<U>::operator=(RBNode<U> &&node) noexcept {
-        this->_data = nullptr;
+        this->pData = nullptr;
         this = &node;
         return *this;
     }
@@ -89,18 +89,18 @@ namespace app {
     template<typename T>
     inline RBTree<T> &RBTree<T>::operator=(const RBTree<T> &tree) {
         this->clear();
-        if (tree._size > 0) {
-            this->_comparator = tree._comparator;
+        if (tree.mSize > 0) {
+            this->mComparator = tree.mComparator;
             queue<NODE *> q;
-            q.push(tree._root);
+            q.push(tree.pRoot);
             while (!q.empty()) {
                 NODE *elem = q.front();
-                this->add(elem->_data);
+                this->add(elem->pData);
                 q.pop();
-                if (elem->_left != nullptr)
-                    q.push(elem->_left);
-                if (elem->_right != nullptr)
-                    q.push(elem->_right);
+                if (elem->pLeft != nullptr)
+                    q.push(elem->pLeft);
+                if (elem->pRight != nullptr)
+                    q.push(elem->pRight);
             }
         }
         return *this;
@@ -109,53 +109,53 @@ namespace app {
     template<typename T>
     inline RBTree<T> &RBTree<T>::operator=(RBTree<T> &&tree) noexcept {
         this->clear();
-        this->_size = tree._size;
-        this->_root = tree._root;
-        this->_comparator = tree._comparator;
-        tree._size = 0;
-        tree._root = nullptr;
-        tree._comparator = nullptr;
+        this->mSize = tree.mSize;
+        this->pRoot = tree.pRoot;
+        this->mComparator = tree.mComparator;
+        tree.mSize = 0;
+        tree.pRoot = nullptr;
+        tree.mComparator = nullptr;
         return *this;
     }
 
     template<typename T>
-    inline typename RBTree<T>::NODE *RBTree<T>::set_color(NODE *node, bool color) {
+    inline typename RBTree<T>::NODE *RBTree<T>::setmColor(NODE *node, bool color) {
         if (node != nullptr)
-            ((RBNode<T> *) node)->_color = color;
+            ((RBNode<T> *) node)->mColor = color;
         return node;
     }
 
     template<typename T>
     inline void RBTree<T>::after_add(NODE *node) {
-        NODE *parent = node->_parent;
+        NODE *parent = node->pParent;
         if (parent == nullptr) {
-            set_color(node, BLACK);
+            setmColor(node, BLACK);
             return;
         }
         if (is_red(parent)) {
             NODE *uncle = parent->get_sibling();
-            NODE *grand = set_color(parent->_parent, RED);
+            NODE *grand = setmColor(parent->pParent, RED);
             if (is_red(uncle)) {
-                set_color(parent, BLACK);
-                set_color(uncle, BLACK);
+                setmColor(parent, BLACK);
+                setmColor(uncle, BLACK);
                 after_add(grand);
                 return;
             }
-            if (parent->is_left()) {
-                if (node->is_left())
-                    set_color(parent, BLACK);
+            if (parent->ispLeft()) {
+                if (node->ispLeft())
+                    setmColor(parent, BLACK);
                 else {
-                    set_color(node, BLACK);
-                    this->rotate_left(parent);
+                    setmColor(node, BLACK);
+                    this->rotatepLeft(parent);
                 }
-                this->rotate_right(grand);
+                this->rotatepRight(grand);
             } else {
-                if (node->is_left()) {
-                    set_color(node, BLACK);
-                    this->rotate_right(parent);
+                if (node->ispLeft()) {
+                    setmColor(node, BLACK);
+                    this->rotatepRight(parent);
                 } else
-                    set_color(parent, BLACK);
-                this->rotate_left(grand);
+                    setmColor(parent, BLACK);
+                this->rotatepLeft(grand);
             }
         }
     }
@@ -163,58 +163,58 @@ namespace app {
     template<typename T>
     inline void RBTree<T>::after_remove(NODE *node) {
         if (is_red(node)) {
-            set_color(node, BLACK);
+            setmColor(node, BLACK);
             return;
         }
-        NODE *parent = node->_parent;
+        NODE *parent = node->pParent;
         if (parent != nullptr) {
-            bool is_left = parent->_left == nullptr || node->is_left();
-            NODE *sibling = is_left ? parent->_right : parent->_left;
-            if (is_left) {
+            bool ispLeft = parent->pLeft == nullptr || node->ispLeft();
+            NODE *sibling = ispLeft ? parent->pRight : parent->pLeft;
+            if (ispLeft) {
                 if (is_red(sibling)) {
-                    set_color(sibling, BLACK);
-                    set_color(parent, RED);
-                    this->rotate_left(parent);
-                    sibling = parent->_right;
+                    setmColor(sibling, BLACK);
+                    setmColor(parent, RED);
+                    this->rotatepLeft(parent);
+                    sibling = parent->pRight;
                 }
-                if (is_black(sibling->_left) && is_black(sibling->_right)) {
+                if (is_black(sibling->pLeft) && is_black(sibling->pRight)) {
                     bool parent_black = is_black(parent);
-                    set_color(parent, BLACK);
-                    set_color(sibling, RED);
+                    setmColor(parent, BLACK);
+                    setmColor(sibling, RED);
                     if (parent_black)
                         after_remove(parent);
                 } else {
-                    if (is_black(sibling->_right)) {
-                        this->rotate_right(sibling);
-                        sibling = parent->_right;
+                    if (is_black(sibling->pRight)) {
+                        this->rotatepRight(sibling);
+                        sibling = parent->pRight;
                     }
-                    set_color(sibling, color_of(parent));
-                    set_color(sibling->_right, BLACK);
-                    set_color(parent, BLACK);
-                    this->rotate_left(parent);
+                    setmColor(sibling, color_of(parent));
+                    setmColor(sibling->pRight, BLACK);
+                    setmColor(parent, BLACK);
+                    this->rotatepLeft(parent);
                 }
             } else {
                 if (is_red(sibling)) {
-                    set_color(sibling, BLACK);
-                    set_color(parent, RED);
-                    this->rotate_right(parent);
-                    sibling = parent->_left;
+                    setmColor(sibling, BLACK);
+                    setmColor(parent, RED);
+                    this->rotatepRight(parent);
+                    sibling = parent->pLeft;
                 }
-                if (is_black(sibling->_left) && is_black(sibling->_right)) {
+                if (is_black(sibling->pLeft) && is_black(sibling->pRight)) {
                     bool parent_black = is_black(parent);
-                    set_color(parent, BLACK);
-                    set_color(sibling, RED);
+                    setmColor(parent, BLACK);
+                    setmColor(sibling, RED);
                     if (parent_black)
                         after_remove(parent);
                 } else {
-                    if (is_black(sibling->_left)) {
-                        this->rotate_left(sibling);
-                        sibling = parent->_left;
+                    if (is_black(sibling->pLeft)) {
+                        this->rotatepLeft(sibling);
+                        sibling = parent->pLeft;
                     }
-                    set_color(sibling, color_of(parent));
-                    set_color(sibling->_left, BLACK);
-                    set_color(parent, BLACK);
-                    this->rotate_right(parent);
+                    setmColor(sibling, color_of(parent));
+                    setmColor(sibling->pLeft, BLACK);
+                    setmColor(parent, BLACK);
+                    this->rotatepRight(parent);
                 }
             }
         }

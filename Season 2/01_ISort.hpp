@@ -15,27 +15,27 @@ namespace app {
      */
     template<typename T>
     class ISort {
-        size_t _cmpCount = 0, _swapCount = 0;
-        clock_t _time = 0;
+        size_t mCmpCount = 0, mSwapCount = 0;
+        clock_t mTime = 0;
 
     protected:
-        T *_array = nullptr;
-        size_t _size = 0;
+        T *pArray = nullptr;
+        size_t mSize = 0;
 
         virtual void sort_algorithm() = 0;
 
         int compare(size_t index0, size_t index1) {
-            _cmpCount++;
-            if (_array[index0] < _array[index1])
+            mCmpCount++;
+            if (pArray[index0] < pArray[index1])
                 return -1;
-            else if (_array[index0] > _array[index1])
+            else if (pArray[index0] > pArray[index1])
                 return 1;
             else
                 return 0;
         }
 
         int compare(T data0, T data1) {
-            _cmpCount++;
+            mCmpCount++;
             if (data0 < data1)
                 return -1;
             else if (data0 > data1)
@@ -46,10 +46,10 @@ namespace app {
 
         void swap(size_t index0, size_t index1) {
             if (index0 != index1) {
-                _swapCount++;
-                T temp = _array[index0];
-                _array[index0] = _array[index1];
-                _array[index1] = temp;
+                mSwapCount++;
+                T temp = pArray[index0];
+                pArray[index0] = pArray[index1];
+                pArray[index1] = temp;
             }
         }
 
@@ -60,11 +60,11 @@ namespace app {
 
         void sort(T *array, size_t size) {
             if (array != nullptr && size >= 2) {
-                _array = array;
-                _size = size;
+                pArray = array;
+                mSize = size;
                 clock_t start = clock();
                 sort_algorithm();
-                _time = clock() - start;
+                mTime = clock() - start;
             }
         }
     };

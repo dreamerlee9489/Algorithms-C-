@@ -12,28 +12,28 @@ namespace app {
      */
     template<typename K>
     class LinkedHashSet : public ISet<K> {
-        LinkedHashMap<K, bool> *map = nullptr;
+        LinkedHashMap<K, bool> *mMap = nullptr;
 
     public:
         LinkedHashSet(typename ISet<K>::Comparator comparator = nullptr) {
-            map = new LinkedHashMap<K, bool>(comparator);
+            mMap = new LinkedHashMap<K, bool>(comparator);
         }
 
-        ~LinkedHashSet() { delete map; }
+        ~LinkedHashSet() { delete mMap; }
 
-        size_t size() override { return map->size(); }
+        size_t size() override { return mMap->size(); }
 
-        bool is_empty() override { return map->is_empty(); }
+        bool is_empty() override { return mMap->is_empty(); }
 
-        bool contains(shared_ptr<K> data) override { return map->contains_key(data); }
+        bool contains(shared_ptr<K> data) override { return mMap->containspKey(data); }
 
-        void add(shared_ptr<K> data) override { map->add(data, make_shared<bool>(true)); }
+        void add(shared_ptr<K> data) override { mMap->add(data, make_shared<bool>(true)); }
 
-        void remove(shared_ptr<K> data) override { map->remove(data); }
+        void remove(shared_ptr<K> data) override { mMap->remove(data); }
 
-        void traverse(typename ISet<K>::TraverseFunc func = nullptr) { map->traverse(func); }
+        void traverse(typename ISet<K>::TraverseFunc func = nullptr) { mMap->traverse(func); }
 
-        void clear() override { map->clear(); }
+        void clear() override { mMap->clear(); }
     };
 } // namespace app
 

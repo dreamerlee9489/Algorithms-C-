@@ -70,7 +70,7 @@ void test2() {
                     make_shared<Person>(37)
             };
     BinaryHeap<Person> heap = BinaryHeap<Person>(
-            [](shared_ptr<Person> a, shared_ptr<Person> b) { return (*b)._age - (*a)._age; },
+            [](shared_ptr<Person> a, shared_ptr<Person> b) { return (*b).mAge - (*a).mAge; },
             array, 15);
     cout << "size=" << heap.size() << ", capacity=" << heap.capacity() << "\n";
     heap.traverse();

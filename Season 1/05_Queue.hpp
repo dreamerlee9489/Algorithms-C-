@@ -11,51 +11,51 @@ namespace app {
      */
     template<typename T>
     class Queue {
-        friend ostream &operator<<(ostream &os, const Queue<T> &queue) { return os << *queue._list; }
+        friend ostream &operator<<(ostream &os, const Queue<T> &queue) { return os << *queue.pList; }
 
-        LinkedList<T> *_list = nullptr;
+        LinkedList<T> *pList = nullptr;
 
     public:
         Queue<T> operator=(const Queue<T> &queue);
 
         Queue<T> operator=(Queue<T> &&queue) noexcept;
 
-        Queue() { _list = new LinkedList<T>(); }
+        Queue() { pList = new LinkedList<T>(); }
 
         Queue(const Queue<T> &queue) { *this = queue; }
 
         Queue(Queue<T> &&queue) noexcept { *this = move(queue); }
 
-        ~Queue() { delete _list; }
+        ~Queue() { delete pList; }
 
-        size_t size() const { return _list->size(); }
+        size_t size() const { return pList->size(); }
 
-        bool is_empty() const { return _list->is_empty(); }
+        bool is_empty() const { return pList->is_empty(); }
 
-        void push(shared_ptr<T> data) { _list->add(data); }
+        void push(shared_ptr<T> data) { pList->add(data); }
 
-        shared_ptr<T> pop() { return _list->remove(0); }
+        shared_ptr<T> pop() { return pList->remove(0); }
 
-        shared_ptr<T> const front() { return _list->get(0); }
+        shared_ptr<T> const front() { return pList->get(0); }
 
-        void clear() { _list->clear(); }
+        void clear() { pList->clear(); }
     };
 
     template<typename T>
     inline Queue<T> Queue<T>::operator=(const Queue<T> &queue) {
         clear();
-        delete _list;
-        _list = new LinkedList<T>();
-        *_list = *queue._list;
+        delete pList;
+        pList = new LinkedList<T>();
+        *pList = *queue.pList;
         return *this;
     }
 
     template<typename T>
     inline Queue<T> Queue<T>::operator=(Queue<T> &&queue) noexcept {
         clear();
-        delete _list;
-        _list = new LinkedList<T>();
-        *_list = move(*queue._list);
+        delete pList;
+        pList = new LinkedList<T>();
+        *pList = move(*queue.pList);
         return *this;
     }
 } // namespace app

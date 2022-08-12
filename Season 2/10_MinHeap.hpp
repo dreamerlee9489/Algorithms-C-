@@ -19,20 +19,20 @@ namespace app {
         using Comparator = int (*)(T *a, T *b);
         using TraverseFunc = bool (*)(T *data);
         const size_t DEFAULT_CAPACITY = 8;
-        size_t _size = 0;
-        size_t _capacity = 0;
-        T **_array = nullptr;
-        Comparator _comparator = nullptr;
+        size_t mSize = 0;
+        size_t mCapacity = 0;
+        T **pArray = nullptr;
+        Comparator mComparator = nullptr;
 
-        void ensure_capacity();
+        void ensuremCapacity();
 
         void sift_up(int index);
 
         void sift_down(int index);
 
         int compare(T *a, T *b) {
-            if (_comparator != nullptr)
-                return _comparator(a, b);
+            if (mComparator != nullptr)
+                return mComparator(a, b);
             else {
                 if (*a < *b)
                     return -1;
@@ -43,12 +43,12 @@ namespace app {
         }
 
         void heapify() {
-            for (int i = (_size >> 1) - 1; i >= 0; --i)
+            for (int i = (mSize >> 1) - 1; i >= 0; --i)
                 sift_down(i);
         }
 
         void heap_empty_check() const {
-            if (_size == 0)
+            if (mSize == 0)
                 throw out_of_range("heap is empty.");
         }
 
@@ -70,11 +70,11 @@ namespace app {
 
         ~MinHeap() { clear(); }
 
-        size_t size() const { return _size; }
+        size_t size() const { return mSize; }
 
-        size_t capacity() const { return _capacity; }
+        size_t capacity() const { return mCapacity; }
 
-        bool is_empty() const { return _size == 0; }
+        bool is_empty() const { return mSize == 0; }
 
         void add(T *data);
 
@@ -84,13 +84,13 @@ namespace app {
 
         T *get() const {
             heap_empty_check();
-            return _array[0];
+            return pArray[0];
         }
 
         void clear() {
-            for (size_t i = 0; i < _capacity; ++i)
-                delete _array[i];
-            _size = 0;
+            for (size_t i = 0; i < mCapacity; ++i)
+                delete pArray[i];
+            mSize = 0;
         }
 
         void traverse(TraverseFunc func = nullptr) const;
@@ -98,40 +98,40 @@ namespace app {
 
     template<typename T>
     inline MinHeap<T> &MinHeap<T>::operator=(const MinHeap<T> &heap) {
-        delete[] _array;
-        _array = new T *[heap._capacity];
-        _capacity = heap._capacity;
-        _size = heap._size;
-        _comparator = heap._comparator;
-        for (size_t i = 0; i < heap._size; ++i)
-            _array[i] = heap._array[i];
+        delete[] pArray;
+        pArray = new T *[heap.mCapacity];
+        mCapacity = heap.mCapacity;
+        mSize = heap.mSize;
+        mComparator = heap.mComparator;
+        for (size_t i = 0; i < heap.mSize; ++i)
+            pArray[i] = heap.pArray[i];
         return *this;
     }
 
     template<typename T>
     inline MinHeap<T> &MinHeap<T>::operator=(MinHeap<T> &&heap) noexcept {
-        delete[] _array;
-        _array = heap._array;
-        _capacity = heap._capacity;
-        _size = heap._size;
-        _comparator = heap._comparator;
-        heap._array = nullptr;
-        heap._size = 0;
+        delete[] pArray;
+        pArray = heap.pArray;
+        mCapacity = heap.mCapacity;
+        mSize = heap.mSize;
+        mComparator = heap.mComparator;
+        heap.pArray = nullptr;
+        heap.mSize = 0;
         return *this;
     }
 
     template<typename T>
     inline MinHeap<T>::MinHeap(T **array, size_t size, Comparator comparator) {
-        _comparator = comparator;
+        mComparator = comparator;
         if (array == nullptr || size == 0) {
-            _array = new T *[DEFAULT_CAPACITY];
-            _capacity = DEFAULT_CAPACITY;
+            pArray = new T *[DEFAULT_CAPACITY];
+            mCapacity = DEFAULT_CAPACITY;
         } else {
-            _size = size;
-            _capacity = max(size, DEFAULT_CAPACITY);
-            _array = new T *[_capacity];
+            mSize = size;
+            mCapacity = max(size, DEFAULT_CAPACITY);
+            pArray = new T *[mCapacity];
             for (size_t i = 0; i < size; ++i)
-                _array[i] = array[i];
+                pArray[i] = array[i];
             heapify();
         }
     }
@@ -139,18 +139,18 @@ namespace app {
     template<typename T>
     inline void MinHeap<T>::add(T *data) {
         not_null_check(data);
-        ensure_capacity();
-        _array[_size++] = data;
-        sift_up(_size - 1);
+        ensuremCapacity();
+        pArray[mSize++] = data;
+        sift_up(mSize - 1);
     }
 
     template<typename T>
     inline T *MinHeap<T>::remove() {
         heap_empty_check();
-        size_t last = --_size;
-        T *root = _array[0];
-        _array[0] = _array[last];
-        _array[last] = nullptr;
+        size_t last = --mSize;
+        T *root = pArray[0];
+        pArray[0] = pArray[last];
+        pArray[last] = nullptr;
         sift_down(0);
         return root;
     }
@@ -159,12 +159,12 @@ namespace app {
     inline T *MinHeap<T>::replace(T *data) {
         not_null_check(data);
         T *root = nullptr;
-        if (_size == 0) {
-            _array[0] = data;
-            _size++;
+        if (mSize == 0) {
+            pArray[0] = data;
+            mSize++;
         } else {
-            root = _array[0];
-            _array[0] = data;
+            root = pArray[0];
+            pArray[0] = data;
             sift_down(0);
         }
         return root;
@@ -172,20 +172,20 @@ namespace app {
 
     template<typename T>
     inline void MinHeap<T>::traverse(TraverseFunc func) const {
-        if (_size > 0) {
+        if (mSize > 0) {
             int index = 0, lv_cnt = 1;
             queue<T *> q;
-            q.push(_array[index]);
+            q.push(pArray[index]);
             while (!q.empty()) {
                 size_t left = (index << 1) + 1, right = left + 1;
                 lv_cnt--;
                 index++;
                 T *data = q.front();
                 q.pop();
-                if (left < _size)
-                    q.push(_array[left]);
-                if (right < _size)
-                    q.push(_array[right]);
+                if (left < mSize)
+                    q.push(pArray[left]);
+                if (right < mSize)
+                    q.push(pArray[right]);
                 if (func != nullptr)
                     func(data);
                 else
@@ -199,46 +199,46 @@ namespace app {
     }
 
     template<typename T>
-    inline void MinHeap<T>::ensure_capacity() {
-        if (_size >= _capacity) {
-            T **old = _array;
-            _capacity <<= 1;
-            _array = new T *[_capacity];
-            for (size_t i = 0; i < _size; ++i)
-                _array[i] = old[i];
+    inline void MinHeap<T>::ensuremCapacity() {
+        if (mSize >= mCapacity) {
+            T **old = pArray;
+            mCapacity <<= 1;
+            pArray = new T *[mCapacity];
+            for (size_t i = 0; i < mSize; ++i)
+                pArray[i] = old[i];
             delete[] old;
         }
     }
 
     template<typename T>
     inline void MinHeap<T>::sift_up(int index) {
-        T *child = _array[index];
+        T *child = pArray[index];
         while (index > 0) {
             int parent_index = (index - 1) >> 1;
-            T *parent = _array[parent_index];
+            T *parent = pArray[parent_index];
             if (compare(child, parent) > 0)
                 break;
-            _array[index] = parent;
+            pArray[index] = parent;
             index = parent_index;
         }
-        _array[index] = child;
+        pArray[index] = child;
     }
 
     template<typename T>
     inline void MinHeap<T>::sift_down(int index) {
-        T *parent = _array[index];
-        int half = _size >> 1;
+        T *parent = pArray[index];
+        int half = mSize >> 1;
         while (index < half) {
             int child_index = (index << 1) + 1, right_index = child_index + 1;
-            T *child = _array[child_index];
-            if (right_index < _size && compare(_array[child_index], _array[right_index]) >= 0)
-                child = _array[child_index = right_index];
+            T *child = pArray[child_index];
+            if (right_index < mSize && compare(pArray[child_index], pArray[right_index]) >= 0)
+                child = pArray[child_index = right_index];
             if (compare(parent, child) < 0)
                 break;
-            _array[index] = child;
+            pArray[index] = child;
             index = child_index;
         }
-        _array[index] = parent;
+        pArray[index] = parent;
     }
 } // namespace app
 

@@ -18,7 +18,7 @@ namespace app {
      */
     template<typename T>
     class IBinaryTree {
-        friend ostream &operator<<(ostream &os, const IBinaryTree<T> &tree) { return draw_tree(os, tree); }
+        friend ostream &operator<<(ostream &os, const IBinaryTree<T> &tree) { return drawmTree(os, tree); }
 
     protected:
         using TraverseFunc = bool (*)(shared_ptr <T> data);
@@ -28,45 +28,45 @@ namespace app {
         struct Node : public IString {
             friend ostream &operator<<(ostream &os, const Node<U> &node) { return os << node.to_string(); }
 
-            shared_ptr <U> _data = nullptr;
-            Node<U> *_parent = nullptr, *_left = nullptr, *_right = nullptr;
+            shared_ptr <U> pData = nullptr;
+            Node<U> *pParent = nullptr, *pLeft = nullptr, *pRight = nullptr;
 
             Node<U> &operator=(const Node<U> &node);
 
             Node<U> &operator=(Node<U> &&node) noexcept;
 
             Node(shared_ptr <U> data, Node<U> *parent = nullptr, Node<U> *left = nullptr, Node<U> *right = nullptr)
-                    : _data(data), _parent(parent), _left(left), _right(right) {}
+                    : pData(data), pParent(parent), pLeft(left), pRight(right) {}
 
             Node(const Node<U> &node) { *this = node; }
 
             Node(Node<U> &&node) noexcept { *this = move(node); }
 
-            virtual ~Node() { _data = nullptr; }
+            virtual ~Node() { pData = nullptr; }
 
-            bool is_leaf() const { return _left == nullptr && _right == nullptr; }
+            bool is_leaf() const { return pLeft == nullptr && pRight == nullptr; }
 
-            bool is_binary() const { return _left != nullptr && _right != nullptr; }
+            bool is_binary() const { return pLeft != nullptr && pRight != nullptr; }
 
-            bool is_left() const { return _parent != nullptr && this == _parent->_left; }
+            bool ispLeft() const { return pParent != nullptr && this == pParent->pLeft; }
 
-            bool is_right() const { return _parent != nullptr && this == _parent->_right; }
+            bool ispRight() const { return pParent != nullptr && this == pParent->pRight; }
 
             Node<U> *get_sibling() const;
 
-            string to_string() const override { return ((IString &) *_data).to_string(); }
+            string to_string() const override { return ((IString &) *pData).to_string(); }
         };
 
-        size_t _size = 0;
-        Node<T> *_root = nullptr;
-        Comparator _comparator = nullptr;
+        size_t mSize = 0;
+        Comparator mComparator = nullptr;
+        Node<T> *pRoot = nullptr;
 
         void not_null_check(shared_ptr <T> data) const {
             if (data == nullptr)
                 throw invalid_argument("data must be not null.");
         }
 
-        static ostream &draw_tree(ostream &os, const IBinaryTree<T> &tree);
+        static ostream &drawmTree(ostream &os, const IBinaryTree<T> &tree);
 
         virtual Node<T> *get_node(shared_ptr <T> data) const = 0;
 
@@ -94,7 +94,7 @@ namespace app {
 
         size_t height_recu(Node<T> *node) const {
             if (node != nullptr)
-                return 1 + max(height_recu(node->_left), height_recu(node->_right));
+                return 1 + max(height_recu(node->pLeft), height_recu(node->pRight));
             return 0;
         }
 
@@ -110,19 +110,19 @@ namespace app {
             Level
         };
 
-        IBinaryTree(Comparator comparator = nullptr) { _comparator = comparator; }
+        IBinaryTree(Comparator comparator = nullptr) { mComparator = comparator; }
 
-        virtual ~IBinaryTree() { clear_recu(_root); }
+        virtual ~IBinaryTree() { clear_recu(pRoot); }
 
         virtual void add(shared_ptr <T> data) = 0;
 
         virtual void remove(shared_ptr <T> data) = 0;
 
-        size_t size() const { return _size; }
+        size_t size() const { return mSize; }
 
-        size_t height() const { return height_iter(_root); }
+        size_t height() const { return height_iter(pRoot); }
 
-        bool is_empty() const { return _size == 0; }
+        bool is_empty() const { return mSize == 0; }
 
         bool is_complete() const;
 
@@ -131,26 +131,26 @@ namespace app {
         void traverse(TraverseOrder order = TraverseOrder::In, TraverseFunc func = nullptr) const;
 
         void clear() {
-            clear_recu(_root);
-            _root = nullptr;
-            _size = 0;
+            clear_recu(pRoot);
+            pRoot = nullptr;
+            mSize = 0;
         }
     };
 
     template<typename T>
     template<typename U>
     inline IBinaryTree<T>::Node<U> &IBinaryTree<T>::Node<U>::operator=(const IBinaryTree<T>::Node<U> &node) {
-        _data = node._data;
-        _parent = node._parent;
-        _left = node._left;
-        _right = node._right;
+        pData = node.pData;
+        pParent = node.pParent;
+        pLeft = node.pLeft;
+        pRight = node.pRight;
         return *this;
     }
 
     template<typename T>
     template<typename U>
     inline IBinaryTree<T>::Node<U> &IBinaryTree<T>::Node<U>::operator=(Node<U> &&node) noexcept {
-        _data = nullptr;
+        pData = nullptr;
         this = &node;
         return *this;
     }
@@ -158,29 +158,29 @@ namespace app {
     template<typename T>
     template<typename U>
     inline IBinaryTree<T>::Node<U> *IBinaryTree<T>::Node<U>::get_sibling() const {
-        if (is_left())
-            return _parent->_right;
-        else if (is_right())
-            return _parent->_left;
+        if (ispLeft())
+            return pParent->pRight;
+        else if (ispRight())
+            return pParent->pLeft;
         return nullptr;
     }
 
     template<typename T>
-    inline ostream &IBinaryTree<T>::draw_tree(ostream &os, const IBinaryTree<T> &tree) {
-        if (tree._root != nullptr) {
+    inline ostream &IBinaryTree<T>::drawmTree(ostream &os, const IBinaryTree<T> &tree) {
+        if (tree.pRoot != nullptr) {
             size_t height = 0;
             size_t level_count = 1;
             queue<Node < T> *> q;
-            q.push(tree._root);
+            q.push(tree.pRoot);
             while (!q.empty()) {
                 Node <T> *elem = q.front();
                 if (elem != nullptr)
-                    os << *tree.get_node(elem->_data) << "\t";
+                    os << *tree.get_node(elem->pData) << "\t";
                 q.pop();
                 if (elem != nullptr)
-                    q.push(elem->_left);
+                    q.push(elem->pLeft);
                 if (elem != nullptr)
-                    q.push(elem->_right);
+                    q.push(elem->pRight);
                 level_count--;
                 if (level_count == 0) {
                     level_count = q.size();
@@ -195,15 +195,15 @@ namespace app {
     template<typename T>
     inline IBinaryTree<T>::Node<T> *IBinaryTree<T>::get_predecessor(Node<T> *node) const {
         if (node != nullptr) {
-            Node <T> *p = node->_left;
+            Node <T> *p = node->pLeft;
             if (p != nullptr) {
-                while (p->_right != nullptr)
-                    p = p->_right;
+                while (p->pRight != nullptr)
+                    p = p->pRight;
                 return p;
             }
-            while (node->_parent != nullptr && node == node->_parent->_left)
-                node = node->_parent;
-            return node->_parent;
+            while (node->pParent != nullptr && node == node->pParent->pLeft)
+                node = node->pParent;
+            return node->pParent;
         }
         return nullptr;
     }
@@ -211,24 +211,24 @@ namespace app {
     template<typename T>
     inline IBinaryTree<T>::Node<T> *IBinaryTree<T>::get_successor(Node<T> *node) const {
         if (node != nullptr) {
-            Node <T> *p = node->_right;
+            Node <T> *p = node->pRight;
             if (p != nullptr) {
-                while (p->_left != nullptr)
-                    p = p->_left;
+                while (p->pLeft != nullptr)
+                    p = p->pLeft;
                 return p;
             }
-            while (node->_parent != nullptr && node == node->_parent->_right)
-                node = node->_parent;
-            return node->_parent;
+            while (node->pParent != nullptr && node == node->pParent->pRight)
+                node = node->pParent;
+            return node->pParent;
         }
         return nullptr;
     }
 
     template<typename T>
     inline bool IBinaryTree<T>::is_complete() const {
-        if (_root != nullptr) {
+        if (pRoot != nullptr) {
             queue<Node < T> *> q;
-            q.push(_root);
+            q.push(pRoot);
             bool leaf = false;
             while (!q.empty()) {
                 Node <T> *elem = q.front();
@@ -236,13 +236,13 @@ namespace app {
                 if (leaf && !elem->is_leaf())
                     return false;
 
-                if (elem->_left != nullptr)
-                    q.push(elem->_left);
-                else if (elem->_right != nullptr)
+                if (elem->pLeft != nullptr)
+                    q.push(elem->pLeft);
+                else if (elem->pRight != nullptr)
                     return false;
 
-                if (elem->_right != nullptr)
-                    q.push(elem->_right);
+                if (elem->pRight != nullptr)
+                    q.push(elem->pRight);
                 else
                     leaf = true; //最后一个非叶结点不入队
             }
@@ -254,8 +254,8 @@ namespace app {
     template<typename T>
     inline void IBinaryTree<T>::clear_recu(Node<T> *node) {
         if (node != nullptr) {
-            clear_recu(node->_left);
-            clear_recu(node->_right);
+            clear_recu(node->pLeft);
+            clear_recu(node->pRight);
             delete node;
         }
     }
@@ -270,10 +270,10 @@ namespace app {
                 Node <T> *elem = q.front();
                 q.pop();
                 level_count--;
-                if (elem->_left != nullptr)
-                    q.push(elem->_left);
-                if (elem->_right != nullptr)
-                    q.push(elem->_right);
+                if (elem->pLeft != nullptr)
+                    q.push(elem->pLeft);
+                if (elem->pRight != nullptr)
+                    q.push(elem->pRight);
                 if (level_count == 0) {
                     level_count = q.size();
                     height++;
@@ -288,16 +288,16 @@ namespace app {
     inline void IBinaryTree<T>::traverse(TraverseOrder order, TraverseFunc func) const {
         switch (order) {
             case TraverseOrder::In:
-                inorder_recu(_root, func);
+                inorder_recu(pRoot, func);
                 break;
             case TraverseOrder::Pre:
-                preorder_recu(_root, func);
+                preorder_recu(pRoot, func);
                 break;
             case TraverseOrder::Post:
-                postorder_recu(_root, func);
+                postorder_recu(pRoot, func);
                 break;
             case TraverseOrder::Level:
-                levelorder(_root, func);
+                levelorder(pRoot, func);
                 break;
         }
     }
@@ -305,12 +305,12 @@ namespace app {
     template<typename T>
     inline void IBinaryTree<T>::inorder_recu(Node<T> *node, TraverseFunc func) const {
         if (node != nullptr) {
-            inorder_recu(node->_left, func);
+            inorder_recu(node->pLeft, func);
             if (func != nullptr)
-                func(node->_data);
+                func(node->pData);
             else
-                cout << *node->_data << "\n";
-            inorder_recu(node->_right, func);
+                cout << *node->pData << "\n";
+            inorder_recu(node->pRight, func);
         }
     }
 
@@ -318,43 +318,43 @@ namespace app {
     inline void IBinaryTree<T>::preorder_recu(Node<T> *node, TraverseFunc func) const {
         if (node != nullptr) {
             if (func != nullptr)
-                func(node->_data);
+                func(node->pData);
             else
-                cout << *node->_data << "\n";
-            preorder_recu(node->_left, func);
-            preorder_recu(node->_right, func);
+                cout << *node->pData << "\n";
+            preorder_recu(node->pLeft, func);
+            preorder_recu(node->pRight, func);
         }
     }
 
     template<typename T>
     inline void IBinaryTree<T>::postorder_recu(Node<T> *node, TraverseFunc func) const {
         if (node != nullptr) {
-            postorder_recu(node->_left, func);
-            postorder_recu(node->_right, func);
+            postorder_recu(node->pLeft, func);
+            postorder_recu(node->pRight, func);
             if (func != nullptr)
-                func(node->_data);
+                func(node->pData);
             else
-                cout << *node->_data << "\n";
+                cout << *node->pData << "\n";
         }
     }
 
     template<typename T>
     inline void IBinaryTree<T>::inorder_iter(TraverseFunc func) const {
-        if (_root != nullptr) {
-            Node <T> *node = _root;
+        if (pRoot != nullptr) {
+            Node <T> *node = pRoot;
             stack<Node < T> *> s;
             while (true) {
                 if (node != nullptr) {
                     s.push(node);
-                    node = node->_left;
+                    node = node->pLeft;
                 } else if (!s.empty()) {
                     node = s.top();
                     s.pop();
                     if (func != nullptr)
-                        func(node->_data);
+                        func(node->pData);
                     else
-                        cout << *node->_data << "\n";
-                    node = node->_right;
+                        cout << *node->pData << "\n";
+                    node = node->pRight;
                 } else
                     return;
             }
@@ -363,43 +363,43 @@ namespace app {
 
     template<typename T>
     inline void IBinaryTree<T>::preorder_iter(TraverseFunc func) const {
-        if (_root != nullptr) {
+        if (pRoot != nullptr) {
             stack<Node < T> *> s;
-            s.push(_root);
+            s.push(pRoot);
             while (!s.empty()) {
                 Node <T> *node = s.top();
                 s.pop();
                 if (func != nullptr)
-                    func(node->_data);
+                    func(node->pData);
                 else
-                    cout << *node->_data << "\n";
-                if (node->_right != nullptr)
-                    s.push(node->_right);
-                if (node->_left != nullptr)
-                    s.push(node->_left);
+                    cout << *node->pData << "\n";
+                if (node->pRight != nullptr)
+                    s.push(node->pRight);
+                if (node->pLeft != nullptr)
+                    s.push(node->pLeft);
             }
         }
     }
 
     template<typename T>
     inline void IBinaryTree<T>::postorder_iter(TraverseFunc func) const {
-        if (_root != nullptr) {
+        if (pRoot != nullptr) {
             Node <T> *prev = nullptr;
             stack<Node < T> *> s;
-            s.push(_root);
+            s.push(pRoot);
             while (!s.empty()) {
                 Node <T> *top = s.top();
-                if (top->is_leaf() || (prev != nullptr && prev->_parent == top)) {
+                if (top->is_leaf() || (prev != nullptr && prev->pParent == top)) {
                     prev = s.pop();
                     if (func != nullptr)
-                        func(prev->_data);
+                        func(prev->pData);
                     else
-                        cout << *prev->_data << "\n";
+                        cout << *prev->pData << "\n";
                 } else {
-                    if (top->_right != nullptr)
-                        s.push(top->_right);
-                    if (top->_left != nullptr)
-                        s.push(top->_left);
+                    if (top->pRight != nullptr)
+                        s.push(top->pRight);
+                    if (top->pLeft != nullptr)
+                        s.push(top->pLeft);
                 }
             }
         }
@@ -407,29 +407,29 @@ namespace app {
 
     template<typename T>
     inline void IBinaryTree<T>::inorder_morris(TraverseFunc func) const {
-        Node <T> *node = _root;
+        Node <T> *node = pRoot;
         while (node != nullptr) {
-            if (node->_left != nullptr) {
-                Node <T> *pred = node->_left;
-                while (pred->_right != nullptr && pred->_right != node)
-                    pred = pred->_right;
-                if (pred->_right == nullptr) {
-                    pred->_right = node;
-                    node = node->_left;
+            if (node->pLeft != nullptr) {
+                Node <T> *pred = node->pLeft;
+                while (pred->pRight != nullptr && pred->pRight != node)
+                    pred = pred->pRight;
+                if (pred->pRight == nullptr) {
+                    pred->pRight = node;
+                    node = node->pLeft;
                 } else {
                     if (func != nullptr)
-                        func(node->_data);
+                        func(node->pData);
                     else
-                        cout << *node->_data << "\n";
-                    pred->_right = nullptr;
-                    node = node->_right;
+                        cout << *node->pData << "\n";
+                    pred->pRight = nullptr;
+                    node = node->pRight;
                 }
             } else {
                 if (func != nullptr)
-                    func(node->_data);
+                    func(node->pData);
                 else
-                    cout << *node->_data << "\n";
-                node = node->_right;
+                    cout << *node->pData << "\n";
+                node = node->pRight;
             }
         }
     }
@@ -442,14 +442,14 @@ namespace app {
             while (!q.empty()) {
                 Node <T> *elem = q.front();
                 q.pop();
-                if (elem->_left != nullptr)
-                    q.push(elem->_left);
-                if (elem->_right != nullptr)
-                    q.push(elem->_right);
+                if (elem->pLeft != nullptr)
+                    q.push(elem->pLeft);
+                if (elem->pRight != nullptr)
+                    q.push(elem->pRight);
                 if (func != nullptr)
-                    func(elem->_data);
+                    func(elem->pData);
                 else
-                    cout << *elem->_data << "\n";
+                    cout << *elem->pData << "\n";
             }
         }
     }

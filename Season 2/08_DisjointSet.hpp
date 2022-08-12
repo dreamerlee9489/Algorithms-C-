@@ -16,23 +16,23 @@ namespace app {
     class DisjointSet {
         template<typename _K>
         struct Node {
-            _K *_key = nullptr;
-            Node<_K> *_parent = this;
-            size_t _rank = 1;
+            _K *pKey = nullptr;
+            Node<_K> *pParent = this;
+            size_t mRank = 1;
 
-            Node(_K *key) { _key = key; }
+            Node(_K *key) { pKey = key; }
 
-            ~Node() { delete _key; }
+            ~Node() { delete pKey; }
         };
 
-        unordered_map<K, Node<K> *> *_map = nullptr;
+        unordered_map<K, Node<K> *> *mMap = nullptr;
 
         Node<K> *find_node(K *key) {
-            typename unordered_map<K, Node<K> *>::iterator iter = _map->find(*key);
-            if (iter != _map->end()) {
-                while (*iter->second->_key != *iter->second->_parent->_key) {
-                    iter->second->_parent = iter->second->_parent->_parent;
-                    iter->second = iter->second->_parent;
+            typename unordered_map<K, Node<K> *>::iterator iter = mMap->find(*key);
+            if (iter != mMap->end()) {
+                while (*iter->second->pKey != *iter->second->pParent->pKey) {
+                    iter->second->pParent = iter->second->pParent->pParent;
+                    iter->second = iter->second->pParent;
                 }
                 return iter->second;
             }
@@ -40,29 +40,29 @@ namespace app {
         }
 
     public:
-        DisjointSet() { _map = new unordered_map<K, Node<K> *>(); }
+        DisjointSet() { mMap = new unordered_map<K, Node<K> *>(); }
 
-        ~DisjointSet() { delete _map; }
+        ~DisjointSet() { delete mMap; }
 
-        void add(K *key) { _map->emplace(*key, new Node<K>(key)); }
+        void add(K *key) { mMap->emplace(*key, new Node<K>(key)); }
 
         K *find_root(K *key) {
             Node<K> *node = find_node(key);
-            return node != nullptr ? node->_key : nullptr;
+            return node != nullptr ? node->pKey : nullptr;
         }
 
         void union_set(K *key1, K *key2) {
             Node<K> *p1 = find_node(key1);
             Node<K> *p2 = find_node(key2);
             if (p1 != nullptr && p2 != nullptr) {
-                if (*p1->_key != *p2->_key) {
-                    if (p1->_rank < p2->_rank)
-                        p1->_parent = p2;
-                    else if (p1->_rank > p2->_rank)
-                        p2->_parent = p1;
+                if (*p1->pKey != *p2->pKey) {
+                    if (p1->mRank < p2->mRank)
+                        p1->pParent = p2;
+                    else if (p1->mRank > p2->mRank)
+                        p2->pParent = p1;
                     else {
-                        p1->_parent = p2;
-                        p2->_rank += 1;
+                        p1->pParent = p2;
+                        p2->mRank += 1;
                     }
                 }
             }

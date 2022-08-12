@@ -20,14 +20,14 @@ namespace app {
         template<typename _K, typename _V>
         struct Node {
             friend ostream &operator<<(ostream &os, const Node &node) {
-                return os << "<" << *node._key << "-" << *node._value << ">";
+                return os << "<" << *node.pKey << "-" << *node.mValue << ">";
             }
 
             size_t _hash = 0;
-            bool _color = RED;
-            shared_ptr<_K> _key = nullptr;
-            shared_ptr<_V> _value = nullptr;
-            Node<_K, _V> *_parent = nullptr, *_left = nullptr, *_right = nullptr;
+            bool mColor = RED;
+            shared_ptr<_K> pKey = nullptr;
+            shared_ptr<_V> mValue = nullptr;
+            Node<_K, _V> *pParent = nullptr, *pLeft = nullptr, *pRight = nullptr;
 
             Node<_K, _V> &operator=(const Node<_K, _V> &node);
 
@@ -35,8 +35,8 @@ namespace app {
 
             Node(shared_ptr<_K> key, shared_ptr<_V> value, Node<_K, _V> *parent = nullptr, Node<_K, _V> *left = nullptr,
                  Node<_K, _V> *right = nullptr)
-                    : _key(key), _value(value), _parent(parent), _left(left), _right(right) {
-                _hash = _key == nullptr ? 0 : hash<_K>()(*key);
+                    : pKey(key), mValue(value), pParent(parent), pLeft(left), pRight(right) {
+                _hash = pKey == nullptr ? 0 : hash<_K>()(*key);
             }
 
             Node(const Node<_K, _V> &node) { *this = node; }
@@ -44,24 +44,24 @@ namespace app {
             Node(Node<_K, _V> &&node) noexcept { *this = move(node); }
 
             virtual ~Node() {
-                _key = nullptr;
-                _value = nullptr;
+                pKey = nullptr;
+                mValue = nullptr;
             }
 
-            bool is_leaf() const { return _left == nullptr && _right == nullptr; }
+            bool is_leaf() const { return pLeft == nullptr && pRight == nullptr; }
 
-            bool is_binary() const { return _left != nullptr && _right != nullptr; }
+            bool is_binary() const { return pLeft != nullptr && pRight != nullptr; }
 
-            bool is_left() const { return _parent != nullptr && this == _parent->_left; }
+            bool ispLeft() const { return pParent != nullptr && this == pParent->pLeft; }
 
-            bool is_right() const { return _parent != nullptr && this == _parent->_right; }
+            bool ispRight() const { return pParent != nullptr && this == pParent->pRight; }
 
             Node<_K, _V> *get_sibling() const;
         };
 
-        size_t _size = 0, _capacity = DEFAULT_CAPACITY;
+        size_t mSize = 0, mCapacity = DEFAULT_CAPACITY;
         Node<K, V> **_table = nullptr;
-        typename IMap<K, V>::Comparator _comparator = nullptr;
+        typename IMap<K, V>::Comparator mComparator = nullptr;
 
         Node<K, V> *get_node(shared_ptr<K> key) const {
             Node<K, V> *root = _table[get_index(key)];
@@ -72,16 +72,16 @@ namespace app {
 
         Node<K, V> *get_successor(Node<K, V> *node) const;
 
-        int get_index(Node<K, V> *node) const { return node->_hash & (_capacity - 1); }
+        int get_index(Node<K, V> *node) const { return node->_hash & (mCapacity - 1); }
 
-        int get_index(shared_ptr<K> key) const { return get_hash(key) & (_capacity - 1); } // 哈希值位与容量映射到哈希数组
+        int get_index(shared_ptr<K> key) const { return get_hash(key) & (mCapacity - 1); } // 哈希值位与容量映射到哈希数组
         size_t get_hash(shared_ptr<K> key) const {
             if (key != nullptr)
                 return hash<K>()(*key);
             return 0;
         }
 
-        void ensure_capacity();
+        void ensuremCapacity();
 
         void move_node(Node<K, V> *newnode);
 
@@ -89,15 +89,15 @@ namespace app {
 
         void after_remove(Node<K, V> *node);
 
-        void rotate_left(Node<K, V> *grand);
+        void rotatepLeft(Node<K, V> *grand);
 
-        void rotate_right(Node<K, V> *grand);
+        void rotatepRight(Node<K, V> *grand);
 
         void after_rotate(Node<K, V> *grand, Node<K, V> *parent, Node<K, V> *child);
 
-        Node<K, V> *set_color(Node<K, V> *node, bool color);
+        Node<K, V> *setmColor(Node<K, V> *node, bool color);
 
-        bool color_of(Node<K, V> *node) const { return node == nullptr ? BLACK : node->_color; }
+        bool color_of(Node<K, V> *node) const { return node == nullptr ? BLACK : node->mColor; }
 
         bool is_black(Node<K, V> *node) const { return color_of(node) == BLACK; }
 
@@ -117,9 +117,9 @@ namespace app {
         HashMap<K, V> &operator=(HashMap<K, V> &&map) noexcept;
 
         HashMap(typename IMap<K, V>::Comparator comparator = nullptr) {
-            _comparator = comparator;
+            mComparator = comparator;
             _table = new Node<K, V> *[DEFAULT_CAPACITY];
-            for (size_t i = 0; i < _capacity; ++i)
+            for (size_t i = 0; i < mCapacity; ++i)
                 _table[i] = nullptr;
         }
 
@@ -132,19 +132,19 @@ namespace app {
 
         HashMap(HashMap<K, V> &&map) noexcept { *this = move(map); }
 
-        size_t size() const override { return _size; }
+        size_t size() const override { return mSize; }
 
-        size_t capacity() const { return _capacity; }
+        size_t capacity() const { return mCapacity; }
 
-        bool is_empty() const override { return _size == 0; }
+        bool is_empty() const override { return mSize == 0; }
 
-        bool contains_key(shared_ptr<K> key) const override { return get_node(key) != nullptr; }
+        bool containspKey(shared_ptr<K> key) const override { return get_node(key) != nullptr; }
 
-        bool contains_value(shared_ptr<V> value) const override;
+        bool containsmValue(shared_ptr<V> value) const override;
 
-        shared_ptr<V> get_value(shared_ptr<K> key) const override {
+        shared_ptr<V> getmValue(shared_ptr<K> key) const override {
             Node<K, V> *node = get_node(key);
-            return node != nullptr ? node->_value : nullptr;
+            return node != nullptr ? node->mValue : nullptr;
         }
 
         shared_ptr<V> add(shared_ptr<K> key, shared_ptr<V> value) override;
@@ -154,9 +154,9 @@ namespace app {
         virtual void traverse(typename IMap<K, V>::TraverseFunc func = nullptr) const;
 
         void clear() override {
-            if (_size > 0) {
-                _size = 0;
-                for (size_t i = 0; i < _capacity; ++i)
+            if (mSize > 0) {
+                mSize = 0;
+                for (size_t i = 0; i < mCapacity; ++i)
                     clear_recu(_table[i]);
             }
         }
@@ -165,12 +165,12 @@ namespace app {
     template<typename K, typename V>
     template<typename _K, typename _V>
     inline HashMap<K, V>::Node<_K, _V> &HashMap<K, V>::Node<_K, _V>::operator=(const Node<_K, _V> &node) {
-        _key = node._key;
-        _value = node._value;
-        _parent = node._parent;
-        _left = node._left;
-        _right = node._right;
-        _color = node._color;
+        pKey = node.pKey;
+        mValue = node.mValue;
+        pParent = node.pParent;
+        pLeft = node.pLeft;
+        pRight = node.pRight;
+        mColor = node.mColor;
         _hash = node._hash;
         return *this;
     }
@@ -178,8 +178,8 @@ namespace app {
     template<typename K, typename V>
     template<typename _K, typename _V>
     inline HashMap<K, V>::Node<_K, _V> &HashMap<K, V>::Node<_K, _V>::operator=(Node<_K, _V> &&node) noexcept {
-        _key = nullptr;
-        _value = nullptr;
+        pKey = nullptr;
+        mValue = nullptr;
         this = &node;
         return *this;
     }
@@ -187,10 +187,10 @@ namespace app {
     template<typename K, typename V>
     template<typename _K, typename _V>
     inline HashMap<K, V>::Node<_K, _V> *HashMap<K, V>::Node<_K, _V>::get_sibling() const {
-        if (is_left())
-            return _parent->_right;
-        else if (is_right())
-            return _parent->_left;
+        if (ispLeft())
+            return pParent->pRight;
+        else if (ispRight())
+            return pParent->pLeft;
         return nullptr;
     }
 
@@ -198,24 +198,24 @@ namespace app {
     inline HashMap<K, V> &HashMap<K, V>::operator=(const HashMap<K, V> &map) {
         clear();
         delete[] _table;
-        _capacity = DEFAULT_CAPACITY;
-        _table = new Node<K, V> *[_capacity];
-        _comparator = map._comparator;
-        for (size_t i = 0; i < _capacity; ++i)
+        mCapacity = DEFAULT_CAPACITY;
+        _table = new Node<K, V> *[mCapacity];
+        mComparator = map.mComparator;
+        for (size_t i = 0; i < mCapacity; ++i)
             _table[i] = nullptr;
-        if (map._size > 0) {
+        if (map.mSize > 0) {
             queue<Node<K, V> *> q;
-            for (size_t i = 0; i < map._capacity; ++i) {
+            for (size_t i = 0; i < map.mCapacity; ++i) {
                 if (map._table[i] != nullptr) {
                     q.push(map._table[i]);
                     while (!q.empty()) {
                         Node<K, V> *node = q.front();
-                        add(node->_key, node->_value);
+                        add(node->pKey, node->mValue);
                         q.pop();
-                        if (node->_left != nullptr)
-                            q.push(node->_left);
-                        if (node->_right != nullptr)
-                            q.push(node->_right);
+                        if (node->pLeft != nullptr)
+                            q.push(node->pLeft);
+                        if (node->pRight != nullptr)
+                            q.push(node->pRight);
                     }
                 }
             }
@@ -226,32 +226,32 @@ namespace app {
     template<typename K, typename V>
     inline HashMap<K, V> &HashMap<K, V>::operator=(HashMap<K, V> &&map) noexcept {
         clear();
-        _size = map._size;
-        _capacity = map._capacity;
-        _comparator = map._comparator;
+        mSize = map.mSize;
+        mCapacity = map.mCapacity;
+        mComparator = map.mComparator;
         _table = map._table;
-        map._size = 0;
-        map._comparator = nullptr;
+        map.mSize = 0;
+        map.mComparator = nullptr;
         map._table = nullptr;
         return *this;
     }
 
     template<typename K, typename V>
-    inline bool HashMap<K, V>::contains_value(shared_ptr<V> value) const {
-        if (_size != 0) {
+    inline bool HashMap<K, V>::containsmValue(shared_ptr<V> value) const {
+        if (mSize != 0) {
             queue<Node<K, V> *> q;
-            for (size_t i = 0; i < _capacity; ++i) {
+            for (size_t i = 0; i < mCapacity; ++i) {
                 if (_table[i] != nullptr) {
                     q.push(_table[i]);
                     while (!q.empty()) {
                         Node<K, V> *node = q.front();
                         q.pop();
-                        if (*value == *node->_value)
+                        if (*value == *node->mValue)
                             return true;
-                        if (node->_left != nullptr)
-                            q.push(node->_left);
-                        if (node->_right != nullptr)
-                            q.push(node->_right);
+                        if (node->pLeft != nullptr)
+                            q.push(node->pLeft);
+                        if (node->pRight != nullptr)
+                            q.push(node->pRight);
                     }
                 }
             }
@@ -261,13 +261,13 @@ namespace app {
 
     template<typename K, typename V>
     inline shared_ptr<V> HashMap<K, V>::add(shared_ptr<K> key, shared_ptr<V> value) {
-        ensure_capacity();
+        ensuremCapacity();
         int index = get_index(key);
         Node<K, V> *root = _table[index];
         if (root == nullptr) {
             root = this->create_node(key, value, nullptr);
             _table[index] = root;
-            _size++;
+            mSize++;
             after_add(root);
             return nullptr;
         }
@@ -279,7 +279,7 @@ namespace app {
         bool scanned = false;
         while (node != nullptr) {
             parent = node;
-            shared_ptr<K> key2 = node->_key;
+            shared_ptr<K> key2 = node->pKey;
             size_t hash2 = node->_hash;
             if (hash1 > hash2)
                 cmp = 1;
@@ -287,13 +287,13 @@ namespace app {
                 cmp = -1;
             else if (*key1 == *key2)
                 cmp = 0;
-            else if (key1 != nullptr && key2 != nullptr && _comparator != nullptr && typeid(*key1) == typeid(*key2) &&
-                     (cmp = _comparator(key1, key2)) != 0) {
+            else if (key1 != nullptr && key2 != nullptr && mComparator != nullptr && typeid(*key1) == typeid(*key2) &&
+                     (cmp = mComparator(key1, key2)) != 0) {
             } else if (scanned)
                 cmp = key1.get() - key2.get();
             else {
-                if (node->_left != nullptr && (result = get_node(node->_left, key1)) != nullptr ||
-                    (node->_right != nullptr && (result = get_node(node->_right, key1)) != nullptr)) {
+                if (node->pLeft != nullptr && (result = get_node(node->pLeft, key1)) != nullptr ||
+                    (node->pRight != nullptr && (result = get_node(node->pRight, key1)) != nullptr)) {
                     node = result;
                     cmp = 0;
                 } else {
@@ -302,23 +302,23 @@ namespace app {
                 }
             }
             if (cmp > 0)
-                node = node->_right;
+                node = node->pRight;
             else if (cmp < 0)
-                node = node->_left;
+                node = node->pLeft;
             else {
-                shared_ptr<V> old = node->_value;
-                node->_key = key;
-                node->_value = value;
+                shared_ptr<V> old = node->mValue;
+                node->pKey = key;
+                node->mValue = value;
                 node->_hash = hash1;
                 return old;
             }
         }
         Node<K, V> *newnode = this->create_node(key, value, parent);
         if (cmp > 0)
-            parent->_right = newnode;
+            parent->pRight = newnode;
         else
-            parent->_left = newnode;
-        _size++;
+            parent->pLeft = newnode;
+        mSize++;
         after_add(newnode);
         return nullptr;
     }
@@ -327,32 +327,32 @@ namespace app {
     inline shared_ptr<V> HashMap<K, V>::remove(shared_ptr<K> key) {
         Node<K, V> *node = get_node(key);
         if (node != nullptr) {
-            _size--;
+            mSize--;
             Node<K, V> *willnode = node;
-            shared_ptr<V> old = node->_value;
+            shared_ptr<V> old = node->mValue;
             if (node->is_binary()) {
                 Node<K, V> *s = get_successor(node);
-                node->_key = s->_key;
-                node->_value = s->_value;
+                node->pKey = s->pKey;
+                node->mValue = s->mValue;
                 node->_hash = s->_hash;
                 node = s;
             }
-            Node<K, V> *replace = node->_left != nullptr ? node->_left : node->_right;
+            Node<K, V> *replace = node->pLeft != nullptr ? node->pLeft : node->pRight;
             int index = get_index(node);
             if (replace != nullptr) {
-                replace->_parent = node->_parent;
-                if (node->_parent == nullptr)
+                replace->pParent = node->pParent;
+                if (node->pParent == nullptr)
                     _table[index] = replace;
-                else if (node == node->_parent->_left)
-                    node->_parent->_left = replace;
+                else if (node == node->pParent->pLeft)
+                    node->pParent->pLeft = replace;
                 else
-                    node->_parent->_right = replace;
+                    node->pParent->pRight = replace;
                 after_remove(replace);
-            } else if (node->_parent != nullptr) {
-                if (node == node->_parent->_left)
-                    node->_parent->_left = nullptr;
+            } else if (node->pParent != nullptr) {
+                if (node == node->pParent->pLeft)
+                    node->pParent->pLeft = nullptr;
                 else
-                    node->_parent->_right = nullptr;
+                    node->pParent->pRight = nullptr;
                 after_remove(node);
             } else {
                 _table[index] = nullptr;
@@ -365,9 +365,9 @@ namespace app {
 
     template<typename K, typename V>
     inline void HashMap<K, V>::traverse(typename IMap<K, V>::TraverseFunc func) const {
-        if (_size > 0) {
+        if (mSize > 0) {
             queue<Node<K, V> *> q;
-            for (size_t i = 0; i < _capacity; ++i) {
+            for (size_t i = 0; i < mCapacity; ++i) {
                 if (_table[i] != nullptr) {
                     cout << "---------- " << i << " ----------\n";
                     q.push(_table[i]);
@@ -376,12 +376,12 @@ namespace app {
                         Node<K, V> *node = q.front();
                         q.pop();
                         lv_cnt--;
-                        if (node->_left != nullptr)
-                            q.push(node->_left);
-                        if (node->_right != nullptr)
-                            q.push(node->_right);
+                        if (node->pLeft != nullptr)
+                            q.push(node->pLeft);
+                        if (node->pRight != nullptr)
+                            q.push(node->pRight);
                         if (func != nullptr)
-                            func(node->_key, node->_value);
+                            func(node->pKey, node->mValue);
                         else
                             cout << *node << "\t";
                         if (lv_cnt == 0) {
@@ -400,21 +400,21 @@ namespace app {
         Node<K, V> *result = nullptr;
         int cmp = 0;
         while (node != nullptr) {
-            shared_ptr<K> key2 = node->_key;
+            shared_ptr<K> key2 = node->pKey;
             size_t hash2 = node->_hash;
             if (hash1 > hash2)
-                node = node->_right;
+                node = node->pRight;
             else if (hash1 < hash2)
-                node = node->_left;
+                node = node->pLeft;
             else if (*key1 == *key2)
                 return node;
-            else if (key1 != nullptr && key2 != nullptr && _comparator != nullptr && typeid(*key1) == typeid(*key2) &&
-                     (cmp = _comparator(key1, key2)) != 0)
-                node = cmp > 0 ? node->_right : node->_left;
-            else if (node->_right != nullptr && (result = get_node(node->_right, key1)) != nullptr)
+            else if (key1 != nullptr && key2 != nullptr && mComparator != nullptr && typeid(*key1) == typeid(*key2) &&
+                     (cmp = mComparator(key1, key2)) != 0)
+                node = cmp > 0 ? node->pRight : node->pLeft;
+            else if (node->pRight != nullptr && (result = get_node(node->pRight, key1)) != nullptr)
                 return result;
             else
-                node = node->_left;
+                node = node->pLeft;
         }
         return nullptr;
     }
@@ -422,52 +422,52 @@ namespace app {
     template<typename K, typename V>
     inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::get_successor(Node<K, V> *node) const {
         if (node != nullptr) {
-            Node<K, V> *p = node->_right;
+            Node<K, V> *p = node->pRight;
             if (p != nullptr) {
-                while (p->_left != nullptr)
-                    p = p->_left;
+                while (p->pLeft != nullptr)
+                    p = p->pLeft;
                 return p;
             }
-            while (node->_parent != nullptr && node == node->_parent->_right)
-                node = node->_parent;
-            return node->_parent;
+            while (node->pParent != nullptr && node == node->pParent->pRight)
+                node = node->pParent;
+            return node->pParent;
         }
         return nullptr;
     }
 
     template<typename K, typename V>
-    inline void HashMap<K, V>::ensure_capacity() {
-        if (_size * 1.0 / _capacity * 1.0 > LOAD_FACTOR) {
+    inline void HashMap<K, V>::ensuremCapacity() {
+        if (mSize * 1.0 / mCapacity * 1.0 > LOAD_FACTOR) {
             Node<K, V> **old = _table;
-            _table = new Node<K, V> *[_capacity << 1];
-            for (size_t i = 0; i < _capacity << 1; ++i)
+            _table = new Node<K, V> *[mCapacity << 1];
+            for (size_t i = 0; i < mCapacity << 1; ++i)
                 _table[i] = nullptr;
             queue<Node<K, V> *> q;
-            for (size_t i = 0; i < _capacity; ++i) {
+            for (size_t i = 0; i < mCapacity; ++i) {
                 if (old[i] != nullptr) {
                     q.push(old[i]);
                     while (!q.empty()) {
                         Node<K, V> *node = q.front();
                         q.pop();
-                        if (node->_left != nullptr)
-                            q.push(node->_left);
-                        if (node->_right != nullptr)
-                            q.push(node->_right);
+                        if (node->pLeft != nullptr)
+                            q.push(node->pLeft);
+                        if (node->pRight != nullptr)
+                            q.push(node->pRight);
                         move_node(node);
                     }
                 }
             }
-            _capacity <<= 1;
+            mCapacity <<= 1;
             delete[] old;
         }
     }
 
     template<typename K, typename V>
     inline void HashMap<K, V>::move_node(Node<K, V> *newnode) {
-        newnode->_parent = nullptr;
-        newnode->_left = nullptr;
-        newnode->_right = nullptr;
-        newnode->_color = RED;
+        newnode->pParent = nullptr;
+        newnode->pLeft = nullptr;
+        newnode->pRight = nullptr;
+        newnode->mColor = RED;
         int index = get_index(newnode);
         Node<K, V> *root = _table[index];
         if (root == nullptr) {
@@ -478,65 +478,65 @@ namespace app {
         }
         Node<K, V> *parent = root, *node = root;
         int cmp = 0;
-        shared_ptr<K> key1 = newnode->_key;
+        shared_ptr<K> key1 = newnode->pKey;
         size_t hash1 = newnode->_hash;
         while (node != nullptr) {
             parent = node;
-            shared_ptr<K> key2 = node->_key;
+            shared_ptr<K> key2 = node->pKey;
             size_t hash2 = node->_hash;
             if (hash1 > hash2)
                 cmp = 1;
             else if (hash1 < hash2)
                 cmp = -1;
-            else if (key1 != nullptr && key2 != nullptr && _comparator != nullptr && typeid(*key1) == typeid(*key2) &&
-                     (cmp = _comparator(key1, key2)) != 0) {
+            else if (key1 != nullptr && key2 != nullptr && mComparator != nullptr && typeid(*key1) == typeid(*key2) &&
+                     (cmp = mComparator(key1, key2)) != 0) {
             } else
                 cmp = key1.get() - key2.get();
 
             if (cmp > 0)
-                node = node->_right;
+                node = node->pRight;
             else if (cmp < 0)
-                node = node->_left;
+                node = node->pLeft;
         }
-        newnode->_parent = parent;
+        newnode->pParent = parent;
         if (cmp > 0)
-            parent->_right = newnode;
+            parent->pRight = newnode;
         else
-            parent->_left = newnode;
+            parent->pLeft = newnode;
         after_add(newnode);
     }
 
     template<typename K, typename V>
     inline void HashMap<K, V>::after_add(Node<K, V> *node) {
-        Node<K, V> *parent = node->_parent;
+        Node<K, V> *parent = node->pParent;
         if (parent == nullptr) {
-            set_color(node, BLACK);
+            setmColor(node, BLACK);
             return;
         }
         if (is_red(parent)) {
             Node<K, V> *uncle = parent->get_sibling();
-            Node<K, V> *grand = set_color(parent->_parent, RED);
+            Node<K, V> *grand = setmColor(parent->pParent, RED);
             if (is_red(uncle)) {
-                set_color(parent, BLACK);
-                set_color(uncle, BLACK);
+                setmColor(parent, BLACK);
+                setmColor(uncle, BLACK);
                 after_add(grand);
                 return;
             }
-            if (parent->is_left()) {
-                if (node->is_left())
-                    set_color(parent, BLACK);
+            if (parent->ispLeft()) {
+                if (node->ispLeft())
+                    setmColor(parent, BLACK);
                 else {
-                    set_color(node, BLACK);
-                    rotate_left(parent);
+                    setmColor(node, BLACK);
+                    rotatepLeft(parent);
                 }
-                rotate_right(grand);
+                rotatepRight(grand);
             } else {
-                if (node->is_left()) {
-                    set_color(node, BLACK);
-                    rotate_right(parent);
+                if (node->ispLeft()) {
+                    setmColor(node, BLACK);
+                    rotatepRight(parent);
                 } else
-                    set_color(parent, BLACK);
-                rotate_left(grand);
+                    setmColor(parent, BLACK);
+                rotatepLeft(grand);
             }
         }
     }
@@ -544,107 +544,107 @@ namespace app {
     template<typename K, typename V>
     inline void HashMap<K, V>::after_remove(Node<K, V> *node) {
         if (is_red(node)) {
-            set_color(node, BLACK);
+            setmColor(node, BLACK);
             return;
         }
-        Node<K, V> *parent = node->_parent;
+        Node<K, V> *parent = node->pParent;
         if (parent != nullptr) {
-            bool is_left = parent->_left == nullptr || node->is_left();
-            Node<K, V> *sibling = is_left ? parent->_right : parent->_left;
-            if (is_left) {
+            bool ispLeft = parent->pLeft == nullptr || node->ispLeft();
+            Node<K, V> *sibling = ispLeft ? parent->pRight : parent->pLeft;
+            if (ispLeft) {
                 if (is_red(sibling)) {
-                    set_color(sibling, BLACK);
-                    set_color(parent, RED);
-                    rotate_left(parent);
-                    sibling = parent->_right;
+                    setmColor(sibling, BLACK);
+                    setmColor(parent, RED);
+                    rotatepLeft(parent);
+                    sibling = parent->pRight;
                 }
-                if (is_black(sibling->_left) && is_black(sibling->_right)) {
+                if (is_black(sibling->pLeft) && is_black(sibling->pRight)) {
                     bool parent_black = is_black(parent);
-                    set_color(parent, BLACK);
-                    set_color(sibling, RED);
+                    setmColor(parent, BLACK);
+                    setmColor(sibling, RED);
                     if (parent_black)
                         after_remove(parent);
                 } else {
-                    if (is_black(sibling->_right)) {
-                        rotate_right(sibling);
-                        sibling = parent->_right;
+                    if (is_black(sibling->pRight)) {
+                        rotatepRight(sibling);
+                        sibling = parent->pRight;
                     }
-                    set_color(sibling, color_of(parent));
-                    set_color(sibling->_right, BLACK);
-                    set_color(parent, BLACK);
-                    rotate_left(parent);
+                    setmColor(sibling, color_of(parent));
+                    setmColor(sibling->pRight, BLACK);
+                    setmColor(parent, BLACK);
+                    rotatepLeft(parent);
                 }
             } else {
                 if (is_red(sibling)) {
-                    set_color(sibling, BLACK);
-                    set_color(parent, RED);
-                    rotate_right(parent);
-                    sibling = parent->_left;
+                    setmColor(sibling, BLACK);
+                    setmColor(parent, RED);
+                    rotatepRight(parent);
+                    sibling = parent->pLeft;
                 }
-                if (is_black(sibling->_left) && is_black(sibling->_right)) {
+                if (is_black(sibling->pLeft) && is_black(sibling->pRight)) {
                     bool parent_black = is_black(parent);
-                    set_color(parent, BLACK);
-                    set_color(sibling, RED);
+                    setmColor(parent, BLACK);
+                    setmColor(sibling, RED);
                     if (parent_black)
                         after_remove(parent);
                 } else {
-                    if (is_black(sibling->_left)) {
-                        rotate_left(sibling);
-                        sibling = parent->_left;
+                    if (is_black(sibling->pLeft)) {
+                        rotatepLeft(sibling);
+                        sibling = parent->pLeft;
                     }
-                    set_color(sibling, color_of(parent));
-                    set_color(sibling->_left, BLACK);
-                    set_color(parent, BLACK);
-                    rotate_right(parent);
+                    setmColor(sibling, color_of(parent));
+                    setmColor(sibling->pLeft, BLACK);
+                    setmColor(parent, BLACK);
+                    rotatepRight(parent);
                 }
             }
         }
     }
 
     template<typename K, typename V>
-    inline void HashMap<K, V>::rotate_left(Node<K, V> *grand) {
-        Node<K, V> *parent = grand->_right;
-        Node<K, V> *child = parent->_left;
-        grand->_right = child;
-        parent->_left = grand;
+    inline void HashMap<K, V>::rotatepLeft(Node<K, V> *grand) {
+        Node<K, V> *parent = grand->pRight;
+        Node<K, V> *child = parent->pLeft;
+        grand->pRight = child;
+        parent->pLeft = grand;
         after_rotate(grand, parent, child);
     }
 
     template<typename K, typename V>
-    inline void HashMap<K, V>::rotate_right(Node<K, V> *grand) {
-        Node<K, V> *parent = grand->_left;
-        Node<K, V> *child = parent->_right;
-        grand->_left = child;
-        parent->_right = grand;
+    inline void HashMap<K, V>::rotatepRight(Node<K, V> *grand) {
+        Node<K, V> *parent = grand->pLeft;
+        Node<K, V> *child = parent->pRight;
+        grand->pLeft = child;
+        parent->pRight = grand;
         after_rotate(grand, parent, child);
     }
 
     template<typename K, typename V>
     inline void HashMap<K, V>::after_rotate(Node<K, V> *grand, Node<K, V> *parent, Node<K, V> *child) {
-        parent->_parent = grand->_parent;
-        if (grand->is_left())
-            grand->_parent->_left = parent;
-        else if (grand->is_right())
-            grand->_parent->_right = parent;
+        parent->pParent = grand->pParent;
+        if (grand->ispLeft())
+            grand->pParent->pLeft = parent;
+        else if (grand->ispRight())
+            grand->pParent->pRight = parent;
         else
             _table[get_index(grand)] = parent;
         if (child != nullptr)
-            child->_parent = grand;
-        grand->_parent = parent;
+            child->pParent = grand;
+        grand->pParent = parent;
     }
 
     template<typename K, typename V>
-    inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::set_color(Node<K, V> *node, bool color) {
+    inline HashMap<K, V>::Node<K, V> *HashMap<K, V>::setmColor(Node<K, V> *node, bool color) {
         if (node != nullptr)
-            node->_color = color;
+            node->mColor = color;
         return node;
     }
 
     template<typename K, typename V>
     inline void HashMap<K, V>::clear_recu(Node<K, V> *root) {
         if (root != nullptr) {
-            clear_recu(root->_left);
-            clear_recu(root->_right);
+            clear_recu(root->pLeft);
+            clear_recu(root->pRight);
             delete root;
         }
     }

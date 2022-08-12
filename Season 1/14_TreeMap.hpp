@@ -17,13 +17,13 @@ namespace app {
         template<typename _K, typename _V>
         struct Node {
             friend ostream &operator<<(ostream &os, const Node &node) {
-                return os << "<" << *node._key << "-" << *node._value << ">";
+                return os << "<" << *node.pKey << "-" << *node.mValue << ">";
             }
 
-            bool _color = RED;
-            shared_ptr<_K> _key;
-            shared_ptr<_V> _value;
-            Node<_K, _V> *_parent = nullptr, *_left = nullptr, *_right = nullptr;
+            bool mColor = RED;
+            shared_ptr<_K> pKey;
+            shared_ptr<_V> mValue;
+            Node<_K, _V> *pParent = nullptr, *pLeft = nullptr, *pRight = nullptr;
 
             Node<_K, _V> &operator=(const Node<_K, _V> &node);
 
@@ -31,31 +31,31 @@ namespace app {
 
             Node(shared_ptr<_K> key, shared_ptr<_V> value, Node<_K, _V> *parent = nullptr, Node<_K, _V> *left = nullptr,
                  Node<_K, _V> *right = nullptr)
-                    : _key(key), _value(value), _parent(parent), _left(left), _right(right) {}
+                    : pKey(key), mValue(value), pParent(parent), pLeft(left), pRight(right) {}
 
             Node(const Node<_K, _V> &node) { *this = node; }
 
             Node(Node<_K, _V> &&node) noexcept { *this = move(node); }
 
             virtual ~Node() {
-                _key = nullptr;
-                _value = nullptr;
+                pKey = nullptr;
+                mValue = nullptr;
             }
 
-            bool is_leaf() const { return _left == nullptr && _right == nullptr; }
+            bool is_leaf() const { return pLeft == nullptr && pRight == nullptr; }
 
-            bool is_binary() const { return _left != nullptr && _right != nullptr; }
+            bool is_binary() const { return pLeft != nullptr && pRight != nullptr; }
 
-            bool is_left() const { return _parent != nullptr && this == _parent->_left; }
+            bool ispLeft() const { return pParent != nullptr && this == pParent->pLeft; }
 
-            bool is_right() const { return _parent != nullptr && this == _parent->_right; }
+            bool ispRight() const { return pParent != nullptr && this == pParent->pRight; }
 
             Node<_K, _V> *get_sibling() const;
         };
 
-        size_t _size = 0;
-        Node<K, V> *_root = nullptr;
-        typename IMap<K, V>::Comparator _comparator = nullptr;
+        size_t mSize = 0;
+        Node<K, V> *pRoot = nullptr;
+        typename IMap<K, V>::Comparator mComparator = nullptr;
 
         void not_null_check(shared_ptr<K> key) const {
             if (key == nullptr)
@@ -72,15 +72,15 @@ namespace app {
 
         void after_remove(Node<K, V> *node);
 
-        void rotate_left(Node<K, V> *grand);
+        void rotatepLeft(Node<K, V> *grand);
 
-        void rotate_right(Node<K, V> *grand);
+        void rotatepRight(Node<K, V> *grand);
 
         void after_rotate(Node<K, V> *grand, Node<K, V> *parent, Node<K, V> *child);
 
-        Node<K, V> *set_color(Node<K, V> *node, bool color);
+        Node<K, V> *setmColor(Node<K, V> *node, bool color);
 
-        bool color_of(Node<K, V> *node) const { return node == nullptr ? BLACK : node->_color; }
+        bool color_of(Node<K, V> *node) const { return node == nullptr ? BLACK : node->mColor; }
 
         bool is_black(Node<K, V> *node) const { return color_of(node) == BLACK; }
 
@@ -95,57 +95,57 @@ namespace app {
 
         TreeMap<K, V> &operator=(TreeMap<K, V> &&map) noexcept;
 
-        TreeMap(typename IMap<K, V>::Comparator comparator = nullptr) { _comparator = comparator; }
+        TreeMap(typename IMap<K, V>::Comparator comparator = nullptr) { mComparator = comparator; }
 
         TreeMap(const TreeMap<K, V> &map) { *this = map; }
 
         TreeMap(TreeMap<K, V> &&map) noexcept { *this = move(map); }
 
-        ~TreeMap() { clear_recu(_root); }
+        ~TreeMap() { clear_recu(pRoot); }
 
-        size_t size() const override { return _size; }
+        size_t size() const override { return mSize; }
 
-        bool is_empty() const override { return _size == 0; }
+        bool is_empty() const override { return mSize == 0; }
 
-        bool contains_key(shared_ptr<K> key) const override { return get_node(key) != nullptr; }
+        bool containspKey(shared_ptr<K> key) const override { return get_node(key) != nullptr; }
 
-        bool contains_value(shared_ptr<V> value) const override;
+        bool containsmValue(shared_ptr<V> value) const override;
 
-        shared_ptr<V> get_value(shared_ptr<K> key) const override {
+        shared_ptr<V> getmValue(shared_ptr<K> key) const override {
             Node<K, V> *node = get_node(key);
-            return node != nullptr ? node->_value : nullptr;
+            return node != nullptr ? node->mValue : nullptr;
         }
 
         shared_ptr<V> add(shared_ptr<K> key, shared_ptr<V> value) override;
 
         shared_ptr<V> remove(shared_ptr<K> key) override;
 
-        void traverse(typename IMap<K, V>::TraverseFunc func = nullptr) const { inorder_traverse(_root, func); }
+        void traverse(typename IMap<K, V>::TraverseFunc func = nullptr) const { inorder_traverse(pRoot, func); }
 
         void clear() override {
-            clear_recu(_root);
-            _root = nullptr;
-            _size = 0;
+            clear_recu(pRoot);
+            pRoot = nullptr;
+            mSize = 0;
         }
     };
 
     template<typename K, typename V>
     template<typename _K, typename _V>
     inline TreeMap<K, V>::Node<_K, _V> &TreeMap<K, V>::Node<_K, _V>::operator=(const Node<_K, _V> &node) {
-        _key = node._key;
-        _value = node._value;
-        _parent = node._parent;
-        _left = node._left;
-        _right = node._right;
-        _color = node._color;
+        pKey = node.pKey;
+        mValue = node.mValue;
+        pParent = node.pParent;
+        pLeft = node.pLeft;
+        pRight = node.pRight;
+        mColor = node.mColor;
         return *this;
     }
 
     template<typename K, typename V>
     template<typename _K, typename _V>
     inline TreeMap<K, V>::Node<_K, _V> &TreeMap<K, V>::Node<_K, _V>::operator=(Node<_K, _V> &&node) noexcept {
-        _key = nullptr;
-        _value = nullptr;
+        pKey = nullptr;
+        mValue = nullptr;
         this = &node;
         return *this;
     }
@@ -153,28 +153,28 @@ namespace app {
     template<typename K, typename V>
     template<typename _K, typename _V>
     inline TreeMap<K, V>::Node<_K, _V> *TreeMap<K, V>::Node<_K, _V>::get_sibling() const {
-        if (is_left())
-            return _parent->_right;
-        else if (is_right())
-            return _parent->_left;
+        if (ispLeft())
+            return pParent->pRight;
+        else if (ispRight())
+            return pParent->pLeft;
         return nullptr;
     }
 
     template<typename K, typename V>
     inline TreeMap<K, V> &TreeMap<K, V>::operator=(const TreeMap<K, V> &map) {
         clear();
-        if (map._size > 0) {
-            _comparator = map._comparator;
+        if (map.mSize > 0) {
+            mComparator = map.mComparator;
             queue<Node<K, V> *> q;
-            q.push(map._root);
+            q.push(map.pRoot);
             while (!q.empty()) {
                 Node<K, V> *node = q.front();
-                add(node->_key, node->_value);
+                add(node->pKey, node->mValue);
                 q.pop();
-                if (node->_left != nullptr)
-                    q.push(node->_left);
-                if (node->_right != nullptr)
-                    q.push(node->_right);
+                if (node->pLeft != nullptr)
+                    q.push(node->pLeft);
+                if (node->pRight != nullptr)
+                    q.push(node->pRight);
             }
         }
         return *this;
@@ -183,31 +183,31 @@ namespace app {
     template<typename K, typename V>
     inline TreeMap<K, V> &TreeMap<K, V>::operator=(TreeMap<K, V> &&map) noexcept {
         clear();
-        _size = map._size;
-        _root = map._root;
-        _comparator = map._comparator;
-        map._size = 0;
-        map._root = nullptr;
-        map._comparator = nullptr;
+        mSize = map.mSize;
+        pRoot = map.pRoot;
+        mComparator = map.mComparator;
+        map.mSize = 0;
+        map.pRoot = nullptr;
+        map.mComparator = nullptr;
         return *this;
     }
 
     template<typename K, typename V>
     inline TreeMap<K, V>::Node<K, V> *TreeMap<K, V>::get_node(shared_ptr<K> key) const {
-        Node<K, V> *node = _root;
+        Node<K, V> *node = pRoot;
         while (node != nullptr) {
-            if (_comparator == nullptr) {
-                if (*node->_key < *key)
-                    node = node->_right;
-                else if (*node->_key > *key)
-                    node = node->_left;
+            if (mComparator == nullptr) {
+                if (*node->pKey < *key)
+                    node = node->pRight;
+                else if (*node->pKey > *key)
+                    node = node->pLeft;
                 else
                     return node;
             } else {
-                if (_comparator(node->_key, key) < 0)
-                    node = node->_right;
-                else if (_comparator(node->_key, key) > 0)
-                    node = node->_left;
+                if (mComparator(node->pKey, key) < 0)
+                    node = node->pRight;
+                else if (mComparator(node->pKey, key) > 0)
+                    node = node->pLeft;
                 else
                     return node;
             }
@@ -218,15 +218,15 @@ namespace app {
     template<typename K, typename V>
     inline TreeMap<K, V>::Node<K, V> *TreeMap<K, V>::get_predecessor(Node<K, V> *node) const {
         if (node != nullptr) {
-            Node<K, V> *p = node->_left;
+            Node<K, V> *p = node->pLeft;
             if (p != nullptr) {
-                while (p->_right != nullptr)
-                    p = p->_right;
+                while (p->pRight != nullptr)
+                    p = p->pRight;
                 return p;
             }
-            while (node->_parent != nullptr && node == node->_parent->_left)
-                node = node->_parent;
-            return node->_parent;
+            while (node->pParent != nullptr && node == node->pParent->pLeft)
+                node = node->pParent;
+            return node->pParent;
         }
         return nullptr;
     }
@@ -234,50 +234,50 @@ namespace app {
     template<typename K, typename V>
     inline TreeMap<K, V>::Node<K, V> *TreeMap<K, V>::get_successor(Node<K, V> *node) const {
         if (node != nullptr) {
-            Node<K, V> *p = node->_right;
+            Node<K, V> *p = node->pRight;
             if (p != nullptr) {
-                while (p->_left != nullptr)
-                    p = p->_left;
+                while (p->pLeft != nullptr)
+                    p = p->pLeft;
                 return p;
             }
-            while (node->_parent != nullptr && node == node->_parent->_right)
-                node = node->_parent;
-            return node->_parent;
+            while (node->pParent != nullptr && node == node->pParent->pRight)
+                node = node->pParent;
+            return node->pParent;
         }
         return nullptr;
     }
 
     template<typename K, typename V>
     inline void TreeMap<K, V>::after_add(Node<K, V> *node) {
-        Node<K, V> *parent = node->_parent;
+        Node<K, V> *parent = node->pParent;
         if (parent == nullptr) {
-            set_color(node, BLACK);
+            setmColor(node, BLACK);
             return;
         }
         if (is_red(parent)) {
             Node<K, V> *uncle = parent->get_sibling();
-            Node<K, V> *grand = set_color(parent->_parent, RED);
+            Node<K, V> *grand = setmColor(parent->pParent, RED);
             if (is_red(uncle)) {
-                set_color(parent, BLACK);
-                set_color(uncle, BLACK);
+                setmColor(parent, BLACK);
+                setmColor(uncle, BLACK);
                 after_add(grand);
                 return;
             }
-            if (parent->is_left()) {
-                if (node->is_left())
-                    set_color(parent, BLACK);
+            if (parent->ispLeft()) {
+                if (node->ispLeft())
+                    setmColor(parent, BLACK);
                 else {
-                    set_color(node, BLACK);
-                    rotate_left(parent);
+                    setmColor(node, BLACK);
+                    rotatepLeft(parent);
                 }
-                rotate_right(grand);
+                rotatepRight(grand);
             } else {
-                if (node->is_left()) {
-                    set_color(node, BLACK);
-                    rotate_right(parent);
+                if (node->ispLeft()) {
+                    setmColor(node, BLACK);
+                    rotatepRight(parent);
                 } else
-                    set_color(parent, BLACK);
-                rotate_left(grand);
+                    setmColor(parent, BLACK);
+                rotatepLeft(grand);
             }
         }
     }
@@ -285,125 +285,125 @@ namespace app {
     template<typename K, typename V>
     inline void TreeMap<K, V>::after_remove(Node<K, V> *node) {
         if (is_red(node)) {
-            set_color(node, BLACK);
+            setmColor(node, BLACK);
             return;
         }
-        Node<K, V> *parent = node->_parent;
+        Node<K, V> *parent = node->pParent;
         if (parent != nullptr) {
-            bool is_left = parent->_left == nullptr || node->is_left();
-            Node<K, V> *sibling = is_left ? parent->_right : parent->_left;
-            if (is_left) {
+            bool ispLeft = parent->pLeft == nullptr || node->ispLeft();
+            Node<K, V> *sibling = ispLeft ? parent->pRight : parent->pLeft;
+            if (ispLeft) {
                 if (is_red(sibling)) {
-                    set_color(sibling, BLACK);
-                    set_color(parent, RED);
-                    rotate_left(parent);
-                    sibling = parent->_right;
+                    setmColor(sibling, BLACK);
+                    setmColor(parent, RED);
+                    rotatepLeft(parent);
+                    sibling = parent->pRight;
                 }
-                if (is_black(sibling->_left) && is_black(sibling->_right)) {
+                if (is_black(sibling->pLeft) && is_black(sibling->pRight)) {
                     bool parent_black = is_black(parent);
-                    set_color(parent, BLACK);
-                    set_color(sibling, RED);
+                    setmColor(parent, BLACK);
+                    setmColor(sibling, RED);
                     if (parent_black)
                         after_remove(parent);
                 } else {
-                    if (is_black(sibling->_right)) {
-                        rotate_right(sibling);
-                        sibling = parent->_right;
+                    if (is_black(sibling->pRight)) {
+                        rotatepRight(sibling);
+                        sibling = parent->pRight;
                     }
-                    set_color(sibling, color_of(parent));
-                    set_color(sibling->_right, BLACK);
-                    set_color(parent, BLACK);
-                    rotate_left(parent);
+                    setmColor(sibling, color_of(parent));
+                    setmColor(sibling->pRight, BLACK);
+                    setmColor(parent, BLACK);
+                    rotatepLeft(parent);
                 }
             } else {
                 if (is_red(sibling)) {
-                    set_color(sibling, BLACK);
-                    set_color(parent, RED);
-                    rotate_right(parent);
-                    sibling = parent->_left;
+                    setmColor(sibling, BLACK);
+                    setmColor(parent, RED);
+                    rotatepRight(parent);
+                    sibling = parent->pLeft;
                 }
-                if (is_black(sibling->_left) && is_black(sibling->_right)) {
+                if (is_black(sibling->pLeft) && is_black(sibling->pRight)) {
                     bool parent_black = is_black(parent);
-                    set_color(parent, BLACK);
-                    set_color(sibling, RED);
+                    setmColor(parent, BLACK);
+                    setmColor(sibling, RED);
                     if (parent_black)
                         after_remove(parent);
                 } else {
-                    if (is_black(sibling->_left)) {
-                        rotate_left(sibling);
-                        sibling = parent->_left;
+                    if (is_black(sibling->pLeft)) {
+                        rotatepLeft(sibling);
+                        sibling = parent->pLeft;
                     }
-                    set_color(sibling, color_of(parent));
-                    set_color(sibling->_left, BLACK);
-                    set_color(parent, BLACK);
-                    rotate_right(parent);
+                    setmColor(sibling, color_of(parent));
+                    setmColor(sibling->pLeft, BLACK);
+                    setmColor(parent, BLACK);
+                    rotatepRight(parent);
                 }
             }
         }
     }
 
     template<typename K, typename V>
-    inline void TreeMap<K, V>::rotate_left(Node<K, V> *grand) {
-        Node<K, V> *parent = grand->_right;
-        Node<K, V> *child = parent->_left;
-        grand->_right = child;
-        parent->_left = grand;
+    inline void TreeMap<K, V>::rotatepLeft(Node<K, V> *grand) {
+        Node<K, V> *parent = grand->pRight;
+        Node<K, V> *child = parent->pLeft;
+        grand->pRight = child;
+        parent->pLeft = grand;
         after_rotate(grand, parent, child);
     }
 
     template<typename K, typename V>
-    inline void TreeMap<K, V>::rotate_right(Node<K, V> *grand) {
-        Node<K, V> *parent = grand->_left;
-        Node<K, V> *child = parent->_right;
-        grand->_left = child;
-        parent->_right = grand;
+    inline void TreeMap<K, V>::rotatepRight(Node<K, V> *grand) {
+        Node<K, V> *parent = grand->pLeft;
+        Node<K, V> *child = parent->pRight;
+        grand->pLeft = child;
+        parent->pRight = grand;
         after_rotate(grand, parent, child);
     }
 
     template<typename K, typename V>
     inline void TreeMap<K, V>::after_rotate(Node<K, V> *grand, Node<K, V> *parent, Node<K, V> *child) {
-        parent->_parent = grand->_parent;
-        if (grand->is_left())
-            grand->_parent->_left = parent;
-        else if (grand->is_right())
-            grand->_parent->_right = parent;
+        parent->pParent = grand->pParent;
+        if (grand->ispLeft())
+            grand->pParent->pLeft = parent;
+        else if (grand->ispRight())
+            grand->pParent->pRight = parent;
         else
-            _root = parent;
+            pRoot = parent;
         if (child != nullptr)
-            child->_parent = grand;
-        grand->_parent = parent;
+            child->pParent = grand;
+        grand->pParent = parent;
     }
 
     template<typename K, typename V>
-    inline TreeMap<K, V>::Node<K, V> *TreeMap<K, V>::set_color(Node<K, V> *node, bool color) {
+    inline TreeMap<K, V>::Node<K, V> *TreeMap<K, V>::setmColor(Node<K, V> *node, bool color) {
         if (node != nullptr)
-            node->_color = color;
+            node->mColor = color;
         return node;
     }
 
     template<typename K, typename V>
     inline void TreeMap<K, V>::clear_recu(Node<K, V> *node) {
         if (node != nullptr) {
-            clear_recu(node->_left);
-            clear_recu(node->_right);
+            clear_recu(node->pLeft);
+            clear_recu(node->pRight);
             delete node;
         }
     }
 
     template<typename K, typename V>
-    inline bool TreeMap<K, V>::contains_value(shared_ptr<V> value) const {
-        if (_root != nullptr) {
+    inline bool TreeMap<K, V>::containsmValue(shared_ptr<V> value) const {
+        if (pRoot != nullptr) {
             queue<Node<K, V> *> q;
-            q.push(_root);
+            q.push(pRoot);
             while (!q.empty()) {
                 Node<K, V> *node = q.front();
-                if (*node->_value == *value)
+                if (*node->mValue == *value)
                     return true;
                 q.pop();
-                if (node->_left != nullptr)
-                    q.push(node->_left);
-                if (node->_right != nullptr)
-                    q.push(node->_right);
+                if (node->pLeft != nullptr)
+                    q.push(node->pLeft);
+                if (node->pRight != nullptr)
+                    q.push(node->pRight);
             }
         }
         return false;
@@ -412,52 +412,52 @@ namespace app {
     template<typename K, typename V>
     inline shared_ptr<V> TreeMap<K, V>::add(shared_ptr<K> key, shared_ptr<V> value) {
         not_null_check(key);
-        if (_root == nullptr) {
-            _root = new Node<K, V>(key, value, nullptr);
-            _size++;
-            after_add(_root);
+        if (pRoot == nullptr) {
+            pRoot = new Node<K, V>(key, value, nullptr);
+            mSize++;
+            after_add(pRoot);
             return nullptr;
         }
-        Node<K, V> *node = _root, *parent = _root;
+        Node<K, V> *node = pRoot, *parent = pRoot;
         while (node != nullptr) {
             parent = node;
-            if (_comparator == nullptr) {
-                if (*node->_key < *key)
-                    node = node->_right;
-                else if (*node->_key > *key)
-                    node = node->_left;
+            if (mComparator == nullptr) {
+                if (*node->pKey < *key)
+                    node = node->pRight;
+                else if (*node->pKey > *key)
+                    node = node->pLeft;
                 else {
-                    node->_key = key;
-                    shared_ptr<V> old = node->_value;
-                    node->_value = value;
+                    node->pKey = key;
+                    shared_ptr<V> old = node->mValue;
+                    node->mValue = value;
                     return old;
                 }
             } else {
-                if (_comparator(node->_key, key) < 0)
-                    node = node->_right;
-                else if (_comparator(node->_key, key) > 0)
-                    node = node->_left;
+                if (mComparator(node->pKey, key) < 0)
+                    node = node->pRight;
+                else if (mComparator(node->pKey, key) > 0)
+                    node = node->pLeft;
                 else {
-                    node->_key = key;
-                    shared_ptr<V> old = node->_value;
-                    node->_value = value;
+                    node->pKey = key;
+                    shared_ptr<V> old = node->mValue;
+                    node->mValue = value;
                     return old;
                 }
             }
         }
         Node<K, V> *temp = new Node<K, V>(key, value, parent);
-        if (_comparator == nullptr) {
-            if (*parent->_key < *key)
-                parent->_right = temp;
+        if (mComparator == nullptr) {
+            if (*parent->pKey < *key)
+                parent->pRight = temp;
             else
-                parent->_left = temp;
+                parent->pLeft = temp;
         } else {
-            if (_comparator(parent->_key, key) < 0)
-                parent->_right = temp;
+            if (mComparator(parent->pKey, key) < 0)
+                parent->pRight = temp;
             else
-                parent->_left = temp;
+                parent->pLeft = temp;
         }
-        _size++;
+        mSize++;
         after_add(temp);
         return nullptr;
     }
@@ -466,32 +466,32 @@ namespace app {
     inline shared_ptr<V> TreeMap<K, V>::remove(shared_ptr<K> key) {
         Node<K, V> *node = get_node(key);
         if (node != nullptr) {
-            _size--;
-            shared_ptr<V> old = node->_value;
+            mSize--;
+            shared_ptr<V> old = node->mValue;
             if (node->is_binary()) {
                 Node<K, V> *s = get_successor(node);
-                node->_key = s->_key;
-                node->_value = s->_value;
+                node->pKey = s->pKey;
+                node->mValue = s->mValue;
                 node = s; //删除前驱结点
             }
-            Node<K, V> *replace = node->_left != nullptr ? node->_left : node->_right;
+            Node<K, V> *replace = node->pLeft != nullptr ? node->pLeft : node->pRight;
             if (replace != nullptr) {
-                replace->_parent = node->_parent;
-                if (node->_parent == nullptr)
-                    _root = replace;
-                else if (node == node->_parent->_left)
-                    node->_parent->_left = replace;
+                replace->pParent = node->pParent;
+                if (node->pParent == nullptr)
+                    pRoot = replace;
+                else if (node == node->pParent->pLeft)
+                    node->pParent->pLeft = replace;
                 else
-                    node->_parent->_right = replace;
+                    node->pParent->pRight = replace;
                 after_remove(replace);
-            } else if (node->_parent != nullptr) {
-                if (node == node->_parent->_left)
-                    node->_parent->_left = nullptr;
+            } else if (node->pParent != nullptr) {
+                if (node == node->pParent->pLeft)
+                    node->pParent->pLeft = nullptr;
                 else
-                    node->_parent->_right = nullptr;
+                    node->pParent->pRight = nullptr;
                 after_remove(node);
             } else {
-                _root = nullptr;
+                pRoot = nullptr;
             }
             delete node;
             return old;
@@ -502,12 +502,12 @@ namespace app {
     template<typename K, typename V>
     inline void TreeMap<K, V>::inorder_traverse(Node<K, V> *node, typename IMap<K, V>::TraverseFunc func) const {
         if (node != nullptr) {
-            inorder_traverse(node->_left, func);
+            inorder_traverse(node->pLeft, func);
             if (func != nullptr)
-                func(node->_key, node->_value);
+                func(node->pKey, node->mValue);
             else
                 cout << *node << "\n";
-            inorder_traverse(node->_right, func);
+            inorder_traverse(node->pRight, func);
         }
     }
 } // namespace app

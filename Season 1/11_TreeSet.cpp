@@ -5,9 +5,9 @@ using namespace app;
 
 int main(int argc, char const *argv[]) {
     TreeSet<Person> set = TreeSet<Person>([](shared_ptr<Person> a, shared_ptr<Person> b) {
-        if ((*a)._age < (*b)._age)
+        if ((*a).mAge < (*b).mAge)
             return -1;
-        else if ((*a)._age > (*b)._age)
+        else if ((*a).mAge > (*b).mAge)
             return 1;
         return 0;
     });

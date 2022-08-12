@@ -16,8 +16,8 @@ namespace app {
 
         template<typename U>
         struct Node {
-            shared_ptr<T> _data = nullptr;
-            Node<U> *_prev = nullptr, *_next = nullptr;
+            shared_ptr<T> mData = nullptr;
+            Node<U> *pPrev = nullptr, *pNext = nullptr;
 
             Node<U> &operator=(const Node<U> &node);
 
@@ -29,7 +29,7 @@ namespace app {
 
             Node(Node<U> &&node) noexcept { *this = move(node); }
 
-            ~Node() { _data = nullptr; }
+            ~Node() { mData = nullptr; }
 
             shared_ptr<T> disconnect();
         };
@@ -37,15 +37,15 @@ namespace app {
         Node<T> *get_node(int index) const;
 
     public:
-        Node<T> *_head = nullptr;
+        Node<T> *mHead = nullptr;
 
         LinkedList<T> &operator=(const LinkedList<T> &list);
 
         LinkedList<T> &operator=(LinkedList<T> &&list) noexcept;
 
         LinkedList() {
-            _head = new Node<T>(nullptr);
-            _head->_prev = _head->_next = _head;
+            mHead = new Node<T>(nullptr);
+            mHead->pPrev = mHead->pNext = mHead;
         }
 
         LinkedList(const LinkedList<T> &list) { *this = list; }
@@ -54,7 +54,7 @@ namespace app {
 
         ~LinkedList() {
             clear();
-            delete _head;
+            delete mHead;
         }
 
         int index_of(shared_ptr<T> data) const override;
@@ -73,24 +73,24 @@ namespace app {
     template<typename T>
     template<typename U>
     inline LinkedList<T>::Node<U>::Node(shared_ptr<T> data, Node<U> *prev, Node<U> *next) {
-        _data = data;
-        _prev = prev;
-        _next = next;
+        mData = data;
+        pPrev = prev;
+        pNext = next;
     }
 
     template<typename T>
     template<typename U>
     inline LinkedList<T>::Node<U> &LinkedList<T>::Node<U>::operator=(const Node<U> &node) {
-        _data = node._data;
-        _prev = node._prev;
-        _next = node._next;
+        mData = node.mData;
+        pPrev = node.pPrev;
+        pNext = node.pNext;
         return *this;
     }
 
     template<typename T>
     template<typename U>
     inline LinkedList<T>::Node<U> &LinkedList<T>::Node<U>::operator=(Node<U> &&node) noexcept {
-        _data = nullptr;
+        mData = nullptr;
         this = &node;
         return *this;
     }
@@ -98,15 +98,15 @@ namespace app {
     template<typename T>
     template<typename U>
     inline shared_ptr<T> LinkedList<T>::Node<U>::disconnect() {
-        auto old = _data;
-        _data = nullptr;
-        _prev = _next = nullptr;
+        auto old = mData;
+        mData = nullptr;
+        pPrev = pNext = nullptr;
         return old;
     }
 
     template<typename U>
     inline ostream &operator<<(ostream &os, const LinkedList<U> &list) {
-        for (size_t i = 0; i < list._size; ++i)
+        for (size_t i = 0; i < list.mSize; ++i)
             if (list.get(i) != nullptr)
                 os << *list.get(i) << "\n";
         return os;
@@ -115,11 +115,11 @@ namespace app {
     template<typename T>
     inline LinkedList<T> &LinkedList<T>::operator=(const LinkedList<T> &list) {
         clear();
-        if (_head == nullptr) {
-            _head = new Node<T>(nullptr);
-            _head->_prev = _head->_next = _head;
+        if (mHead == nullptr) {
+            mHead = new Node<T>(nullptr);
+            mHead->pPrev = mHead->pNext = mHead;
         }
-        for (size_t i = 0; i < list._size; ++i)
+        for (size_t i = 0; i < list.mSize; ++i)
             insert(i, list.get(i));
         return *this;
     }
@@ -127,27 +127,27 @@ namespace app {
     template<typename T>
     inline LinkedList<T> &LinkedList<T>::operator=(LinkedList<T> &&list) noexcept {
         clear();
-        if (_head == nullptr) {
-            _head = new Node<T>(nullptr);
-            _head->_prev = _head->_next = _head;
+        if (mHead == nullptr) {
+            mHead = new Node<T>(nullptr);
+            mHead->pPrev = mHead->pNext = mHead;
         }
-        if (list._size > 0) {
-            this->_size = list._size;
-            _head->_next = list._head->_next;
-            _head->_prev = list._head->_prev;
-            list._head->_next->_prev = _head;
-            list._size = 0;
-            list._head = nullptr;
+        if (list.mSize > 0) {
+            this->mSize = list.mSize;
+            mHead->pNext = list.mHead->pNext;
+            mHead->pPrev = list.mHead->pPrev;
+            list.mHead->pNext->pPrev = mHead;
+            list.mSize = 0;
+            list.mHead = nullptr;
         }
         return *this;
     }
 
     template<typename T>
     inline int LinkedList<T>::index_of(shared_ptr<T> data) const {
-        Node<T> *p = _head;
-        for (size_t i = 0; i < this->_size; ++i) {
-            p = p->_next;
-            if (*p->_data == *data)
+        Node<T> *p = mHead;
+        for (size_t i = 0; i < this->mSize; ++i) {
+            p = p->pNext;
+            if (*p->mData == *data)
                 return i;
         }
         return -1;
@@ -157,81 +157,81 @@ namespace app {
     inline void LinkedList<T>::insert(int index, shared_ptr<T> data) {
         this->check_range(index, true);
         Node<T> *prev = get_node(index - 1);
-        Node<T> *next = prev->_next;
+        Node<T> *next = prev->pNext;
         Node<T> *temp = new Node<T>(data, prev, next);
-        if (next != _head) {
-            prev->_next = temp;
-            next->_prev = temp;
+        if (next != mHead) {
+            prev->pNext = temp;
+            next->pPrev = temp;
         } else {
-            prev->_next = temp;
-            temp->_next = _head;
-            _head->_prev = temp;
+            prev->pNext = temp;
+            temp->pNext = mHead;
+            mHead->pPrev = temp;
         }
-        this->_size++;
+        this->mSize++;
     }
 
     template<typename T>
     inline shared_ptr<T> LinkedList<T>::remove(int index) {
         this->check_range(index);
-        Node<T> *old = _head->_next;
+        Node<T> *old = mHead->pNext;
         for (size_t i = 0; i < index; ++i)
-            old = old->_next;
+            old = old->pNext;
         if (index == 0) {
-            _head->_next = _head->_next->_next;
-            _head->_next->_prev = _head;
-        } else if (index == this->_size - 1) {
-            _head->_prev = _head->_prev->_prev;
-            _head->_prev->_next = _head;
+            mHead->pNext = mHead->pNext->pNext;
+            mHead->pNext->pPrev = mHead;
+        } else if (index == this->mSize - 1) {
+            mHead->pPrev = mHead->pPrev->pPrev;
+            mHead->pPrev->pNext = mHead;
         } else {
-            old->_prev->_next = old->_next;
-            old->_next->_prev = old->_prev;
+            old->pPrev->pNext = old->pNext;
+            old->pNext->pPrev = old->pPrev;
         }
-        this->_size--;
+        this->mSize--;
         return old->disconnect();
     }
 
     template<typename T>
     inline shared_ptr<T> LinkedList<T>::get(int index) const {
         this->check_range(index);
-        Node<T> *p = _head->_next;
+        Node<T> *p = mHead->pNext;
         for (size_t i = 0; i < index; ++i)
-            p = p->_next;
-        return p->_data;
+            p = p->pNext;
+        return p->mData;
     }
 
     template<typename T>
     inline void LinkedList<T>::set(int index, shared_ptr<T> data) {
         this->check_range(index);
-        Node<T> *p = _head->_next;
+        Node<T> *p = mHead->pNext;
         for (size_t i = 0; i < index; ++i)
-            p = p->_next;
-        p->_data = data;
+            p = p->pNext;
+        p->mData = data;
     }
 
     template<typename T>
     inline void LinkedList<T>::clear() {
-        if (this->_size > 0) {
-            Node<T> *p = _head->_prev;
-            while (p != _head) {
-                p = p->_prev;
-                delete p->_next;
+        if (this->mSize > 0) {
+            Node<T> *p = mHead->pPrev;
+            while (p != mHead) {
+                p = p->pPrev;
+                delete p->pNext;
             }
-            _head->_next = _head;
-            _head->_prev = _head;
-            this->_size = 0;
+            mHead->pNext = mHead;
+            mHead->pPrev = mHead;
+            this->mSize = 0;
         }
     }
 
     template<typename T>
     inline LinkedList<T>::Node<T> *LinkedList<T>::get_node(int index) const {
         if (index == -1)
-            return _head;
-        if (index == this->_size - 1)
-            return _head->_prev;
-        Node<T> *p = _head;
+            return mHead;
+        if (index == this->mSize - 1)
+            return mHead->pPrev;
+        Node<T> *p = mHead;
         for (size_t i = 0; i < index; ++i)
-            p = p->_next;
-        return p->_next;
+            p = p->pNext;
+        return p->pNext;
     }
 } // namespace app
 

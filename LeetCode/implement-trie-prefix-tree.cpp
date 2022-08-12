@@ -18,7 +18,7 @@ class Trie {
     struct Node {
         bool _exist = false;
         bool _end = false;
-        vector<Node> *_next = nullptr;
+        vector<Node> *pNext = nullptr;
     };
 
     vector<Node> *inits = new vector<Node>(26);
@@ -33,9 +33,9 @@ public:
             (*tail)[idx]._exist = true;
             if (i == word.size() - 1)
                 (*tail)[idx]._end = true;
-            if ((*tail)[idx]._next == nullptr)
-                (*tail)[idx]._next = new vector<Node>(26);
-            tail = (*tail)[idx]._next;
+            if ((*tail)[idx].pNext == nullptr)
+                (*tail)[idx].pNext = new vector<Node>(26);
+            tail = (*tail)[idx].pNext;
         }
     }
 
@@ -47,7 +47,7 @@ public:
                 return false;
             if (i == word.size() - 1 && !(*tail)[idx]._end)
                 return false;
-            tail = (*tail)[idx]._next;
+            tail = (*tail)[idx].pNext;
         }
         return true;
     }
@@ -58,7 +58,7 @@ public:
             int idx = prefix[i] - 'a';
             if (!(*tail)[idx]._exist)
                 return false;
-            tail = (*tail)[idx]._next;
+            tail = (*tail)[idx].pNext;
         }
         return true;
     }

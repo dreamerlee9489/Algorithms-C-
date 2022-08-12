@@ -16,7 +16,7 @@ namespace app {
     template<typename T>
     class IList {
     protected:
-        size_t _size = 0;
+        size_t mSize = 0;
 
         void check_range(int index, bool isAdd = false) const;
 
@@ -37,21 +37,21 @@ namespace app {
 
         virtual void clear() = 0;
 
-        size_t size() const { return _size; }
+        size_t size() const { return mSize; }
 
-        bool is_empty() const { return _size == 0; }
+        bool is_empty() const { return mSize == 0; }
 
         bool contains(shared_ptr<T> data) const { return index_of(data) >= 0 ? true : false; }
 
-        void add(shared_ptr<T> data) { return insert(_size, data); }
+        void add(shared_ptr<T> data) { return insert(mSize, data); }
     };
 
     template<typename T>
     inline void IList<T>::check_range(int index, bool isAdd) const {
-        if (!isAdd && (index >= _size || index < 0))
-            throw out_of_range("index = " + to_string(index) + " out of range: [0, " + to_string(_size - 1) + "].");
-        if (index > _size || index < 0)
-            throw out_of_range("index = " + to_string(index) + " out of range for add: [0, " + to_string(_size) + "].");
+        if (!isAdd && (index >= mSize || index < 0))
+            throw out_of_range("index = " + to_string(index) + " out of range: [0, " + to_string(mSize - 1) + "].");
+        if (index > mSize || index < 0)
+            throw out_of_range("index = " + to_string(index) + " out of range for add: [0, " + to_string(mSize) + "].");
     }
 } // namespace app
 

@@ -19,19 +19,19 @@ namespace app {
     protected:
         using Comparator = int (*)(shared_ptr<T> a, shared_ptr<T> b);
         using TraverseFunc = bool (*)(shared_ptr<T> data);
-        size_t _size = 0;
-        Comparator _comparator = nullptr;
+        size_t mSize = 0;
+        Comparator mComparator = nullptr;
 
         int compare(shared_ptr<T> a, shared_ptr<T> b);
 
     public:
-        IHeap(Comparator comparator = nullptr) { _comparator = comparator; }
+        IHeap(Comparator comparator = nullptr) { mComparator = comparator; }
 
         virtual ~IHeap() = default;
 
-        size_t size() const { return _size; }
+        size_t size() const { return mSize; }
 
-        bool is_empty() const { return _size == 0; }
+        bool is_empty() const { return mSize == 0; }
 
         virtual void add(shared_ptr<T> data) = 0;
 
@@ -48,8 +48,8 @@ namespace app {
 
     template<typename T>
     inline int IHeap<T>::compare(shared_ptr<T> a, shared_ptr<T> b) {
-        if (_comparator != nullptr)
-            return _comparator(a, b);
+        if (mComparator != nullptr)
+            return mComparator(a, b);
         else {
             if (*a < *b)
                 return -1;
