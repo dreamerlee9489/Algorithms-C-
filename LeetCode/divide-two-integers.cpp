@@ -18,7 +18,7 @@ class Solution {
     pair<string, string> myDivide(string nume, string deno) {
         long dividend = stol(nume), divisor = stol(deno);
         if (dividend < divisor)
-            return pair<string, string>("0", to_string(dividend));
+            return pair<string, string>("0", nume);
         if (dividend == divisor)
             return pair<string, string>("1", "0");
         int div = 0;

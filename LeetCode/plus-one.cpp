@@ -18,10 +18,10 @@ class Solution {
 public:
     vector<int> plusOne(vector<int> &digits) {
         vector<int> res = vector<int>(digits.size());
-        int ahead = 1;
+        int carry = 1;
         for (int i = digits.size() - 1, j = res.size() - 1; i >= -1 || j >= 0; i--, j--) {
             if (i == -1) {
-                if (ahead == 1) {
+                if (carry == 1) {
                     vector<int> tmp = vector<int>(digits.size() + 1);
                     tmp[0] = 1;
                     for (int i = 1; i < tmp.size(); i++)
@@ -30,12 +30,12 @@ public:
                 }
                 break;
             }
-            if (digits[i] + ahead < 10) {
-                res[j] = digits[i] + ahead;
-                ahead = 0;
+            if (digits[i] + carry < 10) {
+                res[j] = digits[i] + carry;
+                carry = 0;
             } else {
                 res[j] = 0;
-                ahead = 1;
+                carry = 1;
             }
         }
         return res;
