@@ -49,6 +49,19 @@ int main() {
     cout << "----------Test BST(BST<T> &&)----------\n";
     BST<Person> tree3 = BST<Person>(move(tree));
     cout << tree3;
+    cout << "----------Test traverse(Morris)----------\n";
+    BST<Person> tree4;
+    tree4.add(make_shared<Person>(6, "Alice6"));
+    tree4.add(make_shared<Person>(2, "Alice2"));
+    tree4.add(make_shared<Person>(0, "Alice0"));
+    tree4.add(make_shared<Person>(4, "Alice4"));
+    tree4.add(make_shared<Person>(3, "Alice3"));
+    tree4.add(make_shared<Person>(5, "Alice5"));
+    tree4.add(make_shared<Person>(8, "Alice8"));
+    tree4.add(make_shared<Person>(7, "Alice7"));
+    tree4.add(make_shared<Person>(9, "Alice9"));
+    tree4.traverse(BST<Person>::TraverseOrder::Morris);
+
     return 0;
 }
 

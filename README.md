@@ -230,3 +230,8 @@
 - 二叉搜索树中第K小的元素(kth-smallest-element-in-a-bst.cpp)
 - 除自身以外数组的乘积(product-of-array-except-self.cpp)
 - 搜寻名人(find-the-celebrity.cpp)
+- 二叉搜索树中的中序后继(inorder-successor-in-bst.cpp)
+- 摆动排序 II(wiggle-sort-ii.cpp)
+- 奇偶链表(odd-even-linked-list.cpp)
+- 递增的三元子序列(increasing-triplet-subsequence.cpp)
+- 至多包含 K 个不同字符的最长子串(longest-substring-with-at-most-k-distinct-characters.cpp)
