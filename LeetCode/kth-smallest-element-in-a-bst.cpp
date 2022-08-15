@@ -10,16 +10,14 @@
  */
 #include <stack>
 #include "./TreeNode.hpp"
+
 using namespace std;
 
-class Solution
-{
+class Solution {
     stack<int> _stack;
 
-    void inorder(TreeNode *node, int k)
-    {
-        if (node != nullptr)
-        {
+    void inorder(TreeNode *node, int k) {
+        if (node != nullptr) {
             inorder(node->left, k);
             if (_stack.size() < k)
                 _stack.emplace(node->val);
@@ -28,8 +26,7 @@ class Solution
     }
 
 public:
-    int kthSmallest(TreeNode *root, int k)
-    {
+    int kthSmallest(TreeNode *root, int k) {
         inorder(root, k);
         return _stack.top();
     }

@@ -131,7 +131,8 @@ namespace app {
 
     template<typename K, typename V>
     template<typename _K, typename _V>
-    inline typename TreeMap<K, V>::template Node<_K, _V> &TreeMap<K, V>::Node<_K, _V>::operator=(const Node<_K, _V> &node) {
+    inline typename TreeMap<K, V>::template Node<_K, _V> &
+    TreeMap<K, V>::Node<_K, _V>::operator=(const Node<_K, _V> &node) {
         _key = node._key;
         _value = node._value;
         _parent = node._parent;
@@ -143,7 +144,8 @@ namespace app {
 
     template<typename K, typename V>
     template<typename _K, typename _V>
-    inline typename TreeMap<K, V>::template Node<_K, _V> &TreeMap<K, V>::Node<_K, _V>::operator=(Node<_K, _V> &&node) noexcept {
+    inline typename TreeMap<K, V>::template Node<_K, _V> &
+    TreeMap<K, V>::Node<_K, _V>::operator=(Node<_K, _V> &&node) noexcept {
         _key = nullptr;
         _value = nullptr;
         this = &node;

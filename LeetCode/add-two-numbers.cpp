@@ -8,8 +8,8 @@
  * @copyright Copyright (c) 2022
  *
  */
-#include "./ListNode.hpp"
 #include <iostream>
+#include "./ListNode.hpp"
 
 using namespace std;
 

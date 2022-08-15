@@ -13,28 +13,22 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+
 using namespace std;
 
-class Solution
-{
-    string multiply(string lhs, string rhs)
-    {
+class Solution {
+    string multiply(string lhs, string rhs) {
         string ans = "";
         vector<string> vec;
-        for (int r = rhs.size() - 1; r >= 0; r--)
-        {
+        for (int r = rhs.size() - 1; r >= 0; r--) {
             int carry = 0;
             vec.emplace_back("");
-            for (int l = lhs.size() - 1; l >= 0; l--)
-            {
+            for (int l = lhs.size() - 1; l >= 0; l--) {
                 string mul = to_string((lhs[l] - '0') * (rhs[r] - '0') + carry);
-                if (mul.size() == 1)
-                {
+                if (mul.size() == 1) {
                     vec.back() += mul[0];
                     carry = 0;
-                }
-                else
-                {
+                } else {
                     vec.back() += mul[1];
                     carry = mul[0] - '0';
                 }
@@ -42,8 +36,7 @@ class Solution
             if (carry != 0)
                 vec.back() += to_string(carry);
             int left = 0, right = vec.back().size() - 1;
-            while (left < right)
-            {
+            while (left < right) {
                 char tmp = vec.back()[left];
                 vec.back()[left] = vec.back()[right];
                 vec.back()[right] = tmp;
@@ -52,12 +45,10 @@ class Solution
             }
             vec.back() += string(rhs.size() - r - 1, '0');
         }
-        for (int i = 1; i < vec.size(); i++)
-        {
+        for (int i = 1; i < vec.size(); i++) {
             string sum = "";
             int carry = 0;
-            for (int f = vec[i - 1].size() - 1, b = vec[i].size() - 1; f >= 0, b >= 0; f--, b--)
-            {
+            for (int f = vec[i - 1].size() - 1, b = vec[i].size() - 1; f >= 0, b >= 0; f--, b--) {
                 string tmp = "";
                 if (f < 0 && b >= 0)
                     tmp += to_string((vec[i][b] - '0') + carry);
@@ -65,13 +56,10 @@ class Solution
                     tmp += to_string((vec[i - 1][f] - '0') + carry);
                 else
                     tmp += to_string((vec[i - 1][f] - '0') + (vec[i][b] - '0') + carry);
-                if (tmp.size() == 1)
-                {
+                if (tmp.size() == 1) {
                     sum += tmp[0];
                     carry = 0;
-                }
-                else
-                {
+                } else {
                     sum += to_string(tmp[1] - '0');
                     carry = tmp[0] - '0';
                 }
@@ -79,8 +67,7 @@ class Solution
             if (carry != 0)
                 sum += to_string(carry);
             int left = 0, right = sum.size() - 1;
-            while (left < right)
-            {
+            while (left < right) {
                 char tmp = sum[left];
                 sum[left] = sum[right];
                 sum[right] = tmp;
@@ -93,20 +80,17 @@ class Solution
     }
 
 public:
-    int trailingZeroes(int n)
-    {
+    int trailingZeroes(int n) {
         int res = 0;
-        if (n > 4)
-        {
+        if (n > 4) {
             int up = log(n) / log(5);
             for (int i = 1; i <= up; i++)
-                res += n / (int)(pow(5, i));
+                res += n / (int) (pow(5, i));
         }
         return res;
     }
 
-    int trailingZeroes1(int n)
-    {
+    int trailingZeroes1(int n) {
         if (n == 0)
             return 0;
         string res = to_string(n);
@@ -114,8 +98,7 @@ public:
         for (int i = n - 1; i > 1; i--)
             res = multiply(res, to_string(i));
         // cout << "res = " << res << "\n";
-        for (int i = res.size() - 1; i >= 0; i--)
-        {
+        for (int i = res.size() - 1; i >= 0; i--) {
             if (res[i] == '0')
                 ++count;
             else
@@ -125,8 +108,7 @@ public:
     }
 };
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
     cout << "1! - " << Solution().trailingZeroes1(1) << "\n";
     cout << "5! - " << Solution().trailingZeroes1(5) << "\n";
     cout << "10! - " << Solution().trailingZeroes1(10) << "\n";

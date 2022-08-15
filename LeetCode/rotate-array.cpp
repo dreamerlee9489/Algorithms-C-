@@ -10,19 +10,17 @@
  */
 #include <vector>
 #include <list>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    void rotate(vector<int> &nums, int k)
-    {
+    void rotate(vector<int> &nums, int k) {
         list<int> _list1, _list2;
-        if(k > nums.size())
+        if (k > nums.size())
             k = k % nums.size();
-        for (int i = 0; i < nums.size(); i++)
-        {
-            if(i < nums.size() - k)
+        for (int i = 0; i < nums.size(); i++) {
+            if (i < nums.size() - k)
                 _list1.emplace_back(nums[i]);
             else
                 _list2.emplace_back(nums[i]);
@@ -31,5 +29,5 @@ public:
         auto iter = _list2.begin();
         for (int i = 0; i < nums.size(); i++, iter++)
             nums[i] = *iter;
-    }   
+    }
 };

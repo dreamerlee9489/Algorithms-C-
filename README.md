@@ -235,3 +235,8 @@
 - 奇偶链表(odd-even-linked-list.cpp)
 - 递增的三元子序列(increasing-triplet-subsequence.cpp)
 - 至多包含 K 个不同字符的最长子串(longest-substring-with-at-most-k-distinct-characters.cpp)
+- 扁平化嵌套列表迭代器(flatten-nested-list-iterato.cpp)
+- 前 K 个高频元素(top-k-frequent-elements.cpp)
+- 设计井字棋(design-tic-tac-toe.cpp)
+- 两整数之和(sum-of-two-integers.cpp)
+- O(1) 时间插入、删除和获取随机元素(insert-delete-getrandom-o1.cpp)

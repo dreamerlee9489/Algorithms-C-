@@ -164,7 +164,8 @@ namespace app {
 
     template<typename K, typename V>
     template<typename _K, typename _V>
-    inline typename HashMap<K, V>::template Node<_K, _V> &HashMap<K, V>::Node<_K, _V>::operator=(const Node<_K, _V> &node) {
+    inline typename HashMap<K, V>::template Node<_K, _V> &
+    HashMap<K, V>::Node<_K, _V>::operator=(const Node<_K, _V> &node) {
         _key = node._key;
         _value = node._value;
         _parent = node._parent;
@@ -177,7 +178,8 @@ namespace app {
 
     template<typename K, typename V>
     template<typename _K, typename _V>
-    inline typename HashMap<K, V>::template Node<_K, _V> &HashMap<K, V>::Node<_K, _V>::operator=(Node<_K, _V> &&node) noexcept {
+    inline typename HashMap<K, V>::template Node<_K, _V> &
+    HashMap<K, V>::Node<_K, _V>::operator=(Node<_K, _V> &&node) noexcept {
         _key = nullptr;
         _value = nullptr;
         this = &node;
@@ -395,7 +397,8 @@ namespace app {
     }
 
     template<typename K, typename V>
-    inline typename HashMap<K, V>::template Node<K, V> *HashMap<K, V>::get_node(Node<K, V> *node, shared_ptr<K> key1) const {
+    inline typename HashMap<K, V>::template Node<K, V> *
+    HashMap<K, V>::get_node(Node<K, V> *node, shared_ptr<K> key1) const {
         size_t hash1 = get_hash(key1);
         Node<K, V> *result = nullptr;
         int cmp = 0;

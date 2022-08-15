@@ -10,17 +10,14 @@
  */
 #include "./ListNode.hpp"
 
-class Solution
-{
+class Solution {
 public:
-    ListNode *oddEvenList(ListNode *head)
-    {
-        if(!head)
+    ListNode *oddEvenList(ListNode *head) {
+        if (!head)
             return nullptr;
         ListNode *head1 = head, *head2 = head->next;
         ListNode *tail1 = head1, *tail2 = head2;
-        while (tail1->next && tail2->next)
-        {
+        while (tail1->next && tail2->next) {
             tail1->next = tail2->next;
             tail1 = tail1->next;
             tail2->next = tail1->next;

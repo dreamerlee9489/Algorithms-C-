@@ -10,19 +10,16 @@
  */
 #include <stack>
 #include "./TreeNode.hpp"
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    TreeNode *inorderSuccessor(TreeNode *root, TreeNode *p)
-    {
+    TreeNode *inorderSuccessor(TreeNode *root, TreeNode *p) {
         stack<TreeNode *> _stk;
         TreeNode *prev = nullptr, *curr = root;
-        while (curr || !_stk.empty())
-        {
-            while (curr)
-            {
+        while (curr || !_stk.empty()) {
+            while (curr) {
                 _stk.emplace(curr);
                 curr = curr->left;
             }

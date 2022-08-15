@@ -10,13 +10,12 @@
  */
 #include <vector>
 #include <algorithm>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    void wiggleSort(vector<int> &nums)
-    {
+    void wiggleSort(vector<int> &nums) {
         vector<int> temp(nums);
         sort(temp.begin(), temp.end());
         int left = (nums.size() - 1) / 2, right = nums.size() - 1;

@@ -11,26 +11,23 @@
 #include <vector>
 #include <unordered_map>
 #include <cmath>
+
 using namespace std;
 
-class Solution
-{
+class Solution {
 public:
-    vector<int> productExceptSelf(vector<int> &nums)
-    {
+    vector<int> productExceptSelf(vector<int> &nums) {
         vector<int> res(nums.size(), 1);
         unordered_map<int, int> _map;
         for (size_t i = 0; i < nums.size(); i++)
             ++_map[nums[i]];
-        for (size_t i = 0; i < nums.size(); i++)
-        {
+        for (size_t i = 0; i < nums.size(); i++) {
             --_map[nums[i]];
             if (_map[0] > 0)
                 res[i] = 0;
-            else
-            {
-                for (auto p : _map)
-                    if(p.first != 1 && p.second != 0)
+            else {
+                for (auto p: _map)
+                    if (p.first != 1 && p.second != 0)
                         res[i] *= pow(p.first, p.second);
             }
             ++_map[nums[i]];
