@@ -9,24 +9,74 @@
  *
  */
 #include "./TreeNode.hpp"
+#include <stack>
 #include <vector>
-
 using namespace std;
 
 class Solution {
-    vector<int> res;
+  vector<int> res;
 
-    void inorder(TreeNode *root) {
-        if (root != nullptr) {
-            inorderTraversal(root->left);
-            res.emplace_back(root->val);
-            inorderTraversal(root->right);
+  /**
+   * @brief Morris遍历
+   * @param root 
+   */
+  void inorder(TreeNode *root) {
+    TreeNode *node = root;
+    while (node) {
+      if (node->left) {
+        TreeNode *prev = node->left;
+        while (prev->right && prev->right != node) {
+          prev = prev->right;
         }
+        if (prev->right == node) {
+          prev->right = nullptr;
+          res.emplace_back(node->val);
+          node = node->right;
+        } else {
+          prev->right = node;
+          node = node->left;
+        }
+      } else {
+        res.emplace_back(node->val);
+        node = node->right;
+      }
     }
+  }
+
+  /**
+   * @brief 迭代遍历
+   * @param root 
+   */
+  void inorder1(TreeNode *root) {
+    stack<TreeNode *> _stk;
+    TreeNode *node = root;
+    while (!_stk.empty() || node) {
+      while (node) {
+        _stk.emplace(node);
+        node = node->left;
+      }
+      node = _stk.top();
+      _stk.pop();
+      res.emplace_back(node->val);
+      node = node->right;
+    }
+  }
+
+  /**
+   * @brief 递归遍历
+   * @param root 
+   */
+  void inorder2(TreeNode *root) {
+    if (root != nullptr) {
+      inorderTraversal(root->left);
+      res.emplace_back(root->val);
+      inorderTraversal(root->right);
+    }
+  }
 
 public:
-    vector<int> inorderTraversal(TreeNode *root) {
-        inorder(root);
-        return res;
-    }
+  vector<int> inorderTraversal(TreeNode *root) {
+    inorder(root);
+    return res;
+  }
 };

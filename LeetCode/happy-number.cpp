@@ -8,35 +8,35 @@
  * @copyright Copyright (c) 2022
  *
  */
+#include <cmath>
 #include <iostream>
 #include <stack>
-#include <cmath>
 
 using namespace std;
 
 class Solution {
 public:
-    bool isHappy(int n) {
-        stack<int> stk;
-        int round = 0;
-        while (n != 1) {
-            while (n != 0) {
-                stk.push(n % 10);
-                n /= 10;
-            }
-            while (!stk.empty()) {
-                n += pow(stk.top(), 2);
-                stk.pop();
-            }
-            if (++round > 9)
-                return false;
-        }
-        return true;
+  bool isHappy(int n) {
+    stack<int> stk;
+    int round = 0;
+    while (n != 1) {
+      while (n != 0) {
+        stk.push(n % 10);
+        n /= 10;
+      }
+      while (!stk.empty()) {
+        n += pow(stk.top(), 2);
+        stk.pop();
+      }
+      if (++round > 9)
+        return false;
     }
+    return true;
+  }
 };
 
 int main(int argc, char const *argv[]) {
-    // cout << Solution().isHappy(19);
-    cout << Solution().isHappy(2);
-    return 0;
+  // cout << Solution().isHappy(19);
+  cout << Solution().isHappy(2);
+  return 0;
 }

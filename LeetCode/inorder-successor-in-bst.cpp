@@ -8,28 +8,28 @@
  * @copyright Copyright (c) 2022
  *
  */
-#include <stack>
 #include "./TreeNode.hpp"
+#include <stack>
 
 using namespace std;
 
 class Solution {
 public:
-    TreeNode *inorderSuccessor(TreeNode *root, TreeNode *p) {
-        stack<TreeNode *> _stk;
-        TreeNode *prev = nullptr, *curr = root;
-        while (curr || !_stk.empty()) {
-            while (curr) {
-                _stk.emplace(curr);
-                curr = curr->left;
-            }
-            curr = _stk.top();
-            _stk.pop();
-            if (prev == p)
-                return curr;
-            prev = curr;
-            curr = curr->right;
-        }
-        return nullptr;
+  TreeNode *inorderSuccessor(TreeNode *root, TreeNode *p) {
+    stack<TreeNode *> _stk;
+    TreeNode *prev = nullptr, *curr = root;
+    while (curr || !_stk.empty()) {
+      while (curr) {
+        _stk.emplace(curr);
+        curr = curr->left;
+      }
+      curr = _stk.top();
+      _stk.pop();
+      if (prev == p)
+        return curr;
+      prev = curr;
+      curr = curr->right;
     }
+    return nullptr;
+  }
 };

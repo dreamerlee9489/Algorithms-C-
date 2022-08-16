@@ -8,9 +8,9 @@
  * @copyright Copyright (c) 2022
  *
  */
-#include <vector>
-#include <unordered_set>
 #include <numeric>
+#include <unordered_set>
+#include <vector>
 
 using namespace std;
 
@@ -18,38 +18,38 @@ bool knows(int a, int b);
 
 class Solution {
 public:
-    int findCelebrity(int n) {
-        int res = 0;
-        for (int i = i; i < n; i++)
-            if (knows(res, i))
-                res = i;
-        for (int i = 0; i < n; i++)
-            if (res != i && (knows(res, i) || !knows(i, res)))
-                return -1;
-        return res;
-    }
+  int findCelebrity(int n) {
+    int res = 0;
+    for (int i = i; i < n; i++)
+      if (knows(res, i))
+        res = i;
+    for (int i = 0; i < n; i++)
+      if (res != i && (knows(res, i) || !knows(i, res)))
+        return -1;
+    return res;
+  }
 };
 
 class Solution1 {
-    vector<vector<bool>> _graph;
+  vector<vector<bool>> _graph;
 
 public:
-    int findCelebrity(int n) {
-        _graph = vector<vector<bool>>(n, vector<bool>(n));
-        unordered_set<int> set;
-        vector<int> indexs;
-        for (int i = 0; i < n; i++)
-            set.emplace(i);
-        for (int r = 0; r < n; r++) {
-            for (int c = 0; c < n; c++) {
-                if (r != c) {
-                    if (knows(r, c))
-                        set.erase(r);
-                    else
-                        set.erase(c);
-                }
-            }
+  int findCelebrity(int n) {
+    _graph = vector<vector<bool>>(n, vector<bool>(n));
+    unordered_set<int> set;
+    vector<int> indexs;
+    for (int i = 0; i < n; i++)
+      set.emplace(i);
+    for (int r = 0; r < n; r++) {
+      for (int c = 0; c < n; c++) {
+        if (r != c) {
+          if (knows(r, c))
+            set.erase(r);
+          else
+            set.erase(c);
         }
-        return set.size() == 1 ? *set.begin() : -1;
+      }
     }
+    return set.size() == 1 ? *set.begin() : -1;
+  }
 };

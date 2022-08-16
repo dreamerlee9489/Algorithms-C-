@@ -8,42 +8,36 @@
  * @copyright Copyright (c) 2022
  *
  */
-#include <vector>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
 class Vector2D {
-    vector<int> mVec;
-    int mIdx = 0;
+  vector<int> mVec;
+  int mIdx = 0;
 
 public:
-    Vector2D(vector<vector<int>> &vec) {
-        for (int i = 0; i < vec.size(); i++)
-            for (int j = 0; j < vec[i].size(); j++)
-                mVec.emplace_back(vec[i][j]);
-    }
+  Vector2D(vector<vector<int>> &vec) {
+    for (int i = 0; i < vec.size(); i++)
+      for (int j = 0; j < vec[i].size(); j++)
+        mVec.emplace_back(vec[i][j]);
+  }
 
-    int next() {
-        return mVec[mIdx++];
-    }
+  int next() { return mVec[mIdx++]; }
 
-    bool hasNext() {
-        return mIdx < mVec.size();
-    }
+  bool hasNext() { return mIdx < mVec.size(); }
 };
 
 int main(int argc, char const *argv[]) {
-    vector<vector<int>> vec = {{1, 2},
-                               {3},
-                               {4}};
-    Vector2D iterator = Vector2D(vec);
-    cout << iterator.next() << "\n";    // 返回 1
-    cout << iterator.next() << "\n";    // 返回 2
-    cout << iterator.next() << "\n";    // 返回 3
-    cout << iterator.hasNext() << "\n"; // 返回 true
-    cout << iterator.hasNext() << "\n"; // 返回 true
-    cout << iterator.next() << "\n";    // 返回 4
-    cout << iterator.hasNext() << "\n"; // 返回 false
-    return 0;
+  vector<vector<int>> vec = {{1, 2}, {3}, {4}};
+  Vector2D iterator = Vector2D(vec);
+  cout << iterator.next() << "\n";    // 返回 1
+  cout << iterator.next() << "\n";    // 返回 2
+  cout << iterator.next() << "\n";    // 返回 3
+  cout << iterator.hasNext() << "\n"; // 返回 true
+  cout << iterator.hasNext() << "\n"; // 返回 true
+  cout << iterator.next() << "\n";    // 返回 4
+  cout << iterator.hasNext() << "\n"; // 返回 false
+  return 0;
 }

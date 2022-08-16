@@ -16,44 +16,41 @@ using namespace std;
 // You should not implement it, or speculate about its implementation
 class NestedInteger {
 public:
-    // Return true if this NestedInteger holds a single integer, rather than a nested list.
-    bool isInteger() const;
+  // Return true if this NestedInteger holds a single integer, rather than a
+  // nested list.
+  bool isInteger() const;
 
-    // Return the single integer that this NestedInteger holds, if it holds a single integer
-    // The result is undefined if this NestedInteger holds a nested list
-    int getInteger() const;
+  // Return the single integer that this NestedInteger holds, if it holds a
+  // single integer The result is undefined if this NestedInteger holds a nested
+  // list
+  int getInteger() const;
 
-    // Return the nested list that this NestedInteger holds, if it holds a nested list
-    // The result is undefined if this NestedInteger holds a single integer
-    const vector<NestedInteger> &getList() const;
+  // Return the nested list that this NestedInteger holds, if it holds a nested
+  // list The result is undefined if this NestedInteger holds a single integer
+  const vector<NestedInteger> &getList() const;
 };
 
 class NestedIterator {
-    vector<int> list;
-    int index = 0;
+  vector<int> list;
+  int index = 0;
 
-    void dfs(const vector<NestedInteger> &nest) {
-        for (int i = 0; i < nest.size(); i++) {
-            if (nest[i].isInteger())
-                list.emplace_back(nest[i].getInteger());
-            else
-                dfs(nest[i].getList());
-        }
+  void dfs(const vector<NestedInteger> &nest) {
+    for (int i = 0; i < nest.size(); i++) {
+      if (nest[i].isInteger())
+        list.emplace_back(nest[i].getInteger());
+      else
+        dfs(nest[i].getList());
     }
+  }
 
 public:
-    NestedIterator(vector<NestedInteger> &nestedList) {
-        dfs(nestedList);
-    }
+  NestedIterator(vector<NestedInteger> &nestedList) { dfs(nestedList); }
 
-    int next() {
-        return list[index++];
-    }
+  int next() { return list[index++]; }
 
-    bool hasNext() {
-        if (index < list.size())
-            return true;
-        return false;
-    }
+  bool hasNext() {
+    if (index < list.size())
+      return true;
+    return false;
+  }
 };
-

@@ -8,19 +8,19 @@
  * @copyright Copyright (c) 2022
  *
  */
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
 class Solution {
 public:
-    bool searchMatrix(vector<vector<int>> &matrix, int target) {
-        for (const auto &row: matrix) {
-            const auto iter = lower_bound(row.begin(), row.end(), target);
-            if (iter != row.end() && *iter == target)
-                return true;
-        }
-        return false;
+  bool searchMatrix(vector<vector<int>> &matrix, int target) {
+    for (const auto &row : matrix) {
+      const auto iter = lower_bound(row.begin(), row.end(), target);
+      if (iter != row.end() && *iter == target)
+        return true;
     }
+    return false;
+  }
 };

@@ -8,28 +8,28 @@
  * @copyright Copyright (c) 2022
  *
  */
-#include <vector>
 #include "./TreeNode.hpp"
+#include <vector>
 
 using namespace std;
 
 class Solution {
-    vector<int> mVec;
+  vector<int> mVec;
 
-    void inorder(TreeNode *node) {
-        if (node != nullptr) {
-            inorder(node->left);
-            mVec.emplace_back(node->val);
-            inorder(node->right);
-        }
+  void inorder(TreeNode *node) {
+    if (node != nullptr) {
+      inorder(node->left);
+      mVec.emplace_back(node->val);
+      inorder(node->right);
     }
+  }
 
 public:
-    bool isValidBST(TreeNode *root) {
-        inorder(root);
-        for (size_t i = 1; i < mVec.size(); i++)
-            if (mVec[i - 1] > mVec[i])
-                return false;
-        return true;
-    }
+  bool isValidBST(TreeNode *root) {
+    inorder(root);
+    for (size_t i = 1; i < mVec.size(); i++)
+      if (mVec[i - 1] > mVec[i])
+        return false;
+    return true;
+  }
 };

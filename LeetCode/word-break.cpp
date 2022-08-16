@@ -9,28 +9,28 @@
  *
  */
 #include <string>
-#include <vector>
 #include <unordered_set>
+#include <vector>
 
 using namespace std;
 
 class Solution {
-    unordered_set<string> set;
+  unordered_set<string> set;
 
 public:
-    bool wordBreak(string s, vector<string> &wordDict) {
-        for (string str: wordDict)
-            set.emplace(str);
-        vector<bool> dp(s.size() + 1, false);
-        dp[0] = true;
-        for (int i = 1; i < dp.size(); i++) {
-            for (int j = 0; j < i; j++) {
-                if (dp[j] && (set.find(s.substr(j, i - j)) != set.end())) {
-                    dp[i] = true;
-                    break;
-                }
-            }
+  bool wordBreak(string s, vector<string> &wordDict) {
+    for (string str : wordDict)
+      set.emplace(str);
+    vector<bool> dp(s.size() + 1, false);
+    dp[0] = true;
+    for (int i = 1; i < dp.size(); i++) {
+      for (int j = 0; j < i; j++) {
+        if (dp[j] && (set.find(s.substr(j, i - j)) != set.end())) {
+          dp[i] = true;
+          break;
         }
-        return dp[s.size()];
+      }
     }
+    return dp[s.size()];
+  }
 };

@@ -15,25 +15,25 @@ using namespace std;
 
 class Solution {
 public:
-    int countPrimes(int n) {
-        int res = 0;
-        vector<bool> isPrime(n, true);
-        for (size_t i = 2; i < n; i++) {
-            if (isPrime[i]) {
-                ++res;
-                if (i * i < n)
-                    for (size_t j = i * i; j < n; j += i)
-                        isPrime[j] = false;
-            }
-        }
-        return res;
+  int countPrimes(int n) {
+    int res = 0;
+    vector<bool> isPrime(n, true);
+    for (size_t i = 2; i < n; i++) {
+      if (isPrime[i]) {
+        ++res;
+        if (i * i < n)
+          for (size_t j = i * i; j < n; j += i)
+            isPrime[j] = false;
+      }
     }
+    return res;
+  }
 };
 
 int main(int argc, char const *argv[]) {
-    cout << Solution().countPrimes(0) << "\n";
-    cout << Solution().countPrimes(1) << "\n";
-    cout << Solution().countPrimes(10) << "\n";
-    cout << Solution().countPrimes(499979) << "\n";
-    return 0;
+  cout << Solution().countPrimes(0) << "\n";
+  cout << Solution().countPrimes(1) << "\n";
+  cout << Solution().countPrimes(10) << "\n";
+  cout << Solution().countPrimes(499979) << "\n";
+  return 0;
 }

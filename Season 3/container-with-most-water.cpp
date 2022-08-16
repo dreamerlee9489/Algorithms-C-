@@ -8,31 +8,31 @@
  * @copyright Copyright (c) 2022
  *
  */
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
 class Solution {
 public:
-    int maxArea(vector<int> &height) {
-        if (height.empty())
-            return 0;
-        int l = 0, r = height.size() - 1;
-        int minH = 0, area = 0;
-        while (l < r) {
-            if (height[l] <= height[r]) {
-                minH = height[l];
-                area = max(area, (r - l) * minH);
-                while (l < r && height[l] <= minH)
-                    l++;
-            } else {
-                minH = height[r];
-                area = max(area, (r - l) * minH);
-                while (l < r && height[r] <= minH)
-                    r--;
-            }
-        }
-        return area;
+  int maxArea(vector<int> &height) {
+    if (height.empty())
+      return 0;
+    int l = 0, r = height.size() - 1;
+    int minH = 0, area = 0;
+    while (l < r) {
+      if (height[l] <= height[r]) {
+        minH = height[l];
+        area = max(area, (r - l) * minH);
+        while (l < r && height[l] <= minH)
+          l++;
+      } else {
+        minH = height[r];
+        area = max(area, (r - l) * minH);
+        while (l < r && height[r] <= minH)
+          r--;
+      }
     }
-};  
+    return area;
+  }
+};

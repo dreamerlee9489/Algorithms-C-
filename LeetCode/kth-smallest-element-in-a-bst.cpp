@@ -8,26 +8,26 @@
  * @copyright Copyright (c) 2022
  *
  */
-#include <stack>
 #include "./TreeNode.hpp"
+#include <stack>
 
 using namespace std;
 
 class Solution {
-    stack<int> _stack;
+  stack<int> _stack;
 
-    void inorder(TreeNode *node, int k) {
-        if (node != nullptr) {
-            inorder(node->left, k);
-            if (_stack.size() < k)
-                _stack.emplace(node->val);
-            inorder(node->right, k);
-        }
+  void inorder(TreeNode *node, int k) {
+    if (node != nullptr) {
+      inorder(node->left, k);
+      if (_stack.size() < k)
+        _stack.emplace(node->val);
+      inorder(node->right, k);
     }
+  }
 
 public:
-    int kthSmallest(TreeNode *root, int k) {
-        inorder(root, k);
-        return _stack.top();
-    }
+  int kthSmallest(TreeNode *root, int k) {
+    inorder(root, k);
+    return _stack.top();
+  }
 };

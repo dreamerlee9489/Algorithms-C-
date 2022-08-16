@@ -1,18 +1,18 @@
-#include <iostream>
-#include <string>
 #include "./14_TreeMap.hpp"
 #include "./Person.hpp"
+#include <iostream>
+#include <string>
 
 using namespace app;
 
 int main(int argc, char const *argv[]) {
-    TreeMap<int, Person> map;
-    map.add(make_shared<int>(10006), make_shared<Person>(12, "Alice12"));
-    map.add(make_shared<int>(10008), make_shared<Person>(15, "Alice15"));
-    map.add(make_shared<int>(10002), make_shared<Person>(16, "Alice16"));
-    map.add(make_shared<int>(10005), make_shared<Person>(18, "Alice18"));
-    map.traverse();
-    return 0;
+  TreeMap<int, Person> map;
+  map.add(make_shared<int>(10006), make_shared<Person>(12, "Alice12"));
+  map.add(make_shared<int>(10008), make_shared<Person>(15, "Alice15"));
+  map.add(make_shared<int>(10002), make_shared<Person>(16, "Alice16"));
+  map.add(make_shared<int>(10005), make_shared<Person>(18, "Alice18"));
+  map.traverse();
+  return 0;
 }
 
 /*

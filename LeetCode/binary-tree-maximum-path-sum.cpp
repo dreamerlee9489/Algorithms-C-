@@ -14,20 +14,20 @@
 using namespace std;
 
 class Solution {
-    int sum = INT_MIN;
+  int sum = INT_MIN;
 
-    int getValue(TreeNode *node) {
-        if (node == nullptr)
-            return 0;
-        int lvalue = max(getValue(node->left), 0);
-        int rvalue = max(getValue(node->right), 0);
-        sum = max(node->val + lvalue + rvalue, sum);
-        return node->val + max(lvalue, rvalue);
-    }
+  int getValue(TreeNode *node) {
+    if (node == nullptr)
+      return 0;
+    int lvalue = max(getValue(node->left), 0);
+    int rvalue = max(getValue(node->right), 0);
+    sum = max(node->val + lvalue + rvalue, sum);
+    return node->val + max(lvalue, rvalue);
+  }
 
 public:
-    int maxPathSum(TreeNode *root) {
-        getValue(root);
-        return sum;
-    }
+  int maxPathSum(TreeNode *root) {
+    getValue(root);
+    return sum;
+  }
 };

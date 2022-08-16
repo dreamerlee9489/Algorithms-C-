@@ -8,26 +8,26 @@
  * @copyright Copyright (c) 2022
  *
  */
-#include <vector>
 #include <algorithm>
+#include <vector>
 
 using namespace std;
 
 class Solution {
 public:
-    int longestConsecutive(vector<int> &nums) {
-        if (nums.empty())
-            return 0;
-        int count = 1, maxCount = 1;
-        sort(nums.begin(), nums.end());
-        for (int i = 1; i < nums.size(); i++) {
-            if (nums[i] == nums[i - 1])
-                continue;
-            if (nums[i] == nums[i - 1] + 1)
-                maxCount = max(++count, maxCount);
-            else
-                count = 1;
-        }
-        return maxCount;
+  int longestConsecutive(vector<int> &nums) {
+    if (nums.empty())
+      return 0;
+    int count = 1, maxCount = 1;
+    sort(nums.begin(), nums.end());
+    for (int i = 1; i < nums.size(); i++) {
+      if (nums[i] == nums[i - 1])
+        continue;
+      if (nums[i] == nums[i - 1] + 1)
+        maxCount = max(++count, maxCount);
+      else
+        count = 1;
     }
+    return maxCount;
+  }
 };

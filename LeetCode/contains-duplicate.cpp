@@ -8,18 +8,18 @@
  * @copyright Copyright (c) 2022
  *
  */
-#include <vector>
 #include <unordered_map>
+#include <vector>
 
 using namespace std;
 
 class Solution {
 public:
-    bool containsDuplicate(vector<int> &nums) {
-        unordered_map<int, int> _map;
-        for (int i: nums)
-            if (++_map[i] > 1)
-                return true;
-        return false;
-    }
+  bool containsDuplicate(vector<int> &nums) {
+    unordered_map<int, int> _map;
+    for (int i : nums)
+      if (++_map[i] > 1)
+        return true;
+    return false;
+  }
 };

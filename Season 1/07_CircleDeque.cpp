@@ -1,28 +1,28 @@
-#include <string>
 #include "./07_CircleDeque.hpp"
 #include "./Person.hpp"
+#include <string>
 
 using namespace app;
 
 int main() {
-    CircleDeque<Person> deque;
-    for (size_t i = 0; i < 10; ++i) {
-        deque.push_front(make_shared<Person>(i + 1, "Alice" + to_string(i + 1)));
-        deque.push(make_shared<Person>(i + 100, "Alice" + to_string(i + 100)));
-    }
-    for (size_t i = 0; i < 3; ++i) {
-        deque.pop();
-        deque.pop_rear();
-    }
-    deque.push_front(make_shared<Person>(11, "Alice11"));
-    deque.push_front(make_shared<Person>(12, "Alice12"));
-    cout << "size=" << deque.size() << ", capacity=" << deque.capacity() << "\n";
-    cout << "----------Test operator<<()----------\n";
-    cout << deque;
-    cout << "----------Test pop()----------\n";
-    while (!deque.is_empty())
-        cout << *deque.pop() << "\n";
-    return 0;
+  CircleDeque<Person> deque;
+  for (size_t i = 0; i < 10; ++i) {
+    deque.push_front(make_shared<Person>(i + 1, "Alice" + to_string(i + 1)));
+    deque.push(make_shared<Person>(i + 100, "Alice" + to_string(i + 100)));
+  }
+  for (size_t i = 0; i < 3; ++i) {
+    deque.pop();
+    deque.pop_rear();
+  }
+  deque.push_front(make_shared<Person>(11, "Alice11"));
+  deque.push_front(make_shared<Person>(12, "Alice12"));
+  cout << "size=" << deque.size() << ", capacity=" << deque.capacity() << "\n";
+  cout << "----------Test operator<<()----------\n";
+  cout << deque;
+  cout << "----------Test pop()----------\n";
+  while (!deque.is_empty())
+    cout << *deque.pop() << "\n";
+  return 0;
 }
 
 /*
