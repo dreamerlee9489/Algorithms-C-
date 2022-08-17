@@ -206,61 +206,64 @@ inline ostream &IBinaryTree<T>::draw_tree(ostream &os,
 template <typename T>
 inline typename IBinaryTree<T>::template Node<T> *
 IBinaryTree<T>::get_predecessor(Node<T> *node) const {
-  if (node != nullptr) {
-    Node<T> *p = node->_left;
-    if (p != nullptr) {
-      while (p->_right != nullptr)
-        p = p->_right;
-      return p;
-    }
-    while (node->_parent != nullptr && node == node->_parent->_left)
-      node = node->_parent;
-    return node->_parent;
+  if (node == nullptr)
+    return node;
+  // 如果左子树不空, 前驱结点为左子树中最后一个右结点
+  if (node->_left != nullptr) {
+    Node<T> *pred = node->_left;
+    while (pred->_right != nullptr)
+      pred = pred->_right;
+    return pred;
   }
-  return nullptr;
+  // 如果左子树为空, 前驱结点为祖先结点中第一个小于自身的结点
+  while (node->_parent != nullptr && node == node->_parent->_left)
+    node = node->_parent;
+  return node->_parent;
 }
 
 template <typename T>
 inline typename IBinaryTree<T>::template Node<T> *
 IBinaryTree<T>::get_successor(Node<T> *node) const {
-  if (node != nullptr) {
-    Node<T> *p = node->_right;
-    if (p != nullptr) {
-      while (p->_left != nullptr)
-        p = p->_left;
-      return p;
-    }
-    while (node->_parent != nullptr && node == node->_parent->_right)
-      node = node->_parent;
-    return node->_parent;
+  if (node == nullptr)
+    return node;
+  // 如果右子树不空, 后继结点为右子树中最后一个左结点
+  if (node->_right != nullptr) {
+    Node<T> *succ = node->_right;
+    while (succ->_left != nullptr)
+      succ = succ->_left;
+    return succ;
   }
-  return nullptr;
+  // 如果右子树为空, 后继结点为祖先结点中第一个大于自身的结点
+  while (node->_parent != nullptr && node == node->_parent->_right)
+    node = node->_parent;
+  return node->_parent;
 }
 
 template <typename T> inline bool IBinaryTree<T>::is_complete() const {
-  if (_root != nullptr) {
-    queue<Node<T> *> q;
-    q.push(_root);
-    bool leaf = false;
-    while (!q.empty()) {
-      Node<T> *elem = q.front();
-      q.pop();
-      if (leaf && !elem->is_leaf())
-        return false;
-
-      if (elem->_left != nullptr)
-        q.push(elem->_left);
-      else if (elem->_right != nullptr)
-        return false;
-
-      if (elem->_right != nullptr)
-        q.push(elem->_right);
-      else
-        leaf = true; //最后一个非叶结点不入队
-    }
-    return true;
+  if (_root == nullptr)
+    return false;
+  queue<Node<T> *> q;
+  q.push(_root);
+  bool leaf = false;
+  while (!q.empty()) {
+    Node<T> *node = q.front();
+    q.pop();
+    if (leaf && !node->is_leaf())
+      return false;
+    // 如果左结点不空, 压入左结点
+    // 如果左结点为空, 右结点不空返回false
+    if (node->_left != nullptr)
+      q.push(node->_left);
+    else if (node->_right != nullptr)
+      return false;
+    // 如果右结点不空, 压入右结点
+    // 如果右结点为空, 表示已到达非叶结点, 剩余的结点应全为叶结点
+    if (node->_right != nullptr)
+      q.push(node->_right);
+    else
+      leaf = true;
   }
-  return false;
+  return true;
 }
 
 template <typename T> inline void IBinaryTree<T>::clear_recu(Node<T> *node) {
@@ -273,26 +276,27 @@ template <typename T> inline void IBinaryTree<T>::clear_recu(Node<T> *node) {
 
 template <typename T>
 inline size_t IBinaryTree<T>::height_iter(Node<T> *node) const {
+  size_t height = 0;
   if (node != nullptr) {
-    size_t height = 0, level_count = 1;
     queue<Node<T> *> q;
     q.push(node);
+    size_t count = 1;
     while (!q.empty()) {
       Node<T> *elem = q.front();
       q.pop();
-      level_count--;
       if (elem->_left != nullptr)
         q.push(elem->_left);
       if (elem->_right != nullptr)
         q.push(elem->_right);
-      if (level_count == 0) {
-        level_count = q.size();
+      // count减为0表示一层遍历结束
+      // 此时队列中结点个数为下一层结点总数
+      if (--count == 0) {
+        count = q.size();
         height++;
       }
     }
-    return height;
   }
-  return 0;
+  return height;
 }
 
 template <typename T>
@@ -432,7 +436,7 @@ inline void IBinaryTree<T>::morrisorder(Node<T> *node,
       while (pred->_right != nullptr && pred->_right != node)
         pred = pred->_right;
       if (pred->_right == nullptr) {
-        pred->_right = node; // 找到左孩子最右侧的结点，将其后继置为根结点
+        pred->_right = node; // 找到左结点最右侧的结点，将其后继置为根结点
         node = node->_left;
       } else {
         if (func != nullptr)

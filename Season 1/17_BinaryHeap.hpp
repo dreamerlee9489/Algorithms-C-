@@ -16,10 +16,22 @@ template <typename T> class BinaryHeap : public IHeap<T> {
 
   void ensure_capacity();
 
+  /**
+   * @brief 上滤
+   * @param index
+   */
   void sift_up(int index);
 
+  /**
+   * @brief 下滤
+   * @param index
+   */
   void sift_down(int index);
 
+  /**
+   * @brief 建堆
+   * @remark 上滤复杂度O(nlogn), 下滤复杂度O(n)
+   */
   void heapify() {
     for (int i = (this->_size >> 1) - 1; i >= 0; --i)
       sift_down(i);
@@ -40,6 +52,12 @@ public:
 
   BinaryHeap<T> &operator=(BinaryHeap<T> &&heap) noexcept;
 
+  /**
+   * @brief 将数组调整为二叉堆
+   * @param comparator
+   * @param array
+   * @param size
+   */
   BinaryHeap(typename IHeap<T>::Comparator comparator = nullptr,
              shared_ptr<T> *array = nullptr, size_t size = 0);
 
@@ -55,6 +73,14 @@ public:
 
   shared_ptr<T> remove() override;
 
+  /**
+   * @brief 删除堆顶元素, 添加新元素到堆中
+   * @param data 新元素
+   * @return shared_ptr<T> 被删除的堆顶元素
+   * @remark TopK问题: 从N个元素中, 找出K个最值
+   *         将前K个元素添加到堆中, 从K+1个数开始, 使用replace替换堆顶元素
+   *         遍历完成后, 堆中剩下的就是K个最值
+   */
   shared_ptr<T> replace(shared_ptr<T> data) override;
 
   shared_ptr<T> get() const override {
@@ -185,30 +211,30 @@ template <typename T> inline void BinaryHeap<T>::ensure_capacity() {
 }
 
 template <typename T> inline void BinaryHeap<T>::sift_up(int index) {
-  shared_ptr<T> child = _array[index];
+  shared_ptr<T> node = _array[index]; // 备份新结点
   while (index > 0) {
     int parent_index = (index - 1) >> 1;
     shared_ptr<T> parent = _array[parent_index];
-    if (this->compare(child, parent) <= 0)
+    if (this->compare(node, parent) <= 0) // 父结点大于node, 退出循环
       break;
-    _array[index] = parent;
+    _array[index] = parent; // node大于父结点, 交换位置
     index = parent_index;
   }
-  _array[index] = child;
+  _array[index] = node;
 }
 
 template <typename T> inline void BinaryHeap<T>::sift_down(int index) {
-  shared_ptr<T> parent = _array[index];
-  int half = this->_size >> 1;
+  shared_ptr<T> parent = _array[index]; // 备份根结点
+  int half = this->_size >> 1;          // 完全二叉树首个叶结点
   while (index < half) {
     int child_index = (index << 1) + 1, right_index = child_index + 1;
-    shared_ptr<T> child = _array[child_index];
+    shared_ptr<T> child = _array[child_index]; // 默认左子结点和父结点比
     if (right_index < this->_size &&
         this->compare(_array[child_index], _array[right_index]) < 0)
-      child = _array[child_index = right_index];
-    if (this->compare(parent, child) >= 0)
+      child = _array[child_index = right_index]; // 右子结点大于左子结点
+    if (this->compare(parent, child) >= 0) // 子结点小于父结点, 退出循环
       break;
-    _array[index] = child;
+    _array[index] = child; // 父结点大于最大子结点, 交换位置
     index = child_index;
   }
   _array[index] = parent;

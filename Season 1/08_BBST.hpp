@@ -15,6 +15,12 @@ template <typename T> class BBST : public BST<T> {
 protected:
   virtual void rotate(NODE *r, NODE *b, NODE *c, NODE *d, NODE *e, NODE *f);
 
+  /**
+   * @brief 维护父指针
+   * @param grand 失衡结点
+   * @param parent 失衡结点的较高子树
+   * @param child 被交换的子树
+   */
   virtual void after_rotate(NODE *grand, NODE *parent, NODE *child);
 
   void rotate_left(NODE *grand);
@@ -31,16 +37,16 @@ public:
 template <typename T> inline void BBST<T>::rotate_left(NODE *grand) {
   NODE *parent = grand->_right;
   NODE *child = parent->_left;
-  grand->_right = child;
-  parent->_left = grand;
+  grand->_right = child; // 祖父节点的右子树指向父结点的左子树
+  parent->_left = grand; // 父结点的左子树指向祖父结点
   this->after_rotate(grand, parent, child);
 }
 
 template <typename T> inline void BBST<T>::rotate_right(NODE *grand) {
-  NODE *parent = grand->_left;
+  NODE *parent = grand->_left;  
   NODE *child = parent->_right;
-  grand->_left = child;
-  parent->_right = grand;
+  grand->_left = child;   // 祖父节点的左子树指向父结点的右子树
+  parent->_right = grand; // 父结点的右子树指向祖父结点
   this->after_rotate(grand, parent, child);
 }
 

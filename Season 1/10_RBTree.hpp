@@ -136,42 +136,49 @@ inline typename RBTree<T>::NODE *RBTree<T>::set_color(NODE *node, bool color) {
 template <typename T> inline void RBTree<T>::after_add(NODE *node) {
   NODE *parent = node->_parent;
   if (parent == nullptr) {
-    set_color(node, BLACK);
+    set_color(node, BLACK); // 根结点必为黑色
     return;
   }
+  // 如果父结点是黑色, 不需要任何处理, 新结点默认红色
   if (is_red(parent)) {
     NODE *uncle = parent->get_sibling();
-    NODE *grand = set_color(parent->_parent, RED);
+    NODE *grand = set_color(parent->_parent, RED); // 祖父结点必为红色
+    // 叔父结点是红色, 表示上溢, 父结点与叔父结点分裂为两个根结点
     if (is_red(uncle)) {
       set_color(parent, BLACK);
       set_color(uncle, BLACK);
-      after_add(grand);
+      after_add(grand); // 祖父结点当做新结点处理
       return;
     }
     if (parent->is_left()) {
-      if (node->is_left())
-        set_color(parent, BLACK);
-      else {
-        set_color(node, BLACK);
+      if (node->is_left()) {
+        set_color(parent, BLACK); // parent成为根结点, 单旋
+        this->rotate_right(grand);
+      } else {
+        set_color(node, BLACK); // node成为根结点, 双旋
         this->rotate_left(parent);
+        this->rotate_right(grand);
       }
-      this->rotate_right(grand);
     } else {
       if (node->is_left()) {
         set_color(node, BLACK);
         this->rotate_right(parent);
-      } else
+        this->rotate_left(grand);
+      } else {
         set_color(parent, BLACK);
-      this->rotate_left(grand);
+        this->rotate_left(grand);
+      }
     }
   }
 }
 
 template <typename T> inline void RBTree<T>::after_remove(NODE *node) {
+  // 删除红色结点(必为B树叶结点)或者度为1的黑色结点
   if (is_red(node)) {
-    set_color(node, BLACK);
+    set_color(node, BLACK); // 将替代结点染为黑色
     return;
   }
+  // 删除黑色叶子结点会导致下溢
   NODE *parent = node->_parent;
   if (parent != nullptr) {
     bool is_left = parent->_left == nullptr || node->is_left();

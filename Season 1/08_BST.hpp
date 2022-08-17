@@ -71,21 +71,21 @@ template <typename T> inline BST<T> &BST<T>::operator=(BST<T> &&tree) noexcept {
 template <typename T> inline void BST<T>::add(shared_ptr<T> data) {
   this->not_null_check(data);
   if (this->_root == nullptr) {
-    this->_root = this->create_node(data, nullptr);
     this->_size++;
+    this->_root = this->create_node(data, nullptr);
     this->after_add(this->_root);
     return;
   }
   NODE *node = this->_root, *parent = this->_root;
   while (node != nullptr) {
-    parent = node;
+    parent = node; // 找到父结点
     if (this->_comparator == nullptr) {
       if (*node->_data < *data)
         node = node->_right;
       else if (*node->_data > *data)
         node = node->_left;
       else {
-        node->_data = data;
+        node->_data = data; // 遇到值相等的结点, 覆盖旧值
         return;
       }
     } else {
@@ -99,6 +99,7 @@ template <typename T> inline void BST<T>::add(shared_ptr<T> data) {
       }
     }
   }
+  // 添加新结点
   NODE *temp = this->create_node(data, parent);
   if (this->_comparator == nullptr) {
     if (*parent->_data < *data)
@@ -119,11 +120,13 @@ template <typename T> inline void BST<T>::remove(shared_ptr<T> data) {
   NODE *node = get_node(data);
   if (node != nullptr) {
     this->_size--;
+    // 删除度为2的结点, 先用前驱/后继覆盖待删结点的值, 然后删除前驱/后继
     if (node->is_binary()) {
       NODE *s = this->get_successor(node);
       node->_data = s->_data;
-      node = s; //删除前驱结点
+      node = s;
     }
+    // 实际删除的结点度必为0或1
     NODE *replace = node->_left != nullptr ? node->_left : node->_right;
     if (replace != nullptr) {
       replace->_parent = node->_parent;
@@ -133,7 +136,7 @@ template <typename T> inline void BST<T>::remove(shared_ptr<T> data) {
         node->_parent->_left = replace;
       else
         node->_parent->_right = replace;
-      this->after_remove(replace);
+      this->after_remove(replace); // 度为1, 用子结点替代待删结点
     } else if (node->_parent != nullptr) {
       if (node == node->_parent->_left)
         node->_parent->_left = nullptr;

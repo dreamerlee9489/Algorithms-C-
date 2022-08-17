@@ -76,19 +76,30 @@ protected:
 
   Node<K, V> *get_successor(Node<K, V> *node) const;
 
+  /**
+   * @brief 获取哈希表索引
+   * @remark 哈希值与数组长度取模可以生成索引值
+   *         为了提升效率, 使用位与代替取模(哈希表长度必为2^n)
+   * @param node
+   * @return int
+   */
   int get_index(Node<K, V> *node) const {
     return node->_hash & (_capacity - 1);
   }
 
   int get_index(shared_ptr<K> key) const {
     return get_hash(key) & (_capacity - 1);
-  } // 哈希值位与容量映射到哈希数组
+  }
+
   size_t get_hash(shared_ptr<K> key) const {
     if (key != nullptr)
       return hash<K>()(*key);
     return 0;
   }
 
+  /**
+   * @brief 元素数量 / 哈希表长度 > 装填因子时扩容
+   */
   void ensure_capacity();
 
   void move_node(Node<K, V> *newnode);
