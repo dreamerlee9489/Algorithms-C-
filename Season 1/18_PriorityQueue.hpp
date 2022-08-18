@@ -9,29 +9,31 @@ namespace app {
  * @date 2022-04-22
  * @tparam T
  */
-template <typename T> class PriorityQueue {
-  using Comparator = int (*)(shared_ptr<T> a, shared_ptr<T> b);
-  BinaryHeap<T> *_heap = nullptr;
+    template<typename T>
+    class PriorityQueue {
+        using Comparator = int (*)(shared_ptr<T> a, shared_ptr<T> b);
 
-public:
-  PriorityQueue(Comparator comparator = nullptr) {
-    _heap = new BinaryHeap<T>(comparator);
-  }
+        BinaryHeap<T> *_heap = nullptr;
 
-  ~PriorityQueue() { delete _heap; }
+    public:
+        PriorityQueue(Comparator comparator = nullptr) {
+            _heap = new BinaryHeap<T>(comparator);
+        }
 
-  size_t size() const { return _heap->size(); }
+        ~PriorityQueue() { delete _heap; }
 
-  bool is_empty() const { return _heap->is_empty(); }
+        size_t size() const { return _heap->size(); }
 
-  void clear() { _heap->clear(); }
+        bool is_empty() const { return _heap->is_empty(); }
 
-  void push(shared_ptr<T> data) { _heap->add(data); }
+        void clear() { _heap->clear(); }
 
-  shared_ptr<T> pop() { return _heap->remove(); }
+        void push(shared_ptr<T> data) { _heap->add(data); }
 
-  shared_ptr<T> front() const { return _heap->get(); }
-};
+        shared_ptr<T> pop() { return _heap->remove(); }
+
+        shared_ptr<T> front() const { return _heap->get(); }
+    };
 } // namespace app
 
 #endif /* PRIORITY_QUEUE_HPP */

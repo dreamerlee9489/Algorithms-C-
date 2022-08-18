@@ -12,14 +12,14 @@
 
 class Solution {
 public:
-  ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-    if (headA == nullptr || headB == nullptr)
-      return nullptr;
-    ListNode *currA = headA, *currB = headB;
-    while (currA != currB) {
-      currA = currA == nullptr ? headB : currA->next;
-      currB = currB == nullptr ? headA : currB->next;
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        if (headA == nullptr || headB == nullptr)
+            return nullptr;
+        ListNode *currA = headA, *currB = headB;
+        while (currA != currB) {
+            currA = currA == nullptr ? headB : currA->next;
+            currB = currB == nullptr ? headA : currB->next;
+        }
+        return currA;
     }
-    return currA;
-  }
 };

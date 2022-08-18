@@ -4,67 +4,67 @@
 using namespace app;
 
 int main() {
-  auto list = make_shared<LinkedList<Person>>();
-  cout << "----------Test add()----------\n";
-  list->add(make_shared<Person>(20, "Alice0"));
-  list->add(make_shared<Person>(21, "Alice1"));
-  list->add(make_shared<Person>(22, "Alice2"));
-  list->add(make_shared<Person>(23, "Alice3"));
-  list->add(make_shared<Person>(24, "Alice4"));
-  list->add(make_shared<Person>(25, "Alice5"));
-  list->add(make_shared<Person>(26, "Alice6"));
-  list->add(make_shared<Person>(27, "Alice7"));
-  cout << "size=" << list->size() << endl;
-  cout << *list;
-  cout << "----------Test insert()----------\n";
-  try {
-    list->insert(5, make_shared<Person>(30, "Bob0"));
-    list->insert(15, make_shared<Person>(35, "Bob1"));
-  } catch (const exception &e) {
-    cerr << e.what() << '\n';
-  }
-  cout << "size=" << list->size() << endl;
-  cout << *list;
-  cout << "----------Test contains() & index_of()----------\n";
-  if (list->contains(make_shared<Person>(30, "Bob0")))
-    cout << "Bob0 at index=" << list->index_of(make_shared<Person>(30, "Bob0"))
-         << endl;
+    auto list = make_shared<LinkedList<Person>>();
+    cout << "----------Test add()----------\n";
+    list->add(make_shared<Person>(20, "Alice0"));
+    list->add(make_shared<Person>(21, "Alice1"));
+    list->add(make_shared<Person>(22, "Alice2"));
+    list->add(make_shared<Person>(23, "Alice3"));
+    list->add(make_shared<Person>(24, "Alice4"));
+    list->add(make_shared<Person>(25, "Alice5"));
+    list->add(make_shared<Person>(26, "Alice6"));
+    list->add(make_shared<Person>(27, "Alice7"));
+    cout << "size=" << list->size() << endl;
+    cout << *list;
+    cout << "----------Test insert()----------\n";
+    try {
+        list->insert(5, make_shared<Person>(30, "Bob0"));
+        list->insert(15, make_shared<Person>(35, "Bob1"));
+    } catch (const exception &e) {
+        cerr << e.what() << '\n';
+    }
+    cout << "size=" << list->size() << endl;
+    cout << *list;
+    cout << "----------Test contains() & index_of()----------\n";
+    if (list->contains(make_shared<Person>(30, "Bob0")))
+        cout << "Bob0 at index=" << list->index_of(make_shared<Person>(30, "Bob0"))
+             << endl;
 
-  cout << "----------Test set()----------\n";
-  list->set(5, make_shared<Person>(25, "Jack"));
-  cout << "size=" << list->size() << endl;
-  cout << *list;
-  cout << "----------Test remove()----------\n";
-  try {
-    cout << "Remove: " << *list->remove(5) << "\n";
-    cout << "Remove: " << *list->remove(-1) << "\n";
-  } catch (const exception &e) {
-    cerr << e.what() << '\n';
-  }
-  cout << "size=" << list->size() << endl;
-  cout << *list;
-  cout << "----------Test clear()----------\n";
-  list->clear();
-  cout << "size=" << list->size() << endl;
-  cout << "----------Test operator=(const LinkedList<T> &)----------\n";
-  auto list1 = make_shared<LinkedList<Person>>();
-  list1->add(make_shared<Person>(10, "test10"));
-  list1->add(make_shared<Person>(11, "test11"));
-  list1->add(make_shared<Person>(12, "test12"));
-  auto list2 = make_shared<LinkedList<Person>>();
-  list2->add(make_shared<Person>(20, "test20"));
-  list2->add(make_shared<Person>(21, "test21"));
-  list2->add(make_shared<Person>(22, "test22"));
-  *list2 = *list1;
-  cout << *list2;
-  cout << "----------Test operator=(LinkedList<T> &&)----------\n";
-  auto list3 = make_shared<LinkedList<Person>>();
-  list3->add(make_shared<Person>(30, "test30"));
-  list3->add(make_shared<Person>(31, "test31"));
-  list3->add(make_shared<Person>(32, "test32"));
-  *list3 = move(*list1);
-  cout << *list3;
-  return 0;
+    cout << "----------Test set()----------\n";
+    list->set(5, make_shared<Person>(25, "Jack"));
+    cout << "size=" << list->size() << endl;
+    cout << *list;
+    cout << "----------Test remove()----------\n";
+    try {
+        cout << "Remove: " << *list->remove(5) << "\n";
+        cout << "Remove: " << *list->remove(-1) << "\n";
+    } catch (const exception &e) {
+        cerr << e.what() << '\n';
+    }
+    cout << "size=" << list->size() << endl;
+    cout << *list;
+    cout << "----------Test clear()----------\n";
+    list->clear();
+    cout << "size=" << list->size() << endl;
+    cout << "----------Test operator=(const LinkedList<T> &)----------\n";
+    auto list1 = make_shared<LinkedList<Person>>();
+    list1->add(make_shared<Person>(10, "test10"));
+    list1->add(make_shared<Person>(11, "test11"));
+    list1->add(make_shared<Person>(12, "test12"));
+    auto list2 = make_shared<LinkedList<Person>>();
+    list2->add(make_shared<Person>(20, "test20"));
+    list2->add(make_shared<Person>(21, "test21"));
+    list2->add(make_shared<Person>(22, "test22"));
+    *list2 = *list1;
+    cout << *list2;
+    cout << "----------Test operator=(LinkedList<T> &&)----------\n";
+    auto list3 = make_shared<LinkedList<Person>>();
+    list3->add(make_shared<Person>(30, "test30"));
+    list3->add(make_shared<Person>(31, "test31"));
+    list3->add(make_shared<Person>(32, "test32"));
+    *list3 = move(*list1);
+    cout << *list3;
+    return 0;
 }
 
 /*

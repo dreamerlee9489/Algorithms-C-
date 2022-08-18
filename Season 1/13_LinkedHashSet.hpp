@@ -10,36 +10,37 @@ namespace app {
  * @date 2022-04-21
  * @tparam K
  */
-template <typename K> class LinkedHashSet : public ISet<K> {
-  LinkedHashMap<K, bool> *_map = nullptr;
+    template<typename K>
+    class LinkedHashSet : public ISet<K> {
+        LinkedHashMap<K, bool> *_map = nullptr;
 
-public:
-  LinkedHashSet(typename ISet<K>::Comparator comparator = nullptr) {
-    _map = new LinkedHashMap<K, bool>(comparator);
-  }
+    public:
+        LinkedHashSet(typename ISet<K>::Comparator comparator = nullptr) {
+            _map = new LinkedHashMap<K, bool>(comparator);
+        }
 
-  ~LinkedHashSet() { delete _map; }
+        ~LinkedHashSet() { delete _map; }
 
-  size_t size() override { return _map->size(); }
+        size_t size() override { return _map->size(); }
 
-  bool is_empty() override { return _map->is_empty(); }
+        bool is_empty() override { return _map->is_empty(); }
 
-  bool contains(shared_ptr<K> data) override {
-    return _map->contains_key(data);
-  }
+        bool contains(shared_ptr<K> data) override {
+            return _map->contains_key(data);
+        }
 
-  void add(shared_ptr<K> data) override {
-    _map->add(data, make_shared<bool>(true));
-  }
+        void add(shared_ptr<K> data) override {
+            _map->add(data, make_shared<bool>(true));
+        }
 
-  void remove(shared_ptr<K> data) override { _map->remove(data); }
+        void remove(shared_ptr<K> data) override { _map->remove(data); }
 
-  void traverse(typename ISet<K>::TraverseFunc func = nullptr) {
-    _map->traverse(func);
-  }
+        void traverse(typename ISet<K>::TraverseFunc func = nullptr) {
+            _map->traverse(func);
+        }
 
-  void clear() override { _map->clear(); }
-};
+        void clear() override { _map->clear(); }
+    };
 } // namespace app
 
 #endif /* LINKED_HASH_SET_HPP */
