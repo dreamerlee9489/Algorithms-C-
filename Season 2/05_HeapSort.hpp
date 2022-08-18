@@ -36,8 +36,8 @@ namespace app {
             for (int i = (_heapSize >> 1) - 1; i >= 0; --i)
                 sift_down(i);
             while (_heapSize > 1) {
-                this->swap(0, --_heapSize);
-                sift_down(0);
+                this->swap(0, --_heapSize); // 交换堆顶堆尾
+                sift_down(0);               // 堆顶下滤
             }
         }
 
