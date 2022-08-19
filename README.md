@@ -240,3 +240,4 @@
 - 设计井字棋(design-tic-tac-toe.cpp)
 - 两整数之和(sum-of-two-integers.cpp)
 - O(1) 时间插入、删除和获取随机元素(insert-delete-getrandom-o1.cpp)
+- 翻转二叉树(invert-binary-tree.cpp)

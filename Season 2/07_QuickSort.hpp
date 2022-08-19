@@ -22,7 +22,7 @@ template <typename T> class QuickSort : public ISort<T> {
     while (beg < end) {
       while (beg < end) {
         // 若元素值相等, <=导致轴心最终位置恰为beg
-        if (this->compare(pivot, this->_array[end]) < 0)  
+        if (this->compare(pivot, this->_array[end]) < 0)
           end--;
         else {
           this->_array[beg++] = this->_array[end];
@@ -31,7 +31,7 @@ template <typename T> class QuickSort : public ISort<T> {
       }
       while (beg < end) {
         // 若元素值相等, >=导致轴心最终位置恰为beg
-        if (this->compare(pivot, this->_array[beg]) > 0)  
+        if (this->compare(pivot, this->_array[beg]) > 0)
           beg++;
         else {
           this->_array[end--] = this->_array[beg];
@@ -39,7 +39,7 @@ template <typename T> class QuickSort : public ISort<T> {
         }
       }
     }
-    this->_array[beg] = pivot;  // beg = end
+    this->_array[beg] = pivot; // beg = end
     return beg;
   }
 

@@ -5,23 +5,23 @@ using namespace std;
 using namespace app;
 
 int main(int argc, char const *argv[]) {
-    DisjointSet<Person> set;
-    size_t count = 20;
-    for (size_t i = 0; i < count; ++i)
-        set.add(new Person(i));
-    set.union_set(new Person(0), new Person(1));
-    set.union_set(new Person(0), new Person(3));
-    set.union_set(new Person(0), new Person(4));
-    set.union_set(new Person(2), new Person(3));
-    set.union_set(new Person(2), new Person(5));
-    set.union_set(new Person(6), new Person(7));
-    set.union_set(new Person(8), new Person(10));
-    set.union_set(new Person(9), new Person(10));
-    set.union_set(new Person(9), new Person(11));
-    cout << "is_same(2, 7)=" << set.is_same(new Person(2), new Person(7)) << "\n";
-    set.union_set(new Person(4), new Person(6));
-    cout << "is_same(2, 7)=" << set.is_same(new Person(2), new Person(7)) << "\n";
-    return 0;
+  DisjointSet<Person> set;
+  size_t count = 20;
+  for (size_t i = 0; i < count; ++i)
+    set.add(new Person(i));
+  set.union_set(new Person(0), new Person(1));
+  set.union_set(new Person(0), new Person(3));
+  set.union_set(new Person(0), new Person(4));
+  set.union_set(new Person(2), new Person(3));
+  set.union_set(new Person(2), new Person(5));
+  set.union_set(new Person(6), new Person(7));
+  set.union_set(new Person(8), new Person(10));
+  set.union_set(new Person(9), new Person(10));
+  set.union_set(new Person(9), new Person(11));
+  cout << "is_same(2, 7)=" << set.is_same(new Person(2), new Person(7)) << "\n";
+  set.union_set(new Person(4), new Person(6));
+  cout << "is_same(2, 7)=" << set.is_same(new Person(2), new Person(7)) << "\n";
+  return 0;
 }
 
 /*

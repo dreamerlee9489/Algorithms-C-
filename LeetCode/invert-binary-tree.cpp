@@ -1,6 +1,6 @@
 /**
  * @file invert-binary-tree.cpp
- * @author your name (you@domain.com)
+ * @author dreamerlee9489@outlook.com
  * @brief 226. 翻转二叉树
  * @version 0.1
  * @date 2022-08-16
@@ -11,19 +11,19 @@
 #include "./TreeNode.hpp"
 
 class Solution {
-  void preorder(TreeNode *node) {
+  void dfs(TreeNode *node) {
     if (node != nullptr) {
       TreeNode *temp = node->left;
       node->left = node->right;
       node->right = temp;
-      preorder(node->left);
-      preorder(node->right);
+      dfs(node->left);
+      dfs(node->right);
     }
   }
 
 public:
   TreeNode *invertTree(TreeNode *root) {
-    preorder(root);
+    dfs(root);
     return root;
   }
 };

@@ -15,14 +15,14 @@ using namespace std;
 
 class Solution {
 public:
-    bool canAttendMeetings(vector<vector<int>> &intervals) {
-        if (intervals.empty())
-            return true;
-        sort(intervals.begin(), intervals.end(),
-             [](vector<int> vec1, vector<int> vec2) { return vec1[0] - vec2[0]; });
-        for (size_t i = 0; i < intervals.size(); i++)
-            if (intervals[i][0] < intervals[i - 1][1])
-                return false;
-        return true;
-    }
+  bool canAttendMeetings(vector<vector<int>> &intervals) {
+    if (intervals.empty())
+      return true;
+    sort(intervals.begin(), intervals.end(),
+         [](vector<int> vec1, vector<int> vec2) { return vec1[0] - vec2[0]; });
+    for (size_t i = 0; i < intervals.size(); i++)
+      if (intervals[i][0] < intervals[i - 1][1])
+        return false;
+    return true;
+  }
 };

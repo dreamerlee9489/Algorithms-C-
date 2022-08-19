@@ -4,35 +4,35 @@
 using namespace app;
 
 int main() {
-    RBTree<Person> tree;
-    cout << "----------Test add()----------\n";
-    tree.add(make_shared<Person>(55, "Alice01"));
-    tree.add(make_shared<Person>(87, "Alice02"));
-    tree.add(make_shared<Person>(56, "Alice03"));
-    tree.add(make_shared<Person>(74, "Alice04"));
-    tree.add(make_shared<Person>(96, "Alice05"));
-    tree.add(make_shared<Person>(22, "Alice06"));
-    tree.add(make_shared<Person>(62, "Alice07"));
-    tree.add(make_shared<Person>(20, "Alice08"));
-    tree.add(make_shared<Person>(70, "Alice09"));
-    tree.add(make_shared<Person>(68, "Alice10"));
-    tree.add(make_shared<Person>(90, "Alice11"));
-    tree.add(make_shared<Person>(50, "Alice12"));
-    cout << "height: " << tree.height() << "\n";
-    cout << tree;
-    cout << "----------Test remove()----------\n";
-    tree.remove(make_shared<Person>(55, "Alice01"));
-    tree.remove(make_shared<Person>(87, "Alice02"));
-    tree.remove(make_shared<Person>(56, "Alice03"));
-    cout << "height: " << tree.height() << "\n";
-    cout << tree;
-    cout << "----------Test RBTree(const RBTree<T> &)----------\n";
-    RBTree<Person> tree2 = RBTree<Person>(tree);
-    cout << tree2;
-    cout << "----------Test RBTree(RBTree<T> &&)----------\n";
-    RBTree<Person> tree3 = RBTree<Person>(move(tree));
-    cout << tree3;
-    return 0;
+  RBTree<Person> tree;
+  cout << "----------Test add()----------\n";
+  tree.add(make_shared<Person>(55, "Alice01"));
+  tree.add(make_shared<Person>(87, "Alice02"));
+  tree.add(make_shared<Person>(56, "Alice03"));
+  tree.add(make_shared<Person>(74, "Alice04"));
+  tree.add(make_shared<Person>(96, "Alice05"));
+  tree.add(make_shared<Person>(22, "Alice06"));
+  tree.add(make_shared<Person>(62, "Alice07"));
+  tree.add(make_shared<Person>(20, "Alice08"));
+  tree.add(make_shared<Person>(70, "Alice09"));
+  tree.add(make_shared<Person>(68, "Alice10"));
+  tree.add(make_shared<Person>(90, "Alice11"));
+  tree.add(make_shared<Person>(50, "Alice12"));
+  cout << "height: " << tree.height() << "\n";
+  cout << tree;
+  cout << "----------Test remove()----------\n";
+  tree.remove(make_shared<Person>(55, "Alice01"));
+  tree.remove(make_shared<Person>(87, "Alice02"));
+  tree.remove(make_shared<Person>(56, "Alice03"));
+  cout << "height: " << tree.height() << "\n";
+  cout << tree;
+  cout << "----------Test RBTree(const RBTree<T> &)----------\n";
+  RBTree<Person> tree2 = RBTree<Person>(tree);
+  cout << tree2;
+  cout << "----------Test RBTree(RBTree<T> &&)----------\n";
+  RBTree<Person> tree3 = RBTree<Person>(move(tree));
+  cout << tree3;
+  return 0;
 }
 
 /*

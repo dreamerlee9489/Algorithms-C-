@@ -3,21 +3,21 @@
 
 using namespace app;
 
-template<typename K, typename V>
+template <typename K, typename V>
 void test(Ski_list<K, V> &list, int count, int delta) {
-    for (size_t i = 0; i < count; i++)
-        list.add(new int(i), new int(i + delta));
-    for (size_t i = 0; i < count; i++)
-        assert(*list.get(new int(i)) == i + delta);
-    assert(list.size() == count);
-    for (size_t i = 0; i < count; i++)
-        assert(*list.remove(new int(i)) == i + delta);
-    assert(list.size() == 0);
+  for (size_t i = 0; i < count; i++)
+    list.add(new int(i), new int(i + delta));
+  for (size_t i = 0; i < count; i++)
+    assert(*list.get(new int(i)) == i + delta);
+  assert(list.size() == count);
+  for (size_t i = 0; i < count; i++)
+    assert(*list.remove(new int(i)) == i + delta);
+  assert(list.size() == 0);
 }
 
 int main(int argc, char const *argv[]) {
-    Ski_list<int, int> list;
-    test(list, 30, 10);
-    cout << "Execution continues past all asserts.";
-    return 0;
+  Ski_list<int, int> list;
+  test(list, 30, 10);
+  cout << "Execution continues past all asserts.";
+  return 0;
 }

@@ -13,24 +13,24 @@ using namespace std;
  * @param money
  */
 int coinChange(int amount, vector<int> coins) {
-    if (amount < 1 || coins.size() == 0)
-        return -1;
-    int *dp = new int[amount + 1]{};
-    for (size_t i = 1; i <= amount; i++) {
-        int min = INT_MAX;
-        for (int face: coins) {
-            if (i >= face) {
-                int v = dp[i - face];
-                if (v >= 0 && v < min)
-                    min = v;
-            }
-        }
-        dp[i] = min == INT_MAX ? -1 : (min + 1);
+  if (amount < 1 || coins.size() == 0)
+    return -1;
+  int *dp = new int[amount + 1]{};
+  for (size_t i = 1; i <= amount; i++) {
+    int min = INT_MAX;
+    for (int face : coins) {
+      if (i >= face) {
+        int v = dp[i - face];
+        if (v >= 0 && v < min)
+          min = v;
+      }
     }
-    return dp[amount];
+    dp[i] = min == INT_MAX ? -1 : (min + 1);
+  }
+  return dp[amount];
 }
 
 int main(int argc, char const *argv[]) {
-    cout << coinChange(41, vector<int>({1, 5, 25, 20}));
-    return 0;
+  cout << coinChange(41, vector<int>({1, 5, 25, 20}));
+  return 0;
 }

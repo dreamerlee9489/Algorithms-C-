@@ -4,25 +4,25 @@
 using namespace app;
 
 int main(int argc, char const *argv[]) {
-    Deque<Person> deque;
-    deque.push(make_shared<Person>(10, "Alice10"));
-    deque.push(make_shared<Person>(11, "Alice11"));
-    deque.push(make_shared<Person>(12, "Alice12"));
-    deque.push_front(make_shared<Person>(13, "Alice13"));
-    deque.push_front(make_shared<Person>(14, "Alice14"));
-    deque.push_front(make_shared<Person>(15, "Alice15"));
-    cout << "----------Test operator<<()----------\n";
-    cout << deque;
-    size_t size = deque.size();
-    cout << "size=" << size << "\n";
-    cout << "----------Test pop()----------\n";
-    for (size_t i = 0; i < size / 2; ++i)
-        cout << *deque.pop() << "\n";
-    cout << "----------Test pop_rear()----------\n";
-    for (size_t i = 0; i < size / 2; ++i)
-        cout << *deque.pop_rear() << "\n";
-    cout << "size=" << deque.size() << "\n";
-    return 0;
+  Deque<Person> deque;
+  deque.push(make_shared<Person>(10, "Alice10"));
+  deque.push(make_shared<Person>(11, "Alice11"));
+  deque.push(make_shared<Person>(12, "Alice12"));
+  deque.push_front(make_shared<Person>(13, "Alice13"));
+  deque.push_front(make_shared<Person>(14, "Alice14"));
+  deque.push_front(make_shared<Person>(15, "Alice15"));
+  cout << "----------Test operator<<()----------\n";
+  cout << deque;
+  size_t size = deque.size();
+  cout << "size=" << size << "\n";
+  cout << "----------Test pop()----------\n";
+  for (size_t i = 0; i < size / 2; ++i)
+    cout << *deque.pop() << "\n";
+  cout << "----------Test pop_rear()----------\n";
+  for (size_t i = 0; i < size / 2; ++i)
+    cout << *deque.pop_rear() << "\n";
+  cout << "size=" << deque.size() << "\n";
+  return 0;
 }
 
 /*
