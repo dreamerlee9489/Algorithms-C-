@@ -48,15 +48,15 @@ class Solution {
    * @param root 
    */
   void inorder1(TreeNode *root) {
-    stack<TreeNode *> _stk;
+    stack<TreeNode *> stk;
     TreeNode *node = root;
-    while (!_stk.empty() || node) {
+    while (!stk.empty() || node) {
       while (node) {
-        _stk.emplace(node);
+        stk.emplace(node);
         node = node->left;
       }
-      node = _stk.top();
-      _stk.pop();
+      node = stk.top();
+      stk.pop();
       res.emplace_back(node->val);
       node = node->right;
     }

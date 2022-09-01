@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2022
  *
  */
+#include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <stack>
@@ -16,9 +17,14 @@
 using namespace std;
 
 class Solution {
-  stack<int> nums;
-  stack<char> ops;
+  stack<int> nums;  // 运算数栈
+  stack<char> ops;  // 运算符栈
 
+  /**
+   * @brief 定义运算符优先级
+   * @param op
+   * @return int
+   */
   int priority(char op) {
     switch (op) {
     case '+':
@@ -32,6 +38,9 @@ class Solution {
     }
   }
 
+  /**
+   * @brief 弹出两个运算数和一个运算符，并将结果压入运算数栈中
+   */
   void calculate() {
     char op = ops.top();
     ops.pop();
@@ -59,23 +68,22 @@ public:
   int calculate(string s) {
     s += '$';
     ops.push('$');
-    stack<int> temp;
+    s.erase(remove_if(s.begin(), s.end(), [](char ch) { return isspace(ch); }),
+            s.end());
+    string operand; // 存放一个运算数
     for (size_t i = 0; i < s.size(); i++) {
-      if (s[i] == ' ')
-        continue;
       int val = s[i] - '0';
       if (val >= 0 && val <= 9)
-        temp.push(val);
+        operand += s[i];
       else {
-        int num = 0, index = 0;
-        while (!temp.empty()) {
-          num += temp.top() * pow(10, index++);
-          temp.pop();
-        }
+        int num = stoi(operand);
+        operand.clear();
         nums.push(num);
+        // 当前运算符优先级大于栈顶元素,入栈
         if (priority(s[i]) > priority(ops.top()))
           ops.push(s[i]);
-        else {
+        else {  
+          // 弹出全部运算符
           while (ops.size() > 1 && priority(s[i]) <= priority(ops.top()))
             calculate();
           ops.push(s[i]);
@@ -87,9 +95,9 @@ public:
 };
 
 int main(int argc, char const *argv[]) {
-  // cout << Solution().calculate("3+2*2") << "\n";
-  // cout << Solution().calculate(" 3/2 ") << "\n";
-  // cout << Solution().calculate(" 3+5 / 2 ") << "\n";
+  cout << Solution().calculate("3+2*2") << "\n";
+  cout << Solution().calculate(" 3/2 ") << "\n";
+  cout << Solution().calculate(" 3+5 / 2 ") << "\n";
   cout << Solution().calculate("3+5-6*4+7/2*8-9*2+10") << "\n";
   return 0;
 }

@@ -25,11 +25,13 @@ public:
         sum += l2->val;
       if (sum < 10) {
         tail->val = sum;
+        // 进位为0，如果下一位还有数字，追加新结点
         if ((l1 != nullptr && l1->next != nullptr) ||
             (l2 != nullptr && l2->next != nullptr))
           tail->next = new ListNode(0);
       } else {
         tail->val = sum - 10;
+        // 进位为1，直接追加新结点
         tail->next = new ListNode(1);
       }
       tail = tail->next;
