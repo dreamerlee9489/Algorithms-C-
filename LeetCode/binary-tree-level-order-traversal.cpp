@@ -11,37 +11,47 @@
  */
 #include "./TreeNode.hpp"
 #include <iostream>
+#include <list>
+#include <utility>
 #include <vector>
 
 using namespace std;
 
 class Solution {
-  void preorder(int layer, TreeNode *root, vector<vector<int>> &res) {
-    if (root != nullptr) {
-      if (layer >= res.size())
-        res.emplace(res.begin() + layer, vector<int>({root->val}));
-      else
-        res[layer].emplace_back(root->val);
-      preorder(layer + 1, root->left, res);
-      preorder(layer + 1, root->right, res);
-    }
-  }
-
 public:
   vector<vector<int>> levelOrder(TreeNode *root) {
     vector<vector<int>> res;
-    preorder(0, root, res);
+    if (root != nullptr) {
+      list<TreeNode *> que;
+      que.push_back(root);
+      res.push_back({root->val});
+      int lvCnt = 1;
+      while (!que.empty()) {
+        TreeNode *top = que.front();
+        que.pop_front();
+        if (top->left != nullptr)
+          que.push_back(top->left);
+        if (top->right != nullptr)
+          que.push_back(top->right);
+        if (--lvCnt == 0) {
+          vector<int> tmp;
+          for (auto node : que)
+            tmp.push_back(node->val);
+          if (!tmp.empty())
+            res.push_back(move(tmp));
+          lvCnt = que.size();
+        }
+      }
+    }
     return res;
   }
 };
 
 int main(int argc, char const *argv[]) {
   TreeNode *root = new TreeNode(1);
-
   root->left = new TreeNode(2);
   root->left->left = new TreeNode(4);
   root->left->right = nullptr;
-
   root->right = new TreeNode(3);
   root->right->left = nullptr;
   root->right->right = new TreeNode(5);

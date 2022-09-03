@@ -17,13 +17,15 @@ class Solution {
 public:
   int countPrimes(int n) {
     int res = 0;
-    vector<bool> isPrime(n, true);
+    vector<bool> dp(n, true);
     for (size_t i = 2; i < n; i++) {
-      if (isPrime[i]) {
+      if (dp[i]) {
         ++res;
+        // 如果i是质数，那么i的所有倍数都不是质数
+        // 没必要从2i开始，2i必然是2的倍数
         if (i * i < n)
           for (size_t j = i * i; j < n; j += i)
-            isPrime[j] = false;
+            dp[j] = false;
       }
     }
     return res;

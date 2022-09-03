@@ -17,14 +17,13 @@ using namespace std;
 
 class Solution {
   TreeNode *buildTree(int begin, int end, vector<int> &nums) {
-    if (begin <= end) {
-      int mid = (begin + end) / 2;
-      TreeNode *root = new TreeNode(nums[mid]);
-      root->left = buildTree(begin, mid - 1, nums);
-      root->right = buildTree(mid + 1, end, nums);
-      return root;
-    }
-    return nullptr;
+    if (begin > end)
+      return nullptr;
+    int mid = (begin + end) / 2;
+    TreeNode *root = new TreeNode(nums[mid]);
+    root->left = buildTree(begin, mid - 1, nums);
+    root->right = buildTree(mid + 1, end, nums);
+    return root;
   }
 
 public:

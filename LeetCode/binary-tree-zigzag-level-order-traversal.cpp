@@ -16,28 +16,37 @@
 using namespace std;
 
 class Solution {
-  void preorder(int layer, TreeNode *node, vector<list<int>> &res) {
-    if (node != nullptr) {
-      if (layer >= res.size())
-        res.emplace(res.begin() + layer, list<int>({node->val}));
-      else if ((layer & 1) == 0)
-        res[layer].emplace_back(node->val);
-      else
-        res[layer].emplace_front(node->val);
-      preorder(layer + 1, node->left, res);
-      preorder(layer + 1, node->right, res);
-    }
-  }
-
 public:
   vector<vector<int>> zigzagLevelOrder(TreeNode *root) {
-    vector<list<int>> resList;
-    preorder(0, root, resList);
-    vector<vector<int>> resVec(resList.size());
-    for (int i = 0; i < resList.size(); i++)
-      for (int val : resList[i])
-        resVec[i].emplace_back(val);
-    return resVec;
+    vector<vector<int>> res;
+    if (root != nullptr) {
+      list<TreeNode *> lst;
+      lst.push_back(root);
+      res.push_back({root->val});
+      int lvCnt = 1, h = 1;
+      while (!lst.empty()) {
+        TreeNode *top = lst.front();
+        lst.pop_front();
+        if (top->left != nullptr)
+          lst.push_back(top->left);
+        if (top->right != nullptr)
+          lst.push_back(top->right);
+        if (--lvCnt == 0) {
+          lvCnt = lst.size();
+          vector<int> tmp;
+          if (++h & 1) {
+            for (auto iter = lst.begin(); iter != lst.end(); ++iter)
+              tmp.push_back((*iter)->val);
+          } else {
+            for (auto iter = lst.rbegin(); iter != lst.rend(); ++iter)
+              tmp.push_back((*iter)->val);
+          }
+          if (!tmp.empty())
+            res.push_back(move(tmp));
+        }
+      }
+    }
+    return res;
   }
 };
 

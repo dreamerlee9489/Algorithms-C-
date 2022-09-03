@@ -9,23 +9,23 @@
  *
  */
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <vector>
 
 using namespace std;
 
 class Solution {
-  vector<vector<int>> edges;
+  unordered_map<int, vector<int>> edges; //前置课程出度表
   vector<int> visited;
   bool valid = true;
 
   void dfs(int index) {
     visited[index] = -1; // 搜索中
     for (int i : edges[index]) {
-      if (visited[i] == -1) { // 尚未搜索该结点，继续搜索
+      if (visited[i] == -1) { // 正在搜索该结点，证明有环
         valid = false;
         return;
-      } else if (visited[i] == 0) { // 正在搜索该结点，证明有环
+      } else if (visited[i] == 0) { // 尚未搜索该结点，继续搜索
         dfs(i);
         if (!valid)
           return;
@@ -36,7 +36,6 @@ class Solution {
 
 public:
   bool canFinish(int numCourses, vector<vector<int>> &prerequisites) {
-    edges = vector<vector<int>>(numCourses);
     visited = vector<int>(numCourses);
     for (auto &vec : prerequisites)
       edges[vec[1]].emplace_back(vec[0]);

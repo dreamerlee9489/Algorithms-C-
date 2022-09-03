@@ -68,9 +68,9 @@ class Solution {
    */
   void inorder2(TreeNode *root) {
     if (root != nullptr) {
-      inorderTraversal(root->left);
+      inorder2(root->left);
       res.emplace_back(root->val);
-      inorderTraversal(root->right);
+      inorder2(root->right);
     }
   }
 

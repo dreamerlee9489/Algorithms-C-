@@ -20,18 +20,18 @@ class Solution {
   unordered_map<int, int> map;
 
   TreeNode *myBuildTree(vector<int> &preorder, vector<int> &inorder,
-                        int preLeftIdx, int preRightIdx, int inLeftIdx,
-                        int inRightIdx) {
-    if (preLeftIdx > preRightIdx)
+                        int preLeftBound, int preRightBound, int inLeftBound,
+                        int inRightBound) {
+    if (preLeftBound > preRightBound)
       return nullptr;
-    int preRootIdx = preLeftIdx;
+    int preRootIdx = preLeftBound;
     int inRootIdx = map[preorder[preRootIdx]];
-    int leftSize = inRootIdx - inLeftIdx;
+    int leftSize = inRootIdx - inLeftBound;
     TreeNode *root = new TreeNode(preorder[preRootIdx]);
     root->left = myBuildTree(preorder, inorder, preRootIdx + 1,
-                             preRootIdx + leftSize, inLeftIdx, inRootIdx - 1);
+                             preRootIdx + leftSize, inLeftBound, inRootIdx - 1);
     root->right = myBuildTree(preorder, inorder, preRootIdx + leftSize + 1,
-                              preRightIdx, inRootIdx + 1, inRightIdx);
+                              preRightBound, inRootIdx + 1, inRightBound);
     return root;
   }
 
