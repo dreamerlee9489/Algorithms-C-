@@ -26,6 +26,6 @@ public:
       if (nums[i] > nums[l] && nums[i] > nums[r])
         return i;
     }
-    // return 0;
+    return 0;
   }
 };

@@ -48,7 +48,7 @@ class Solution {
     for (int i = 1; i < vec.size(); i++) {
       string sum = "";
       int carry = 0;
-      for (int f = vec[i - 1].size() - 1, b = vec[i].size() - 1; f >= 0, b >= 0;
+      for (int f = vec[i - 1].size() - 1, b = vec[i].size() - 1; b >= 0;
            f--, b--) {
         string tmp = "";
         if (f < 0 && b >= 0)
