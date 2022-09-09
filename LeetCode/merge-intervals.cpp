@@ -15,19 +15,19 @@
 using namespace std;
 
 class Solution {
-  struct {
+  struct Cmp {
     bool operator()(vector<int> &a, vector<int> &b) const {
       return a[0] < b[0];
     }
-  } cmp;
+  };
 
 public:
   vector<vector<int>> merge(vector<vector<int>> &intervals) {
     vector<vector<int>> res;
     sort(intervals.begin(), intervals.end(),
          [](vector<int> &a, vector<int> &b) { return a[0] < b[0]; });
-    priority_queue<vector<int>, vector<vector<int>>, decltype(cmp)> que;
-    que.push({intervals[0][0], intervals[0][1]});
+    priority_queue<vector<int>, vector<vector<int>>, Cmp> que;
+    que.push(intervals[0]);
     for (int i = 1; i < intervals.size(); i++) {
       vector<int> top = que.top();
       if (intervals[i][0] > top[1])
@@ -41,6 +41,7 @@ public:
       res.emplace_back(que.top());
       que.pop();
     }
+    reverse(res.begin(), res.end());
     return res;
   }
 };

@@ -17,8 +17,6 @@ using namespace std;
 class Solution {
 public:
   int trap(vector<int> &height) {
-    if (height.empty())
-      return 0;
     int sum = 0;
     // 动态规划: 利用左右边界推导出lMaxes, rMaxes
     vector<int> lMaxes = vector<int>(height.size(), 0);

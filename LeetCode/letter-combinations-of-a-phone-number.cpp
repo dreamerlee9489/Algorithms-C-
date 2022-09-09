@@ -15,7 +15,7 @@
 using namespace std;
 
 class Solution {
-  vector<vector<char>> map = {{},
+  vector<vector<char>> mat = {{},
                               {},
                               {'a', 'b', 'c'},
                               {'d', 'e', 'f'},
@@ -31,8 +31,8 @@ class Solution {
       res.emplace_back(str);
       return;
     }
-    for (size_t j = 0; j < map[digits[layer] - '0'].size(); j++)
-      dfs(layer + 1, str + map[digits[layer] - '0'][j], digits, res);
+    for (size_t j = 0; j < mat[digits[layer] - '0'].size(); j++)
+      dfs(layer + 1, str + mat[digits[layer] - '0'][j], digits, res);
   }
 
 public:

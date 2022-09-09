@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2022
  *
  */
+#include <algorithm>
 #include <iostream>
 #include <vector>
 
@@ -17,12 +18,9 @@ class Solution {
 public:
   int maxSubArray(vector<int> &nums) {
     vector<int> dp(nums);
-    int maxSum = nums[0];
-    for (int i = 1; i < nums.size(); i++) {
+    for (int i = 1; i < nums.size(); i++)
       dp[i] = max(dp[i - 1] + nums[i], nums[i]);
-      maxSum = max(maxSum, dp[i]);
-    }
-    return maxSum;
+    return *max_element(dp.begin(), dp.end());
   }
 };
 
