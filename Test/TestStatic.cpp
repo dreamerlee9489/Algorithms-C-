@@ -1,24 +1,18 @@
 #include <iostream>
 
-class TestStatic
-{
+class TestStatic {
   static int i;
 
-public: 
+public:
   TestStatic() = default;
   ~TestStatic() = default;
-  static void setI(int val) {
-    i = val;
-  }
-  static int getI() {
-    return i;
-  }
+  static void setI(int val) { i = val; }
+  static int getI() { return i; }
 };
 
 int TestStatic::i = 99;
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
   std::cout << "i = " << TestStatic::getI() << "\n";
   TestStatic::setI(100);
   std::cout << "i = " << TestStatic::getI() << "\n";
