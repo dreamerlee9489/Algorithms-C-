@@ -25,7 +25,7 @@ class Solution {
     return true;
   }
 
-  void backTrack(string s, int index, vector<string> &path,
+  void dfs(string s, int index, vector<string> &path,
                  vector<vector<string>> &res) {
     if (index == s.size()) {
       res.emplace_back(path);
@@ -35,7 +35,7 @@ class Solution {
       string frac = s.substr(index, i - index);
       if (isPalindrome(frac)) {
         path.emplace_back(frac);
-        backTrack(s, i, path, res);
+        dfs(s, i, path, res);
         path.erase(prev(path.end()));
       }
     }
@@ -45,7 +45,13 @@ public:
   vector<vector<string>> partition(string s) {
     vector<vector<string>> res;
     vector<string> path;
-    backTrack(s, 0, path, res);
+    dfs(s, 0, path, res);
     return res;
   }
 };
+
+int main(int argc, char const *argv[])
+{
+  auto res = Solution().partition("aab");
+  return 0;
+}

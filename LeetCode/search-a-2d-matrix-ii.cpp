@@ -17,6 +17,8 @@ class Solution {
 public:
   bool searchMatrix(vector<vector<int>> &matrix, int target) {
     for (const auto &row : matrix) {
+      // 返回指向范围 [first, last) 中首个不小于（即大于或等于） value
+      // 的元素的迭代器，或若找不到这种元素则返回 last 。
       const auto iter = lower_bound(row.begin(), row.end(), target);
       if (iter != row.end() && *iter == target)
         return true;

@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2022
  *
  */
+#include <iostream>
 #include <vector>
 
 using namespace std;
@@ -35,7 +36,7 @@ public:
 };
 
 int main(int argc, char const *argv[]) {
-  vector<int> nums = {1, 2};
+  vector<int> nums = {1, 2, 3};
   auto res = Solution().subsets(nums);
   return 0;
 }
