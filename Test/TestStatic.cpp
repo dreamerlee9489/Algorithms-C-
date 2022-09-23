@@ -5,8 +5,11 @@ class TestStatic {
 
 public:
   TestStatic() = default;
+
   ~TestStatic() = default;
+
   static void setI(int val) { i = val; }
+  
   static int getI() { return i; }
 };
 
