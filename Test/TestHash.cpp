@@ -86,7 +86,6 @@ template <> struct std::hash<app::Test3::Test4> {
 
 inline size_t app::Test3::get_Hash() { return std::hash<Test3::Test4>()(t4); }
 
-
 int main(int argc, char const *argv[]) {
   app::Test<int> t;
   cout << "Test:" << hash<app::Test<int>>()(t) << "\n";

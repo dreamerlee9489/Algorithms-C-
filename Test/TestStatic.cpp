@@ -9,7 +9,7 @@ public:
   ~TestStatic() = default;
 
   static void setI(int val) { i = val; }
-  
+
   static int getI() { return i; }
 };
 
