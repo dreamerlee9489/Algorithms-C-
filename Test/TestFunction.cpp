@@ -2,10 +2,10 @@
 #include <iostream>
 #include <list>
 
-typedef std::list<std::function<int(int, int)>> Event;
+typedef std::list<std::function<int(int, int)>> event_t;
 
 int main(int argc, char const *argv[]) {
-  Event event;
+  event_t event;
   event.push_back([](int a, int b) { return a + b; });
   event.push_back([](int a, int b) { return a - b; });
   event.push_back([](int a, int b) { return a * b; });
