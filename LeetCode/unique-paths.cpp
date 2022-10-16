@@ -15,8 +15,14 @@ using namespace std;
 
 class Solution {
 public:
+  /**
+   * @brief 组合
+   * @param m
+   * @param n
+   * @return (m + n - 2)! / ((m - 1)! * (n - 1)!)
+   */
   int uniquePaths(int m, int n) {
-    size_t res = 1;
+    int res = 1;
     for (int i = n, j = 1; j < m; i++, j++)
       res = res * i / j;
     return res;

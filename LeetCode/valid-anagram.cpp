@@ -9,20 +9,22 @@
  *
  */
 #include <string>
-#include <vector>
+#include <unordered_map>
 
 using namespace std;
 
 class Solution {
 public:
   bool isAnagram(string s, string t) {
-    if (s.empty() || t.empty() || s.size() != t.size())
+    if (s.size() != t.size())
       return false;
-    vector<int> counts = vector<int>(26);
-    for (size_t i = 0; i < s.size(); ++i)
-      counts[s[i] - 'a']++;
-    for (size_t i = 0; i < t.size(); ++i) {
-      if (--counts[t[i] - 'a'] < 0)
+    unordered_map<char, int> _map1, _map2;
+    for (char &c : s)
+      ++_map1[c];
+    for (char &c : t)
+      ++_map2[c];
+    for (auto &p : _map1) {
+      if (p.second != _map2[p.first])
         return false;
     }
     return true;
