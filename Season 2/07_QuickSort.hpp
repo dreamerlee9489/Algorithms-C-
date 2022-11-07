@@ -15,13 +15,11 @@ template <typename T> class QuickSort : public ISort<T> {
   default_random_engine e;
 
   size_t pivot_index(size_t beg, size_t end) {
-    // 轴心最终位置恰为beg时, 快排降为O(n^2)
     u = uniform_int_distribution<size_t>(beg, --end); // 均匀整数分布
     this->swap(beg, u(e));
     T pivot = this->_array[beg];
     while (beg < end) {
       while (beg < end) {
-        // 若元素值相等, <=导致轴心最终位置恰为beg
         if (this->compare(pivot, this->_array[end]) < 0)
           end--;
         else {
@@ -30,7 +28,6 @@ template <typename T> class QuickSort : public ISort<T> {
         }
       }
       while (beg < end) {
-        // 若元素值相等, >=导致轴心最终位置恰为beg
         if (this->compare(pivot, this->_array[beg]) > 0)
           beg++;
         else {
@@ -39,7 +36,7 @@ template <typename T> class QuickSort : public ISort<T> {
         }
       }
     }
-    this->_array[beg] = pivot; // beg = end
+    this->_array[beg] = pivot; 
     return beg;
   }
 

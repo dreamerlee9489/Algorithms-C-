@@ -15,7 +15,7 @@ void test_sort(int *array, size_t size, initializer_list<ISort<int> *> list) {
     for (size_t i = 0; i < size; ++i)
       copy[i] = array[i];
     (*beg)->sort(copy, size);
-    cout << typeid(**beg).name() << ": ";
+    cout << typeid(**beg).name() << "\t";
     for (size_t i = 0; i < size; ++i)
       cout << copy[i] << " ";
     cout << "\n";
@@ -33,10 +33,10 @@ int main(int argc, char const *argv[]) {
 }
 
 /*
-10BubbleSortIiE: 3 4 5 5 6 7 7 8
-10SelectSortIiE: 3 4 5 5 6 7 7 8
-10InsertSortIiE: 3 4 5 5 6 7 7 8
-8HeapSortIiE:    3 4 5 5 6 7 7 8
-9MergeSortIiE:   3 4 5 5 6 7 7 8
-9QuickSortIiE:   3 4 5 5 6 7 7 8
+N3app10BubbleSortIiEE   1 2 3 3 4 4 5 5 6 7 8 9 10 11 12
+N3app10SelectSortIiEE   1 2 3 3 4 4 5 5 6 7 8 9 10 11 12
+N3app10InsertSortIiEE   1 2 3 3 4 4 5 5 6 7 8 9 10 11 12
+N3app8HeapSortIiEE      1 2 3 3 4 4 5 5 6 7 8 9 10 11 12
+N3app9MergeSortIiEE     1 2 3 3 4 4 5 5 6 7 8 9 10 11 12
+N3app9QuickSortIiEE     1 2 3 3 4 4 5 5 6 7 8 9 10 11 12
 */
