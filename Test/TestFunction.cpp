@@ -1,19 +1,66 @@
-#include <functional>
 #include <iostream>
 #include <list>
 
-typedef std::list<std::function<int(int, int)>> event_t;
+template <typename... Args>
+class Event
+{
+  using Func = void (*)(Args... args);
+  std::list<Func> _event;
 
-int main(int argc, char const *argv[]) {
-  event_t event;
-  event.push_back([](int a, int b) { return a + b; });
-  event.push_back([](int a, int b) { return a - b; });
-  event.push_back([](int a, int b) { return a * b; });
-  event.push_back([](int a, int b) { return a / b; });
-  for (auto &e : event)
-    std::cout << (uintptr_t)&e << ": " << e(3, 4) << "\n";
-  event.clear();
-  int i = 10, *j = new int(20);
-  std::cout << (uintptr_t)&i << " " << (uintptr_t)j << "\n";
+public:
+  Event& operator+=(const Func& func)
+  {
+    _event.push_back(func);
+    return *this;
+  }
+
+  Event& operator-=(const Func& func)
+  {
+    _event.remove(func);
+    return *this;
+  }
+
+  void operator()(Args... args)
+  {
+    for (auto& f : _event)
+      f(args...);
+  }
+
+  Event() = default;
+
+  ~Event() = default;
+};
+
+void Add(int a, int b)
+{
+  std::cout << a << " + " << b << " = " << a + b << "\n";
+}
+
+void Sub(int a, int b)
+{
+  std::cout << a << " - " << b << " = " << a - b << "\n";
+}
+
+void Mul(int a, int b)
+{
+  std::cout << a << " * " << b << " = " << a * b << "\n";
+}
+
+void Div(int a, int b)
+{
+  std::cout << a << " / " << b << " = " << a * 1.0 / b * 1.0 << "\n";
+}
+
+int main(int argc, char const* argv[])
+{
+  Event<int, int> e;
+  e += Add;
+  e += Sub;
+  e += Mul;
+  e += Div;
+  e(3, 4);
+  e -= Add;
+  e -= Sub;
+  e(5, 6);
   return 0;
 }
