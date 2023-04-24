@@ -1,23 +1,30 @@
 #include <iostream>
+using namespace std;
 
-class TestStatic {
-  static int i;
+class Test {
+  int i = 0;
 
 public:
-  TestStatic() = default;
+  Test(int i) 
+  { 
+    this->i = i;
+    cout << "Test() " << this->i << "\n"; 
+  }
 
-  ~TestStatic() = default;
-
-  static void setI(int val) { i = val; }
-
-  static int getI() { return i; }
+  ~Test() 
+  { 
+    cout << "~Test() " << this->i << "\n";
+  }
 };
 
-int TestStatic::i = 99;
+static Test t0(0);
+Test t1(1);
 
-int main(int argc, char const *argv[]) {
-  std::cout << "i = " << TestStatic::getI() << "\n";
-  TestStatic::setI(100);
-  std::cout << "i = " << TestStatic::getI() << "\n";
+int main(int argc, char const *argv[]) 
+{
+  cout << "main\n";
+  static Test t2(2);
+  Test t3(3);
+  static Test t4(4);
   return 0;
 }
