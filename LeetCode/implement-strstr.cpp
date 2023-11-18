@@ -14,12 +14,12 @@ using namespace std;
 
 class Solution {
 public:
-  int strStr(string haystack, string needle) {
-    // size_t pos = haystack.find(needle);
-    // return pos == string::npos ? -1 : pos;
-    for (int i = 0; i < haystack.size(); i++)
-      if (haystack.substr(i, needle.size()) == needle)
-        return i;
-    return -1;
-  }
+	int strStr(string haystack, string needle) {
+		// size_t pos = haystack.find(needle);
+		// return pos == string::npos ? -1 : pos;
+		for (int i = 0; i < haystack.size(); i++)
+			if (haystack.substr(i, needle.size()) == needle)
+				return i;
+		return -1;
+	}
 };

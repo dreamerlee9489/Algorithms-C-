@@ -14,15 +14,15 @@ using namespace std;
 
 class Solution {
 public:
-  /**
-   * @brief 动态规划模拟递归
-   * @param n 
-   * @return int 
-   */
-  int climbStairs(int n) {
-    vector<int> res = vector<int>(n + 1, 1);
-    for (size_t i = 2; i < res.size(); i++)
-      res[i] = res[i - 1] + res[i - 2];
-    return res[n];
-  }
+	/**
+	 * @brief 动态规划模拟递归
+	 * @param n
+	 * @return int
+	 */
+	int climbStairs(int n) {
+		vector<int> res = vector<int>(n + 1, 1);
+		for (size_t i = 2; i < res.size(); i++)
+			res[i] = res[i - 1] + res[i - 2];
+		return res[n];
+	}
 };

@@ -16,13 +16,13 @@ using namespace std;
 
 class Solution {
 public:
-  int firstUniqChar(string s) {
-    unordered_map<char, int> _map;
-    for (int i = 0; i < s.size(); i++)
-      ++_map[s[i]];
-    for (int i = 0; i < s.size(); i++)
-      if (_map[s[i]] == 1)
-        return i;
-    return -1;
-  }
+	int firstUniqChar(string s) {
+		unordered_map<char, int> _map;
+		for (int i = 0; i < s.size(); i++)
+			++_map[s[i]];
+		for (int i = 0; i < s.size(); i++)
+			if (_map[s[i]] == 1)
+				return i;
+		return -1;
+	}
 };

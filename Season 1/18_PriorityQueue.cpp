@@ -3,17 +3,17 @@
 
 using namespace app;
 
-int main(int argc, char const *argv[]) {
-  PriorityQueue<Person> q;
-  q.push(make_shared<Person>(2));
-  q.push(make_shared<Person>(10));
-  q.push(make_shared<Person>(5));
-  q.push(make_shared<Person>(15));
-  q.push(make_shared<Person>(25));
-  q.push(make_shared<Person>(20));
-  while (!q.is_empty())
-    cout << *q.pop() << "\n";
-  return 0;
+int main(int argc, char const* argv[]) {
+	PriorityQueue<Person> q;
+	q.push(make_shared<Person>(2));
+	q.push(make_shared<Person>(10));
+	q.push(make_shared<Person>(5));
+	q.push(make_shared<Person>(15));
+	q.push(make_shared<Person>(25));
+	q.push(make_shared<Person>(20));
+	while (!q.is_empty())
+		cout << *q.pop() << "\n";
+	return 0;
 }
 
 /*

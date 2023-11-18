@@ -13,16 +13,16 @@
 
 class Solution {
 public:
-  TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q) {
-    // 找到p,q
-    if (root == nullptr || root == p || root == q)
-      return root;
-    TreeNode *left = lowestCommonAncestor(root->left, p, q);
-    TreeNode *right = lowestCommonAncestor(root->right, p, q);
-    // p,q分别为左右子结点
-    if (left != nullptr && right != nullptr)
-      return root;
-    // p,q在同一颗子树
-    return left != nullptr ? left : right;
-  }
+	TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+		// 找到p,q
+		if (root == nullptr || root == p || root == q)
+			return root;
+		TreeNode* left = lowestCommonAncestor(root->left, p, q);
+		TreeNode* right = lowestCommonAncestor(root->right, p, q);
+		// p,q分别为左右子结点
+		if (left != nullptr && right != nullptr)
+			return root;
+		// p,q在同一颗子树
+		return left != nullptr ? left : right;
+	}
 };

@@ -14,11 +14,11 @@ using namespace std;
 
 class Solution {
 public:
-  int findDuplicate(vector<int> &nums) {
-    vector<int> counts = vector<int>(nums.size());
-    for (int i = 0; i < nums.size(); i++)
-      if (++counts[nums[i]] == 2)
-        return nums[i];
-    return 0;
-  }
+	int findDuplicate(vector<int>& nums) {
+		vector<int> counts = vector<int>(nums.size());
+		for (int i = 0; i < nums.size(); i++)
+			if (++counts[nums[i]] == 2)
+				return nums[i];
+		return 0;
+	}
 };

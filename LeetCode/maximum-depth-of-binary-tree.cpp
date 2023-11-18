@@ -14,19 +14,19 @@
 using namespace std;
 
 class Solution {
-  int height = 0;
+	int height = 0;
 
-  void inorder(int layer, TreeNode *node) {
-    if (node != nullptr) {
-      inorder(layer + 1, node->left);
-      height = max(layer + 1, height);
-      inorder(layer + 1, node->right);
-    }
-  }
+	void inorder(int layer, TreeNode* node) {
+		if (node != nullptr) {
+			inorder(layer + 1, node->left);
+			height = max(layer + 1, height);
+			inorder(layer + 1, node->right);
+		}
+	}
 
 public:
-  int maxDepth(TreeNode *root) {
-    inorder(0, root);
-    return height;
-  }
+	int maxDepth(TreeNode* root) {
+		inorder(0, root);
+		return height;
+	}
 };

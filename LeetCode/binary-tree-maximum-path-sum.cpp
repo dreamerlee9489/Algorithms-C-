@@ -14,27 +14,27 @@
 using namespace std;
 
 class Solution {
-  int sum = INT_MIN;
+	int sum = INT_MIN;
 
-  /**
-   * @brief Get the Value object
-   * @param node
-   * @return int 以node为根的单分支最大路径和
-   */
-  int getValue(TreeNode *node) {
-    if (node == nullptr)
-      return 0;
-    // 左、右子树单分支最大路径和
-    int lvalue = max(getValue(node->left), 0);
-    int rvalue = max(getValue(node->right), 0);
-    // 最大路径和 = 根结点 + 左、右子树单分支最大路径和
-    sum = max(node->val + lvalue + rvalue, sum);
-    return node->val + max(lvalue, rvalue);
-  }
+	/**
+	 * @brief Get the Value object
+	 * @param node
+	 * @return int 以node为根的单分支最大路径和
+	 */
+	int getValue(TreeNode* node) {
+		if (node == nullptr)
+			return 0;
+		// 左、右子树单分支最大路径和
+		int lvalue = max(getValue(node->left), 0);
+		int rvalue = max(getValue(node->right), 0);
+		// 最大路径和 = 根结点 + 左、右子树单分支最大路径和
+		sum = max(node->val + lvalue + rvalue, sum);
+		return node->val + max(lvalue, rvalue);
+	}
 
 public:
-  int maxPathSum(TreeNode *root) {
-    getValue(root);
-    return sum;
-  }
+	int maxPathSum(TreeNode* root) {
+		getValue(root);
+		return sum;
+	}
 };

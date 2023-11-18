@@ -17,22 +17,22 @@ using namespace std;
 
 class Solution {
 public:
-  int singleNumber(vector<int> &nums) {
-    if (nums.size() > 1) {
-      unordered_map<int, int> _map;
-      for (int i = 0; i < nums.size(); i++)
-        _map[nums[i]]++;
-      for (auto &p : _map) {
-        if (p.second == 1)
-          return p.first;
-      }
-    }
-    return nums[0];
-  }
+	int singleNumber(vector<int>& nums) {
+		if (nums.size() > 1) {
+			unordered_map<int, int> _map;
+			for (int i = 0; i < nums.size(); i++)
+				_map[nums[i]]++;
+			for (auto& p : _map) {
+				if (p.second == 1)
+					return p.first;
+			}
+		}
+		return nums[0];
+	}
 };
 
-int main(int argc, char const *argv[]) {
-  vector<int> nums = {4, 1, 2, 1, 2};
-  cout << Solution().singleNumber(nums) << "\n";
-  return 0;
+int main(int argc, char const* argv[]) {
+	vector<int> nums = { 4, 1, 2, 1, 2 };
+	cout << Solution().singleNumber(nums) << "\n";
+	return 0;
 }

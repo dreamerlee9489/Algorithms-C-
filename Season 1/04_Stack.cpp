@@ -4,22 +4,22 @@
 using namespace app;
 
 int main() {
-  Stack<Person> stack;
-  stack.push(make_shared<Person>(10, "Alice0"));
-  stack.push(make_shared<Person>(11, "Alice1"));
-  stack.push(make_shared<Person>(12, "Alice2"));
-  stack.push(make_shared<Person>(13, "Alice3"));
-  stack.push(make_shared<Person>(14, "Alice4"));
-  cout << "----------Test operator<<()----------\n";
-  cout << stack;
-  cout << "----------Test top()----------\n";
-  cout << "top: " << *stack.top() << "\n";
-  cout << "----------Test pop()----------\n";
-  cout << "size=" << stack.size() << endl;
-  while (!stack.is_empty())
-    cout << *stack.pop() << "\n";
-  cout << "size=" << stack.size() << endl;
-  return 0;
+	Stack<Person> stack;
+	stack.push(make_shared<Person>(10, "Alice0"));
+	stack.push(make_shared<Person>(11, "Alice1"));
+	stack.push(make_shared<Person>(12, "Alice2"));
+	stack.push(make_shared<Person>(13, "Alice3"));
+	stack.push(make_shared<Person>(14, "Alice4"));
+	cout << "----------Test operator<<()----------\n";
+	cout << stack;
+	cout << "----------Test top()----------\n";
+	cout << "top: " << *stack.top() << "\n";
+	cout << "----------Test pop()----------\n";
+	cout << "size=" << stack.size() << endl;
+	while (!stack.is_empty())
+		cout << *stack.pop() << "\n";
+	cout << "size=" << stack.size() << endl;
+	return 0;
 }
 
 /*

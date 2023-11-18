@@ -14,31 +14,31 @@
 using namespace std;
 
 class Solution {
-  void dfs(int layer, int lRemain, int rRemain, string str,
-           vector<string> &res) {
-    if (layer == str.size()) {
-      res.emplace_back(str);
-      return;
-    }
-    if (lRemain > 0) {
-      str[layer] = '(';
-      dfs(layer + 1, lRemain - 1, rRemain, str, res);
-    }
-    if (rRemain > 0 && lRemain != rRemain) {
-      str[layer] = ')';
-      dfs(layer + 1, lRemain, rRemain - 1, str, res);
-    }
-  }
+	void dfs(int layer, int lRemain, int rRemain, string str,
+		vector<string>& res) {
+		if (layer == str.size()) {
+			res.emplace_back(str);
+			return;
+		}
+		if (lRemain > 0) {
+			str[layer] = '(';
+			dfs(layer + 1, lRemain - 1, rRemain, str, res);
+		}
+		if (rRemain > 0 && lRemain != rRemain) {
+			str[layer] = ')';
+			dfs(layer + 1, lRemain, rRemain - 1, str, res);
+		}
+	}
 
 public:
-  vector<string> generateParenthesis(int n) {
-    vector<string> res;
-    dfs(0, n, n, string(n << 1, '0'), res);
-    return res;
-  }
+	vector<string> generateParenthesis(int n) {
+		vector<string> res;
+		dfs(0, n, n, string(n << 1, '0'), res);
+		return res;
+	}
 };
 
-int main(int argc, char const *argv[]) {
-  auto res = Solution().generateParenthesis(3);
-  return 0;
+int main(int argc, char const* argv[]) {
+	auto res = Solution().generateParenthesis(3);
+	return 0;
 }

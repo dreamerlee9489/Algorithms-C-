@@ -1,4 +1,0 @@
-EnemyID,Name,InitHp,InitPos
-1,Enemy_Soldier_01,100,(-10;0;-10)
-2,Enemy_Soldier_01,100,(-5;0;-5)
-3,Enemy_Soldier_01,100,(10;0;10)

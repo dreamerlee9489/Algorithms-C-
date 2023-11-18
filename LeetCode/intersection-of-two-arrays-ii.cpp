@@ -17,20 +17,20 @@ using namespace std;
 
 class Solution {
 public:
-  vector<int> intersect(vector<int> &nums1, vector<int> &nums2) {
-    vector<int> res;
-    unordered_map<int, int> map1, map2;
-    for (int n : nums1)
-      map1[n]++;
-    for (int n : nums2)
-      map2[n]++;
-    for (auto p : map1) {
-      if (map2.find(p.first) != map2.end()) {
-        int count = min(map1[p.first], map2[p.first]);
-        for (int i = 0; i < count; i++)
-          res.emplace_back(p.first);
-      }
-    }
-    return res;
-  }
+	vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+		vector<int> res;
+		unordered_map<int, int> map1, map2;
+		for (int n : nums1)
+			map1[n]++;
+		for (int n : nums2)
+			map2[n]++;
+		for (auto p : map1) {
+			if (map2.find(p.first) != map2.end()) {
+				int count = min(map1[p.first], map2[p.first]);
+				for (int i = 0; i < count; i++)
+					res.emplace_back(p.first);
+			}
+		}
+		return res;
+	}
 };

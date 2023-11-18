@@ -12,23 +12,24 @@
 
 class Solution {
 public:
-  ListNode *partition(ListNode *head, int x) {
-    if (head == nullptr)
-      return nullptr;
-    ListNode *lHead = new ListNode(0), *lTail = lHead;
-    ListNode *rHead = new ListNode(0), *rTail = rHead;
-    while (head != nullptr) {
-      if (head->val < x) {
-        lTail->next = head;
-        lTail = head;
-      } else {
-        rTail->next = head;
-        rTail = head;
-      }
-      head = head->next;
-    }
-    rTail->next = nullptr;
-    lTail->next = rHead->next;
-    return lHead->next;
-  }
+	ListNode* partition(ListNode* head, int x) {
+		if (head == nullptr)
+			return nullptr;
+		ListNode* lHead = new ListNode(0), * lTail = lHead;
+		ListNode* rHead = new ListNode(0), * rTail = rHead;
+		while (head != nullptr) {
+			if (head->val < x) {
+				lTail->next = head;
+				lTail = head;
+			}
+			else {
+				rTail->next = head;
+				rTail = head;
+			}
+			head = head->next;
+		}
+		rTail->next = nullptr;
+		lTail->next = rHead->next;
+		return lHead->next;
+	}
 };

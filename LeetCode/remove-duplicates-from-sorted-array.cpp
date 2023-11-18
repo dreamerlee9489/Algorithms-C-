@@ -15,14 +15,14 @@ using namespace std;
 
 class Solution {
 public:
-  int removeDuplicates(vector<int> &nums) {
-    int index = 1, num = nums[0];
-    for (int i = 1; i < nums.size(); i++) {
-      if (nums[i] != num) {
-        nums[index++] = nums[i];
-        num = nums[i];
-      }
-    }
-    return index;
-  }
+	int removeDuplicates(vector<int>& nums) {
+		int index = 1, num = nums[0];
+		for (int i = 1; i < nums.size(); i++) {
+			if (nums[i] != num) {
+				nums[index++] = nums[i];
+				num = nums[i];
+			}
+		}
+		return index;
+	}
 };

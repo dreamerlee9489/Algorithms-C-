@@ -15,19 +15,19 @@ using namespace std;
 
 class Solution {
 public:
-  bool isPalindrome(ListNode *head) {
-    vector<int> vec;
-    while (head != nullptr) {
-      vec.emplace_back(head->val);
-      head = head->next;
-    }
-    int left = 0, right = vec.size() - 1;
-    while (left < right) {
-      if (vec[left] != vec[right])
-        return false;
-      ++left;
-      --right;
-    }
-    return true;
-  }
+	bool isPalindrome(ListNode* head) {
+		vector<int> vec;
+		while (head != nullptr) {
+			vec.emplace_back(head->val);
+			head = head->next;
+		}
+		int left = 0, right = vec.size() - 1;
+		while (left < right) {
+			if (vec[left] != vec[right])
+				return false;
+			++left;
+			--right;
+		}
+		return true;
+	}
 };

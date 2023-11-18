@@ -4,7 +4,7 @@ using namespace std;
 
 int main()
 {
-    const char str[] = "HelloWorld";
-    cout << "len=" << strlen(str) << ", " << sizeof(str) << "\n";
-    return 0;
+	const char str[] = "HelloWorld";
+	cout << "len=" << strlen(str) << ", " << sizeof(str) << "\n";
+	return 0;
 }

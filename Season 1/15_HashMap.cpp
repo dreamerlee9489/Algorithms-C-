@@ -3,45 +3,45 @@
 
 using namespace app;
 
-int main(int argc, char const *argv[]) {
-  HashMap<Person, int> map;
-  map.add(make_shared<Person>(10, "Alice10"), make_shared<int>(10));
-  map.add(make_shared<Person>(11, "Alice11"), make_shared<int>(11));
-  map.add(make_shared<Person>(12, "Alice12"), make_shared<int>(12));
-  map.add(make_shared<Person>(13, "Alice13"), make_shared<int>(13));
-  map.add(make_shared<Person>(14, "Alice14"), make_shared<int>(14));
-  cout << "size=" << map.size() << ", capacity=" << map.capacity() << "\n";
-  map.traverse();
-  map.remove(make_shared<Person>(11, "Alice11"));
-  map.remove(make_shared<Person>(13, "Alice13"));
-  cout << "size=" << map.size() << ", capacity=" << map.capacity() << "\n";
-  map.traverse();
-  map.add(make_shared<Person>(10, "Alice10"), make_shared<int>(30));
-  map.add(make_shared<Person>(12, "Alice12"), make_shared<int>(36));
-  map.add(make_shared<Person>(14, "Alice14"), make_shared<int>(42));
-  cout << "size=" << map.size() << ", capacity=" << map.capacity() << "\n";
-  map.traverse();
-  cout << "----------Test traverse()----------\n";
-  for (size_t i = 0; i < 10; ++i) {
-    map.add(make_shared<Person>(i + 2, "Bob" + std::to_string(i + 2)),
-            make_shared<int>(i + 2));
-    map.add(make_shared<Person>(i * 2, "Jack" + std::to_string(i * 2)),
-            make_shared<int>(i * 2));
-  }
-  cout << "size=" << map.size() << ", capacity=" << map.capacity() << "\n";
-  map.traverse([](shared_ptr<Person> key, shared_ptr<int> value) {
-    cout << "lamdba<" << *key << "-" << *value << ">\t";
-    return false;
-  });
-  cout << "----------Test HashMap(const HashMap<K, V> &)----------\n";
-  HashMap<Person, int> map1 = HashMap<Person, int>(map);
-  cout << "size=" << map1.size() << ", capacity=" << map1.capacity() << "\n";
-  map1.traverse();
-  cout << "----------Test HashMap(HashMap<K, V> &&)----------\n";
-  HashMap<Person, int> map2 = HashMap<Person, int>(std::move(map));
-  cout << "size=" << map2.size() << ", capacity=" << map2.capacity() << "\n";
-  map2.traverse();
-  return 0;
+int main(int argc, char const* argv[]) {
+	HashMap<Person, int> map;
+	map.add(make_shared<Person>(10, "Alice10"), make_shared<int>(10));
+	map.add(make_shared<Person>(11, "Alice11"), make_shared<int>(11));
+	map.add(make_shared<Person>(12, "Alice12"), make_shared<int>(12));
+	map.add(make_shared<Person>(13, "Alice13"), make_shared<int>(13));
+	map.add(make_shared<Person>(14, "Alice14"), make_shared<int>(14));
+	cout << "size=" << map.size() << ", capacity=" << map.capacity() << "\n";
+	map.traverse();
+	map.remove(make_shared<Person>(11, "Alice11"));
+	map.remove(make_shared<Person>(13, "Alice13"));
+	cout << "size=" << map.size() << ", capacity=" << map.capacity() << "\n";
+	map.traverse();
+	map.add(make_shared<Person>(10, "Alice10"), make_shared<int>(30));
+	map.add(make_shared<Person>(12, "Alice12"), make_shared<int>(36));
+	map.add(make_shared<Person>(14, "Alice14"), make_shared<int>(42));
+	cout << "size=" << map.size() << ", capacity=" << map.capacity() << "\n";
+	map.traverse();
+	cout << "----------Test traverse()----------\n";
+	for (size_t i = 0; i < 10; ++i) {
+		map.add(make_shared<Person>(i + 2, "Bob" + std::to_string(i + 2)),
+			make_shared<int>(i + 2));
+		map.add(make_shared<Person>(i * 2, "Jack" + std::to_string(i * 2)),
+			make_shared<int>(i * 2));
+	}
+	cout << "size=" << map.size() << ", capacity=" << map.capacity() << "\n";
+	map.traverse([](shared_ptr<Person> key, shared_ptr<int> value) {
+		cout << "lamdba<" << *key << "-" << *value << ">\t";
+		return false;
+		});
+	cout << "----------Test HashMap(const HashMap<K, V> &)----------\n";
+	HashMap<Person, int> map1 = HashMap<Person, int>(map);
+	cout << "size=" << map1.size() << ", capacity=" << map1.capacity() << "\n";
+	map1.traverse();
+	cout << "----------Test HashMap(HashMap<K, V> &&)----------\n";
+	HashMap<Person, int> map2 = HashMap<Person, int>(std::move(map));
+	cout << "size=" << map2.size() << ", capacity=" << map2.capacity() << "\n";
+	map2.traverse();
+	return 0;
 }
 
 /*
