@@ -4,7 +4,7 @@
  * @brief 79. 单词搜索
  * @version 0.1
  * @date 2022-08-07
- * @link https://leetcode.cn/problems/word-search/ @endlink
+ * @link https://leetcode.cn/problems/word-search/
  * @copyright Copyright (c) 2022
  *
  */

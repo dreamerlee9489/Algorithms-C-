@@ -4,7 +4,7 @@
  * @brief 118. 杨辉三角
  * @version 0.1
  * @date 2022-08-09
- * @link https://leetcode.cn/problems/pascals-triangle/ @endlink
+ * @link https://leetcode.cn/problems/pascals-triangle/
  * @copyright Copyright (c) 2022
  *
  */

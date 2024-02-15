@@ -4,7 +4,7 @@
  * @brief 324. 摆动排序 II
  * @version 0.1
  * @date 2022-08-14
- * @link https://leetcode.cn/problems/wiggle-sort-ii/ @endlink
+ * @link https://leetcode.cn/problems/wiggle-sort-ii/
  * @copyright Copyright (c) 2022
  *
  */

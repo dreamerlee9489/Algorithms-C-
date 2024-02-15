@@ -4,7 +4,7 @@
  * @brief 33. 搜索旋转排序数组
  * @version 0.1
  * @date 2022-08-05
- * @link https://leetcode.cn/problems/search-in-rotated-sorted-array/ @endlink
+ * @link https://leetcode.cn/problems/search-in-rotated-sorted-array/
  * @copyright Copyright (c) 2022
  *
  */

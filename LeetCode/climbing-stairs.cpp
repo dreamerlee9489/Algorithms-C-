@@ -4,7 +4,7 @@
  * @brief 70. 爬楼梯
  * @version 0.1
  * @date 2022-08-03
- * @link https://leetcode.cn/problems/climbing-stairs/ @endlink
+ * @link https://leetcode.cn/problems/climbing-stairs/
  * @copyright Copyright (c) 2022
  *
  */

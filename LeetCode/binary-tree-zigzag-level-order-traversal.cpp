@@ -5,7 +5,7 @@
  * @version 0.1
  * @date 2022-08-07
  * @link https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/
- * @endlink
+ *
  * @copyright Copyright (c) 2022
  *
  */

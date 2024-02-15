@@ -4,7 +4,7 @@
  * @brief 179. 最大数
  * @version 0.1
  * @date 2022-08-01
- * @link https://leetcode.cn/problems/largest-number/ @endlink
+ * @link https://leetcode.cn/problems/largest-number/
  * @copyright Copyright (c) 2022
  *
  */

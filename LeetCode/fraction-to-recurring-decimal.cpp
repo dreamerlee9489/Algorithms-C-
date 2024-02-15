@@ -4,7 +4,7 @@
  * @brief 166. 分数到小数
  * @version 0.1
  * @date 2022-08-12
- * @link https://leetcode.cn/problems/fraction-to-recurring-decimal/ @endlink
+ * @link https://leetcode.cn/problems/fraction-to-recurring-decimal/
  * @copyright Copyright (c) 2022
  *
  */

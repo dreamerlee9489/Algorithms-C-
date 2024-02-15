@@ -4,7 +4,7 @@
  * @brief 149. 直线上最多的点数
  * @version 0.1
  * @date 2022-07-28
- * @link https://leetcode.cn/problems/max-points-on-a-line/ @endlink
+ * @link https://leetcode.cn/problems/max-points-on-a-line/
  * @copyright Copyright (c) 2022
  *
  */

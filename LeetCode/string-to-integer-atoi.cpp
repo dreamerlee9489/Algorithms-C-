@@ -4,7 +4,7 @@
  * @brief 8. 字符串转换整数 (atoi)
  * @version 0.1
  * @date 2022-08-06
- * @link https://leetcode.cn/problems/string-to-integer-atoi/ @endlink
+ * @link https://leetcode.cn/problems/string-to-integer-atoi/
  * @copyright Copyright (c) 2022
  *
  */

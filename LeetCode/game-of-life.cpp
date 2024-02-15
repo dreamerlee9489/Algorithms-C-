@@ -4,7 +4,7 @@
  * @brief 289. 生命游戏
  * @version 0.1
  * @date 2022-08-06
- * @link https://leetcode.cn/problems/game-of-life/ @endlink
+ * @link https://leetcode.cn/problems/game-of-life/
  * @copyright Copyright (c) 2022
  *
  */

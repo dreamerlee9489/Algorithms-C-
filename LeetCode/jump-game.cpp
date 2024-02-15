@@ -4,7 +4,7 @@
  * @brief 55. 跳跃游戏
  * @version 0.1
  * @date 2022-08-06
- * @link https://leetcode.cn/problems/jump-game/ @endlink
+ * @link https://leetcode.cn/problems/jump-game/
  * @copyright Copyright (c) 2022
  *
  */

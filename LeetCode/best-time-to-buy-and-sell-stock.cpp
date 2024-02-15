@@ -4,7 +4,7 @@
  * @brief 121. 买卖股票的最佳时机
  * @version 0.1
  * @date 2022-08-04
- * @link https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/ @endlink
+ * @link https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/
  * @copyright Copyright (c) 2022
  *
  */

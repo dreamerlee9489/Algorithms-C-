@@ -4,7 +4,7 @@
  * @brief 38. 外观数列
  * @version 0.1
  * @date 2022-08-10
- * @link https://leetcode.cn/problems/count-and-say/ @endlink
+ * @link https://leetcode.cn/problems/count-and-say/
  * @copyright Copyright (c) 2022
  *
  */

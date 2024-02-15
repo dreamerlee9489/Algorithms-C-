@@ -4,7 +4,7 @@
  * @brief 350. 两个数组的交集 II
  * @version 0.1
  * @date 2022-08-10
- * @link https://leetcode.cn/problems/intersection-of-two-arrays-ii/ @endlink
+ * @link https://leetcode.cn/problems/intersection-of-two-arrays-ii/
  * @copyright Copyright (c) 2022
  *
  */

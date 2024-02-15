@@ -4,7 +4,7 @@
  * @brief 66. 加一
  * @version 0.1
  * @date 2022-08-11
- * @link https://leetcode.cn/problems/plus-one/ @endlink
+ * @link https://leetcode.cn/problems/plus-one/
  * @copyright Copyright (c) 2022
  *
  */

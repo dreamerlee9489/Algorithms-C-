@@ -4,7 +4,7 @@
  * @brief 29. 两数相除
  * @version 0.1
  * @date 2022-08-11
- * @link https://leetcode.cn/problems/divide-two-integers/ @endlink
+ * @link https://leetcode.cn/problems/divide-two-integers/
  * @copyright Copyright (c) 2022
  *
  */

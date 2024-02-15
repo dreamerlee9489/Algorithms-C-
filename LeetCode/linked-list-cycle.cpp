@@ -4,7 +4,7 @@
  * @brief 141. 环形链表
  * @version 0.1
  * @date 2022-08-09
- * @link https://leetcode.cn/problems/linked-list-cycle/ @endlink
+ * @link https://leetcode.cn/problems/linked-list-cycle/
  * @copyright Copyright (c) 2022
  *
  */

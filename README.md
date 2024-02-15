@@ -152,6 +152,7 @@
 - 字符串中的第一个唯一字符(first-unique-character-in-a-string.cpp)
 - Fizz Buzz(fizz-buzz.cpp)
 - 翻转二叉树(invert-binary-tree.cpp)
+- 移除元素(remove-element.cpp)
 > 中等
 - 两数相加(add-two-numbers.cpp)  
 - 无重复字符的最长子串(longest-substring-without-repeating-characters.cpp)  
@@ -238,6 +239,13 @@
 - 打乱数组(shuffle-an-array.cpp)
 - 至少有 K 个重复字符的最长子串(longest-substring-with-at-least-k-repeating-characters.cpp)
 - 四数相加 II(four-sum-ii.cpp)
+- 最接近的三数之和(3sum-closest.cpp)
+- 设计循环双端队列(design-circular-deque.cpp)
+- 根据身高重建队列(queue-reconstruction-by-height.cpp)
+- 验证栈序列(validate-stack-sequences.cpp)
+- 填充每个节点的下一个右侧节点指针(populating-next-right-pointers-in-each-node.cpp)
+- 填充每个节点的下一个右侧节点指针 II(populating-next-right-pointers-in-each-node-ii.cpp)
+- 旋转链表(rotate-list.cpp)
 > 困难
 - 直线上最多的点数(max-points-on-a-line.cpp)  
 - 火星词典(alien-dictionary.cpp)  

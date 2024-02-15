@@ -4,7 +4,7 @@
  * @brief 208. 实现 Trie (前缀树)
  * @version 0.1
  * @date 2022-08-08
- * @link https://leetcode.cn/problems/implement-trie-prefix-tree/ @endlink
+ * @link https://leetcode.cn/problems/implement-trie-prefix-tree/
  * @copyright Copyright (c) 2022
  *
  */

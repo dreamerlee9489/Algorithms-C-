@@ -4,7 +4,7 @@
  * @brief 104. 二叉树的最大深度
  * @version 0.1
  * @date 2022-08-07
- * @link https://leetcode.cn/problems/maximum-depth-of-binary-tree/ @endlink
+ * @link https://leetcode.cn/problems/maximum-depth-of-binary-tree/
  * @copyright Copyright (c) 2022
  *
  */

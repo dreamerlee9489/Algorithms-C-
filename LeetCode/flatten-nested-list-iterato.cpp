@@ -4,7 +4,7 @@
  * @brief 341. 扁平化嵌套列表迭代器
  * @version 0.1
  * @date 2022-08-15
- * @link https://leetcode.cn/problems/flatten-nested-list-iterator/ @endlink
+ * @link https://leetcode.cn/problems/flatten-nested-list-iterator/
  * @copyright Copyright (c) 2022
  *
  */

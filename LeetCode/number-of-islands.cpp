@@ -4,7 +4,7 @@
  * @brief 200. 岛屿数量
  * @version 0.1
  * @date 2022-08-04
- * @link https://leetcode.cn/problems/number-of-islands/ @endlink
+ * @link https://leetcode.cn/problems/number-of-islands/
  * @copyright Copyright (c) 2022
  *
  */

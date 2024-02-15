@@ -6,7 +6,7 @@
  * @date 2022-08-10
  * @link
  * https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/
- * @endlink
+ *
  * @copyright Copyright (c) 2022
  *
  */

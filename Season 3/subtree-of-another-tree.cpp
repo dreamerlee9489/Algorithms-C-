@@ -4,7 +4,7 @@
  * @brief 572. 另一棵树的子树
  * @version 0.1
  * @date 2022-07-20
- * @link https://leetcode.cn/problems/subtree-of-another-tree/ @endlink
+ * @link https://leetcode.cn/problems/subtree-of-another-tree/
  * @copyright Copyright (c) 2022
  *
  */

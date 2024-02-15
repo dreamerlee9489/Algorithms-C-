@@ -4,7 +4,7 @@
  * @brief 56. 合并区间
  * @version 0.1
  * @date 2022-08-05
- * @link https://leetcode.cn/problems/merge-intervals/ @endlink
+ * @link https://leetcode.cn/problems/merge-intervals/
  * @copyright Copyright (c) 2022
  *
  */

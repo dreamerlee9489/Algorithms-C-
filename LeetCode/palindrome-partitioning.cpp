@@ -4,7 +4,7 @@
  * @brief 131. 分割回文串
  * @version 0.1
  * @date 2022-08-09
- * @link https://leetcode.cn/problems/palindrome-partitioning/ @endlink
+ * @link https://leetcode.cn/problems/palindrome-partitioning/
  * @copyright Copyright (c) 2022
  *
  */

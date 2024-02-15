@@ -4,7 +4,7 @@
  * @brief 217. 存在重复元素
  * @version 0.1
  * @date 2022-08-11
- * @link https://leetcode.cn/problems/contains-duplicate/ @endlink
+ * @link https://leetcode.cn/problems/contains-duplicate/
  * @copyright Copyright (c) 2022
  *
  */

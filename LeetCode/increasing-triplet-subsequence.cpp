@@ -4,7 +4,7 @@
  * @brief 334. 递增的三元子序列
  * @version 0.1
  * @date 2022-08-14
- * @link https://leetcode.cn/problems/increasing-triplet-subsequence/ @endlink
+ * @link https://leetcode.cn/problems/increasing-triplet-subsequence/
  * @copyright Copyright (c) 2022
  *
  */

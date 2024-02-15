@@ -4,7 +4,7 @@
  * @brief 50. Pow(x, n)
  * @version 0.1
  * @date 2022-07-24
- * @link https://leetcode.cn/problems/powx-n/ @endlink
+ * @link https://leetcode.cn/problems/powx-n/
  * @copyright Copyright (c) 2022
  *
  */

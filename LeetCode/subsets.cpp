@@ -4,7 +4,7 @@
  * @brief 78. 子集
  * @version 0.1
  * @date 2022-08-06
- * @link https://leetcode.cn/problems/subsets/ @endlink
+ * @link https://leetcode.cn/problems/subsets/
  * @copyright Copyright (c) 2022
  *
  */

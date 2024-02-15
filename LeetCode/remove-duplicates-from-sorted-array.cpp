@@ -5,7 +5,7 @@
  * @version 0.1
  * @date 2022-08-10
  * @link https://leetcode.cn/problems/remove-duplicates-from-sorted-array/
- * @endlink
+ *
  * @copyright Copyright (c) 2022
  *
  */

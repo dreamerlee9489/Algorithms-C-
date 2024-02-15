@@ -4,7 +4,7 @@
  * @brief 21. 合并两个有序链表
  * @version 0.1
  * @date 2022-08-01
- * @link https://leetcode.cn/problems/merge-two-sorted-lists/ @endlink
+ * @link https://leetcode.cn/problems/merge-two-sorted-lists/
  * @copyright Copyright (c) 2022
  *
  */

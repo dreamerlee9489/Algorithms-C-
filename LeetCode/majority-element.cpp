@@ -4,7 +4,7 @@
  * @brief 169. 多数元素
  * @version 0.1
  * @date 2022-08-10
- * @link https://leetcode.cn/problems/majority-element/ @endlink
+ * @link https://leetcode.cn/problems/majority-element/
  * @copyright Copyright (c) 2022
  *
  */

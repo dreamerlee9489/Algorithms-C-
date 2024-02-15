@@ -4,7 +4,7 @@
  * @brief 347. 前 K 个高频元素
  * @version 0.1
  * @date 2022-08-15
- * @link https://leetcode.cn/problems/top-k-frequent-elements/ @endlink
+ * @link https://leetcode.cn/problems/top-k-frequent-elements/
  * @copyright Copyright (c) 2022
  *
  */

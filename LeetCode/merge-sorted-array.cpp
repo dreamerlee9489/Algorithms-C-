@@ -4,7 +4,7 @@
  * @brief 88. 合并两个有序数组
  * @version 0.1
  * @date 2022-08-04
- * @link https://leetcode.cn/problems/merge-sorted-array/ @endlink
+ * @link https://leetcode.cn/problems/merge-sorted-array/
  * @copyright Copyright (c) 2022
  *
  */

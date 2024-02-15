@@ -4,7 +4,7 @@
  * @brief 739. 每日温度
  * @version 0.1
  * @date 2022-07-19
- * @link https://leetcode.cn/problems/daily-temperatures/ @endlink
+ * @link https://leetcode.cn/problems/daily-temperatures/
  * @copyright Copyright (c) 2022
  *
  */

@@ -4,7 +4,7 @@
  * @brief 371. 两整数之和
  * @version 0.1
  * @date 2022-08-15
- * @link https://leetcode.cn/problems/sum-of-two-integers/ @endlink
+ * @link https://leetcode.cn/problems/sum-of-two-integers/
  * @copyright Copyright (c) 2022
  *
  */

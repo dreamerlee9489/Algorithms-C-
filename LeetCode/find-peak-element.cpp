@@ -4,7 +4,7 @@
  * @brief 162. 寻找峰值
  * @version 0.1
  * @date 2022-08-09
- * @link https://leetcode.cn/problems/find-peak-element/ @endlink
+ * @link https://leetcode.cn/problems/find-peak-element/
  * @copyright Copyright (c) 2022
  *
  */

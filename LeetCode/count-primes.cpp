@@ -4,7 +4,7 @@
  * @brief 204. 计数质数
  * @version 0.1
  * @date 2022-08-07
- * @link https://leetcode.cn/problems/count-primes/ @endlink
+ * @link https://leetcode.cn/problems/count-primes/
  * @copyright Copyright (c) 2022
  *
  */

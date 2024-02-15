@@ -4,7 +4,7 @@
  * @brief 348. 设计井字棋
  * @version 0.1
  * @date 2022-08-15
- * @link https://leetcode.cn/problems/design-tic-tac-toe/ @endlink
+ * @link https://leetcode.cn/problems/design-tic-tac-toe/
  * @copyright Copyright (c) 2022
  *
  */

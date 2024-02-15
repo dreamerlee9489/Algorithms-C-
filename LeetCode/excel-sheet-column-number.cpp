@@ -4,7 +4,7 @@
  * @brief 171. Excel 表列序号
  * @version 0.1
  * @date 2022-08-11
- * @link https://leetcode.cn/problems/excel-sheet-column-number/ @endlink
+ * @link https://leetcode.cn/problems/excel-sheet-column-number/
  * @copyright Copyright (c) 2022
  *
  */

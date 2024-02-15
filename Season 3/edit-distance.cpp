@@ -4,7 +4,7 @@
  * @brief 72. 编辑距离
  * @version 0.1
  * @date 2022-07-21
- * @link https://leetcode.cn/problems/edit-distance/ @endlink
+ * @link https://leetcode.cn/problems/edit-distance/
  * @copyright Copyright (c) 2022
  *
  */

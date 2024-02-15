@@ -4,7 +4,7 @@
  * @brief 287. 寻找重复数
  * @version 0.1
  * @date 2022-08-07
- * @link https://leetcode.cn/problems/find-the-duplicate-number/ @endlink
+ * @link https://leetcode.cn/problems/find-the-duplicate-number/
  * @copyright Copyright (c) 2022
  *
  */

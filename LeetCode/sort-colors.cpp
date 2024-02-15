@@ -4,7 +4,7 @@
  * @brief 75. 颜色分类
  * @version 0.1
  * @date 2022-07-18
- * @link https://leetcode.cn/problems/sort-colors/ @endlink
+ * @link https://leetcode.cn/problems/sort-colors/
  * @copyright Copyright (c) 2022
  *
  */

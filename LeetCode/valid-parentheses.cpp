@@ -4,7 +4,7 @@
  * @brief 20. 有效的括号
  * @version 0.1
  * @date 2022-08-03
- * @link https://leetcode.cn/problems/valid-parentheses/ @endlink
+ * @link https://leetcode.cn/problems/valid-parentheses/
  * @copyright Copyright (c) 2022
  *
  */

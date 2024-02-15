@@ -4,7 +4,7 @@
  * @brief 285. 二叉搜索树中的中序后继
  * @version 0.1
  * @date 2022-08-14
- * @link https://leetcode.cn/problems/inorder-successor-in-bst/ @endlink
+ * @link https://leetcode.cn/problems/inorder-successor-in-bst/
  * @copyright Copyright (c) 2022
  *
  */

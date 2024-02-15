@@ -4,7 +4,7 @@
  * @brief 69. x 的平方根
  * @version 0.1
  * @date 2022-08-11
- * @link https://leetcode.cn/problems/sqrtx/ @endlink
+ * @link https://leetcode.cn/problems/sqrtx/
  * @copyright Copyright (c) 2022
  *
  */

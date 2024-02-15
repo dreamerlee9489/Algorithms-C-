@@ -4,7 +4,7 @@
  * @brief 210. 课程表 II
  * @version 0.1
  * @date 2022-08-13
- * @link https://leetcode.cn/problems/course-schedule-ii/ @endlink
+ * @link https://leetcode.cn/problems/course-schedule-ii/
  * @copyright Copyright (c) 2022
  *
  */

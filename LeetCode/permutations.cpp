@@ -4,7 +4,7 @@
  * @brief 46. 全排列
  * @version 0.1
  * @date 2022-08-02
- * @link https://leetcode.cn/problems/permutations/ @endlink
+ * @link https://leetcode.cn/problems/permutations/
  * @copyright Copyright (c) 2022
  *
  */

@@ -4,7 +4,7 @@
  * @brief 380. O(1) 时间插入、删除和获取随机元素
  * @version 0.1
  * @date 2022-08-15
- * @link https://leetcode.cn/problems/insert-delete-getrandom-o1/ @endlink
+ * @link https://leetcode.cn/problems/insert-delete-getrandom-o1/
  * @copyright Copyright (c) 2022
  *
  */

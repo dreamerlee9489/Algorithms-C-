@@ -4,7 +4,7 @@
  * @brief 326. 3 的幂
  * @version 0.1
  * @date 2022-08-11
- * @link https://leetcode.cn/problems/power-of-three/ @endlink
+ * @link https://leetcode.cn/problems/power-of-three/
  * @copyright Copyright (c) 2022
  *
  */

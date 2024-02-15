@@ -4,7 +4,7 @@
  * @brief 28. 实现 strStr()
  * @version 0.1
  * @date 2022-08-10
- * @link https://leetcode.cn/problems/implement-strstr/ @endlink
+ * @link https://leetcode.cn/problems/implement-strstr/
  * @copyright Copyright (c) 2022
  *
  */

@@ -4,7 +4,7 @@
  * @brief 91. 解码方法
  * @version 0.1
  * @date 2022-08-04
- * @link https://leetcode.cn/problems/decode-ways/ @endlink
+ * @link https://leetcode.cn/problems/decode-ways/
  * @copyright Copyright (c) 2022
  *
  */

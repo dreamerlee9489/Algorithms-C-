@@ -4,7 +4,7 @@
  * @brief 36. 有效的数独
  * @version 0.1
  * @date 2022-08-12
- * @link https://leetcode.cn/problems/valid-sudoku/ @endlink
+ * @link https://leetcode.cn/problems/valid-sudoku/
  * @copyright Copyright (c) 2022
  *
  */

@@ -4,7 +4,7 @@
  * @brief 277. 搜寻名人
  * @version 0.1
  * @date 2022-08-13
- * @link https://leetcode.cn/problems/find-the-celebrity/ @endlink
+ * @link https://leetcode.cn/problems/find-the-celebrity/
  * @copyright Copyright (c) 2022
  *
  */

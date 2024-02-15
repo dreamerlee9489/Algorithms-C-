@@ -4,7 +4,7 @@
  * @brief 344. 反转字符串
  * @version 0.1
  * @date 2022-08-10
- * @link https://leetcode.cn/problems/reverse-string/ @endlink
+ * @link https://leetcode.cn/problems/reverse-string/
  * @copyright Copyright (c) 2022
  *
  */

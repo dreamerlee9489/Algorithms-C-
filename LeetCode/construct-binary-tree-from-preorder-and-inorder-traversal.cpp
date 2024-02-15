@@ -6,7 +6,7 @@
  * @date 2022-08-08
  * @link
  * https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
- * @endlink
+ *
  * @copyright Copyright (c) 2022
  *
  */

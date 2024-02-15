@@ -4,7 +4,7 @@
  * @brief 215. 数组中的第K个最大元素
  * @version 0.1
  * @date 2022-08-04
- * @link https://leetcode.cn/problems/kth-largest-element-in-an-array/ @endlink
+ * @link https://leetcode.cn/problems/kth-largest-element-in-an-array/
  * @copyright Copyright (c) 2022
  *
  */

@@ -4,7 +4,7 @@
  * @brief 253. 会议室 II
  * @version 0.1
  * @date 2022-08-04
- * @link https://leetcode.cn/problems/meeting-rooms-ii/ @endlink
+ * @link https://leetcode.cn/problems/meeting-rooms-ii/
  * @copyright Copyright (c) 2022
  *
  */

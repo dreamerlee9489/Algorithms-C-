@@ -4,7 +4,7 @@
  * @brief 48. 旋转图像
  * @version 0.1
  * @date 2022-08-06
- * @link https://leetcode.cn/problems/rotate-image/ @endlink
+ * @link https://leetcode.cn/problems/rotate-image/
  * @copyright Copyright (c) 2022
  *
  */

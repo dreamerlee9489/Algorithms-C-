@@ -4,7 +4,7 @@
  * @brief 139. 单词拆分
  * @version 0.1
  * @date 2022-08-08
- * @link https://leetcode.cn/problems/word-break/ @endlink
+ * @link https://leetcode.cn/problems/word-break/
  * @copyright Copyright (c) 2022
  *
  */

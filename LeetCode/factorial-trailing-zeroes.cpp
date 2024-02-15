@@ -4,7 +4,7 @@
  * @brief 172. 阶乘后的零
  * @version 0.1
  * @date 2022-08-13
- * @link https://leetcode.cn/problems/factorial-trailing-zeroes/ @endlink
+ * @link https://leetcode.cn/problems/factorial-trailing-zeroes/
  * @copyright Copyright (c) 2022
  *
  */

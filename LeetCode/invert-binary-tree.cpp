@@ -4,7 +4,7 @@
  * @brief 226. 翻转二叉树
  * @version 0.1
  * @date 2022-08-16
- * @link https://leetcode.cn/problems/invert-binary-tree/ @endlink
+ * @link https://leetcode.cn/problems/invert-binary-tree/
  * @copyright Copyright (c) 2022
  *
  */

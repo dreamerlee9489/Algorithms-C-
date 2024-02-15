@@ -6,7 +6,7 @@
  * @date 2022-08-12
  * @link
  * https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/
- * @endlink
+ *
  * @copyright Copyright (c) 2022
  *
  */

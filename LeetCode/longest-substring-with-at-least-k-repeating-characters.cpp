@@ -6,7 +6,7 @@
  * @date 2022-08-08
  * @link
  * https://leetcode.cn/problems/longest-substring-with-at-least-k-repeating-characters/
- * @endlink
+ *
  * @copyright Copyright (c) 2022
  *
  */

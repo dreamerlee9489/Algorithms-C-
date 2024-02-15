@@ -4,7 +4,7 @@
  * @brief 207. 课程表
  * @version 0.1
  * @date 2022-08-13
- * @link https://leetcode.cn/problems/course-schedule/ @endlink
+ * @link https://leetcode.cn/problems/course-schedule/
  * @copyright Copyright (c) 2022
  *
  */

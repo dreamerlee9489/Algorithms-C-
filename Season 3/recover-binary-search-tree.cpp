@@ -4,7 +4,7 @@
  * @brief 99. 恢复二叉搜索树
  * @version 0.1
  * @date 2022-07-22
- * @link https://leetcode.cn/problems/recover-binary-search-tree/ @endlink
+ * @link https://leetcode.cn/problems/recover-binary-search-tree/
  * @copyright Copyright (c) 2022
  *
  */

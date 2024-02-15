@@ -4,7 +4,7 @@
  * @brief 234. 回文链表
  * @version 0.1
  * @date 2022-07-18
- * @link https://leetcode.cn/problems/palindrome-linked-list/ @endlink
+ * @link https://leetcode.cn/problems/palindrome-linked-list/
  * @copyright Copyright (c) 2022
  *
  */

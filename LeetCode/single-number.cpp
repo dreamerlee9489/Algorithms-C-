@@ -4,7 +4,7 @@
  * @brief 136. 只出现一次的数字
  * @version 0.1
  * @date 2022-08-09
- * @link https://leetcode.cn/problems/single-number/ @endlink
+ * @link https://leetcode.cn/problems/single-number/
  * @copyright Copyright (c) 2022
  *
  */

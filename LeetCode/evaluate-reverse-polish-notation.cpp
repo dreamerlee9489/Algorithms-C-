@@ -4,7 +4,7 @@
  * @brief 150. 逆波兰表达式求值
  * @version 0.1
  * @date 2022-08-12
- * @link https://leetcode.cn/problems/evaluate-reverse-polish-notation/ @endlink
+ * @link https://leetcode.cn/problems/evaluate-reverse-polish-notation/
  * @copyright Copyright (c) 2022
  *
  */

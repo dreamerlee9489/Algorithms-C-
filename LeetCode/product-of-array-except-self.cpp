@@ -4,7 +4,7 @@
  * @brief 238. 除自身以外数组的乘积
  * @version 0.1
  * @date 2022-08-13
- * @link https://leetcode.cn/problems/product-of-array-except-self/ @endlink
+ * @link https://leetcode.cn/problems/product-of-array-except-self/
  * @copyright Copyright (c) 2022
  *
  */

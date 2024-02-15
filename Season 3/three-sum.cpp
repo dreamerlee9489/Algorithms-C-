@@ -4,7 +4,7 @@
  * @brief 15. 三数之和
  * @version 0.1
  * @date 2022-07-24
- * @link https://leetcode.cn/problems/3sum/ @endlink
+ * @link https://leetcode.cn/problems/3sum/
  * @copyright Copyright (c) 2022
  *
  */

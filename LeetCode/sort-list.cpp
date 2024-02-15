@@ -4,7 +4,7 @@
  * @brief 148. 排序链表
  * @version 0.1
  * @date 2022-08-03
- * @link https://leetcode.cn/problems/sort-list/ @endlink
+ * @link https://leetcode.cn/problems/sort-list/
  * @copyright Copyright (c) 2022
  *
  */

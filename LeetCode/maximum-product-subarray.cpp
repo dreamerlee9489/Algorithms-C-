@@ -4,7 +4,7 @@
  * @brief 152. 乘积最大子数组
  * @version 0.1
  * @date 2022-08-06
- * @link https://leetcode.cn/problems/maximum-product-subarray/ @endlink
+ * @link https://leetcode.cn/problems/maximum-product-subarray/
  * @copyright Copyright (c) 2022
  *
  */

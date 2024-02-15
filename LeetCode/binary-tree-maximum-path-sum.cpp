@@ -4,7 +4,7 @@
  * @brief 124. 二叉树中的最大路径和
  * @version 0.1
  * @date 2022-08-03
- * @link https://leetcode.cn/problems/binary-tree-maximum-path-sum/ @endlink
+ * @link https://leetcode.cn/problems/binary-tree-maximum-path-sum/
  * @copyright Copyright (c) 2022
  *
  */

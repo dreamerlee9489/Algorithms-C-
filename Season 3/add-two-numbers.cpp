@@ -4,7 +4,7 @@
  * @brief 2. 两数相加
  * @version 0.1
  * @date 2022-07-18
- * @link https://leetcode.cn/problems/add-two-numbers/ @endlink
+ * @link https://leetcode.cn/problems/add-two-numbers/
  * @copyright Copyright (c) 2022
  *
  */

@@ -4,7 +4,7 @@
  * @brief 269. 火星词典
  * @version 0.1
  * @date 2022-07-28
- * @link https://leetcode.cn/problems/alien-dictionary/ @endlink
+ * @link https://leetcode.cn/problems/alien-dictionary/
  * @copyright Copyright (c) 2022
  *
  */

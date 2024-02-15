@@ -4,7 +4,7 @@
  * @brief 328. 奇偶链表
  * @version 0.1
  * @date 2022-08-14
- * @link https://leetcode.cn/problems/odd-even-linked-list/ @endlink
+ * @link https://leetcode.cn/problems/odd-even-linked-list/
  * @copyright Copyright (c) 2022
  *
  */

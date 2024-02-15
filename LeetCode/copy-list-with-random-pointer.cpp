@@ -4,7 +4,7 @@
  * @brief 138. 复制带随机指针的链表
  * @version 0.1
  * @date 2022-08-07
- * @link https://leetcode.cn/problems/copy-list-with-random-pointer/ @endlink
+ * @link https://leetcode.cn/problems/copy-list-with-random-pointer/
  * @copyright Copyright (c) 2022
  *
  */

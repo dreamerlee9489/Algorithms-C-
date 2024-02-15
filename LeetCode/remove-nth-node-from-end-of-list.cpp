@@ -4,7 +4,7 @@
  * @brief 19. 删除链表的倒数第 N 个结点
  * @version 0.1
  * @date 2022-08-04
- * @link https://leetcode.cn/problems/remove-nth-node-from-end-of-list/ @endlink
+ * @link https://leetcode.cn/problems/remove-nth-node-from-end-of-list/
  * @copyright Copyright (c) 2022
  *
  */

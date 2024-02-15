@@ -4,7 +4,7 @@
  * @brief 230. 二叉搜索树中第K小的元素
  * @version 0.1
  * @date 2022-08-13
- * @link https://leetcode.cn/problems/kth-smallest-element-in-a-bst/ @endlink
+ * @link https://leetcode.cn/problems/kth-smallest-element-in-a-bst/
  * @copyright Copyright (c) 2022
  *
  */

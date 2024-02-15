@@ -4,7 +4,7 @@
  * @brief 14. 最长公共前缀
  * @version 0.1
  * @date 2022-08-09
- * @link https://leetcode.cn/problems/longest-common-prefix/ @endlink
+ * @link https://leetcode.cn/problems/longest-common-prefix/
  * @copyright Copyright (c) 2022
  *
  */

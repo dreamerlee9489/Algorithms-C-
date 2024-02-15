@@ -6,7 +6,7 @@
  * @date 2022-08-14
  * @link
  * https://leetcode.cn/problems/longest-substring-with-at-most-k-distinct-characters/
- * @endlink
+ *
  * @copyright Copyright (c) 2022
  *
  */

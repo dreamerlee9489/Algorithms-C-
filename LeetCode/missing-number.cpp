@@ -4,7 +4,7 @@
  * @brief 268. 丢失的数字
  * @version 0.1
  * @date 2022-08-11
- * @link https://leetcode.cn/problems/missing-number/ @endlink
+ * @link https://leetcode.cn/problems/missing-number/
  * @copyright Copyright (c) 2022
  *
  */

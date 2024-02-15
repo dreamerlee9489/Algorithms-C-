@@ -4,7 +4,7 @@
  * @brief 86. 分隔链表
  * @version 0.1
  * @date 2022-07-18
- * @link https://leetcode.cn/problems/partition-list/ @endlink
+ * @link https://leetcode.cn/problems/partition-list/
  * @copyright Copyright (c) 2022
  *
  */

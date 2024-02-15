@@ -4,7 +4,7 @@
  * @brief 94. 二叉树的中序遍历
  * @version 0.1
  * @date 2022-08-04
- * @link https://leetcode.cn/problems/binary-tree-inorder-traversal/ @endlink
+ * @link https://leetcode.cn/problems/binary-tree-inorder-traversal/
  * @copyright Copyright (c) 2022
  *
  */

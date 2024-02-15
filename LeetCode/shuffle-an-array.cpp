@@ -4,7 +4,7 @@
  * @brief 384. 打乱数组
  * @version 0.1
  * @date 2022-08-06
- * @link https://leetcode.cn/problems/shuffle-an-array/ @endlink
+ * @link https://leetcode.cn/problems/shuffle-an-array/
  * @copyright Copyright (c) 2022
  *
  */

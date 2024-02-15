@@ -4,7 +4,7 @@
  * @brief 251. 展开二维向量
  * @version 0.1
  * @date 2022-08-09
- * @link https://leetcode.cn/problems/flatten-2d-vector/ @endlink
+ * @link https://leetcode.cn/problems/flatten-2d-vector/
  * @copyright Copyright (c) 2022
  *
  */

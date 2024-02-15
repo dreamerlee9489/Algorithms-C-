@@ -4,7 +4,7 @@
  * @brief 128. 最长连续序列
  * @version 0.1
  * @date 2022-08-12
- * @link https://leetcode.cn/problems/longest-consecutive-sequence/ @endlink
+ * @link https://leetcode.cn/problems/longest-consecutive-sequence/
  * @copyright Copyright (c) 2022
  *
  */

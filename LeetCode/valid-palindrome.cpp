@@ -4,7 +4,7 @@
  * @brief 125. 验证回文串
  * @version 0.1
  * @date 2022-08-11
- * @link https://leetcode.cn/problems/valid-palindrome/ @endlink
+ * @link https://leetcode.cn/problems/valid-palindrome/
  * @copyright Copyright (c) 2022
  *
  */

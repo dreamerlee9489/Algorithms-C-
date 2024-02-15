@@ -4,7 +4,7 @@
  * @brief 190. 颠倒二进制位
  * @version 0.1
  * @date 2022-08-11
- * @link https://leetcode.cn/problems/reverse-bits/ @endlink
+ * @link https://leetcode.cn/problems/reverse-bits/
  * @copyright Copyright (c) 2022
  *
  */

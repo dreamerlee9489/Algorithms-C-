@@ -4,7 +4,7 @@
  * @brief 202. 快乐数
  * @version 0.1
  * @date 2022-08-05
- * @link https://leetcode.cn/problems/happy-number/ @endlink
+ * @link https://leetcode.cn/problems/happy-number/
  * @copyright Copyright (c) 2022
  *
  */

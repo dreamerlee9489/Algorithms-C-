@@ -4,7 +4,7 @@
  * @brief 279. 完全平方数
  * @version 0.1
  * @date 2022-08-04
- * @link https://leetcode.cn/problems/perfect-squares/ @endlink
+ * @link https://leetcode.cn/problems/perfect-squares/
  * @copyright Copyright (c) 2022
  *
  */

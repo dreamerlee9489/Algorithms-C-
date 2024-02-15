@@ -4,7 +4,7 @@
  * @brief 剑指 Offer 47. 礼物的最大价值
  * @version 0.1
  * @date 2022-07-20
- * @link https://leetcode.cn/problems/li-wu-de-zui-da-jie-zhi-lcof/ @endlink
+ * @link https://leetcode.cn/problems/li-wu-de-zui-da-jie-zhi-lcof/
  * @copyright Copyright (c) 2022
  *
  */

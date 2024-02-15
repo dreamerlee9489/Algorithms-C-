@@ -4,7 +4,7 @@
  * @brief 206. 反转链表
  * @version 0.1
  * @date 2022-07-28
- * @link https://leetcode.cn/problems/reverse-linked-list/ @endlink
+ * @link https://leetcode.cn/problems/reverse-linked-list/
  * @copyright Copyright (c) 2022
  *
  */

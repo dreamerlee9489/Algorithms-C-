@@ -4,7 +4,7 @@
  * @brief 191. 位1的个数
  * @version 0.1
  * @date 2022-08-11
- * @link https://leetcode.cn/problems/number-of-1-bits/ @endlink
+ * @link https://leetcode.cn/problems/number-of-1-bits/
  * @copyright Copyright (c) 2022
  *
  */

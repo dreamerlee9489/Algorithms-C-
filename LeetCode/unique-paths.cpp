@@ -4,7 +4,7 @@
  * @brief 62. 不同路径
  * @version 0.1
  * @date 2022-08-07
- * @link https://leetcode.cn/problems/unique-paths/ @endlink
+ * @link https://leetcode.cn/problems/unique-paths/
  * @copyright Copyright (c) 2022
  *
  */

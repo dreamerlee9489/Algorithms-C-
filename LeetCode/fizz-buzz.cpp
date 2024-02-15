@@ -4,7 +4,7 @@
  * @brief 412. Fizz Buzz
  * @version 0.1
  * @date 2022-08-11
- * @link https://leetcode.cn/problems/fizz-buzz/ @endlink
+ * @link https://leetcode.cn/problems/fizz-buzz/
  * @copyright Copyright (c) 2022
  *
  */

@@ -4,7 +4,7 @@
  * @brief 239. 滑动窗口最大值
  * @version 0.1
  * @date 2022-07-19
- * @link https://leetcode.cn/problems/sliding-window-maximum/ @endlink
+ * @link https://leetcode.cn/problems/sliding-window-maximum/
  * @copyright Copyright (c) 2022
  *
  */

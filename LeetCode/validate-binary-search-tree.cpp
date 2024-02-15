@@ -4,7 +4,7 @@
  * @brief 98. 验证二叉搜索树
  * @version 0.1
  * @date 2022-08-12
- * @link https://leetcode.cn/problems/validate-binary-search-tree/ @endlink
+ * @link https://leetcode.cn/problems/validate-binary-search-tree/
  * @copyright Copyright (c) 2022
  *
  */
