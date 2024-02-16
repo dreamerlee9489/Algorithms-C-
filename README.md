@@ -246,6 +246,12 @@
 - 填充每个节点的下一个右侧节点指针(populating-next-right-pointers-in-each-node.cpp)
 - 填充每个节点的下一个右侧节点指针 II(populating-next-right-pointers-in-each-node-ii.cpp)
 - 旋转链表(rotate-list.cpp)
+- 我的日程安排表 I(my-calendar-i.cpp)
+- 砖墙(brick-wall.cpp)
+- 路径总和(path-sum.cpp)
+- 目标和(target-sum.cpp)
+- 省份数量(number-of-provinces.cpp)
+- 统计封闭岛屿的数目(number-of-closed-islands.cpp)
 > 困难
 - 直线上最多的点数(max-points-on-a-line.cpp)  
 - 火星词典(alien-dictionary.cpp)  

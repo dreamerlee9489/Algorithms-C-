@@ -10,26 +10,18 @@
  */
 #include "./TreeNode.hpp"
 #include <vector>
-
+#include <climits>
 using namespace std;
 
 class Solution {
-	vector<int> mVec;
-
-	void inorder(TreeNode* node) {
-		if (node != nullptr) {
-			inorder(node->left);
-			mVec.emplace_back(node->val);
-			inorder(node->right);
-		}
+	bool isValidBST(TreeNode* root, long min, long max) {
+		if (root == nullptr) return true;
+		if (root->val <= min || root->val >= max) return false;
+		return isValidBST(root->left, min, root->val) && isValidBST(root->right, root->val, max);
 	}
 
 public:
 	bool isValidBST(TreeNode* root) {
-		inorder(root);
-		for (size_t i = 1; i < mVec.size(); i++)
-			if (mVec[i - 1] > mVec[i])
-				return false;
-		return true;
+		return isValidBST(root, LONG_MIN, LONG_MAX);
 	}
 };
