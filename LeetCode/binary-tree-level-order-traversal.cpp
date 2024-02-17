@@ -11,7 +11,7 @@
  */
 #include "./TreeNode.hpp"
 #include <iostream>
-#include <list>
+#include <queue>
 #include <utility>
 #include <vector>
 
@@ -21,27 +21,19 @@ class Solution {
 public:
 	vector<vector<int>> levelOrder(TreeNode* root) {
 		vector<vector<int>> res;
-		if (root != nullptr) {
-			list<TreeNode*> que;
-			que.push_back(root);
-			res.push_back({ root->val });
-			int lvCnt = 1;
-			while (!que.empty()) {
-				TreeNode* top = que.front();
-				que.pop_front();
-				if (top->left != nullptr)
-					que.push_back(top->left);
-				if (top->right != nullptr)
-					que.push_back(top->right);
-				if (--lvCnt == 0) {
-					vector<int> tmp;
-					for (auto node : que)
-						tmp.push_back(node->val);
-					if (!tmp.empty())
-						res.push_back(move(tmp));
-					lvCnt = que.size();
-				}
+		if (!root) return res;
+		queue<TreeNode*> q({ root });
+		while (!q.empty()) {
+			int size = q.size();
+			vector<int> currLevel;
+			for (int i = 0; i < size; i++) {
+				TreeNode* top = q.front();
+				q.pop();
+				currLevel.push_back(top->val);
+				if (top->left)	q.push(top->left);
+				if (top->right) q.push(top->right);
 			}
+			res.push_back(currLevel);
 		}
 		return res;
 	}

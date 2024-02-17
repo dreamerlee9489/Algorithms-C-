@@ -252,6 +252,9 @@
 - 目标和(target-sum.cpp)
 - 省份数量(number-of-provinces.cpp)
 - 统计封闭岛屿的数目(number-of-closed-islands.cpp)
+- 二进制矩阵中的最短路径(shortest-path-in-binary-matrix.cpp)
+- 颜色交替的最短路径(shortest-path-with-alternating-colors.cpp)
+- 打开转盘锁(open-the-lock.cpp)
 > 困难
 - 直线上最多的点数(max-points-on-a-line.cpp)  
 - 火星词典(alien-dictionary.cpp)  
