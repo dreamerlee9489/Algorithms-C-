@@ -9,102 +9,46 @@
  *
  */
 #include <vector>
-
 using namespace std;
 
+/**
+ * 解题技巧总结：
+ * 全排列问题是一个典型的回溯算法应用场景，以下是解题时应该考虑的要点：
+ * 回溯框架：实现一个回溯函数，它将维护当前状态（包括已经选择的数字和还未选择的数字），并在符合条件时进行递归，以探索所有可能的情况。
+ * 递归和终止条件：递归需要一个终止条件，对于全排列问题，当当前排列的长度等于输入数组的长度时，表示一个全排列已经形成，此时应记录当前排列，并返回上一层递归。
+ * 维护状态：为了防止在同一个排列中使用相同的数字，需要维护一个状态来标记已经使用过的数字。
+ * 不重复使用数字：因为题目中提到数组不含重复数字，所以在递归过程中直接使用一个额外的数据结构（如布尔数组或哈希集合）来记录哪些数字已经被使用过，从而避免重复使用同一个数字。
+ * 时间复杂度：对于不重复数字的全排列问题，时间复杂度为O(n!)，其中n是数组的长度，因为需要探索n!种可能的排列。
+ * 
+ */
 class Solution {
-	void dfs(int index, vector<int>& nums, vector<vector<int>>& list) {
-		if (index == nums.size()) {
-			list.emplace_back(nums);
-			return;
-		}
-		for (int i = index; i < nums.size(); ++i) {
-			swap(nums, index, i);
-			dfs(index + 1, nums, list);
-			swap(nums, index, i);
-		}
-	}
-
-	void swap(vector<int>& nums, int i, int j) {
-		int temp = nums[i];
-		nums[i] = nums[j];
-		nums[j] = temp;
-	}
-
 public:
-	vector<vector<int>> permute(vector<int>& nums) {
-		if (nums.empty())
-			return vector<vector<int>>();
-		vector<vector<int>> list;
-		dfs(0, nums, list);
-		return list;
-	}
-};
-
-class Solution2 {
-	vector<vector<int>> list;
-	vector<int> nums, result;
-
-	void dfs(int index) {
-		if (index == nums.size()) {
-			list.emplace_back(result);
+	void backtrack(vector<int>& nums, vector<vector<int>>& res, vector<int>& permutation, vector<bool>& used) {
+		if (permutation.size() == nums.size()) {
+			// 当前排列长度等于nums长度，记录当前排列
+			res.push_back(permutation);
 			return;
 		}
-		for (int num : nums) {
-			if (!contains(result, num)) {
-				result.emplace_back(num);
-				dfs(index + 1);
-				// result.erase(result.end());
-				result.pop_back();
-			}
-		}
-	}
 
-	bool contains(vector<int>& vals, int num) {
-		for (int val : vals)
-			if (val == num)
-				return true;
-		return false;
-	}
-
-public:
-	vector<vector<int>> permute(vector<int>& nums) {
-		if (nums.empty())
-			return vector<vector<int>>();
-		this->nums = nums;
-		dfs(0);
-		return list;
-	}
-};
-
-class Solution1 {
-	vector<vector<int>> list;
-	vector<int> nums, result;
-	vector<bool> used;
-
-	void dfs(int index) {
-		if (index == nums.size()) {
-			list.emplace_back(result);
-			return;
-		}
 		for (int i = 0; i < nums.size(); ++i) {
-			if (!used[i]) {
-				result[index] = nums[i];
-				used[i] = true;
-				dfs(index + 1);
-				used[i] = false;
-			}
+			// 跳过已经使用过的数字
+			if (used[i]) continue;
+			// 做选择
+			permutation.push_back(nums[i]);
+			used[i] = true;
+			// 进入下一层决策树
+			backtrack(nums, res, permutation, used);
+			// 撤销选择
+			permutation.pop_back();
+			used[i] = false;
 		}
 	}
 
-public:
 	vector<vector<int>> permute(vector<int>& nums) {
-		if (nums.empty())
-			return vector<vector<int>>();
-		this->nums = nums;
-		this->result = vector<int>(nums.size());
-		this->used = vector<bool>(nums.size());
-		dfs(0);
-		return list;
+		vector<vector<int>> res;
+		vector<int> permutation;
+		vector<bool> used(nums.size(), false);
+		backtrack(nums, res, permutation, used);
+		return res;
 	}
 };

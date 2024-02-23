@@ -8,49 +8,35 @@
  * @copyright Copyright (c) 2022
  *
  */
+
+ /**
+  * 解题技巧总结：
+  * 要实现幂函数pow(x, n)，最直接的方法是进行n次乘法，但这种方法的时间复杂度是O(n)，效率低下。更高效的方法是使用“快速幂”算法，也称为“二分幂”算法，其核心思想是利用幂的性质来减少计算量。
+  * 以下是实现快速幂算法的几个重要步骤：
+  * 递归实现：快速幂算法可以使用递归来实现。当我们要计算x^n时，可以根据n的奇偶性进行分治处理。如果n是偶数，那么x^n = (x^(n/2))^2；如果n是奇数，则x^n = x * (x^(n/2))^2。
+  * 迭代实现：虽然递归实现较为直观，但递归深度可能会很大，导致栈溢出。因此，使用迭代的方式也是一个不错的选择。迭代实现可以借助位运算来优化。
+  * 处理负幂：如果n是负数，可以先计算正幂，然后取其倒数。
+  * 注意边界情况：需要考虑n为0或x为0等边界情况。
+  * 时间复杂度：快速幂算法的时间复杂度为O(log n)，因为每次都将问题规模缩小一半。
+  *
+  */
 class Solution {
 public:
 	double myPow(double x, int n) {
-		long y = n < 0 ? -(long)n : n;
-		double res = 1;
-		while (y > 0) {
-			if ((y & 1) == 1)
-				res *= x;
-			x *= x;
-			y >>= 1;
+		// 处理n为负数的情况
+		long long N = n;
+		if (N < 0) {
+			x = 1 / x;
+			N = -N;
 		}
-		return n < 0 ? 1 / res : res;
-	}
-
-	double myPow1(double x, int n) {
-		if (n == 0)
-			return 1;
-		if (n == -1)
-			return 1 / x;
-		double half = myPow1(x, n >> 1);
-		return n & 1 ? half * half * x : half * half;
-	}
-
-	int powMod(int x, unsigned y, int z) {
-		if (z == 0)
-			return 0;
-		x %= z;
-		int res = 1 % z;
-		while (y > 0) {
-			if ((y & 1) == 1)
-				res = (res * x) % z;
-			x = (x * x) % z;
-			y >>= 1;
+		double ans = 1;
+		double current_product = x;
+		for (long long i = N; i; i /= 2) {
+			if (i % 2 == 1) {
+				ans = ans * current_product;
+			}
+			current_product = current_product * current_product;
 		}
-		return res;
-	}
-
-	int powMod1(int x, unsigned y, int z) {
-		if (z == 0)
-			return 0;
-		if (y == 0)
-			return 1 % z;
-		int half = powMod1(x, y >> 1, z);
-		return (y & 1) == 0 ? half * half % z : half * half * (x % z) % z;
+		return ans;
 	}
 };
