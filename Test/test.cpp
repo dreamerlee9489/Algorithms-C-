@@ -1,44 +1,47 @@
 #include <bits/stdc++.h>
-#include <cstdlib>
-#include <iostream>
-#include <vector>
 using namespace std;
 
-std::vector<std::string> split(const std::string& str, const char delimiter) {
-	std::vector<std::string> tokens;
-	std::string token;
-	std::istringstream tokenStream(str);
-
-	// 从 tokenStream 中读取字符，直到遇到 delimiter，每次读取的子字符串存储在 token 中
-	while (std::getline(tokenStream, token, delimiter)) {
-		tokens.push_back(token);
+struct TreeNode {
+	int val;
+	TreeNode* left, * right;
+	TreeNode(int val, TreeNode* left = nullptr, TreeNode* right = nullptr) {
+		this->val = val;
+		this->left = left;
+		this->right = right;
 	}
+};
 
-	return tokens;
+bool isSameTree(TreeNode* root1, TreeNode* root2) {
+	if (!root1 && !root2)	return true;
+	if (!root1 || !root2)	return false;
+	if (root1->val != root2->val)	return false;
+	return isSameTree(root1->left, root2->left) && isSameTree(root1->right, root2->right);
 }
 
-int main() {
-	int val;
-	cin >> val;
-	string str;
-	getline(cin, str);
-	getline(cin, str);
-	vector<string> strs = split(str, ' ');
-	vector<int> coins;
-	for (string& s : strs)
-		coins.push_back(atoi(s.c_str()));
-	sort(coins.begin(), coins.end());
-	int count = 0, i = coins.size() - 1;
-	while (i >= 0) {
-		if (val >= coins[i]) {
-			val -= coins[i];
-			count++;
-		}
-		else {
-			i--;
-		}
+void dfs(vector<string>& result, string current, int n, int left, int right) {
+	if (current.size() == 2 * n) {
+		result.push_back(current);
+		return;
 	}
-	cout << (val > 0 ? -1 : count);
+
+	if (left < n) {
+		dfs(result, current + '(', n, left + 1, right);
+	}
+
+	if (right < left) {
+		dfs(result, current + ')', n, left, right + 1);
+	}
+}
+
+vector<string> test(int n) {
+	vector<string> result;
+	string current;
+	dfs(result, current, n, 0, 0);
+	return result;
+}
+
+int main(int argc, char const* argv[])
+{
+	vector<string> res = test(3);
 	return 0;
 }
-// 64 位输出请用 printf("%lld")

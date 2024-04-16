@@ -9,6 +9,7 @@
  *
  */
 #include <vector>
+#include <iostream>
 using namespace std;
 
 /**
@@ -18,7 +19,7 @@ using namespace std;
  * 动态编程：为了减少重复计算，我们可以用两个数组分别存储每个位置左边和右边最高的柱子高度，这样就可以在O(n)的时间内找到任意位置能接的雨水高度。时间复杂度降低为O(n)，但空间复杂度上升为O(n)。
  * 双指针法：动态编程的基础上，可以进一步优化空间复杂度。使用两个指针分别从前后遍历数组，在移动指针的过程中维护左边和右边的最高柱子高度，并根据这两个高度计算雨水量。
  * 使用栈：使用栈来跟踪可能储水的最低点。遍历数组时，保持栈内元素单调递减，如果当前柱子的高度大于栈顶柱子的高度，则意味着可以接雨水。计算雨水量，并将当前柱子压入栈中。
- * 
+ *
  */
 class Solution {
 public:
@@ -41,3 +42,9 @@ public:
 		return ans;
 	}
 };
+
+int main(int argc, char const* argv[]) {
+	vector<int> height = { 0,1,0,2,1,0,1,3,2,1,2,1 };
+	cout << Solution().trap(height);
+	return 0;
+}
